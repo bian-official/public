@@ -5,10 +5,9 @@
 
 **Download**
 
-BIAN Semantic APIs.
+BIAN Semantic APIs from: https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
 
-Each Swagger represnets a BIAN Service Domain.
-
+Each Swagger represents a BIAN Service Domain.
 
 
 
