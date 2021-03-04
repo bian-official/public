@@ -18,7 +18,7 @@ Each Swagger represnets a BIAN Service Domain.
 1. Sign in to GitHub with your _username_
 2. Click the 'Fork' button in the upper right corner. This creates a working copy of the repository that you can download and change.
 3. Install the necessary Git client tools, for example, Download the Git client for your operating system here https://git-scm.com/downloads and run it.
-4. Clone the forked repository you created to your local computer by using the git clone command. It will look something like this:
+4. Clone the forked repository you created to your local computer by using the git clone command:
     git clone https://github.com/username/bian-official _myrepository_
     where _username_ is your GitHub username and _myrepository_ is a name you pick for the repository on your computer.
 5. Create a branch to add any new features:
