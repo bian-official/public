@@ -7,7 +7,7 @@
 
 BIAN Semantic APIs.
 
-Each Swagger represnets a BIAN Service Domain.
+Each Swagger represents a BIAN Service Domain.
 
 
 
