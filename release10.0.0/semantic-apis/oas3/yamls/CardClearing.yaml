@@ -1,0 +1,1015 @@
+openapi: 3.0.1
+info:
+  title: Card Clearing
+  description: This service domain orchestrates the capture and consolidation of card financial transactions originating from various sources, such as POS Network, E-Commerce Gateway, ATM Network, or Card Case Management. It also handles the clearing of the transactions from the Acquirers to the Issuers through the Card Networks
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CardClearing/10.0.0
+paths:
+  /CardClearing/Initiate:
+    post:
+      tags:
+      - CR - CardClearingProcedure
+      summary: InCR Initiate a card clearing process
+      description: InCR Initiate a card clearing process
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateCardClearingProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCardClearingProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Update:
+    put:
+      tags:
+      - CR - CardClearingProcedure
+      summary: UpCR Update details of a card clearing processing batch
+      description: UpCR Update details of a card clearing processing batch
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      requestBody:
+        $ref: '#/components/requestBodies/CardClearingProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardClearingProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Retrieve:
+    get:
+      tags:
+      - CR - CardClearingProcedure
+      summary: ReCR Retrieve details about a card clearing process
+      description: ReCR Retrieve details about a card clearing process
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardClearingProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Capture/{captureId}/Update:
+    put:
+      tags:
+      - BQ - Capture
+      summary: UpBQ Update details of a captured card transaction (for repair)
+      description: UpBQ Update details of a captured card transaction (for repair)
+      operationId: UpdateCapture
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/CaptureID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCaptureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCaptureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Capture/{captureId}/Retrieve:
+    get:
+      tags:
+      - BQ - Capture
+      summary: ReBQ Retrieve details about a captured card transaction
+      description: ReBQ Retrieve details about a captured card transaction
+      operationId: RetrieveCapture
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/CaptureID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCaptureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Addressing/{addressingId}/Retrieve:
+    get:
+      tags:
+      - BQ - Addressing
+      summary: ReBQ Retrieve details about card transaction addressing
+      description: ReBQ Retrieve details about card transaction addressing
+      operationId: RetrieveAddressing
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/AddressingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveAddressingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/FXConversion/{fxconversionId}/Retrieve:
+    get:
+      tags:
+      - BQ - FXConversion
+      summary: ReBQ Retrieve details about card transaction FX conversion|
+      description: ReBQ Retrieve details about card transaction FX conversion|
+      operationId: RetrieveFXConversion
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/FXConversionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveFXConversionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Fees/{feesId}/Update:
+    put:
+      tags:
+      - BQ - Fees
+      summary: UpBQ Update details of applied fees
+      description: UpBQ Update details of applied fees
+      operationId: UpdateFees
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/FeesID'
+      requestBody:
+        $ref: '#/components/requestBodies/Fees'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fees'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Fees/{feesId}/Retrieve:
+    get:
+      tags:
+      - BQ - Fees
+      summary: ReBQ Retrieve details about card transaction intercharge fees
+      description: ReBQ Retrieve details about card transaction intercharge fees
+      operationId: RetrieveFees
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/FeesID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveFeesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Matching/{matchingId}/Retrieve:
+    get:
+      tags:
+      - BQ - Matching
+      summary: ReBQ Retrieve details about card transaction matching
+      description: ReBQ Retrieve details about card transaction matching
+      operationId: RetrieveMatching
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/MatchingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveMatchingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Reconciliation/{reconciliationId}/Retrieve:
+    get:
+      tags:
+      - BQ - Reconciliation
+      summary: ReBQ Retrieve details about card transaction reconciliation
+      description: ReBQ Retrieve details about card transaction reconciliation
+      operationId: RetrieveReconciliation
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/ReconciliationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveReconciliationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardClearing/{cardclearingId}/Routing/{routingId}/Retrieve:
+    get:
+      tags:
+      - BQ - Routing
+      summary: ReBQ Retrieve details about card transaction routing
+      description: ReBQ Retrieve details about card transaction routing
+      operationId: RetrieveRouting
+      parameters:
+      - $ref: '#/components/parameters/CardClearingID'
+      - $ref: '#/components/parameters/RoutingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRoutingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CardClearingProcedure:
+      type: object
+      properties:
+        NetworkReference:
+          type: object
+        ParticipantAcquirerBankReference:
+          type: object
+        ParticipantAcquirerBankClearingandSettlementTerms:
+          type: string
+        ParticipantIssuerBankReference:
+          type: object
+        ParticipantIssuerBankClearingandSettlementTerms:
+          type: string
+        CardClearingProcessType:
+          type: string
+        CardClearingProcessDateOrTime:
+          type: string
+        CardClearingServiceSchedule:
+          type: string
+    FXConversion:
+      type: object
+      properties:
+        FXConversionRatesandFees:
+          type: object
+        FXConversionTaskResult:
+          type: string
+    Matching:
+      type: object
+      properties:
+        MatchingTaskResult:
+          type: string
+    Fees:
+      type: object
+      properties:
+        InterchargeFees:
+          type: string
+        FeeTaskResult:
+          type: string
+    Routing:
+      type: object
+      properties:
+        RoutingTaskResult:
+          type: string
+    Addressing:
+      type: object
+      properties:
+        AddressingTaskResult:
+          type: string
+    Reconciliation:
+      type: object
+      properties:
+        ReconciliationTaskResult:
+          type: string
+    Capture:
+      type: object
+      properties:
+        CardTransactionRecordReference:
+          type: object
+        CardTransactionProductInstanceReference:
+          type: object
+        CardTransactionNetworkReference:
+          type: object
+        CardTransactionIssuingBankReference:
+          type: object
+        CardTransactionMerchantAcquiringBankReference:
+          type: object
+        CardTransactionType:
+          type: string
+        CardTransactionCurrency:
+          type: string
+        CardTransactionAmountType:
+          type: string
+        CardTransactionAmount:
+          type: number
+        CardTransactionMerchantReference:
+          type: object
+        CardTransactionLocationReference:
+          type: object
+        CardTransactionProductandServiceReference:
+          type: object
+        CardTransactionDate/Time:
+          type: string
+        CardTransactionFXConversionCharge:
+          type: string
+        CardTransactionInterchargeFee:
+          type: string
+        CardTransactionAuthorizationRecord:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateCardClearingProcedureRequest:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            NetworkReference:
+              type: object
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+            CardClearingProcessType:
+              type: string
+            CardClearingProcessDateOrTime:
+              type: string
+            CardClearingServiceSchedule:
+              type: string
+    InitiateCardClearingProcedureResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            NetworkReference:
+              type: object
+            ParticipantAcquirerBankClearingandSettlementTerms:
+              type: string
+            ParticipantIssuerBankClearingandSettlementTerms:
+              type: string
+            CardClearingProcessDateOrTime:
+              type: string
+            CardClearingServiceSchedule:
+              type: string
+    UpdateCaptureRequest:
+      type: object
+      properties:
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+    UpdateCaptureResponse:
+      type: object
+      properties:
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+    RetrieveCaptureResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+    RetrieveAddressingResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+        Addressing:
+          type: object
+          properties:
+            AddressingTaskResult:
+              type: string
+    RetrieveFXConversionResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+        FXConversion:
+          type: object
+          properties:
+            FXConversionRatesandFees:
+              type: object
+            FXConversionTaskResult:
+              type: string
+    RetrieveFeesResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+        Fees:
+          type: object
+          properties:
+            InterchargeFees:
+              type: string
+            FeeTaskResult:
+              type: string
+    RetrieveMatchingResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+        Matching:
+          type: object
+          properties:
+            MatchingTaskResult:
+              type: string
+    RetrieveReconciliationResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+        Reconciliation:
+          type: object
+          properties:
+            ReconciliationTaskResult:
+              type: string
+    RetrieveRoutingResponse:
+      type: object
+      properties:
+        CardClearingProcedure:
+          type: object
+          properties:
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantIssuerBankReference:
+              type: object
+        Capture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+        Routing:
+          type: object
+          properties:
+            RoutingTaskResult:
+              type: string
+  parameters:
+    CardClearingID:
+      name: cardclearingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    FXConversionID:
+      name: fxconversionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    MatchingID:
+      name: matchingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    FeesID:
+      name: feesId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    RoutingID:
+      name: routingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AddressingID:
+      name: addressingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ReconciliationID:
+      name: reconciliationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CaptureID:
+      name: captureId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateCardClearingProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateCardClearingProcedureRequest'
+    CardClearingProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CardClearingProcedure'
+    UpdateCaptureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCaptureRequest'
+    Fees:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Fees'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

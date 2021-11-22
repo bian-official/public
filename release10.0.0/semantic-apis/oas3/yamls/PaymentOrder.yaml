@@ -1,0 +1,542 @@
+openapi: 3.0.1
+info:
+  title: Payment Order
+  description: This service domain handles the bank-side processing of funds transfers, making the necessary bank and regulatory checks on the involved parties and applying their payment preferences where appropriate
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/PaymentOrder/10.0.0
+paths:
+  /PaymentOrder/Initiate:
+    post:
+      tags:
+      - CR - PaymentOrderProcedure
+      summary: InCR Initiate a payment order procedure
+      description: InCR Initiate a payment order procedure
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentOrderProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePaymentOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentOrder/{paymentorderId}/Update:
+    put:
+      tags:
+      - CR - PaymentOrderProcedure
+      summary: UpCR Update details of a payment order instruction
+      description: UpCR Update details of a payment order instruction
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/PaymentOrderID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentOrderProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentOrder/{paymentorderId}/Retrieve:
+    get:
+      tags:
+      - CR - PaymentOrderProcedure
+      summary: ReCR Retrieve details about a payment order instruction
+      description: ReCR Retrieve details about a payment order instruction
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/PaymentOrderID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentOrder/{paymentorderId}/OrderConfirmation/{orderconfirmationId}/Retrieve:
+    get:
+      tags:
+      - BQ - OrderConfirmation
+      summary: ReBQ Retrieve details about a payment order confirmation process
+      description: ReBQ Retrieve details about a payment order confirmation process
+      operationId: RetrieveOrderConfirmation
+      parameters:
+      - $ref: '#/components/parameters/PaymentOrderID'
+      - $ref: '#/components/parameters/OrderConfirmationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveOrderConfirmationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentOrder/{paymentorderId}/ExecutionInitiation/{executioninitiationId}/Retrieve:
+    get:
+      tags:
+      - BQ - ExecutionInitiation
+      summary: ReBQ Retrieve details about the payment execution processing
+      description: ReBQ Retrieve details about the payment execution processing
+      operationId: RetrieveExecutionInitiation
+      parameters:
+      - $ref: '#/components/parameters/PaymentOrderID'
+      - $ref: '#/components/parameters/ExecutionInitiationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveExecutionInitiationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    PaymentOrderProcedure:
+      type: object
+      properties:
+        PaymentTransactionInitiatorReference:
+          type: object
+        PayerReference:
+          type: object
+        PayerBankReference:
+          type: object
+        PayerProductInstanceReference:
+          type: object
+        PayeeReference:
+          type: object
+        PayeeBankReference:
+          type: object
+        PayeeProductInstanceReference:
+          type: object
+        Amount:
+          type: string
+        Currency:
+          type: string
+        DateType:
+          type: string
+        Date:
+          type: string
+        PaymentMechanismType:
+          type: string
+        PaymentInstructions:
+          type: string
+        InterestedParties:
+          type: string
+        ProductType:
+          type: string
+        SettlementInstructions:
+          type: string
+    ExecutionInitiation:
+      type: object
+      properties:
+        PaymentExecutionProcedureInstanceReference:
+          type: object
+        PaymentExecutionProcedureInstanceStatus:
+          type: string
+        ExecutionInitiationTaskResult:
+          type: string
+    OrderConfirmation:
+      type: object
+      properties:
+        PaymentOrderComplianceCheckType:
+          type: string
+        PaymentOrderComplianceCheckResult:
+          type: string
+        OrderConfirmationTaskResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiatePaymentOrderProcedureRequest:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            PaymentMechanismType:
+              type: string
+            PaymentInstructions:
+              type: string
+            InterestedParties:
+              type: string
+            ProductType:
+              type: string
+            SettlementInstructions:
+              type: string
+    InitiatePaymentOrderProcedureResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentMechanismType:
+              type: string
+    UpdatePaymentOrderProcedureRequest:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            PaymentMechanismType:
+              type: string
+            PaymentInstructions:
+              type: string
+            InterestedParties:
+              type: string
+            ProductType:
+              type: string
+            SettlementInstructions:
+              type: string
+    UpdatePaymentOrderProcedureResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            PaymentMechanismType:
+              type: string
+            PaymentInstructions:
+              type: string
+            InterestedParties:
+              type: string
+            ProductType:
+              type: string
+            SettlementInstructions:
+              type: string
+    RetrievePaymentOrderProcedureResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            PaymentMechanismType:
+              type: string
+            PaymentInstructions:
+              type: string
+            InterestedParties:
+              type: string
+            ProductType:
+              type: string
+            SettlementInstructions:
+              type: string
+    RetrieveOrderConfirmationResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            PaymentMechanismType:
+              type: string
+            PaymentInstructions:
+              type: string
+            InterestedParties:
+              type: string
+            ProductType:
+              type: string
+            SettlementInstructions:
+              type: string
+        OrderConfirmation:
+          type: object
+          properties:
+            PaymentOrderComplianceCheckType:
+              type: string
+            PaymentOrderComplianceCheckResult:
+              type: string
+            OrderConfirmationTaskResult:
+              type: string
+    RetrieveExecutionInitiationResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            PaymentMechanismType:
+              type: string
+            PaymentInstructions:
+              type: string
+            InterestedParties:
+              type: string
+            ProductType:
+              type: string
+            SettlementInstructions:
+              type: string
+        ExecutionInitiation:
+          type: object
+          properties:
+            PaymentExecutionProcedureInstanceReference:
+              type: object
+            PaymentExecutionProcedureInstanceStatus:
+              type: string
+            ExecutionInitiationTaskResult:
+              type: string
+  parameters:
+    PaymentOrderID:
+      name: paymentorderId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ExecutionInitiationID:
+      name: executioninitiationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    OrderConfirmationID:
+      name: orderconfirmationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiatePaymentOrderProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentOrderProcedureRequest'
+    UpdatePaymentOrderProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentOrderProcedureRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

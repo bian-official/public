@@ -1,0 +1,276 @@
+openapi: 3.0.1
+info:
+  title: Fraud Evaluation
+  description: The service domain executes fraud behavioral pattern tests to detect possible fraudulent transactions/activity
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/FraudEvaluation/10.0.0
+paths:
+  /FraudEvaluation/Evaluate:
+    post:
+      tags:
+      - CR - FraudEvaluationAssessment
+      summary: EvCR Start a fraud evaluation for a production transaction set
+      description: EvCR Start a fraud evaluation for a production transaction set
+      operationId: Evaluate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateFraudEvaluationAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateFraudEvaluationAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudEvaluation/{fraudevaluationId}/Retrieve:
+    get:
+      tags:
+      - CR - FraudEvaluationAssessment
+      summary: ReCr Retrieve details about a fraud evaluation assessment
+      description: ReCr Retrieve details about a fraud evaluation assessment
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/FraudEvaluationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudEvaluationAssessment'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudEvaluation/{fraudevaluationId}/RuleSetsandDecisionTrees/{rulesetsanddecisiontreesId}/Retrieve:
+    get:
+      tags:
+      - BQ - RuleSetsandDecisionTrees
+      summary: ReBQ Retrieve details about rule set or decision tree based tests applied
+      description: ReBQ Retrieve details about rule set or decision tree based tests applied
+      operationId: RetrieveRuleSetsandDecisionTrees
+      parameters:
+      - $ref: '#/components/parameters/FraudEvaluationID'
+      - $ref: '#/components/parameters/RuleSetsandDecisionTreesID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudEvaluationAssessment'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudEvaluation/{fraudevaluationId}/Models/{modelsId}/Retrieve:
+    get:
+      tags:
+      - BQ - Models
+      summary: ReBQ Retrieve details about model based tests applied
+      description: ReBQ Retrieve details about model based tests applied
+      operationId: RetrieveModels
+      parameters:
+      - $ref: '#/components/parameters/FraudEvaluationID'
+      - $ref: '#/components/parameters/ModelsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudEvaluationAssessment'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    FraudEvaluationAssessment:
+      type: object
+      properties:
+        ProductProductionSessionReference:
+          type: object
+        FraudEvaluationTestProfile:
+          type: string
+        FraudEvaluationEnsembleTechniqueType:
+          type: string
+        FraudEvaluationEnsembleTechniqueDefinition:
+          type: string
+        FraudEvaluationTransactionConsolidationRecord:
+          type: string
+        FraudEvaluationProductionAnomalyRecord:
+          type: string
+        FraudEvaluationProductionAnomalyProductionTransactionReference:
+          type: object
+    RuleSetsandDecisionTrees:
+      type: object
+      properties:
+        RuleSetsAndDecisionTreesTestResult:
+          type: string
+        RuleSetsAndDecisionTreesTestWorkProduct:
+          type: string
+    Models:
+      type: object
+      properties:
+        ModelsTestResult:
+          type: string
+        ModelsTestWorkProduct:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    EvaluateFraudEvaluationAssessmentRequest:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: object
+            FraudEvaluationTestProfile:
+              type: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+            FraudEvaluationTransactionConsolidationRecord:
+              type: string
+    EvaluateFraudEvaluationAssessmentResponse:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: object
+            FraudEvaluationTestProfile:
+              type: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: object
+  parameters:
+    FraudEvaluationID:
+      name: fraudevaluationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    RuleSetsandDecisionTreesID:
+      name: rulesetsanddecisiontreesId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ModelsID:
+      name: modelsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    EvaluateFraudEvaluationAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateFraudEvaluationAssessmentRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

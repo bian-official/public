@@ -1,0 +1,748 @@
+openapi: 3.0.1
+info:
+  title: Transaction Authorization
+  description: This service domain handles risk based authorization for interactive customer transactions. This combines the context (channel) transaction, customer details and recent activity analysis as appropriate. The authorization may require a specific level of party/customer authentication to get approval.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/TransactionAuthorization/10.0.0
+paths:
+  /TransactionAuthorization/Evaluate:
+    post:
+      tags:
+      - CR - InteractiveTransactionAssessment
+      summary: EvCR Evaluate a proposed interactive transaction for authorization
+      description: EvCR Evaluate a proposed interactive transaction for authorization
+      operationId: Evaluate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateInteractiveTransactionAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateInteractiveTransactionAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /TransactionAuthorization/{transactionauthorizationId}/Update:
+    put:
+      tags:
+      - CR - InteractiveTransactionAssessment
+      summary: UpCR Update details of a proposed transaction for authorization
+      description: UpCR Update details of a proposed transaction for authorization
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/TransactionAuthorizationID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateInteractiveTransactionAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateInteractiveTransactionAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /TransactionAuthorization/{transactionauthorizationId}/Execute:
+    put:
+      tags:
+      - CR - InteractiveTransactionAssessment
+      summary: ExCR Execute an automated action for transaction authorization (e.g. upload data)
+      description: ExCR Execute an automated action for transaction authorization (e.g. upload data)
+      operationId: Execute
+      parameters:
+      - $ref: '#/components/parameters/TransactionAuthorizationID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteInteractiveTransactionAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteInteractiveTransactionAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /TransactionAuthorization/{transactionauthorizationId}/Request:
+    put:
+      tags:
+      - CR - InteractiveTransactionAssessment
+      summary: RqCR Request manual intervention (e.g. engage a specialist)
+      description: RqCR Request manual intervention (e.g. engage a specialist)
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/TransactionAuthorizationID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestInteractiveTransactionAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestInteractiveTransactionAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /TransactionAuthorization/{transactionauthorizationId}/Retrieve:
+    get:
+      tags:
+      - CR - InteractiveTransactionAssessment
+      summary: ReCR Retrieve details about an interactive transaction authorization
+      description: ReCR Retrieve details about an interactive transaction authorization
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/TransactionAuthorizationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveInteractiveTransactionAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    InteractiveTransactionAssessment:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        EmployeeReference:
+          type: object
+        ProductReference:
+          type: object
+        ProductInstanceReference:
+          type: object
+        ProposedTransactionType:
+          type: string
+        ProposedTransactionValue:
+          type: string
+        CustomerContactRecordReference:
+          type: object
+        CustomerContactRecord:
+          type: string
+        CustomerContactRecordCustomerReference:
+          type: object
+        CustomerContactRecordContactDevice:
+          type: string
+        CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+          type: string
+        CustomerContactRecordRoutingSelectionStatus:
+          type: string
+        CustomerContactRecordMenuSelection:
+          type: string
+        CustomerContactRecordServicingRequest:
+          type: string
+        CustomerContactRecordServicingEventHistory:
+          type: string
+        CustomerContactRecordServicingPositionReference:
+          type: object
+        CustomerContactRecordServicingResourceReference:
+          type: object
+        CustomerContactRecordActivityRecord:
+          type: string
+        CustomerSessionDialogueReference:
+          type: object
+        CustomerSessionDialogueRecord:
+          type: string
+        SessionDialogueType:
+          type: string
+        SessionDialogueScript:
+          type: string
+        SessionDialogueLogReference:
+          type: object
+        SessionDialogueLog:
+          type: string
+        SessionDialogueSessionMechanism:
+          type: string
+        SessionDialogueRecordSessionStartOrEndTime:
+          type: string
+        SessionDialogueResult:
+          type: string
+        CustomerContactRecordDuration:
+          type: string
+        CustomerContactActivityRecord:
+          type: string
+        CustomerContactResult:
+          type: string
+        ChannelActivityHistoryReportReference:
+          type: object
+        ChannelActivityHistoryReportFromOrto:
+          type: string
+        ChannelActivityHistoryReport:
+          type: string
+        TransactionAuthorizationGuidance:
+          type: string
+        TransactionAuthorizationResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    EvaluateInteractiveTransactionAssessmentRequest:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionValue:
+              type: string
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            SessionDialogueType:
+              type: string
+            SessionDialogueScript:
+              type: string
+            SessionDialogueLogReference:
+              type: object
+            SessionDialogueSessionMechanism:
+              type: string
+            SessionDialogueRecordSessionStartOrEndTime:
+              type: string
+            SessionDialogueResult:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+    EvaluateInteractiveTransactionAssessmentResponse:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            TransactionAuthorizationGuidance:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+    UpdateInteractiveTransactionAssessmentRequest:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionValue:
+              type: string
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            SessionDialogueType:
+              type: string
+            SessionDialogueScript:
+              type: string
+            SessionDialogueLogReference:
+              type: object
+            SessionDialogueSessionMechanism:
+              type: string
+            SessionDialogueRecordSessionStartOrEndTime:
+              type: string
+            SessionDialogueResult:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+    UpdateInteractiveTransactionAssessmentResponse:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionValue:
+              type: string
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            SessionDialogueType:
+              type: string
+            SessionDialogueScript:
+              type: string
+            SessionDialogueLogReference:
+              type: object
+            SessionDialogueSessionMechanism:
+              type: string
+            SessionDialogueRecordSessionStartOrEndTime:
+              type: string
+            SessionDialogueResult:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+    ExecuteInteractiveTransactionAssessmentRequest:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionValue:
+              type: string
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            SessionDialogueType:
+              type: string
+            SessionDialogueScript:
+              type: string
+            SessionDialogueLogReference:
+              type: object
+            SessionDialogueSessionMechanism:
+              type: string
+            SessionDialogueRecordSessionStartOrEndTime:
+              type: string
+            SessionDialogueResult:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+    ExecuteInteractiveTransactionAssessmentResponse:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            TransactionAuthorizationGuidance:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+    RequestInteractiveTransactionAssessmentRequest:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionValue:
+              type: string
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            SessionDialogueType:
+              type: string
+            SessionDialogueScript:
+              type: string
+            SessionDialogueLogReference:
+              type: object
+            SessionDialogueSessionMechanism:
+              type: string
+            SessionDialogueRecordSessionStartOrEndTime:
+              type: string
+            SessionDialogueResult:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+    RequestInteractiveTransactionAssessmentResponse:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            TransactionAuthorizationGuidance:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+    RetrieveInteractiveTransactionAssessmentResponse:
+      type: object
+      properties:
+        InteractiveTransactionAssessment:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionValue:
+              type: string
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus(asobtainedbySD-ContactHandler):
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            SessionDialogueType:
+              type: string
+            SessionDialogueScript:
+              type: string
+            SessionDialogueLogReference:
+              type: object
+            SessionDialogueSessionMechanism:
+              type: string
+            SessionDialogueRecordSessionStartOrEndTime:
+              type: string
+            SessionDialogueResult:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+            TransactionAuthorizationGuidance:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+  parameters:
+    TransactionAuthorizationID:
+      name: transactionauthorizationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    EvaluateInteractiveTransactionAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateInteractiveTransactionAssessmentRequest'
+    UpdateInteractiveTransactionAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateInteractiveTransactionAssessmentRequest'
+    ExecuteInteractiveTransactionAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteInteractiveTransactionAssessmentRequest'
+    RequestInteractiveTransactionAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestInteractiveTransactionAssessmentRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

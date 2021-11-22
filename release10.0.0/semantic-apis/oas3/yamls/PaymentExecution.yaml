@@ -1,0 +1,550 @@
+openapi: 3.0.1
+info:
+  title: Payment Execution
+  description: This service domains processes the movement of funds between accounts within the bank or to/from an account held with another bank, selecting the appropriate payment mechanism
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/PaymentExecution/10.0.0
+paths:
+  /PaymentExecution/Initiate:
+    post:
+      tags:
+      - CR - PaymentExecutionProcedure
+      summary: InCR Initiate a payment execution procedure
+      description: InCR Initiate a payment execution procedure
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentExecutionProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePaymentExecutionProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentExecution/{paymentexecutionId}/Update:
+    put:
+      tags:
+      - CR - PaymentExecutionProcedure
+      summary: UpCR Update details of a payment execution instruction
+      description: UpCR Update details of a payment execution instruction
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/PaymentExecutionID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentExecutionProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentExecutionProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentExecution/{paymentexecutionId}/Retrieve:
+    get:
+      tags:
+      - CR - PaymentExecutionProcedure
+      summary: ReCR Retrieve details about a payment execution instruction
+      description: ReCR Retrieve details about a payment execution instruction
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/PaymentExecutionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentExecutionProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentExecution/{paymentexecutionId}/PaymentMechanism/{paymentmechanismId}/Retrieve:
+    get:
+      tags:
+      - BQ - PaymentMechanism
+      summary: ReBQ Retrieve details about the payment mechanism selection
+      description: ReBQ Retrieve details about the payment mechanism selection
+      operationId: RetrievePaymentMechanism
+      parameters:
+      - $ref: '#/components/parameters/PaymentExecutionID'
+      - $ref: '#/components/parameters/PaymentMechanismID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentMechanismResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PaymentExecution/{paymentexecutionId}/PaymentExecutionWorkstep/{paymentexecutionworkstepId}/Retrieve:
+    get:
+      tags:
+      - BQ - PaymentExecutionWorkstep
+      summary: ReBQ Retrieve details about the gateway transaction
+      description: ReBQ Retrieve details about the gateway transaction
+      operationId: RetrievePaymentExecutionWorkstep
+      parameters:
+      - $ref: '#/components/parameters/PaymentExecutionID'
+      - $ref: '#/components/parameters/PaymentExecutionWorkstepID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentExecutionWorkstepResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    PaymentExecutionProcedure:
+      type: object
+      properties:
+        ACHAccessServiceSessionReference:
+          type: object
+        ACHAccessSchedule:
+          type: string
+        CorrespondentServiceSessionReference:
+          type: object
+        CorrespondentServiceAccessSchedule:
+          type: string
+        PaymentTransactionInitiatorReference:
+          type: object
+        PaymentOrderReference:
+          type: object
+        PayerReference:
+          type: object
+        PayerBankReference:
+          type: object
+        PayerProductInstanceReference:
+          type: object
+        PayeeReference:
+          type: object
+        PayeeBankReference:
+          type: object
+        PayeeProductInstanceReference:
+          type: object
+        Amount:
+          type: string
+        Currency:
+          type: string
+        DateType:
+          type: string
+        Date:
+          type: string
+        WashAccountReference:
+          type: object
+        IntermediaryAccountReference:
+          type: object
+        PaymentMechanismType:
+          type: string
+    PaymentExecutionWorkstep:
+      type: object
+      properties:
+        PaymentExecutionTaskResult:
+          type: string
+    PaymentMechanism:
+      type: object
+      properties:
+        PaymentExecutionTaskResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiatePaymentExecutionProcedureRequest:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            WashAccountReference:
+              type: object
+            IntermediaryAccountReference:
+              type: object
+            PaymentMechanismType:
+              type: string
+    InitiatePaymentExecutionProcedureResponse:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            ACHAccessServiceSessionReference:
+              type: object
+            ACHAccessSchedule:
+              type: string
+            CorrespondentServiceSessionReference:
+              type: object
+            CorrespondentServiceAccessSchedule:
+              type: string
+    UpdatePaymentExecutionProcedureRequest:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            WashAccountReference:
+              type: object
+            IntermediaryAccountReference:
+              type: object
+            PaymentMechanismType:
+              type: string
+    UpdatePaymentExecutionProcedureResponse:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            WashAccountReference:
+              type: object
+            IntermediaryAccountReference:
+              type: object
+            PaymentMechanismType:
+              type: string
+    RetrievePaymentExecutionProcedureResponse:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            ACHAccessServiceSessionReference:
+              type: object
+            ACHAccessSchedule:
+              type: string
+            CorrespondentServiceSessionReference:
+              type: object
+            CorrespondentServiceAccessSchedule:
+              type: string
+            PaymentTransactionInitiatorReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            WashAccountReference:
+              type: object
+            IntermediaryAccountReference:
+              type: object
+            PaymentMechanismType:
+              type: string
+    RetrievePaymentMechanismResponse:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            ACHAccessServiceSessionReference:
+              type: object
+            ACHAccessSchedule:
+              type: string
+            CorrespondentServiceSessionReference:
+              type: object
+            CorrespondentServiceAccessSchedule:
+              type: string
+            PaymentTransactionInitiatorReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            WashAccountReference:
+              type: object
+            IntermediaryAccountReference:
+              type: object
+            PaymentMechanismType:
+              type: string
+        PaymentMechanism:
+          type: object
+          properties:
+            PaymentExecutionTaskResult:
+              type: string
+    RetrievePaymentExecutionWorkstepResponse:
+      type: object
+      properties:
+        PaymentExecutionProcedure:
+          type: object
+          properties:
+            ACHAccessServiceSessionReference:
+              type: object
+            ACHAccessSchedule:
+              type: string
+            CorrespondentServiceSessionReference:
+              type: object
+            CorrespondentServiceAccessSchedule:
+              type: string
+            PaymentTransactionInitiatorReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+            PayerReference:
+              type: object
+            PayerBankReference:
+              type: object
+            PayerProductInstanceReference:
+              type: object
+            PayeeReference:
+              type: object
+            PayeeBankReference:
+              type: object
+            PayeeProductInstanceReference:
+              type: object
+            Amount:
+              type: string
+            Currency:
+              type: string
+            DateType:
+              type: string
+            WashAccountReference:
+              type: object
+            IntermediaryAccountReference:
+              type: object
+            PaymentMechanismType:
+              type: string
+        PaymentExecutionWorkstep:
+          type: object
+          properties:
+            PaymentExecutionTaskResult:
+              type: string
+  parameters:
+    PaymentExecutionID:
+      name: paymentexecutionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentExecutionWorkstepID:
+      name: paymentexecutionworkstepId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentMechanismID:
+      name: paymentmechanismId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiatePaymentExecutionProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentExecutionProcedureRequest'
+    UpdatePaymentExecutionProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentExecutionProcedureRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

@@ -1,0 +1,354 @@
+openapi: 3.0.1
+info:
+  title: Financial Accounting
+  description: The Financial Accounting Service Domain takes in financial facts and based on these, creates accounting instructions that will update the general ledger and sub ledger accounts
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/FinancialAccounting/10.0.0
+paths:
+  /FinancialAccounting/Initiate:
+    post:
+      tags:
+      - CR - FinancialBookingLog
+      summary: InCR Initiate a financial accounting log (account)
+      description: InCR Initiate a financial accounting log (account)
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateFinancialBookingLogRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateFinancialBookingLogResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FinancialAccounting/{financialaccountingId}/Update:
+    put:
+      tags:
+      - CR - FinancialBookingLog
+      summary: UpCR Update details for an active financial account
+      description: UpCR Update details for an active financial account
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/FinancialAccountingID'
+      requestBody:
+        $ref: '#/components/requestBodies/FinancialBookingLog'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialBookingLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FinancialAccounting/{financialaccountingId}/Retrieve:
+    get:
+      tags:
+      - CR - FinancialBookingLog
+      summary: ReCR Retrieve information about the log
+      description: ReCR Retrieve information about the log
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/FinancialAccountingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialBookingLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FinancialAccounting/{financialaccountingId}/LedgerPosting/{ledgerpostingId}/Update:
+    put:
+      tags:
+      - BQ - LedgerPosting
+      summary: UpBQ Update details of a posting (repair)
+      description: UpBQ Update details of a posting (repair)
+      operationId: UpdateLedgerPosting
+      parameters:
+      - $ref: '#/components/parameters/FinancialAccountingID'
+      - $ref: '#/components/parameters/LedgerPostingID'
+      requestBody:
+        $ref: '#/components/requestBodies/LedgerPosting'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LedgerPosting'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FinancialAccounting/{financialaccountingId}/LedgerPosting/{ledgerpostingId}/Capture:
+    put:
+      tags:
+      - BQ - LedgerPosting
+      summary: CaBQ Post to the financial account
+      description: CaBQ Post to the financial account
+      operationId: CaptureLedgerPosting
+      parameters:
+      - $ref: '#/components/parameters/FinancialAccountingID'
+      - $ref: '#/components/parameters/LedgerPostingID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureLedgerPostingRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureLedgerPostingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FinancialAccounting/{financialaccountingId}/LedgerPosting/{ledgerpostingId}/Retrieve:
+    get:
+      tags:
+      - BQ - LedgerPosting
+      summary: ReBQ Retrieve details of postings from the account
+      description: ReBQ Retrieve details of postings from the account
+      operationId: RetrieveLedgerPosting
+      parameters:
+      - $ref: '#/components/parameters/FinancialAccountingID'
+      - $ref: '#/components/parameters/LedgerPostingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LedgerPosting'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    FinancialBookingLog:
+      type: object
+      properties:
+        FinancialAccountType:
+          type: string
+        ProductandServiceReference:
+          type: object
+        BusinessUnitReference:
+          type: object
+        ChartofAccountOrBookingRules:
+          type: string
+        BaseCurrency:
+          type: string
+        Status:
+          type: string
+    LedgerPosting:
+      type: object
+      properties:
+        PostingDirection:
+          type: string
+        PostingAmount(credit/debitpair):
+          type: number
+        PostingValueDate:
+          type: string
+        PostingResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateFinancialBookingLogRequest:
+      type: object
+      properties:
+        FinancialBookingLog:
+          type: object
+          properties:
+            FinancialAccountType:
+              type: string
+            ProductandServiceReference:
+              type: object
+            BusinessUnitReference:
+              type: object
+            ChartofAccountOrBookingRules:
+              type: string
+            BaseCurrency:
+              type: string
+    InitiateFinancialBookingLogResponse:
+      type: object
+      properties:
+        FinancialBookingLog:
+          type: object
+          properties:
+            Status:
+              type: string
+    CaptureLedgerPostingRequest:
+      type: object
+      properties:
+        LedgerPosting:
+          type: object
+          properties:
+            PostingDirection:
+              type: string
+            PostingAmount(creditOrdebitpair):
+              type: number
+            PostingValueDate:
+              type: string
+    CaptureLedgerPostingResponse:
+      type: object
+      properties:
+        LedgerPosting:
+          type: object
+          properties:
+            PostingResult:
+              type: string
+  parameters:
+    FinancialAccountingID:
+      name: financialaccountingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    LedgerPostingID:
+      name: ledgerpostingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateFinancialBookingLogRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateFinancialBookingLogRequest'
+    FinancialBookingLog:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FinancialBookingLog'
+    LedgerPosting:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LedgerPosting'
+    CaptureLedgerPostingRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureLedgerPostingRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

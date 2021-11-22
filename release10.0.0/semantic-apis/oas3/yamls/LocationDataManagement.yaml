@@ -1,0 +1,823 @@
+openapi: 3.0.1
+info:
+  title: Location Data Management
+  description: This service domain maintain details of the use and state of locations of interest to the bank. This can include both physical and virtual addresses. It is used to check for valid use and for sales/marketing activities
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/LocationDataManagement/10.0.0
+paths:
+  /LocationDataManagement/Register:
+    post:
+      tags:
+      - CR - LocationDirectoryEntry
+      summary: InCR Register a location in the catalog
+      description: InCR Register a location in the catalog
+      operationId: Register
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/RegisterLocationDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Update:
+    put:
+      tags:
+      - CR - LocationDirectoryEntry
+      summary: UpCR Update details about the location's directory entry
+      description: UpCR Update details about the location's directory entry
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLocationDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateLocationDirectoryEntryResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Request:
+    put:
+      tags:
+      - CR - LocationDirectoryEntry
+      summary: RqCR Request manual intervention with an entry (e.g. refresh content)
+      description: RqCR Request manual intervention with an entry (e.g. refresh content)
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestLocationDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Retrieve:
+    get:
+      tags:
+      - CR - LocationDirectoryEntry
+      summary: ReCR Retrieve details about a location directory entry
+      description: ReCR Retrieve details about a location directory entry
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveLocationDirectoryEntryResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Execute:
+    put:
+      tags:
+      - CR - LocationDirectoryEntry
+      summary: ExCR Execute an automated action against an entry
+      description: ExCR Execute an automated action against an entry
+      operationId: Execute
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteLocationDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Location/{locationId}/Update:
+    put:
+      tags:
+      - BQ - Location
+      summary: UpBQ Update details about a location entry
+      description: UpBQ Update details about a location entry
+      operationId: UpdateLocation
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      - $ref: '#/components/parameters/LocationID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLocationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateLocationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Location/{locationId}/Retrieve:
+    get:
+      tags:
+      - BQ - Location
+      summary: ReBQ Retrieve details about location entries in the directory
+      description: ReBQ Retrieve details about location entries in the directory
+      operationId: RetrieveLocation
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      - $ref: '#/components/parameters/LocationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveLocationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Use/{useId}/Update:
+    put:
+      tags:
+      - BQ - Use
+      summary: UpBQ Update details about an usage entry for the location
+      description: UpBQ Update details about an usage entry for the location
+      operationId: UpdateUse
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      - $ref: '#/components/parameters/UseID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateUseRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUseResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Use/{useId}/Retrieve:
+    get:
+      tags:
+      - BQ - Use
+      summary: ReBQ Retrieve details about usage entries in the location directory
+      description: ReBQ Retrieve details about usage entries in the location directory
+      operationId: RetrieveUse
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      - $ref: '#/components/parameters/UseID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveUseResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Occupancy/{occupancyId}/Update:
+    put:
+      tags:
+      - BQ - Occupancy
+      summary: UpBQ Update details about a location's occupancy
+      description: UpBQ Update details about a location's occupancy
+      operationId: UpdateOccupancy
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      - $ref: '#/components/parameters/OccupancyID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateOccupancyRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateOccupancyResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /LocationDataManagement/{locationdatamanagementId}/Occupancy/{occupancyId}/Retrieve:
+    get:
+      tags:
+      - BQ - Occupancy
+      summary: ReBQ Retrieve details about location's occupancy entry in the directory
+      description: ReBQ Retrieve details about location's occupancy entry in the directory
+      operationId: RetrieveOccupancy
+      parameters:
+      - $ref: '#/components/parameters/LocationDataManagementID'
+      - $ref: '#/components/parameters/OccupancyID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveOccupancyResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    LocationDirectoryEntry:
+      type: object
+      properties:
+        LocationReference:
+          type: object
+        DateType:
+          type: string
+        Date:
+          type: string
+    Occupancy:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        LocationOwner/Title:
+          type: string
+        LocationValue:
+          type: string
+        LocationOccupierType:
+          type: string
+        LocationOccupierReference:
+          type: object
+        LocationOccupierTerms:
+          type: string
+        AlliancePartnerReference:
+          type: object
+    Location:
+      type: object
+      properties:
+        LocationType:
+          type: string
+        LocationAddress:
+          type: string
+        LocationCoordinates:
+          type: string
+        LocationDescription:
+          type: string
+        LocationConstructionType:
+          type: string
+        LocationCapacity:
+          type: string
+        LocationStatus:
+          type: string
+        LocationNeighborhoodType:
+          type: string
+    Use:
+      type: object
+      properties:
+        LocationZoningType:
+          type: string
+        LocationUsage:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    RegisterLocationDirectoryEntryRequest:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+    UpdateLocationDirectoryEntryRequest:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+    UpdateLocationDirectoryEntryResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+    RequestLocationDirectoryEntryRequest:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            DateType:
+              type: string
+    RetrieveLocationDirectoryEntryResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+    ExecuteLocationDirectoryEntryRequest:
+      type: object
+      properties:
+        Location:
+          type: object
+          properties:
+            LocationType:
+              type: string
+            LocationAddress:
+              type: string
+            LocationCoordinates:
+              type: string
+            LocationDescription:
+              type: string
+            LocationConstructionType:
+              type: string
+            LocationCapacity:
+              type: string
+            LocationStatus:
+              type: string
+            LocationNeighborhoodType:
+              type: string
+        Use:
+          type: object
+          properties:
+            LocationZoningType:
+              type: string
+            LocationUsage:
+              type: string
+        Occupancy:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            LocationOwnerOrTitle:
+              type: string
+            LocationValue:
+              type: string
+            LocationOccupierType:
+              type: string
+            LocationOccupierReference:
+              type: object
+            LocationOccupierTerms:
+              type: string
+            AlliancePartnerReference:
+              type: object
+    UpdateLocationRequest:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            Date:
+              type: string
+        Location:
+          type: object
+          properties:
+            LocationType:
+              type: string
+            LocationAddress:
+              type: string
+            LocationCoordinates:
+              type: string
+            LocationDescription:
+              type: string
+            LocationConstructionType:
+              type: string
+            LocationCapacity:
+              type: string
+            LocationStatus:
+              type: string
+            LocationNeighborhoodType:
+              type: string
+    UpdateLocationResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            Date:
+              type: string
+        Location:
+          type: object
+          properties:
+            LocationType:
+              type: string
+            LocationAddress:
+              type: string
+            LocationCoordinates:
+              type: string
+            LocationDescription:
+              type: string
+            LocationConstructionType:
+              type: string
+            LocationCapacity:
+              type: string
+            LocationStatus:
+              type: string
+            LocationNeighborhoodType:
+              type: string
+    RetrieveLocationResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+        Location:
+          type: object
+          properties:
+            LocationType:
+              type: string
+            LocationAddress:
+              type: string
+            LocationCoordinates:
+              type: string
+            LocationDescription:
+              type: string
+            LocationConstructionType:
+              type: string
+            LocationCapacity:
+              type: string
+            LocationStatus:
+              type: string
+            LocationNeighborhoodType:
+              type: string
+    UpdateUseRequest:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            Date:
+              type: string
+        Use:
+          type: object
+          properties:
+            LocationZoningType:
+              type: string
+            LocationUsage:
+              type: string
+    UpdateUseResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            Date:
+              type: string
+        Use:
+          type: object
+          properties:
+            LocationZoningType:
+              type: string
+            LocationUsage:
+              type: string
+    RetrieveUseResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+        Use:
+          type: object
+          properties:
+            LocationZoningType:
+              type: string
+            LocationUsage:
+              type: string
+    UpdateOccupancyRequest:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            Date:
+              type: string
+        Occupancy:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            LocationOwnerOrTitle:
+              type: string
+            LocationValue:
+              type: string
+            LocationOccupierType:
+              type: string
+            LocationOccupierReference:
+              type: object
+            LocationOccupierTerms:
+              type: string
+            AlliancePartnerReference:
+              type: object
+    UpdateOccupancyResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            Date:
+              type: string
+        Occupancy:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            LocationOwnerOrTitle:
+              type: string
+            LocationValue:
+              type: string
+            LocationOccupierType:
+              type: string
+            LocationOccupierReference:
+              type: object
+            LocationOccupierTerms:
+              type: string
+            AlliancePartnerReference:
+              type: object
+    RetrieveOccupancyResponse:
+      type: object
+      properties:
+        LocationDirectoryEntry:
+          type: object
+          properties:
+            LocationReference:
+              type: object
+            DateType:
+              type: string
+        Occupancy:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            LocationOwnerOrTitle:
+              type: string
+            LocationValue:
+              type: string
+            LocationOccupierType:
+              type: string
+            LocationOccupierReference:
+              type: object
+            LocationOccupierTerms:
+              type: string
+            AlliancePartnerReference:
+              type: object
+  parameters:
+    LocationDataManagementID:
+      name: locationdatamanagementId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    OccupancyID:
+      name: occupancyId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    LocationID:
+      name: locationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    UseID:
+      name: useId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    RegisterLocationDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegisterLocationDirectoryEntryRequest'
+    UpdateLocationDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateLocationDirectoryEntryRequest'
+    RequestLocationDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestLocationDirectoryEntryRequest'
+    ExecuteLocationDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteLocationDirectoryEntryRequest'
+    UpdateLocationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateLocationRequest'
+    UpdateUseRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateUseRequest'
+    UpdateOccupancyRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateOccupancyRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

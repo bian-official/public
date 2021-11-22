@@ -1,0 +1,829 @@
+openapi: 3.0.1
+info:
+  title: Customer Billing
+  description: This service domains provides a central service to compose, issue and track customer billing and invoices
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CustomerBilling/10.0.0
+paths:
+  /CustomerBilling/Initiate:
+    post:
+      tags:
+      - CR - CustomerBillingProcedure
+      summary: InCR Initiate customer billing for a customer
+      description: InCR Initiate customer billing for a customer
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerBillingProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCustomerBillingProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Update:
+    put:
+      tags:
+      - CR - CustomerBillingProcedure
+      summary: UpCR Update details of a customer billing transaction
+      description: UpCR Update details of a customer billing transaction
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerBillingProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerBillingProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Execute:
+    put:
+      tags:
+      - CR - CustomerBillingProcedure
+      summary: ExCR Execute an automated action against an active bill (e.g. resubmit)
+      description: ExCR Execute an automated action against an active bill (e.g. resubmit)
+      operationId: Execute
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerBillingProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerBillingProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Request:
+    put:
+      tags:
+      - CR - CustomerBillingProcedure
+      summary: RqCR Request manual intervention with an active billing procedure
+      description: RqCR Request manual intervention with an active billing procedure
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerBillingProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerBillingProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Retrieve:
+    get:
+      tags:
+      - CR - CustomerBillingProcedure
+      summary: ReCR Retrieve details about an active billing procedure
+      description: ReCR Retrieve details about an active billing procedure
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerBillingProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Invoicing/{invoicingId}/Update:
+    put:
+      tags:
+      - BQ - Invoicing
+      summary: UpBQ Update details of a generated invoice
+      description: UpBQ Update details of a generated invoice
+      operationId: UpdateInvoicing
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      - $ref: '#/components/parameters/InvoicingID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateInvoicingRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateInvoicingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Invoicing/{invoicingId}/Retrieve:
+    get:
+      tags:
+      - BQ - Invoicing
+      summary: ReBQ Retrieve details about a sent invoice
+      description: ReBQ Retrieve details about a sent invoice
+      operationId: RetrieveInvoicing
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      - $ref: '#/components/parameters/InvoicingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveInvoicingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/TrackingandReminders/Initiate:
+    post:
+      tags:
+      - BQ - TrackingandReminders
+      summary: InBQ Initiate tracking and reminder task against an active billing procedure
+      description: InBQ Initiate tracking and reminder task against an active billing procedure
+      operationId: InitiateTrackingandReminders
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateTrackingandRemindersRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateTrackingandRemindersResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/TrackingandReminders/{trackingandremindersId}/Retrieve:
+    get:
+      tags:
+      - BQ - TrackingandReminders
+      summary: RwBQ Retrieve details about tracking and reminder activity
+      description: RwBQ Retrieve details about tracking and reminder activity
+      operationId: RetrieveTrackingandReminders
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      - $ref: '#/components/parameters/TrackingandRemindersID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTrackingandRemindersResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Payments/Initiate:
+    post:
+      tags:
+      - BQ - Payments
+      summary: InBQ Initiate payment processing against a billing transaction
+      description: InBQ Initiate payment processing against a billing transaction
+      operationId: InitiatePayments
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerBillingProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePaymentsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Payments/{paymentsId}/Update:
+    put:
+      tags:
+      - BQ - Payments
+      summary: UpBQ Update payment details for a billing transaction
+      description: UpBQ Update payment details for a billing transaction
+      operationId: UpdatePayments
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      - $ref: '#/components/parameters/PaymentsID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerBilling/{customerbillingId}/Payments/{paymentsId}/Retrieve:
+    get:
+      tags:
+      - BQ - Payments
+      summary: ReBQ Retrieve payment processing details
+      description: ReBQ Retrieve payment processing details
+      operationId: RetrievePayments
+      parameters:
+      - $ref: '#/components/parameters/CustomerBillingID'
+      - $ref: '#/components/parameters/PaymentsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CustomerBillingProcedure:
+      type: object
+      properties:
+        CustomerBillingTransactionType:
+          type: string
+        CustomerBillingTransactionDescription:
+          type: string
+        CustomerReference:
+          type: object
+        ProductInstanceReference:
+          type: object
+        CustomerAgreementReference:
+          type: object
+        CustomerBillingProductandServiceOrActionDescription:
+          type: string
+        CustomerBillingParty:
+          type: string
+        CustomerBillingAddress:
+          type: string
+        CustomerBillingPeriod:
+          type: string
+        CustomerBillingStatement:
+          type: string
+        CustomerBillingAmount:
+          type: number
+        CustomerBillingPaymentDueDate:
+          type: string
+        CustomerBillingPaymentDetails:
+          type: string
+        CustomerBillingPaymentSchedule:
+          type: string
+    Payments:
+      type: object
+      properties:
+        PaymentTransactionReference:
+          type: object
+        PaymentTransaction:
+          type: string
+    Invoicing:
+      type: object
+      properties:
+        CustomerInvoiceRecord:
+          type: string
+        InvoiceDate:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        CorrespondenceInstanceReference:
+          type: object
+        Invoice:
+          type: string
+        InvoicingWorkProduct:
+          type: string
+    TrackingandReminders:
+      type: object
+      properties:
+        CustomerReminderContactRecord:
+          type: string
+        ContactMessage:
+          type: string
+        ContactDate:
+          type: string
+        ContactResult:
+          type: string
+        TrackingandRemindersResult:
+          type: string
+        TrackingandRemindersWorkProduct:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateCustomerBillingProcedureResponse:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingPaymentSchedule:
+              type: string
+    UpdateInvoicingRequest:
+      type: object
+      properties:
+        Invoicing:
+          type: object
+          properties:
+            CustomerInvoiceRecord:
+              type: string
+            InvoiceDate:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvoicingWorkProduct:
+              type: string
+    UpdateInvoicingResponse:
+      type: object
+      properties:
+        Invoicing:
+          type: object
+          properties:
+            CustomerInvoiceRecord:
+              type: string
+            InvoiceDate:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvoicingWorkProduct:
+              type: string
+    RetrieveInvoicingResponse:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingTransactionType:
+              type: string
+            CustomerBillingTransactionDescription:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerBillingProductandServiceOrActionDescription:
+              type: string
+            CustomerBillingParty:
+              type: string
+            CustomerBillingAddress:
+              type: string
+            CustomerBillingPeriod:
+              type: string
+            CustomerBillingStatement:
+              type: string
+            CustomerBillingAmount:
+              type: number
+            CustomerBillingPaymentDueDate:
+              type: string
+            CustomerBillingPaymentDetails:
+              type: string
+            CustomerBillingPaymentSchedule:
+              type: string
+        Invoicing:
+          type: object
+          properties:
+            CustomerInvoiceRecord:
+              type: string
+            InvoiceDate:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvoicingWorkProduct:
+              type: string
+    InitiateTrackingandRemindersRequest:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingTransactionType:
+              type: string
+            CustomerBillingTransactionDescription:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerBillingProductandServiceOrActionDescription:
+              type: string
+            CustomerBillingParty:
+              type: string
+            CustomerBillingAddress:
+              type: string
+            CustomerBillingPeriod:
+              type: string
+            CustomerBillingStatement:
+              type: string
+            CustomerBillingAmount:
+              type: number
+            CustomerBillingPaymentDueDate:
+              type: string
+            CustomerBillingPaymentDetails:
+              type: string
+            CustomerBillingPaymentSchedule:
+              type: string
+        Invoicing:
+          type: object
+          properties:
+            CustomerInvoiceRecord:
+              type: string
+            InvoiceDate:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+    InitiateTrackingandRemindersResponse:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingPaymentSchedule:
+              type: string
+        TrackingandReminders:
+          type: object
+          properties:
+            CustomerReminderContactRecord:
+              type: string
+            ContactMessage:
+              type: string
+            ContactDate:
+              type: string
+            ContactResult:
+              type: string
+            TrackingandRemindersResult:
+              type: string
+            TrackingandRemindersWorkProduct:
+              type: string
+    RetrieveTrackingandRemindersResponse:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingTransactionType:
+              type: string
+            CustomerBillingTransactionDescription:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerBillingProductandServiceOrActionDescription:
+              type: string
+            CustomerBillingParty:
+              type: string
+            CustomerBillingAddress:
+              type: string
+            CustomerBillingPeriod:
+              type: string
+            CustomerBillingStatement:
+              type: string
+            CustomerBillingAmount:
+              type: number
+            CustomerBillingPaymentDueDate:
+              type: string
+            CustomerBillingPaymentDetails:
+              type: string
+            CustomerBillingPaymentSchedule:
+              type: string
+        Invoicing:
+          type: object
+          properties:
+            CustomerInvoiceRecord:
+              type: string
+            InvoiceDate:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+        TrackingandReminders:
+          type: object
+          properties:
+            CustomerReminderContactRecord:
+              type: string
+            ContactMessage:
+              type: string
+            ContactDate:
+              type: string
+            ContactResult:
+              type: string
+            TrackingandRemindersResult:
+              type: string
+            TrackingandRemindersWorkProduct:
+              type: string
+    InitiatePaymentsResponse:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingPaymentSchedule:
+              type: string
+        Payments:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+    UpdatePaymentsRequest:
+      type: object
+      properties:
+        Payments:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+    UpdatePaymentsResponse:
+      type: object
+      properties:
+        Payments:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+    RetrievePaymentsResponse:
+      type: object
+      properties:
+        CustomerBillingProcedure:
+          type: object
+          properties:
+            CustomerBillingTransactionType:
+              type: string
+            CustomerBillingTransactionDescription:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerBillingProductandServiceOrActionDescription:
+              type: string
+            CustomerBillingParty:
+              type: string
+            CustomerBillingAddress:
+              type: string
+            CustomerBillingPeriod:
+              type: string
+            CustomerBillingStatement:
+              type: string
+            CustomerBillingAmount:
+              type: number
+            CustomerBillingPaymentDueDate:
+              type: string
+            CustomerBillingPaymentDetails:
+              type: string
+            CustomerBillingPaymentSchedule:
+              type: string
+        Payments:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+  parameters:
+    CustomerBillingID:
+      name: customerbillingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentsID:
+      name: paymentsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    InvoicingID:
+      name: invoicingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    TrackingandRemindersID:
+      name: trackingandremindersId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    CustomerBillingProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerBillingProcedure'
+    UpdateInvoicingRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateInvoicingRequest'
+    InitiateTrackingandRemindersRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateTrackingandRemindersRequest'
+    UpdatePaymentsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentsRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

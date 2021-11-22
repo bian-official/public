@@ -1,0 +1,563 @@
+openapi: 3.0.1
+info:
+  title: Card Transaction Switch
+  description: This service domain orchestrates the switching and routing of Card Authorization and Financial transactions received through the Card POS Network, Card E-Commerce Gateway, or the ATM Network from the Acquirer to the Issuer through the Card Networks.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CardTransactionSwitch/10.0.0
+paths:
+  /CardTransactionSwitch/Initiate:
+    post:
+      tags:
+      - CR - CardTransactionSwitchOperatingSession
+      summary: InCR Initiate a card transaction switch operating session
+      description: InCR Initiate a card transaction switch operating session
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CardTransactionSwitchOperatingSession'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardTransactionSwitch/{cardtransactionswitchId}/Update:
+    put:
+      tags:
+      - CR - CardTransactionSwitchOperatingSession
+      summary: UpCR Update an active card transaction switch operating session
+      description: UpCR Update an active card transaction switch operating session
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CardTransactionSwitchID'
+      requestBody:
+        $ref: '#/components/requestBodies/CardTransactionSwitchOperatingSession'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardTransactionSwitchOperatingSession'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardTransactionSwitch/{cardtransactionswitchId}/Retrieve:
+    get:
+      tags:
+      - CR - CardTransactionSwitchOperatingSession
+      summary: ReCR Retrieve details about an active card transaction switch operating session
+      description: ReCR Retrieve details about an active card transaction switch operating session
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CardTransactionSwitchID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardTransactionSwitchOperatingSession'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardTransactionSwitch/{cardtransactionswitchId}/TransactionCapture/Initiate:
+    post:
+      tags:
+      - BQ - TransactionCapture
+      summary: InBQ Initiate a card transaction switch capture function
+      description: InBQ Initiate a card transaction switch capture function
+      operationId: InitiateTransactionCapture
+      parameters:
+      - $ref: '#/components/parameters/CardTransactionSwitchID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateTransactionCaptureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardTransactionSwitch/{cardtransactionswitchId}/TransactionCapture/{transactioncaptureId}/Retrieve:
+    get:
+      tags:
+      - BQ - TransactionCapture
+      summary: ReBQ Retrieve details about a card capture transaction
+      description: ReBQ Retrieve details about a card capture transaction
+      operationId: RetrieveTransactionCapture
+      parameters:
+      - $ref: '#/components/parameters/CardTransactionSwitchID'
+      - $ref: '#/components/parameters/TransactionCaptureID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTransactionCaptureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardTransactionSwitch/{cardtransactionswitchId}/TransactionRouting/Initiate:
+    post:
+      tags:
+      - BQ - TransactionRouting
+      summary: InBQ Initiate the routing function
+      description: InBQ Initiate the routing function
+      operationId: InitiateTransactionRouting
+      parameters:
+      - $ref: '#/components/parameters/CardTransactionSwitchID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateTransactionRoutingRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardTransactionSwitch/{cardtransactionswitchId}/TransactionRouting/{transactionroutingId}/Retrieve:
+    get:
+      tags:
+      - BQ - TransactionRouting
+      summary: ReBQ Retrieve details about a card transaction switch routing transaction
+      description: ReBQ Retrieve details about a card transaction switch routing transaction
+      operationId: RetrieveTransactionRouting
+      parameters:
+      - $ref: '#/components/parameters/CardTransactionSwitchID'
+      - $ref: '#/components/parameters/TransactionRoutingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTransactionRoutingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CardTransactionSwitchOperatingSession:
+      type: object
+      properties:
+        NetworkReference:
+          type: object
+        ParticipantAcquirerBankReference:
+          type: object
+        ParticipantAcquirerBanktransactionRoutingDetails:
+          type: string
+        ParticipantIssuerBankReference:
+          type: object
+        ParticipantIssuerBankTransactionRoutingDetails:
+          type: string
+    TransactionRouting:
+      type: object
+      properties: {}
+    TransactionCapture:
+      type: object
+      properties:
+        CardTransactionRecordReference:
+          type: object
+        CardTransactionProductInstanceReference:
+          type: object
+        CardTransactionNetworkReference:
+          type: object
+        CardTransactionIssuingBankReference:
+          type: object
+        CardTransactionMerchantAcquiringBankReference:
+          type: object
+        CardTransactionType:
+          type: string
+        CardTransactionCurrency:
+          type: string
+        CardTransactionAmountType:
+          type: string
+        CardTransactionAmount:
+          type: number
+        CardTransactionMerchantReference:
+          type: object
+        CardTransactionLocationReference:
+          type: object
+        CardTransactionProductandServiceReference:
+          type: object
+        CardTransactionDate/Time:
+          type: string
+        CardTransactionFXConversionCharge:
+          type: string
+        CardTransactionInterchargeFee:
+          type: string
+        CardTransactionAuthorizationRecord:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateTransactionCaptureRequest:
+      type: object
+      properties:
+        CardTransactionSwitchOperatingSession:
+          type: object
+          properties:
+            NetworkReference:
+              type: object
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantAcquirerBanktransactionRoutingDetails:
+              type: string
+            ParticipantIssuerBankReference:
+              type: object
+            ParticipantIssuerBankTransactionRoutingDetails:
+              type: string
+        TransactionCapture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+    RetrieveTransactionCaptureResponse:
+      type: object
+      properties:
+        CardTransactionSwitchOperatingSession:
+          type: object
+          properties:
+            NetworkReference:
+              type: object
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantAcquirerBanktransactionRoutingDetails:
+              type: string
+            ParticipantIssuerBankReference:
+              type: object
+            ParticipantIssuerBankTransactionRoutingDetails:
+              type: string
+        TransactionCapture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+    InitiateTransactionRoutingRequest:
+      type: object
+      properties:
+        CardTransactionSwitchOperatingSession:
+          type: object
+          properties:
+            NetworkReference:
+              type: object
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantAcquirerBanktransactionRoutingDetails:
+              type: string
+            ParticipantIssuerBankReference:
+              type: object
+            ParticipantIssuerBankTransactionRoutingDetails:
+              type: string
+        TransactionCapture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+    RetrieveTransactionRoutingResponse:
+      type: object
+      properties:
+        CardTransactionSwitchOperatingSession:
+          type: object
+          properties:
+            NetworkReference:
+              type: object
+            ParticipantAcquirerBankReference:
+              type: object
+            ParticipantAcquirerBanktransactionRoutingDetails:
+              type: string
+            ParticipantIssuerBankReference:
+              type: object
+            ParticipantIssuerBankTransactionRoutingDetails:
+              type: string
+        TransactionCapture:
+          type: object
+          properties:
+            CardTransactionRecordReference:
+              type: object
+            CardTransactionProductInstanceReference:
+              type: object
+            CardTransactionNetworkReference:
+              type: object
+            CardTransactionIssuingBankReference:
+              type: object
+            CardTransactionMerchantAcquiringBankReference:
+              type: object
+            CardTransactionType:
+              type: string
+            CardTransactionCurrency:
+              type: string
+            CardTransactionAmountType:
+              type: string
+            CardTransactionMerchantReference:
+              type: object
+            CardTransactionLocationReference:
+              type: object
+            CardTransactionProductandServiceReference:
+              type: object
+            CardTransactionDateOrTime:
+              type: string
+            CardTransactionFXConversionCharge:
+              type: string
+            CardTransactionInterchargeFee:
+              type: string
+            CardTransactionAuthorizationRecord:
+              type: string
+  parameters:
+    CardTransactionSwitchID:
+      name: cardtransactionswitchId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    TransactionRoutingID:
+      name: transactionroutingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    TransactionCaptureID:
+      name: transactioncaptureId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    CardTransactionSwitchOperatingSession:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CardTransactionSwitchOperatingSession'
+    InitiateTransactionCaptureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateTransactionCaptureRequest'
+    InitiateTransactionRoutingRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateTransactionRoutingRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

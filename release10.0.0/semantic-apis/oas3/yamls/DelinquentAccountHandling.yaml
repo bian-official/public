@@ -1,0 +1,1383 @@
+openapi: 3.0.1
+info:
+  title: Delinquent Account Handling
+  description: This service domain handles delinquent accounts (typically for active credit/charge cards) for follow-up of payments due through periodic review and contacts. This process ends when the account is cancelled and is transferred to Collections
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/DelinquentAccountHandling/10.0.0
+paths:
+  /DelinquentAccountHandling/Initiate:
+    post:
+      tags:
+      - CR - DelinquentAccountProcedure
+      summary: InCR Initiate delinquent account processing
+      description: InCR Initiate delinquent account processing
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateDelinquentAccountProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateDelinquentAccountProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Update:
+    put:
+      tags:
+      - CR - DelinquentAccountProcedure
+      summary: UpCR Update details of delinquent account processing
+      description: UpCR Update details of delinquent account processing
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateDelinquentAccountProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateDelinquentAccountProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Retrieve:
+    get:
+      tags:
+      - CR - DelinquentAccountProcedure
+      summary: ReCR Retrieve details about a delinquent account procedure
+      description: ReCR Retrieve details about a delinquent account procedure
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDelinquentAccountProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Assessment/{assessmentId}/Retrieve:
+    get:
+      tags:
+      - BQ - Assessment
+      summary: ReBQ Retrieve details about a delinquent account assessment
+      description: ReBQ Retrieve details about a delinquent account assessment
+      operationId: RetrieveAssessment
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/AssessmentID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Contact/Initiate:
+    post:
+      tags:
+      - BQ - Contact
+      summary: InBQ Initiate contact with the customer for a delinquent account
+      description: InBQ Initiate contact with the customer for a delinquent account
+      operationId: InitiateContact
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateContactRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateContactResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Contact/{contactId}/Request:
+    put:
+      tags:
+      - BQ - Contact
+      summary: RqBQ Request contact processing for an active delinquent account procedure
+      description: RqBQ Request contact processing for an active delinquent account procedure
+      operationId: RequestContact
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/ContactID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestContactResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Contact/{contactId}/Retrieve:
+    get:
+      tags:
+      - BQ - Contact
+      summary: ReBQ Retrieve details about a contact
+      description: ReBQ Retrieve details about a contact
+      operationId: RetrieveContact
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/ContactID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveContactResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Payment/Initiate:
+    post:
+      tags:
+      - BQ - Payment
+      summary: InBQ Initiate payment processing against the delinquent account
+      description: InBQ Initiate payment processing against the delinquent account
+      operationId: InitiatePayment
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Payment/{paymentId}/Update:
+    put:
+      tags:
+      - BQ - Payment
+      summary: UpBQ Update a payment transaction
+      description: UpBQ Update a payment transaction
+      operationId: UpdatePayment
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/PaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Payment/{paymentId}/Retrieve:
+    get:
+      tags:
+      - BQ - Payment
+      summary: ReBQ Retrieve details about a payment made against the delinquent account
+      description: ReBQ Retrieve details about a payment made against the delinquent account
+      operationId: RetrievePayment
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/PaymentID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Resolution/{resolutionId}/Update:
+    put:
+      tags:
+      - BQ - Resolution
+      summary: UpBQ Update a resolution plan
+      description: UpBQ Update a resolution plan
+      operationId: UpdateResolution
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/ResolutionID'
+      requestBody:
+        $ref: '#/components/requestBodies/Resolution'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resolution'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DelinquentAccountHandling/{delinquentaccounthandlingId}/Resolution/{resolutionId}/Retrieve:
+    get:
+      tags:
+      - BQ - Resolution
+      summary: ReBQ Retrieve details about a delinquent account recovery plan
+      description: ReBQ Retrieve details about a delinquent account recovery plan
+      operationId: RetrieveResolution
+      parameters:
+      - $ref: '#/components/parameters/DelinquentAccountHandlingID'
+      - $ref: '#/components/parameters/ResolutionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveResolutionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    DelinquentAccountProcedure:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        ProductAccountNumber:
+          type: string
+        ProductandServiceType:
+          type: string
+        CustomerReference:
+          type: object
+        BankBranchOrLocationReference:
+          type: object
+        IssuedDevice:
+          type: string
+        AccountCurrency:
+          type: string
+        TaxReference:
+          type: object
+        Associations:
+          type: string
+        AssociationType:
+          type: string
+        AssociationObligationOrEntitlement:
+          type: string
+        AssociationReference:
+          type: object
+        LinkedAccounts:
+          type: string
+        LinkType:
+          type: string
+        AccountDetails:
+          type: string
+        PositionLimits:
+          type: string
+        PositionLimitType:
+          type: string
+        PositionLimitSettings:
+          type: string
+        PositionLimitValue:
+          type: string
+        CollateralAssetAllocationInstanceReference:
+          type: object
+        CollateralAssetAllocationProfile:
+          type: string
+        DateType:
+          type: string
+        Date:
+          type: string
+        BillingTransactions:
+          type: string
+        BillingTransactionReference:
+          type: object
+        PaymentTransactions:
+          type: string
+        PaymentTransactionReference:
+          type: object
+        ProductTransactions:
+          type: string
+        ProductTransactionReference:
+          type: object
+        InterestTransactions:
+          type: string
+        InterestTransactionReference:
+          type: object
+        FeeTransactions:
+          type: string
+        FeeTransactionReference:
+          type: object
+        CreditPlanReference:
+          type: object
+        CreditPlanType:
+          type: string
+        DelinquentAccountProcessingSchedule:
+          type: string
+    Payment:
+      type: object
+      properties:
+        PaymentTransactionReference:
+          type: object
+        PaymentTransaction:
+          type: string
+    Contact:
+      type: object
+      properties:
+        CustomerDelinquentAccountContactRecord:
+          type: string
+        ContactMessage:
+          type: string
+        ContactDate:
+          type: string
+        ContactResult:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        DocumentContent:
+          type: string
+        CorrespondenceInstanceReference:
+          type: object
+        CorrespondenceContent:
+          type: string
+        DelinquentAccountContactResult:
+          type: string
+        DelinquentAccountContactWorkProduct:
+          type: string
+    Assessment:
+      type: object
+      properties:
+        DelinquentAccountAssessmentWorkProduct:
+          type: string
+        DelinquentAccountAssessmentRecord:
+          type: string
+    Resolution:
+      type: object
+      properties:
+        DelinquentAccountResolutionTaskResult:
+          type: string
+        DelinquentAccountResolutionActionPlan:
+          type: string
+        DelinquentAccountResolutionWorkProduct:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateDelinquentAccountProcedureRequest:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+    InitiateDelinquentAccountProcedureResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            DateType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+    UpdateDelinquentAccountProcedureRequest:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+    UpdateDelinquentAccountProcedureResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+    RetrieveDelinquentAccountProcedureResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+    RetrieveAssessmentResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+        Assessment:
+          type: object
+          properties:
+            DelinquentAccountAssessmentWorkProduct:
+              type: string
+            DelinquentAccountAssessmentRecord:
+              type: string
+    InitiateContactRequest:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+    InitiateContactResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            DateType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+        Contact:
+          type: object
+          properties:
+            CustomerDelinquentAccountContactRecord:
+              type: string
+            ContactMessage:
+              type: string
+            ContactDate:
+              type: string
+            ContactResult:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            DocumentContent:
+              type: string
+            CorrespondenceInstanceReference:
+              type: object
+            CorrespondenceContent:
+              type: string
+            DelinquentAccountContactResult:
+              type: string
+            DelinquentAccountContactWorkProduct:
+              type: string
+    RequestContactResponse:
+      type: object
+      properties:
+        Contact:
+          type: object
+          properties:
+            CustomerDelinquentAccountContactRecord:
+              type: string
+            ContactMessage:
+              type: string
+            ContactDate:
+              type: string
+            ContactResult:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            DocumentContent:
+              type: string
+            CorrespondenceInstanceReference:
+              type: object
+            CorrespondenceContent:
+              type: string
+    RetrieveContactResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+        Contact:
+          type: object
+          properties:
+            CustomerDelinquentAccountContactRecord:
+              type: string
+            ContactMessage:
+              type: string
+            ContactDate:
+              type: string
+            ContactResult:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            DocumentContent:
+              type: string
+            CorrespondenceInstanceReference:
+              type: object
+            CorrespondenceContent:
+              type: string
+    InitiatePaymentRequest:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            PaymentTransactions:
+              type: string
+    InitiatePaymentResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+    UpdatePaymentRequest:
+      type: object
+      properties:
+        Payment:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+    UpdatePaymentResponse:
+      type: object
+      properties:
+        Payment:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+    RetrievePaymentResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+    RetrieveResolutionResponse:
+      type: object
+      properties:
+        DelinquentAccountProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductAccountNumber:
+              type: string
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            IssuedDevice:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            CollateralAssetAllocationInstanceReference:
+              type: object
+            CollateralAssetAllocationProfile:
+              type: string
+            DateType:
+              type: string
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            InterestTransactions:
+              type: string
+            InterestTransactionReference:
+              type: object
+            FeeTransactions:
+              type: string
+            FeeTransactionReference:
+              type: object
+            CreditPlanReference:
+              type: object
+            CreditPlanType:
+              type: string
+            DelinquentAccountProcessingSchedule:
+              type: string
+        Resolution:
+          type: object
+          properties:
+            DelinquentAccountResolutionTaskResult:
+              type: string
+            DelinquentAccountResolutionActionPlan:
+              type: string
+            DelinquentAccountResolutionWorkProduct:
+              type: string
+  parameters:
+    DelinquentAccountHandlingID:
+      name: delinquentaccounthandlingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentID:
+      name: paymentId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ContactID:
+      name: contactId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AssessmentID:
+      name: assessmentId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ResolutionID:
+      name: resolutionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateDelinquentAccountProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateDelinquentAccountProcedureRequest'
+    UpdateDelinquentAccountProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateDelinquentAccountProcedureRequest'
+    InitiateContactRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateContactRequest'
+    InitiatePaymentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentRequest'
+    UpdatePaymentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentRequest'
+    Resolution:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Resolution'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

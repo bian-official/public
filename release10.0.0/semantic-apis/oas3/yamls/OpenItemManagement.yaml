@@ -1,0 +1,480 @@
+openapi: 3.0.1
+info:
+  title: Open Item Management
+  description: This service domain provides a service for handling the resolution of open items against accounts (such as overdue loan payments)
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/OpenItemManagement/10.0.0
+paths:
+  /OpenItemManagement/Initiate:
+    post:
+      tags:
+      - CR - OpenItemProcedure
+      summary: InCR Initiate an open item procedure
+      description: InCR Initiate an open item procedure
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateOpenItemProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateOpenItemProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Update:
+    put:
+      tags:
+      - CR - OpenItemProcedure
+      summary: UpCR Update details of an active open item procedure
+      description: UpCR Update details of an active open item procedure
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/OpenItemProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenItemProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Request:
+    put:
+      tags:
+      - CR - OpenItemProcedure
+      summary: RqCR Request manual intervention with an active open item procedure
+      description: RqCR Request manual intervention with an active open item procedure
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/OpenItemProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenItemProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Retrieve:
+    get:
+      tags:
+      - CR - OpenItemProcedure
+      summary: ReCR Retrieve details about an open item
+      description: ReCR Retrieve details about an open item
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenItemProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Tracking/{trackingId}/Retrieve:
+    get:
+      tags:
+      - BQ - Tracking
+      summary: ReBQ Retrieve tracking details about an open item
+      description: ReBQ Retrieve tracking details about an open item
+      operationId: RetrieveTracking
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      - $ref: '#/components/parameters/TrackingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracking'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Repayment/Initiate:
+    post:
+      tags:
+      - BQ - Repayment
+      summary: InBQ Initiate repayment transaction against an open item
+      description: InBQ Initiate repayment transaction against an open item
+      operationId: InitiateRepayment
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/OpenItemProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateRepaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Repayment/{repaymentId}/Update:
+    put:
+      tags:
+      - BQ - Repayment
+      summary: UpBQ Update repayment transaction details
+      description: UpBQ Update repayment transaction details
+      operationId: UpdateRepayment
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      - $ref: '#/components/parameters/RepaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/Repayment'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repayment'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Repayment/{repaymentId}/Execute:
+    put:
+      tags:
+      - BQ - Repayment
+      summary: ExBQ Execute an automated repayment task (e.g. trigger scheduled repayment)
+      description: ExBQ Execute an automated repayment task (e.g. trigger scheduled repayment)
+      operationId: ExecuteRepayment
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      - $ref: '#/components/parameters/RepaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/Repayment'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repayment'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /OpenItemManagement/{openitemmanagementId}/Repayment/{repaymentId}/Retrieve:
+    get:
+      tags:
+      - BQ - Repayment
+      summary: ReBQ retrieve details about a repayment transaction
+      description: ReBQ retrieve details about a repayment transaction
+      operationId: RetrieveRepayment
+      parameters:
+      - $ref: '#/components/parameters/OpenItemManagementID'
+      - $ref: '#/components/parameters/RepaymentID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRepaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    OpenItemProcedure:
+      type: object
+      properties:
+        OpenItemType:
+          type: string
+        OpenItemDescription:
+          type: string
+        ProductInstanceReference:
+          type: object
+        PartyReference:
+          type: object
+        LoanRepaymentSchedule:
+          type: string
+        LoanOutstandingBalance:
+          type: string
+        LoanTerminationDate:
+          type: string
+        RepaymentStatement:
+          type: string
+    Repayment:
+      type: object
+      properties:
+        TransactionPayerReference:
+          type: object
+        TransactionPayerProductInstanceReference:
+          type: object
+        TransactionPayerBankReference:
+          type: object
+        TransactionType:
+          type: string
+        TransactionAmount:
+          type: number
+        TransactionCurrency:
+          type: string
+        TransactionDate:
+          type: string
+    Tracking:
+      type: object
+      properties:
+        CustomerBillingProcedureInstanceReference:
+          type: object
+        CustomerBillingParty:
+          type: string
+        CustomerBillingAddress:
+          type: string
+        CustomerBillingPeriod:
+          type: string
+        CustomerBillingStatement:
+          type: string
+        CustomerBillingAmount:
+          type: number
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateOpenItemProcedureRequest:
+      type: object
+      properties:
+        OpenItemProcedure:
+          type: object
+          properties:
+            OpenItemType:
+              type: string
+            OpenItemDescription:
+              type: string
+            ProductInstanceReference:
+              type: object
+            PartyReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            LoanTerminationDate:
+              type: string
+    InitiateOpenItemProcedureResponse:
+      type: object
+      properties:
+        OpenItemProcedure:
+          type: object
+          properties:
+            RepaymentStatement:
+              type: string
+    InitiateRepaymentResponse:
+      type: object
+      properties:
+        Repayment:
+          type: object
+          properties:
+            TransactionDate:
+              type: string
+    RetrieveRepaymentResponse:
+      type: object
+      properties:
+        OpenItemProcedure:
+          type: object
+          properties:
+            OpenItemType:
+              type: string
+            OpenItemDescription:
+              type: string
+            ProductInstanceReference:
+              type: object
+            PartyReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+  parameters:
+    OpenItemManagementID:
+      name: openitemmanagementId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    RepaymentID:
+      name: repaymentId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    TrackingID:
+      name: trackingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateOpenItemProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateOpenItemProcedureRequest'
+    OpenItemProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OpenItemProcedure'
+    Repayment:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Repayment'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

@@ -1,0 +1,552 @@
+openapi: 3.0.1
+info:
+  title: Channel Activity History
+  description: This service domains consolidates and captures customer channel usage activity to support channel activity analysis and also can be referenced for customer access authorization and routing decisions
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/ChannelActivityHistory/10.0.0
+paths:
+  /ChannelActivityHistory/Initiate:
+    post:
+      tags:
+      - CR - ChannelActivityLog
+      summary: InCR Initiate channel activity logging for a customer
+      description: InCR Initiate channel activity logging for a customer
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/ChannelActivityLog'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateChannelActivityLogResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ChannelActivityHistory/{channelactivityhistoryId}/Update:
+    put:
+      tags:
+      - CR - ChannelActivityLog
+      summary: UpCR Update channel activity logging details for a customer
+      description: UpCR Update channel activity logging details for a customer
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/ChannelActivityHistoryID'
+      requestBody:
+        $ref: '#/components/requestBodies/ChannelActivityLog'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelActivityLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ChannelActivityHistory/{channelactivityhistoryId}/Retrieve:
+    get:
+      tags:
+      - CR - ChannelActivityLog
+      summary: ReCR Retrieve details about customer channel activity logging
+      description: ReCR Retrieve details about customer channel activity logging
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/ChannelActivityHistoryID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelActivityLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ChannelActivityHistory/{channelactivityhistoryId}/Event/{eventId}/Update:
+    put:
+      tags:
+      - BQ - Event
+      summary: UpBQ Update a logged event for a customer
+      description: UpBQ Update a logged event for a customer
+      operationId: UpdateEvent
+      parameters:
+      - $ref: '#/components/parameters/ChannelActivityHistoryID'
+      - $ref: '#/components/parameters/EventID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateEventRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateEventResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ChannelActivityHistory/{channelactivityhistoryId}/Event/{eventId}/Capture:
+    put:
+      tags:
+      - BQ - Event
+      summary: CaBQ Capture a channel access event in the log
+      description: CaBQ Capture a channel access event in the log
+      operationId: CaptureEvent
+      parameters:
+      - $ref: '#/components/parameters/ChannelActivityHistoryID'
+      - $ref: '#/components/parameters/EventID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureEventRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ChannelActivityHistory/{channelactivityhistoryId}/Event/{eventId}/Retrieve:
+    get:
+      tags:
+      - BQ - Event
+      summary: ReBQ Retrieve details about a logged channel activity event
+      description: ReBQ Retrieve details about a logged channel activity event
+      operationId: RetrieveEvent
+      parameters:
+      - $ref: '#/components/parameters/ChannelActivityHistoryID'
+      - $ref: '#/components/parameters/EventID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveEventResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    ChannelActivityLog:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        Date:
+          type: string
+    Event:
+      type: object
+      properties:
+        EmployeeReference:
+          type: object
+        ProductReference:
+          type: object
+        ProductInstanceReference:
+          type: object
+        CustomerContactRecordReference:
+          type: object
+        CustomerContactRecord:
+          type: string
+        CustomerContactRecordCustomerReference:
+          type: object
+        CustomerContactRecordContactDevice:
+          type: string
+        CustomerContactRecordAuthenticationStatus:
+          type: string
+        CustomerContactRecordRoutingSelectionStatus:
+          type: string
+        CustomerContactRecordMenuSelection:
+          type: string
+        CustomerContactRecordServicingRequest:
+          type: string
+        CustomerContactRecordServicingEventHistory:
+          type: string
+        CustomerContactRecordServicingPositionReference:
+          type: object
+        CustomerContactRecordServicingResourceReference:
+          type: object
+        CustomerContactRecordActivityRecord:
+          type: string
+        CustomerSessionDialogueReference:
+          type: object
+        CustomerSessionDialogueRecord:
+          type: string
+        CustomerContactRecordDuration:
+          type: string
+        CustomerContactActivityRecord:
+          type: string
+        CustomerContactResult:
+          type: string
+        ChannelActivityHistoryReportReference:
+          type: object
+        ChannelActivityHistoryReportFrom/to:
+          type: string
+        ChannelActivityHistoryReport:
+          type: string
+        TransactionAuthorizationResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateChannelActivityLogResponse:
+      type: object
+      properties:
+        ChannelActivityLog:
+          type: object
+          properties:
+            Date:
+              type: string
+    UpdateEventRequest:
+      type: object
+      properties:
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+    UpdateEventResponse:
+      type: object
+      properties:
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+    CaptureEventRequest:
+      type: object
+      properties:
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+    RetrieveEventResponse:
+      type: object
+      properties:
+        ChannelActivityLog:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            Date:
+              type: string
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: object
+            ProductReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            CustomerContactRecordCustomerReference:
+              type: object
+            CustomerContactRecordContactDevice:
+              type: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+            CustomerContactRecordMenuSelection:
+              type: string
+            CustomerContactRecordServicingRequest:
+              type: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+            CustomerContactRecordServicingPositionReference:
+              type: object
+            CustomerContactRecordServicingResourceReference:
+              type: object
+            CustomerContactRecordActivityRecord:
+              type: string
+            CustomerSessionDialogueReference:
+              type: object
+            CustomerSessionDialogueRecord:
+              type: string
+            CustomerContactRecordDuration:
+              type: string
+            CustomerContactActivityRecord:
+              type: string
+            CustomerContactResult:
+              type: string
+            ChannelActivityHistoryReportReference:
+              type: object
+            ChannelActivityHistoryReportFromOrto:
+              type: string
+            TransactionAuthorizationResult:
+              type: string
+  parameters:
+    ChannelActivityHistoryID:
+      name: channelactivityhistoryId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    EventID:
+      name: eventId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    ChannelActivityLog:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChannelActivityLog'
+    UpdateEventRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateEventRequest'
+    CaptureEventRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureEventRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

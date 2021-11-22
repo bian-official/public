@@ -1,0 +1,2320 @@
+openapi: 3.0.1
+info:
+  title: Savings Account
+  description: This service domain orchestrates a consumer savings account. The typical range of services and fees covers payments from and scheduled and ad-hoc deposits to the account, standing orders, sweeps, and liens.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/SavingsAccount/10.0.0
+paths:
+  /SavingsAccount/Initiate:
+    post:
+      tags:
+      - CR - SavingsAccountFacility
+      summary: InCR Initiate A new savings account
+      description: InCR Initiate A new savings account
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateSavingsAccountFacilityRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateSavingsAccountFacilityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Update:
+    put:
+      tags:
+      - CR - SavingsAccountFacility
+      summary: UpCR Update properties of an active savings account
+      description: UpCR Update properties of an active savings account
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateSavingsAccountFacilityRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSavingsAccountFacilityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Retrieve:
+    get:
+      tags:
+      - CR - SavingsAccountFacility
+      summary: ReCR Retrieve information about a savings account - either standard canned reports or selected instance attribute values
+      description: ReCR Retrieve information about a savings account - either standard canned reports or selected instance attribute values
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveSavingsAccountFacilityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Interest/{interestId}/Retrieve:
+    get:
+      tags:
+      - BQ - Interest
+      summary: ReBQ Retrieve details of an interest transaction applied internally to the account
+      description: ReBQ Retrieve details of an interest transaction applied internally to the account
+      operationId: RetrieveInterest
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/InterestID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveInterestResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/ServiceFees/Initiate:
+    post:
+      tags:
+      - BQ - ServiceFees
+      summary: InBQ Initiate service fees against an account
+      description: InBQ Initiate service fees against an account
+      operationId: InitiateServiceFees
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateServiceFeesRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateServiceFeesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/ServiceFees/{servicefeesId}/Execute:
+    put:
+      tags:
+      - BQ - ServiceFees
+      summary: ExBQ Apply a service fee to the account
+      description: ExBQ Apply a service fee to the account
+      operationId: ExecuteServiceFees
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/ServiceFeesID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteServiceFeesRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteServiceFeesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/ServiceFees/{servicefeesId}/Retrieve:
+    get:
+      tags:
+      - BQ - ServiceFees
+      summary: ReBQ Retrieve information about a service fee applied to the account
+      description: ReBQ Retrieve information about a service fee applied to the account
+      operationId: RetrieveServiceFees
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/ServiceFeesID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceFees'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountLien/Initiate:
+    post:
+      tags:
+      - BQ - AccountLien
+      summary: InBQ Set up an account lien
+      description: InBQ Set up an account lien
+      operationId: InitiateAccountLien
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateAccountLienRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateAccountLienResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountLien/{accountlienId}/Update:
+    put:
+      tags:
+      - BQ - AccountLien
+      summary: UpBQ Update details of an existing account lien
+      description: UpBQ Update details of an existing account lien
+      operationId: UpdateAccountLien
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/AccountLienID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAccountLienRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccountLienResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountLien/{accountlienId}/Retrieve:
+    get:
+      tags:
+      - BQ - AccountLien
+      summary: ReBQ Retrieve details about an active account lien
+      description: ReBQ Retrieve details about an active account lien
+      operationId: RetrieveAccountLien
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/AccountLienID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLien'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountSweep/Initiate:
+    post:
+      tags:
+      - BQ - AccountSweep
+      summary: InBQ Set up an account sweep
+      description: InBQ Set up an account sweep
+      operationId: InitiateAccountSweep
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateAccountSweepRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateAccountSweepResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountSweep/{accountsweepId}/Update:
+    put:
+      tags:
+      - BQ - AccountSweep
+      summary: UpBQ Update details of an existing account sweep
+      description: UpBQ Update details of an existing account sweep
+      operationId: UpdateAccountSweep
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/AccountSweepID'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountSweep'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountSweep'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountSweep/{accountsweepId}/Execute:
+    put:
+      tags:
+      - BQ - AccountSweep
+      summary: ExBQ Trigger an account sweep transaction
+      description: ExBQ Trigger an account sweep transaction
+      operationId: ExecuteAccountSweep
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/AccountSweepID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteAccountSweepRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/AccountSweep/{accountsweepId}/Retrieve:
+    get:
+      tags:
+      - BQ - AccountSweep
+      summary: ReBQ Retrieve details about an active sweep facility or specific sweep transaction
+      description: ReBQ Retrieve details about an active sweep facility or specific sweep transaction
+      operationId: RetrieveAccountSweep
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/AccountSweepID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountSweep'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/DepositsandWithdrawals/Initiate:
+    post:
+      tags:
+      - BQ - DepositsandWithdrawals
+      summary: InBQ Initialize deposit or withdrawal transaction
+      description: InBQ Initialize deposit or withdrawal transaction
+      operationId: InitiateDepositsandWithdrawals
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateDepositsandWithdrawalsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateDepositsandWithdrawalsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/DepositsandWithdrawals/{depositsandwithdrawalsId}/Update:
+    put:
+      tags:
+      - BQ - DepositsandWithdrawals
+      summary: UpBQ Update/correct a deposit or withdrawal transaction
+      description: UpBQ Update/correct a deposit or withdrawal transaction
+      operationId: UpdateDepositsandWithdrawals
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/DepositsandWithdrawalsID'
+      requestBody:
+        $ref: '#/components/requestBodies/DepositsandWithdrawals'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositsandWithdrawals'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/DepositsandWithdrawals/{depositsandwithdrawalsId}/Execute:
+    put:
+      tags:
+      - BQ - DepositsandWithdrawals
+      summary: ExBQ Execute a deposit or withdrawal transaction
+      description: ExBQ Execute a deposit or withdrawal transaction
+      operationId: ExecuteDepositsandWithdrawals
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/DepositsandWithdrawalsID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteDepositsandWithdrawalsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteDepositsandWithdrawalsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/DepositsandWithdrawals/{depositsandwithdrawalsId}/Retrieve:
+    get:
+      tags:
+      - BQ - DepositsandWithdrawals
+      summary: ReBQ Retrieve details about a deposit or withdrawal transaction
+      description: ReBQ Retrieve details about a deposit or withdrawal transaction
+      operationId: RetrieveDepositsandWithdrawals
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/DepositsandWithdrawalsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositsandWithdrawals'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Payments/Initiate:
+    post:
+      tags:
+      - BQ - Payments
+      summary: InBQ Initialize a payment transaction (can be single or repeating)
+      description: InBQ Initialize a payment transaction (can be single or repeating)
+      operationId: InitiatePayments
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePaymentsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Payments/{paymentsId}/Update:
+    put:
+      tags:
+      - BQ - Payments
+      summary: UpBQ Update a payment transaction configuration or specific transaction
+      description: UpBQ Update a payment transaction configuration or specific transaction
+      operationId: UpdatePayments
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/PaymentsID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Payments/{paymentsId}/Execute:
+    put:
+      tags:
+      - BQ - Payments
+      summary: ExBQ Trigger a payment for a repeating payment set up
+      description: ExBQ Trigger a payment for a repeating payment set up
+      operationId: ExecutePayments
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/PaymentsID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecutePaymentsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutePaymentsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/Payments/{paymentsId}/Retrieve:
+    get:
+      tags:
+      - BQ - Payments
+      summary: ReBQ Retrieve details about a payment transaction or arrangement
+      description: ReBQ Retrieve details about a payment transaction or arrangement
+      operationId: RetrievePayments
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/PaymentsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payments'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/IssuedDevice/Initiate:
+    post:
+      tags:
+      - BQ - IssuedDevice
+      summary: InBQ Initiate the provision of issued inventory for the account (include initial issuance)
+      description: InBQ Initiate the provision of issued inventory for the account (include initial issuance)
+      operationId: InitiateIssuedDevice
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateIssuedDeviceRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateIssuedDeviceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/IssuedDevice/{issueddeviceId}/Update:
+    put:
+      tags:
+      - BQ - IssuedDevice
+      summary: UpBQ Update the issued inventory details and provisioning configuration or status
+      description: UpBQ Update the issued inventory details and provisioning configuration or status
+      operationId: UpdateIssuedDevice
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/IssuedDeviceID'
+      requestBody:
+        $ref: '#/components/requestBodies/IssuedDevice'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuedDevice'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/IssuedDevice/{issueddeviceId}/Request:
+    put:
+      tags:
+      - BQ - IssuedDevice
+      summary: RqBQ Request changes or replacement devices or inventory
+      description: RqBQ Request changes or replacement devices or inventory
+      operationId: RequestIssuedDevice
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/IssuedDeviceID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestIssuedDeviceRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestIssuedDeviceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /SavingsAccount/{savingsaccountId}/IssuedDevice/{issueddeviceId}/Retrieve:
+    get:
+      tags:
+      - BQ - IssuedDevice
+      summary: ReBQ Retrieve details about issued devices or inventory
+      description: ReBQ Retrieve details about issued devices or inventory
+      operationId: RetrieveIssuedDevice
+      parameters:
+      - $ref: '#/components/parameters/SavingsAccountID'
+      - $ref: '#/components/parameters/IssuedDeviceID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuedDevice'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    SavingsAccountFacility:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        SavingsAccountNumber:
+          type: string
+        CustomerReference:
+          type: object
+        BankBranchOrLocationReference:
+          type: object
+        AccountType:
+          type: string
+        AccountCurrency:
+          type: string
+        TaxReference:
+          type: object
+        EntitlementOptionDefinition:
+          type: string
+        EntitlementOptionSetting:
+          type: string
+        RestrictionOptionDefinition:
+          type: string
+        RestrictionOptionSetting:
+          type: string
+        Associations:
+          type: string
+        AssociationType:
+          type: string
+        AssociationObligationOrEntitlement:
+          type: string
+        AssociationReference:
+          type: object
+        LinkedAccounts:
+          type: string
+        LinkType:
+          type: string
+        AccountDetails:
+          type: string
+        PositionLimits:
+          type: string
+        PositionLimitType:
+          type: string
+        PositionLimitSettings:
+          type: string
+        PositionLimitValue:
+          type: string
+        DateType:
+          type: string
+        Date:
+          type: string
+        StatementsSchedule:
+          type: string
+        StatementType:
+          type: string
+        StatementTransactionType:
+          type: string
+        StatementPeriod:
+          type: string
+        StatementReport:
+          type: string
+    IssuedDevice:
+      type: object
+      properties:
+        IssuedDeviceType:
+          type: string
+        IssuedDeviceDescription:
+          type: string
+        IssuedDeviceOptionDefinition:
+          type: string
+        IssuedDeviceOptionSetting:
+          type: string
+        IssuedDeviceProperty:
+          type: string
+        IssuedDevicePropertyType:
+          type: string
+        IssuedDevicePropertyValue:
+          type: string
+        IssuedDeviceStatus:
+          type: string
+    DepositsandWithdrawals:
+      type: object
+      properties:
+        DepositType:
+          type: string
+        WithdrawalType:
+          type: string
+        AccountLimitBreachResponse:
+          type: string
+        DepositTransaction:
+          type: string
+        DepositTransactionSourceReference:
+          type: object
+        DepositTransactionDepositType:
+          type: string
+        DepositTransactionDescription:
+          type: string
+        DepositTransactionAmount:
+          type: number
+        DepositTransactionDate:
+          type: string
+        WithdrawalTransaction:
+          type: string
+        WithdrawalTransactionSourceReference:
+          type: object
+        WithdrawalTransactionWithdrawalType:
+          type: string
+        WithdrawalTransactionDescription:
+          type: string
+        WithdrawalTransactionAmount:
+          type: number
+        WithdrawalTransactionDate:
+          type: string
+    AccountSweep:
+      type: object
+      properties:
+        AccountSweepType:
+          type: string
+        AccountSweepDefinition:
+          type: string
+        AccountSweepApplicationSchedule:
+          type: string
+        AccountSweepConfiguration:
+          type: string
+        TargetAccount:
+          type: string
+        SweepMandate:
+          type: string
+        SweepProcessingSchedule:
+          type: string
+        SweepApplicationRecord:
+          type: string
+        AccountSweepTargetAccount:
+          type: string
+        AccountSweepAmount:
+          type: number
+        AccountSweepExecutionDate:
+          type: string
+    AccountLien:
+      type: object
+      properties:
+        LienType:
+          type: string
+        LienDefinition:
+          type: string
+        LienProcessingOption:
+          type: string
+        LienRecord:
+          type: string
+        LienOriginator:
+          type: string
+        LienPurpose:
+          type: string
+        LienAmount:
+          type: number
+        LienStartDate:
+          type: string
+        LienExpiryDate:
+          type: string
+        LienStatus:
+          type: string
+    Interest:
+      type: object
+      properties:
+        InterestRateType:
+          type: string
+        InterestRateApplicationSchedule:
+          type: object
+        InterestRateConfiguration:
+          type: object
+        InterestRate:
+          type: object
+        InterestApplicationRecord:
+          type: string
+        InterestTransaction:
+          type: string
+        TransactionDescription:
+          type: string
+        TransactionRateType:
+          type: string
+        TransactionInterestCharge:
+          type: string
+        InterestAccrualAmount:
+          type: number
+        InterestAccrualType:
+          type: string
+        InterestAccrualCharge:
+          type: string
+    Payments:
+      type: object
+      properties:
+        PaymentType:
+          type: string
+        PaymentDefinition:
+          type: string
+        PaymentProcessingOptionDefinition:
+          type: string
+        PaymentProcessingOptionSetting:
+          type: string
+        PaymentConfiguration:
+          type: string
+        PaymentSchedule:
+          type: string
+        DirectDebitMandateReference:
+          type: object
+        DirectDebitMandateSettings:
+          type: string
+        BillPayMandateReference:
+          type: object
+        BillPayMandateSettings:
+          type: string
+        PaymentTransaction:
+          type: string
+        PaymentTransactionType:
+          type: string
+        PaymentTransactionPayeeReference:
+          type: object
+        PaymentTransactionPayeeAccountReference:
+          type: object
+        PaymentTransactionPayeeBankReference:
+          type: object
+        PaymentTransactionAmount:
+          type: number
+        PaymentTransactionFeeType:
+          type: string
+        PaymentTransactionFeeCharge:
+          type: string
+        PaymentTransactionDate:
+          type: string
+        PaymentTransactionPaymentMechanism:
+          type: string
+        PaymentTransactionPaymentPurpose:
+          type: string
+        PaymentTransactionBankBranch/LocationReference:
+          type: object
+        PaymentTransactionStatus:
+          type: string
+    ServiceFees:
+      type: object
+      properties:
+        FeeConfigurationProfile:
+          type: string
+        FeeType:
+          type: string
+        FeeDefinition:
+          type: string
+        FeeApplicationRecord:
+          type: string
+        FeeTransaction:
+          type: string
+        TransactionDescription:
+          type: string
+        TransactionFeeType:
+          type: string
+        TransactionFeeCharge:
+          type: string
+        FeeProjectionsandCommitments:
+          type: string
+        ProjectedTransactionDescription:
+          type: string
+        ProjectedTransactionFeeType:
+          type: string
+        ProjectedTransactionFeeCharge:
+          type: string
+        FeeAccrualAmount:
+          type: number
+        AccrualFeeType:
+          type: string
+        AccrualFeeCharge:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateSavingsAccountFacilityRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimitSettings:
+              type: string
+            DateType:
+              type: string
+            StatementsSchedule:
+              type: string
+            StatementType:
+              type: string
+            StatementTransactionType:
+              type: string
+            StatementPeriod:
+              type: string
+            StatementReport:
+              type: string
+    InitiateSavingsAccountFacilityResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            AccountCurrency:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+    UpdateSavingsAccountFacilityRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+            StatementsSchedule:
+              type: string
+            StatementType:
+              type: string
+            StatementTransactionType:
+              type: string
+            StatementPeriod:
+              type: string
+            StatementReport:
+              type: string
+    UpdateSavingsAccountFacilityResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+            StatementsSchedule:
+              type: string
+            StatementType:
+              type: string
+            StatementTransactionType:
+              type: string
+            StatementPeriod:
+              type: string
+            StatementReport:
+              type: string
+    RetrieveSavingsAccountFacilityResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimits:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+            StatementsSchedule:
+              type: string
+            StatementType:
+              type: string
+            StatementTransactionType:
+              type: string
+            StatementPeriod:
+              type: string
+            StatementReport:
+              type: string
+    RetrieveInterestResponse:
+      type: object
+      properties:
+        Interest:
+          type: object
+          properties:
+            InterestRateType:
+              type: string
+            InterestRateApplicationSchedule:
+              type: object
+            InterestRateConfiguration:
+              type: object
+            InterestApplicationRecord:
+              type: string
+            InterestTransaction:
+              type: string
+            TransactionDescription:
+              type: string
+            TransactionRateType:
+              type: string
+            TransactionInterestCharge:
+              type: string
+            InterestAccrualAmount:
+              type: number
+            InterestAccrualType:
+              type: string
+            InterestAccrualCharge:
+              type: string
+    InitiateServiceFeesRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            RestrictionOptionSetting:
+              type: string
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+            StatementsSchedule:
+              type: string
+            StatementType:
+              type: string
+            StatementTransactionType:
+              type: string
+            StatementPeriod:
+              type: string
+            StatementReport:
+              type: string
+        ServiceFees:
+          type: object
+          properties:
+            FeeConfigurationProfile:
+              type: string
+            FeeType:
+              type: string
+    InitiateServiceFeesResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            DateType:
+              type: string
+        ServiceFees:
+          type: object
+          properties:
+            FeeDefinition:
+              type: string
+    ExecuteServiceFeesRequest:
+      type: object
+      properties:
+        ServiceFees:
+          type: object
+          properties:
+            FeeConfigurationProfile:
+              type: string
+            FeeType:
+              type: string
+            FeeApplicationRecord:
+              type: string
+            FeeTransaction:
+              type: string
+            TransactionDescription:
+              type: string
+            TransactionFeeType:
+              type: string
+            FeeProjectionsandCommitments:
+              type: string
+            ProjectedTransactionDescription:
+              type: string
+            ProjectedTransactionFeeType:
+              type: string
+            AccrualFeeType:
+              type: string
+    ExecuteServiceFeesResponse:
+      type: object
+      properties:
+        ServiceFees:
+          type: object
+          properties:
+            FeeConfigurationProfile:
+              type: string
+            FeeDefinition:
+              type: string
+            FeeApplicationRecord:
+              type: string
+            FeeTransaction:
+              type: string
+            TransactionFeeType:
+              type: string
+            TransactionFeeCharge:
+              type: string
+            FeeProjectionsandCommitments:
+              type: string
+            ProjectedTransactionFeeType:
+              type: string
+            ProjectedTransactionFeeCharge:
+              type: string
+            FeeAccrualAmount:
+              type: number
+            AccrualFeeType:
+              type: string
+            AccrualFeeCharge:
+              type: string
+    InitiateAccountLienRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            PositionLimitType:
+              type: string
+            PositionLimitSettings:
+              type: string
+            DateType:
+              type: string
+        AccountLien:
+          type: object
+          properties:
+            LienType:
+              type: string
+            LienDefinition:
+              type: string
+            LienProcessingOption:
+              type: string
+            LienRecord:
+              type: string
+            LienOriginator:
+              type: string
+            LienPurpose:
+              type: string
+            LienAmount:
+              type: number
+            LienStartDate:
+              type: string
+            LienExpiryDate:
+              type: string
+            LienStatus:
+              type: string
+    InitiateAccountLienResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            EntitlementOptionDefinition:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            LinkedAccounts:
+              type: string
+            PositionLimitSettings:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+        AccountLien:
+          type: object
+          properties:
+            LienDefinition:
+              type: string
+            LienRecord:
+              type: string
+    UpdateAccountLienRequest:
+      type: object
+      properties:
+        AccountLien:
+          type: object
+          properties:
+            LienType:
+              type: string
+            LienProcessingOption:
+              type: string
+            LienRecord:
+              type: string
+            LienOriginator:
+              type: string
+            LienPurpose:
+              type: string
+            LienAmount:
+              type: number
+            LienStartDate:
+              type: string
+            LienExpiryDate:
+              type: string
+            LienStatus:
+              type: string
+    UpdateAccountLienResponse:
+      type: object
+      properties:
+        AccountLien:
+          type: object
+          properties:
+            LienType:
+              type: string
+            LienProcessingOption:
+              type: string
+            LienRecord:
+              type: string
+            LienOriginator:
+              type: string
+            LienPurpose:
+              type: string
+            LienAmount:
+              type: number
+            LienStartDate:
+              type: string
+            LienExpiryDate:
+              type: string
+            LienStatus:
+              type: string
+    InitiateAccountSweepRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            TaxReference:
+              type: object
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            LinkedAccounts:
+              type: string
+            LinkType:
+              type: string
+            AccountDetails:
+              type: string
+            DateType:
+              type: string
+        AccountSweep:
+          type: object
+          properties:
+            AccountSweepType:
+              type: string
+            AccountSweepApplicationSchedule:
+              type: string
+            AccountSweepConfiguration:
+              type: string
+            TargetAccount:
+              type: string
+            SweepMandate:
+              type: string
+            SweepProcessingSchedule:
+              type: string
+    InitiateAccountSweepResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            DateType:
+              type: string
+        AccountSweep:
+          type: object
+          properties:
+            AccountSweepDefinition:
+              type: string
+            AccountSweepApplicationSchedule:
+              type: string
+    ExecuteAccountSweepRequest:
+      type: object
+      properties:
+        AccountSweep:
+          type: object
+          properties:
+            SweepApplicationRecord:
+              type: string
+            AccountSweepTargetAccount:
+              type: string
+            AccountSweepAmount:
+              type: number
+            AccountSweepExecutionDate:
+              type: string
+    InitiateDepositsandWithdrawalsRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            PositionLimitType:
+              type: string
+            DateType:
+              type: string
+        DepositsandWithdrawals:
+          type: object
+          properties:
+            DepositType:
+              type: string
+            WithdrawalType:
+              type: string
+            AccountLimitBreachResponse:
+              type: string
+    InitiateDepositsandWithdrawalsResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+    ExecuteDepositsandWithdrawalsRequest:
+      type: object
+      properties:
+        DepositsandWithdrawals:
+          type: object
+          properties:
+            DepositTransaction:
+              type: string
+            DepositTransactionSourceReference:
+              type: object
+            DepositTransactionDepositType:
+              type: string
+            DepositTransactionDescription:
+              type: string
+            DepositTransactionAmount:
+              type: number
+            DepositTransactionDate:
+              type: string
+            WithdrawalTransaction:
+              type: string
+            WithdrawalTransactionSourceReference:
+              type: object
+            WithdrawalTransactionWithdrawalType:
+              type: string
+            WithdrawalTransactionDescription:
+              type: string
+            WithdrawalTransactionAmount:
+              type: number
+            WithdrawalTransactionDate:
+              type: string
+    ExecuteDepositsandWithdrawalsResponse:
+      type: object
+      properties:
+        DepositsandWithdrawals:
+          type: object
+          properties:
+            DepositTransactionDate:
+              type: string
+            WithdrawalTransactionDate:
+              type: string
+    InitiatePaymentsRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+            StatementsSchedule:
+              type: string
+            StatementType:
+              type: string
+            StatementTransactionType:
+              type: string
+            StatementPeriod:
+              type: string
+            StatementReport:
+              type: string
+        Payments:
+          type: object
+          properties:
+            PaymentType:
+              type: string
+            PaymentDefinition:
+              type: string
+            PaymentProcessingOptionSetting:
+              type: string
+            PaymentConfiguration:
+              type: string
+            PaymentSchedule:
+              type: string
+            DirectDebitMandateReference:
+              type: object
+            DirectDebitMandateSettings:
+              type: string
+            BillPayMandateReference:
+              type: object
+            BillPayMandateSettings:
+              type: string
+    InitiatePaymentsResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            TaxReference:
+              type: object
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            PositionLimitSettings:
+              type: string
+            DateType:
+              type: string
+        Payments:
+          type: object
+          properties:
+            PaymentDefinition:
+              type: string
+            PaymentProcessingOptionDefinition:
+              type: string
+    UpdatePaymentsRequest:
+      type: object
+      properties:
+        Payments:
+          type: object
+          properties:
+            PaymentType:
+              type: string
+            PaymentProcessingOptionDefinition:
+              type: string
+            PaymentProcessingOptionSetting:
+              type: string
+            PaymentConfiguration:
+              type: string
+            PaymentSchedule:
+              type: string
+            DirectDebitMandateReference:
+              type: object
+            DirectDebitMandateSettings:
+              type: string
+            BillPayMandateReference:
+              type: object
+            BillPayMandateSettings:
+              type: string
+            PaymentTransaction:
+              type: string
+            PaymentTransactionType:
+              type: string
+            PaymentTransactionPayeeReference:
+              type: object
+            PaymentTransactionPayeeAccountReference:
+              type: object
+            PaymentTransactionPayeeBankReference:
+              type: object
+            PaymentTransactionAmount:
+              type: number
+            PaymentTransactionFeeType:
+              type: string
+            PaymentTransactionFeeCharge:
+              type: string
+            PaymentTransactionDate:
+              type: string
+            PaymentTransactionPaymentMechanism:
+              type: string
+            PaymentTransactionPaymentPurpose:
+              type: string
+            PaymentTransactionBankBranchOrLocationReference:
+              type: object
+    UpdatePaymentsResponse:
+      type: object
+      properties:
+        Payments:
+          type: object
+          properties:
+            PaymentType:
+              type: string
+            PaymentProcessingOptionDefinition:
+              type: string
+            PaymentProcessingOptionSetting:
+              type: string
+            PaymentConfiguration:
+              type: string
+            PaymentSchedule:
+              type: string
+            DirectDebitMandateReference:
+              type: object
+            DirectDebitMandateSettings:
+              type: string
+            BillPayMandateReference:
+              type: object
+            BillPayMandateSettings:
+              type: string
+            PaymentTransaction:
+              type: string
+            PaymentTransactionType:
+              type: string
+            PaymentTransactionPayeeReference:
+              type: object
+            PaymentTransactionPayeeAccountReference:
+              type: object
+            PaymentTransactionPayeeBankReference:
+              type: object
+            PaymentTransactionAmount:
+              type: number
+            PaymentTransactionFeeType:
+              type: string
+            PaymentTransactionFeeCharge:
+              type: string
+            PaymentTransactionDate:
+              type: string
+            PaymentTransactionPaymentMechanism:
+              type: string
+            PaymentTransactionPaymentPurpose:
+              type: string
+            PaymentTransactionBankBranchOrLocationReference:
+              type: object
+            PaymentTransactionStatus:
+              type: string
+    ExecutePaymentsRequest:
+      type: object
+      properties:
+        Payments:
+          type: object
+          properties:
+            PaymentTransaction:
+              type: string
+            PaymentTransactionType:
+              type: string
+            PaymentTransactionPayeeReference:
+              type: object
+            PaymentTransactionPayeeAccountReference:
+              type: object
+            PaymentTransactionPayeeBankReference:
+              type: object
+            PaymentTransactionAmount:
+              type: number
+            PaymentTransactionFeeType:
+              type: string
+            PaymentTransactionFeeCharge:
+              type: string
+            PaymentTransactionDate:
+              type: string
+            PaymentTransactionPaymentMechanism:
+              type: string
+            PaymentTransactionPaymentPurpose:
+              type: string
+            PaymentTransactionBankBranchOrLocationReference:
+              type: object
+            PaymentTransactionStatus:
+              type: string
+    ExecutePaymentsResponse:
+      type: object
+      properties:
+        Payments:
+          type: object
+          properties:
+            PaymentTransactionDate:
+              type: string
+            PaymentTransactionStatus:
+              type: string
+    InitiateIssuedDeviceRequest:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            SavingsAccountNumber:
+              type: string
+            CustomerReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            AccountType:
+              type: string
+            AccountCurrency:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            PositionLimitValue:
+              type: string
+            DateType:
+              type: string
+        IssuedDevice:
+          type: object
+          properties:
+            IssuedDeviceType:
+              type: string
+            IssuedDeviceDescription:
+              type: string
+            IssuedDeviceOptionDefinition:
+              type: string
+            IssuedDeviceOptionSetting:
+              type: string
+            IssuedDeviceProperty:
+              type: string
+            IssuedDevicePropertyType:
+              type: string
+            IssuedDevicePropertyValue:
+              type: string
+            IssuedDeviceStatus:
+              type: string
+    InitiateIssuedDeviceResponse:
+      type: object
+      properties:
+        SavingsAccountFacility:
+          type: object
+          properties:
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            PositionLimitSettings:
+              type: string
+            DateType:
+              type: string
+        IssuedDevice:
+          type: object
+          properties:
+            IssuedDeviceDescription:
+              type: string
+            IssuedDeviceOptionDefinition:
+              type: string
+            IssuedDeviceOptionSetting:
+              type: string
+            IssuedDeviceProperty:
+              type: string
+            IssuedDevicePropertyType:
+              type: string
+            IssuedDevicePropertyValue:
+              type: string
+            IssuedDeviceStatus:
+              type: string
+    RequestIssuedDeviceRequest:
+      type: object
+      properties:
+        IssuedDevice:
+          type: object
+          properties:
+            IssuedDeviceType:
+              type: string
+            IssuedDeviceOptionSetting:
+              type: string
+            IssuedDeviceProperty:
+              type: string
+            IssuedDevicePropertyValue:
+              type: string
+            IssuedDeviceStatus:
+              type: string
+    RequestIssuedDeviceResponse:
+      type: object
+      properties:
+        IssuedDevice:
+          type: object
+          properties:
+            IssuedDeviceDescription:
+              type: string
+            IssuedDeviceOptionDefinition:
+              type: string
+            IssuedDeviceOptionSetting:
+              type: string
+            IssuedDevicePropertyType:
+              type: string
+            IssuedDevicePropertyValue:
+              type: string
+            IssuedDeviceStatus:
+              type: string
+  parameters:
+    SavingsAccountID:
+      name: savingsaccountId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    IssuedDeviceID:
+      name: issueddeviceId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    DepositsandWithdrawalsID:
+      name: depositsandwithdrawalsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AccountSweepID:
+      name: accountsweepId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AccountLienID:
+      name: accountlienId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    InterestID:
+      name: interestId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentsID:
+      name: paymentsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ServiceFeesID:
+      name: servicefeesId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateSavingsAccountFacilityRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateSavingsAccountFacilityRequest'
+    UpdateSavingsAccountFacilityRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateSavingsAccountFacilityRequest'
+    InitiateServiceFeesRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateServiceFeesRequest'
+    ExecuteServiceFeesRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteServiceFeesRequest'
+    InitiateAccountLienRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateAccountLienRequest'
+    UpdateAccountLienRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAccountLienRequest'
+    InitiateAccountSweepRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateAccountSweepRequest'
+    AccountSweep:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountSweep'
+    ExecuteAccountSweepRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteAccountSweepRequest'
+    InitiateDepositsandWithdrawalsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateDepositsandWithdrawalsRequest'
+    DepositsandWithdrawals:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DepositsandWithdrawals'
+    ExecuteDepositsandWithdrawalsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteDepositsandWithdrawalsRequest'
+    InitiatePaymentsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentsRequest'
+    UpdatePaymentsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentsRequest'
+    ExecutePaymentsRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecutePaymentsRequest'
+    InitiateIssuedDeviceRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateIssuedDeviceRequest'
+    IssuedDevice:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IssuedDevice'
+    RequestIssuedDeviceRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestIssuedDeviceRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

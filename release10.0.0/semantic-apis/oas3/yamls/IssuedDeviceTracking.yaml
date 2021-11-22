@@ -1,0 +1,668 @@
+openapi: 3.0.1
+info:
+  title: Issued Device Tracking
+  description: This service domain handles operational access to issued device tracking services. Services report on the status of devices such as cards, fobs, etc. that have been issued to customers. Service notifications include fraud warnings/alerts and device cancellation.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/IssuedDeviceTracking/10.0.0
+paths:
+  /IssuedDeviceTracking/Initiate:
+    post:
+      tags:
+      - CR - IssuedDeviceState
+      summary: InCR Initiate tracking for an allocated issued device
+      description: InCR Initiate tracking for an allocated issued device
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateIssuedDeviceStateRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuedDeviceState'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/Update:
+    put:
+      tags:
+      - CR - IssuedDeviceState
+      summary: UpCR Update details of a tracked issued device
+      description: UpCR Update details of a tracked issued device
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      requestBody:
+        $ref: '#/components/requestBodies/IssuedDeviceState'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuedDeviceState'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/Retrieve:
+    get:
+      tags:
+      - CR - IssuedDeviceState
+      summary: ReCR Retrieve details about a tracked device
+      description: ReCR Retrieve details about a tracked device
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuedDeviceState'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/InternalNotification/{internalnotificationId}/Update:
+    put:
+      tags:
+      - BQ - InternalNotification
+      summary: UpBQ Update captured internal status details for an issued device
+      description: UpBQ Update captured internal status details for an issued device
+      operationId: UpdateInternalNotification
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      - $ref: '#/components/parameters/InternalNotificationID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateInternalNotificationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateInternalNotificationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/InternalNotification/{internalnotificationId}/Capture:
+    put:
+      tags:
+      - BQ - InternalNotification
+      summary: CaBQ Capture status notification for an issued device
+      description: CaBQ Capture status notification for an issued device
+      operationId: CaptureInternalNotification
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      - $ref: '#/components/parameters/InternalNotificationID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureInternalNotificationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureInternalNotificationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/InternalNotification/{internalnotificationId}/Retrieve:
+    get:
+      tags:
+      - BQ - InternalNotification
+      summary: ReBQ Retrieve internal status notification details
+      description: ReBQ Retrieve internal status notification details
+      operationId: RetrieveInternalNotification
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      - $ref: '#/components/parameters/InternalNotificationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveInternalNotificationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/ExternalReport/{externalreportId}/Update:
+    put:
+      tags:
+      - BQ - ExternalReport
+      summary: UpBQ Update captured externally reported status details for an issued device
+      description: UpBQ Update captured externally reported status details for an issued device
+      operationId: UpdateExternalReport
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      - $ref: '#/components/parameters/ExternalReportID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateExternalReportRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateExternalReportResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/ExternalReport/{externalreportId}/Capture:
+    put:
+      tags:
+      - BQ - ExternalReport
+      summary: CaBQ Capture external notification status details for an issued device
+      description: CaBQ Capture external notification status details for an issued device
+      operationId: CaptureExternalReport
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      - $ref: '#/components/parameters/ExternalReportID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureExternalReportRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureExternalReportResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /IssuedDeviceTracking/{issueddevicetrackingId}/ExternalReport/{externalreportId}/Retrieve:
+    get:
+      tags:
+      - BQ - ExternalReport
+      summary: ReBQ Retrieve external status notification details
+      description: ReBQ Retrieve external status notification details
+      operationId: RetrieveExternalReport
+      parameters:
+      - $ref: '#/components/parameters/IssuedDeviceTrackingID'
+      - $ref: '#/components/parameters/ExternalReportID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveExternalReportResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    IssuedDeviceState:
+      type: object
+      properties:
+        InformationFeedProviderReference:
+          type: object
+        IssuedDeviceAllocationInstanceReference:
+          type: object
+        IssuedDeviceAllocationStatus:
+          type: string
+    ExternalReport:
+      type: object
+      properties:
+        InformationFeedServiceContentRecord:
+          type: string
+        IssuedDeviceReference:
+          type: object
+        IssuedDeviceType:
+          type: string
+        CustomerReference:
+          type: object
+        ProductInstanceReference:
+          type: object
+        StatusUpdateDetails:
+          type: string
+        StatusUpdateResult:
+          type: string
+        Date:
+          type: string
+    InternalNotification:
+      type: object
+      properties:
+        IssuedDeviceReference:
+          type: object
+        IssuedDeviceType:
+          type: string
+        CustomerReference:
+          type: object
+        ProductInstanceReference:
+          type: object
+        StatusUpdateDetails:
+          type: string
+        StatusUpdateResult:
+          type: string
+        Date:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateIssuedDeviceStateRequest:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+    UpdateInternalNotificationRequest:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            InformationFeedProviderReference:
+              type: object
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+        InternalNotification:
+          type: object
+          properties:
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+            StatusUpdateResult:
+              type: string
+    UpdateInternalNotificationResponse:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            InformationFeedProviderReference:
+              type: object
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+        InternalNotification:
+          type: object
+          properties:
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+            StatusUpdateResult:
+              type: string
+    CaptureInternalNotificationRequest:
+      type: object
+      properties:
+        InternalNotification:
+          type: object
+          properties:
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+    CaptureInternalNotificationResponse:
+      type: object
+      properties:
+        InternalNotification:
+          type: object
+          properties:
+            StatusUpdateResult:
+              type: string
+    RetrieveInternalNotificationResponse:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            InformationFeedProviderReference:
+              type: object
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+        InternalNotification:
+          type: object
+          properties:
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+            StatusUpdateResult:
+              type: string
+    UpdateExternalReportRequest:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            InformationFeedProviderReference:
+              type: object
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+        ExternalReport:
+          type: object
+          properties:
+            InformationFeedServiceContentRecord:
+              type: string
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+            StatusUpdateResult:
+              type: string
+    UpdateExternalReportResponse:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            InformationFeedProviderReference:
+              type: object
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+        ExternalReport:
+          type: object
+          properties:
+            InformationFeedServiceContentRecord:
+              type: string
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+            StatusUpdateResult:
+              type: string
+    CaptureExternalReportRequest:
+      type: object
+      properties:
+        ExternalReport:
+          type: object
+          properties:
+            InformationFeedServiceContentRecord:
+              type: string
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+    CaptureExternalReportResponse:
+      type: object
+      properties:
+        ExternalReport:
+          type: object
+          properties:
+            StatusUpdateResult:
+              type: string
+    RetrieveExternalReportResponse:
+      type: object
+      properties:
+        IssuedDeviceState:
+          type: object
+          properties:
+            InformationFeedProviderReference:
+              type: object
+            IssuedDeviceAllocationInstanceReference:
+              type: object
+            IssuedDeviceAllocationStatus:
+              type: string
+        ExternalReport:
+          type: object
+          properties:
+            InformationFeedServiceContentRecord:
+              type: string
+            IssuedDeviceReference:
+              type: object
+            IssuedDeviceType:
+              type: string
+            CustomerReference:
+              type: object
+            ProductInstanceReference:
+              type: object
+            StatusUpdateDetails:
+              type: string
+            StatusUpdateResult:
+              type: string
+  parameters:
+    IssuedDeviceTrackingID:
+      name: issueddevicetrackingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ExternalReportID:
+      name: externalreportId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    InternalNotificationID:
+      name: internalnotificationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateIssuedDeviceStateRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateIssuedDeviceStateRequest'
+    IssuedDeviceState:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IssuedDeviceState'
+    UpdateInternalNotificationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateInternalNotificationRequest'
+    CaptureInternalNotificationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureInternalNotificationRequest'
+    UpdateExternalReportRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateExternalReportRequest'
+    CaptureExternalReportRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureExternalReportRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

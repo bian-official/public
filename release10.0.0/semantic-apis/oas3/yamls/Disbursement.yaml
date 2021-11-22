@@ -1,0 +1,258 @@
+openapi: 3.0.1
+info:
+  title: Disbursement
+  description: This service domain handles the disbursement of funds to newly established loans/facilities as necessary
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/Disbursement/10.0.0
+paths:
+  /Disbursement/Initiate:
+    post:
+      tags:
+      - CR - DisbursementTransaction
+      summary: InCR Initiate a disbursement
+      description: InCR Initiate a disbursement
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateDisbursementTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Disbursement/{disbursementId}/Update:
+    put:
+      tags:
+      - CR - DisbursementTransaction
+      summary: UpCR Update details of a disbursement
+      description: UpCR Update details of a disbursement
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/DisbursementID'
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisbursementTransaction'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Disbursement/{disbursementId}/Execute:
+    put:
+      tags:
+      - CR - DisbursementTransaction
+      summary: ExCR Execute an automated task against an active disbursement
+      description: ExCR Execute an automated task against an active disbursement
+      operationId: Execute
+      parameters:
+      - $ref: '#/components/parameters/DisbursementID'
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisbursementTransaction'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Disbursement/{disbursementId}/Request:
+    put:
+      tags:
+      - CR - DisbursementTransaction
+      summary: RqCR Request manual intervention with a disbursement transaction
+      description: RqCR Request manual intervention with a disbursement transaction
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/DisbursementID'
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisbursementTransaction'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Disbursement/{disbursementId}/Retrieve:
+    get:
+      tags:
+      - CR - DisbursementTransaction
+      summary: ReCR Retrieve details about a disbursement transaction
+      description: ReCR Retrieve details about a disbursement transaction
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/DisbursementID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisbursementTransaction'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    DisbursementTransaction:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        AuthorizingEmployeeReference:
+          type: object
+        CustomerReference:
+          type: object
+        FundingAccountReference:
+          type: object
+        PayeeReference:
+          type: object
+        PayeeProductInstanceReference:
+          type: object
+        PayeeBankReference:
+          type: object
+        Amount:
+          type: string
+        Currency:
+          type: string
+        ValueDate:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateDisbursementTransactionResponse:
+      type: object
+      properties:
+        DisbursementTransaction:
+          type: object
+          properties:
+            ValueDate:
+              type: string
+  parameters:
+    DisbursementID:
+      name: disbursementId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    DisbursementTransaction:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DisbursementTransaction'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

@@ -1,0 +1,659 @@
+openapi: 3.0.1
+info:
+  title: Card Collections
+  description: This service domain administers the recovery of outstanding amounts from cancelled card accounts through internal or external collection agencies.  This may involve negotiating payment terms and/or interest write-downs.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CardCollections/10.0.0
+paths:
+  /CardCollections/Initiate:
+    post:
+      tags:
+      - CR - CardCollectionsProcedure
+      summary: InCR Initiate card collections processing
+      description: InCR Initiate card collections processing
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CardCollectionsProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCardCollectionsProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Update:
+    put:
+      tags:
+      - CR - CardCollectionsProcedure
+      summary: UpCR Update details of card collections processing
+      description: UpCR Update details of card collections processing
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      requestBody:
+        $ref: '#/components/requestBodies/CardCollectionsProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardCollectionsProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Retrieve:
+    get:
+      tags:
+      - CR - CardCollectionsProcedure
+      summary: ReCR Retrieve details about a card collections procedure
+      description: ReCR Retrieve details about a card collections procedure
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardCollectionsProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Assignment/{assignmentId}/Retrieve:
+    get:
+      tags:
+      - BQ - Assignment
+      summary: ReBQ Retrieve details about a card collections assignment
+      description: ReBQ Retrieve details about a card collections assignment
+      operationId: RetrieveAssignment
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      - $ref: '#/components/parameters/AssignmentID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveAssignmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/PaymentTerms/{paymenttermsId}/Retrieve:
+    get:
+      tags:
+      - BQ - PaymentTerms
+      summary: ReBQ Retrieve details about the payment terms for a card collections procedure
+      description: ReBQ Retrieve details about the payment terms for a card collections procedure
+      operationId: RetrievePaymentTerms
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      - $ref: '#/components/parameters/PaymentTermsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardCollectionsProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Payment/Initiate:
+    post:
+      tags:
+      - BQ - Payment
+      summary: InBQ Initiate payment processing against the card collections account
+      description: InBQ Initiate payment processing against the card collections account
+      operationId: InitiatePayment
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Payment/{paymentId}/Update:
+    put:
+      tags:
+      - BQ - Payment
+      summary: UpBQ Update a payment transaction
+      description: UpBQ Update a payment transaction
+      operationId: UpdatePayment
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      - $ref: '#/components/parameters/PaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Payment/{paymentId}/Retrieve:
+    get:
+      tags:
+      - BQ - Payment
+      summary: ReBQ Retrieve details about a payment made against the delinquent account
+      description: ReBQ Retrieve details about a payment made against the delinquent account
+      operationId: RetrievePayment
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      - $ref: '#/components/parameters/PaymentID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievePaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Resolution/{resolutionId}/Update:
+    put:
+      tags:
+      - BQ - Resolution
+      summary: UpBQ Update a resolution plan
+      description: UpBQ Update a resolution plan
+      operationId: UpdateResolution
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      - $ref: '#/components/parameters/ResolutionID'
+      requestBody:
+        $ref: '#/components/requestBodies/Resolution'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resolution'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CardCollections/{cardcollectionsId}/Resolution/{resolutionId}/Retrieve:
+    get:
+      tags:
+      - BQ - Resolution
+      summary: ReBQ Retrieve details about a card collections resolution plan
+      description: ReBQ Retrieve details about a card collections resolution plan
+      operationId: RetrieveResolution
+      parameters:
+      - $ref: '#/components/parameters/CardCollectionsID'
+      - $ref: '#/components/parameters/ResolutionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardCollectionsProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CardCollectionsProcedure:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        ProductandServiceType:
+          type: string
+        CustomerReference:
+          type: object
+        CardType:
+          type: string
+        CardAccountStatus:
+          type: string
+        CardAccountLimits:
+          type: string
+        ConfigurationOrOptions:
+          type: string
+        TaxReference:
+          type: object
+        BillingTransactions:
+          type: string
+        BillingTransactionReference:
+          type: object
+        PaymentTransactions:
+          type: string
+        PaymentTransactionReference:
+          type: object
+        ProductTransactions:
+          type: string
+        ProductTransactionReference:
+          type: object
+        Statements:
+          type: string
+        StatementsReference:
+          type: object
+        CardCollectionsProcessingSchedule:
+          type: string
+    Payment:
+      type: object
+      properties:
+        PaymentTransactionReference:
+          type: object
+        PaymentTransaction:
+          type: string
+        CardCollectionsPaymentNotificationRecord:
+          type: string
+    Resolution:
+      type: object
+      properties:
+        CardCollectionsResolutionDecision:
+          type: string
+        CardCollectionsResolutionWorkProduct:
+          type: string
+    PaymentTerms:
+      type: object
+      properties:
+        CardCollectionsPaymentTermsContactRecord:
+          type: string
+        ContactMessage:
+          type: string
+        ContactDate:
+          type: string
+        ContactResult:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        DocumentContent:
+          type: string
+        CorrespondenceInstanceReference:
+          type: object
+        CorrespondenceContent:
+          type: string
+        CardCollectionsPaymentTermsRenegotiationDecision:
+          type: string
+        CardCollectionsPaymentTermsWorkProduct:
+          type: string
+    Assignment:
+      type: object
+      properties:
+        CustomerCreditRatingAssessmentInstanceReference:
+          type: object
+        CustomerCreditRatingAssessment:
+          type: string
+        CollectionAgencyReference:
+          type: object
+        CollectionAgencyAgreement:
+          type: string
+        CardCollectionsAssignmentDecision:
+          type: string
+        CardCollectionsAssignmentWorkProduct:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateCardCollectionsProcedureResponse:
+      type: object
+      properties:
+        CardCollectionsProcedure:
+          type: object
+          properties:
+            CardCollectionsProcessingSchedule:
+              type: string
+    RetrieveAssignmentResponse:
+      type: object
+      properties:
+        CardCollectionsProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            CardType:
+              type: string
+            CardAccountStatus:
+              type: string
+            CardAccountLimits:
+              type: string
+            ConfigurationOrOptions:
+              type: string
+            TaxReference:
+              type: object
+            BillingTransactions:
+              type: string
+            BillingTransactionReference:
+              type: object
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            ProductTransactions:
+              type: string
+            ProductTransactionReference:
+              type: object
+            Statements:
+              type: string
+            StatementsReference:
+              type: object
+            CardCollectionsProcessingSchedule:
+              type: string
+        Assignment:
+          type: object
+          properties:
+            CustomerCreditRatingAssessmentInstanceReference:
+              type: object
+            CollectionAgencyReference:
+              type: object
+            CollectionAgencyAgreement:
+              type: string
+            CardCollectionsAssignmentDecision:
+              type: string
+            CardCollectionsAssignmentWorkProduct:
+              type: string
+    InitiatePaymentRequest:
+      type: object
+      properties:
+        CardCollectionsProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            CardType:
+              type: string
+            CardAccountStatus:
+              type: string
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            CardCollectionsProcessingSchedule:
+              type: string
+        Payment:
+          type: object
+          properties:
+            CardCollectionsPaymentNotificationRecord:
+              type: string
+    InitiatePaymentResponse:
+      type: object
+      properties:
+        CardCollectionsProcedure:
+          type: object
+          properties:
+            CardCollectionsProcessingSchedule:
+              type: string
+    UpdatePaymentRequest:
+      type: object
+      properties:
+        Payment:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+            CardCollectionsPaymentNotificationRecord:
+              type: string
+    UpdatePaymentResponse:
+      type: object
+      properties:
+        Payment:
+          type: object
+          properties:
+            PaymentTransactionReference:
+              type: object
+            CardCollectionsPaymentNotificationRecord:
+              type: string
+    RetrievePaymentResponse:
+      type: object
+      properties:
+        CardCollectionsProcedure:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductandServiceType:
+              type: string
+            CustomerReference:
+              type: object
+            CardType:
+              type: string
+            CardAccountStatus:
+              type: string
+            PaymentTransactions:
+              type: string
+            PaymentTransactionReference:
+              type: object
+            CardCollectionsProcessingSchedule:
+              type: string
+        Payment:
+          type: object
+          properties:
+            CardCollectionsPaymentNotificationRecord:
+              type: string
+  parameters:
+    CardCollectionsID:
+      name: cardcollectionsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentID:
+      name: paymentId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ResolutionID:
+      name: resolutionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PaymentTermsID:
+      name: paymenttermsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AssignmentID:
+      name: assignmentId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    CardCollectionsProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CardCollectionsProcedure'
+    InitiatePaymentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentRequest'
+    UpdatePaymentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentRequest'
+    Resolution:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Resolution'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

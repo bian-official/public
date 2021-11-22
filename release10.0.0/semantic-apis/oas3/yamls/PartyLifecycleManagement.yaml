@@ -1,0 +1,803 @@
+openapi: 3.0.1
+info:
+  title: Party Lifecycle Management
+  description: This service domain tracks the state of a party relationship with the bank from the initial checks made during the establishment of a new party connection and subsequently maintained as necessary over the duration of the relationship. The checks and the maintenance requirements will vary by party type and jurisdiction. The checks cover bank specific and legal and regulatory considerations and may be updated based on a standard schedule or by request in specific circumstances.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/PartyLifecycleManagement/10.0.0
+paths:
+  /PartyLifecycleManagement/Initiate:
+    post:
+      tags:
+      - CR - PartyRelationshipProcedure
+      summary: InCR Initiate party life-cycle processing for a new party
+      description: InCR Initiate party life-cycle processing for a new party
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePartyRelationshipProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatePartyRelationshipProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Update:
+    put:
+      tags:
+      - CR - PartyRelationshipProcedure
+      summary: UpCR Update details about a party life-cycle procedure
+      description: UpCR Update details about a party life-cycle procedure
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/PartyRelationshipProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyRelationshipProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Execute:
+    put:
+      tags:
+      - CR - PartyRelationshipProcedure
+      summary: ExCR Execute an automated action (e.g. input data)
+      description: ExCR Execute an automated action (e.g. input data)
+      operationId: Execute
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecutePartyRelationshipProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutePartyRelationshipProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Request:
+    put:
+      tags:
+      - CR - PartyRelationshipProcedure
+      summary: RqCR Request manual intervention (e.g. negotiate resolution)
+      description: RqCR Request manual intervention (e.g. negotiate resolution)
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestPartyRelationshipProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPartyRelationshipProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Retrieve:
+    get:
+      tags:
+      - CR - PartyRelationshipProcedure
+      summary: ReCR Retrieve details about a party life-cycle procedure
+      description: ReCR Retrieve details about a party life-cycle procedure
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyRelationshipProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Authentication/{authenticationId}/Retrieve:
+    get:
+      tags:
+      - BQ - Authentication
+      summary: ReBQ Retrieve details about a party authentication procedure
+      description: ReBQ Retrieve details about a party authentication procedure
+      operationId: RetrieveAuthentication
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/AuthenticationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyRelationshipProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Qualification/{qualificationId}/Retrieve:
+    get:
+      tags:
+      - BQ - Qualification
+      summary: ReBQ Retrieve details about a party qualification procedure
+      description: ReBQ Retrieve details about a party qualification procedure
+      operationId: RetrieveQualification
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/QualificationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyRelationshipProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Documentation/{documentationId}/Execute:
+    put:
+      tags:
+      - BQ - Documentation
+      summary: ExBQ Execute an automated action (e.g. input data about a document)
+      description: ExBQ Execute an automated action (e.g. input data about a document)
+      operationId: ExecuteDocumentation
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/DocumentationID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteDocumentationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteDocumentationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Documentation/{documentationId}/Request:
+    put:
+      tags:
+      - BQ - Documentation
+      summary: RqBQ Request manual intervention (e.g. handle a document exchange)
+      description: RqBQ Request manual intervention (e.g. handle a document exchange)
+      operationId: RequestDocumentation
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/DocumentationID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestDocumentationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDocumentationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Documentation/{documentationId}/Retrieve:
+    get:
+      tags:
+      - BQ - Documentation
+      summary: ReBQ Retrieve details about document processing for a party life-cycle procedure
+      description: ReBQ Retrieve details about document processing for a party life-cycle procedure
+      operationId: RetrieveDocumentation
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/DocumentationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyRelationshipProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Precedents/{precedentsId}/Update:
+    put:
+      tags:
+      - BQ - Precedents
+      summary: UpBQ Update details about customer precedents
+      description: UpBQ Update details about customer precedents
+      operationId: UpdatePrecedents
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/PrecedentsID'
+      requestBody:
+        $ref: '#/components/requestBodies/Precedents'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Precedents'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /PartyLifecycleManagement/{partylifecyclemanagementId}/Precedents/{precedentsId}/Retrieve:
+    get:
+      tags:
+      - BQ - Precedents
+      summary: ReBQ Retrieve details about customer precedent maintenance
+      description: ReBQ Retrieve details about customer precedent maintenance
+      operationId: RetrievePrecedents
+      parameters:
+      - $ref: '#/components/parameters/PartyLifecycleManagementID'
+      - $ref: '#/components/parameters/PrecedentsID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyRelationshipProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    PartyRelationshipProcedure:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        PartyReference:
+          type: object
+        PartyRelationshipType:
+          type: string
+        PartyLife-cycleMaintenanceSchedule:
+          type: string
+        PartyLife-cycleMaintenanceTask:
+          type: string
+        PartyLife-cycleMaintenanceTaskType:
+          type: string
+        PartyLife-cycleMaintenanceWorkProducts:
+          type: string
+        PartyLife-cycleMaintenanceTaskResult:
+          type: string
+        CustomerPrecedentProfileUpdateLog:
+          type: string
+    Authentication:
+      type: object
+      properties:
+        AuthenticationType:
+          type: string
+        PublicDirectoryReference:
+          type: object
+        SpecialistAgencyServiceReference:
+          type: object
+        AuthenticationTaskRecord:
+          type: string
+        AuthenticationTaskDescription:
+          type: string
+        SpecialistAgencyServiceRequestResult:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        AuthenticationTaskWorkProducts:
+          type: string
+        AuthenticationTaskResult:
+          type: string
+    Qualification:
+      type: object
+      properties:
+        QualificationType:
+          type: string
+        PublicDirectoryReference:
+          type: object
+        SpecialistAgencyServiceReference:
+          type: object
+        QualificationTaskRecord:
+          type: string
+        QualificationTaskDescription:
+          type: string
+        SpecialistAgency/RegulatorServiceRequestResult:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        QualificationTaskWorkProducts:
+          type: string
+        QualificationTaskResult:
+          type: string
+    Documentation:
+      type: object
+      properties:
+        PartyLife-cycleRequiredDocumentation:
+          type: string
+        PartyLife-cycleDocumentSchedule:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+    Precedents:
+      type: object
+      properties:
+        PrecedentType:
+          type: string
+        CustomerPrecedentReference:
+          type: object
+        CustomerPrecedentValue:
+          type: string
+        CustomerPrecedentValueDate:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiatePartyRelationshipProcedureRequest:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            PartyRelationshipType:
+              type: string
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+    InitiatePartyRelationshipProcedureResponse:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+            PartyLife-cycleMaintenanceWorkProducts:
+              type: string
+            PartyLife-cycleMaintenanceTaskResult:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+    ExecutePartyRelationshipProcedureRequest:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            PartyRelationshipType:
+              type: string
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+    ExecutePartyRelationshipProcedureResponse:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+            PartyLife-cycleMaintenanceWorkProducts:
+              type: string
+            PartyLife-cycleMaintenanceTaskResult:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+    RequestPartyRelationshipProcedureRequest:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            PartyRelationshipType:
+              type: string
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+    RequestPartyRelationshipProcedureResponse:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+            PartyLife-cycleMaintenanceWorkProducts:
+              type: string
+            PartyLife-cycleMaintenanceTaskResult:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+    ExecuteDocumentationRequest:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            PartyRelationshipType:
+              type: string
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+        Documentation:
+          type: object
+          properties:
+            PartyLife-cycleRequiredDocumentation:
+              type: string
+            PartyLife-cycleDocumentSchedule:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+    ExecuteDocumentationResponse:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceWorkProducts:
+              type: string
+            PartyLife-cycleMaintenanceTaskResult:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+        Documentation:
+          type: object
+          properties:
+            PartyLife-cycleRequiredDocumentation:
+              type: string
+            PartyLife-cycleDocumentSchedule:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+    RequestDocumentationRequest:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            PartyRelationshipType:
+              type: string
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceTaskType:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+        Documentation:
+          type: object
+          properties:
+            PartyLife-cycleRequiredDocumentation:
+              type: string
+            PartyLife-cycleDocumentSchedule:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+    RequestDocumentationResponse:
+      type: object
+      properties:
+        PartyRelationshipProcedure:
+          type: object
+          properties:
+            PartyLife-cycleMaintenanceSchedule:
+              type: string
+            PartyLife-cycleMaintenanceTask:
+              type: string
+            PartyLife-cycleMaintenanceWorkProducts:
+              type: string
+            PartyLife-cycleMaintenanceTaskResult:
+              type: string
+            CustomerPrecedentProfileUpdateLog:
+              type: string
+        Documentation:
+          type: object
+          properties:
+            PartyLife-cycleRequiredDocumentation:
+              type: string
+            PartyLife-cycleDocumentSchedule:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+  parameters:
+    PartyLifecycleManagementID:
+      name: partylifecyclemanagementId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AuthenticationID:
+      name: authenticationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    QualificationID:
+      name: qualificationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    DocumentationID:
+      name: documentationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    PrecedentsID:
+      name: precedentsId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiatePartyRelationshipProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePartyRelationshipProcedureRequest'
+    PartyRelationshipProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PartyRelationshipProcedure'
+    ExecutePartyRelationshipProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecutePartyRelationshipProcedureRequest'
+    RequestPartyRelationshipProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestPartyRelationshipProcedureRequest'
+    ExecuteDocumentationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteDocumentationRequest'
+    RequestDocumentationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestDocumentationRequest'
+    Precedents:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Precedents'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

@@ -1,0 +1,364 @@
+openapi: 3.0.1
+info:
+  title: Servicing Order
+  description: This service domain handles the processing of a customer servicing request as a predefined procedure. A range of standard servicing requests can be supported. The process can include a check of permissions when the request is made by a third party/service provider
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/ServicingOrder/10.0.0
+paths:
+  /ServicingOrder/Initiate:
+    post:
+      tags:
+      - CR - ServicingOrderProcedure
+      summary: InCR Initiate a servicing order (within a contact session)
+      description: InCR Initiate a servicing order (within a contact session)
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateServicingOrderProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateServicingOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ServicingOrder/{servicingorderId}/Execute:
+    put:
+      tags:
+      - CR - ServicingOrderProcedure
+      summary: ExCR Execute an automated task in a servicing order (e.g. upload data)
+      description: ExCR Execute an automated task in a servicing order (e.g. upload data)
+      operationId: Execute
+      parameters:
+      - $ref: '#/components/parameters/ServicingOrderID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteServicingOrderProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteServicingOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ServicingOrder/{servicingorderId}/Request:
+    put:
+      tags:
+      - CR - ServicingOrderProcedure
+      summary: RqCR Request manual intervention in a servicing order (e.g. engage a servicing agent)
+      description: RqCR Request manual intervention in a servicing order (e.g. engage a servicing agent)
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/ServicingOrderID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestServicingOrderProcedureRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestServicingOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /ServicingOrder/{servicingorderId}/Retrieve:
+    get:
+      tags:
+      - CR - ServicingOrderProcedure
+      summary: ReCR Retrieve details about a servicing order
+      description: ReCR Retrieve details about a servicing order
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/ServicingOrderID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveServicingOrderProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    ServicingOrderProcedure:
+      type: object
+      properties:
+        ThirdPartyReference:
+          type: object
+        ThirdPartyServicingMandateReference:
+          type: object
+        ThirdPartyServicingMandate:
+          type: string
+        CustomerReference:
+          type: object
+        CustomerEligibilityAssessmentInstanceReference:
+          type: object
+        ServicingOrderType:
+          type: string
+        ServicingOrderTaskRecord:
+          type: string
+        ServicingOrderDescription:
+          type: string
+        Date:
+          type: string
+        EmployeeOrBusinessUnitReference:
+          type: object
+        ServicingOrderWorkProduct:
+          type: string
+        ServicingOrderWorkTaskResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateServicingOrderProcedureRequest:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ThirdPartyReference:
+              type: object
+            ThirdPartyServicingMandateReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerEligibilityAssessmentInstanceReference:
+              type: object
+            ServicingOrderType:
+              type: string
+            ServicingOrderTaskRecord:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+    InitiateServicingOrderProcedureResponse:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ServicingOrderTaskRecord:
+              type: string
+            ServicingOrderDescription:
+              type: string
+            ServicingOrderWorkProduct:
+              type: string
+            ServicingOrderWorkTaskResult:
+              type: string
+    ExecuteServicingOrderProcedureRequest:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ThirdPartyReference:
+              type: object
+            ThirdPartyServicingMandateReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerEligibilityAssessmentInstanceReference:
+              type: object
+            ServicingOrderType:
+              type: string
+            ServicingOrderTaskRecord:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+    ExecuteServicingOrderProcedureResponse:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ServicingOrderTaskRecord:
+              type: string
+            ServicingOrderDescription:
+              type: string
+            ServicingOrderWorkProduct:
+              type: string
+            ServicingOrderWorkTaskResult:
+              type: string
+    RequestServicingOrderProcedureRequest:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ThirdPartyReference:
+              type: object
+            ThirdPartyServicingMandateReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerEligibilityAssessmentInstanceReference:
+              type: object
+            ServicingOrderType:
+              type: string
+            ServicingOrderTaskRecord:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+    RequestServicingOrderProcedureResponse:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ServicingOrderTaskRecord:
+              type: string
+            ServicingOrderDescription:
+              type: string
+            ServicingOrderWorkProduct:
+              type: string
+            ServicingOrderWorkTaskResult:
+              type: string
+    RetrieveServicingOrderProcedureResponse:
+      type: object
+      properties:
+        ServicingOrderProcedure:
+          type: object
+          properties:
+            ThirdPartyReference:
+              type: object
+            ThirdPartyServicingMandateReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerEligibilityAssessmentInstanceReference:
+              type: object
+            ServicingOrderType:
+              type: string
+            ServicingOrderTaskRecord:
+              type: string
+            ServicingOrderDescription:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+            ServicingOrderWorkProduct:
+              type: string
+            ServicingOrderWorkTaskResult:
+              type: string
+  parameters:
+    ServicingOrderID:
+      name: servicingorderId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateServicingOrderProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateServicingOrderProcedureRequest'
+    ExecuteServicingOrderProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteServicingOrderProcedureRequest'
+    RequestServicingOrderProcedureRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestServicingOrderProcedureRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

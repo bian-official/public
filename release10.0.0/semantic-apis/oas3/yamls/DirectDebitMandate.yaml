@@ -1,0 +1,448 @@
+openapi: 3.0.1
+info:
+  title: Direct Debit Mandate
+  description: This service domains manages the customer mandates associated with direct debit processing for a corporate client
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/DirectDebitMandate/10.0.0
+paths:
+  /DirectDebitMandate/Register:
+    post:
+      tags:
+      - CR - DirectDebitMandateDirectoryEntry
+      summary: InCR Register a new direct debit
+      description: InCR Register a new direct debit
+      operationId: Register
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/DirectDebitMandateDirectoryEntry'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/Update:
+    put:
+      tags:
+      - CR - DirectDebitMandateDirectoryEntry
+      summary: UpCR Update details of an existing collection of DD mandates maintained for a corporate customer
+      description: UpCR Update details of an existing collection of DD mandates maintained for a corporate customer
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      requestBody:
+        $ref: '#/components/requestBodies/DirectDebitMandateDirectoryEntry'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectDebitMandateDirectoryEntry'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/Retrieve:
+    get:
+      tags:
+      - CR - DirectDebitMandateDirectoryEntry
+      summary: ReCR Retrieve details about a collection of DD mandates
+      description: ReCR Retrieve details about a collection of DD mandates
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectDebitMandateDirectoryEntry'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/MandateRegistration/Register:
+    post:
+      tags:
+      - BQ - MandateRegistration
+      summary: ReBQ Register a customer's DD mandate for a corporate customer
+      description: ReBQ Register a customer's DD mandate for a corporate customer
+      operationId: RegisterMandateRegistration
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      requestBody:
+        $ref: '#/components/requestBodies/DirectDebitMandateDirectoryEntry'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterMandateRegistrationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/MandateRegistration/{mandateregistrationId}/Update:
+    put:
+      tags:
+      - BQ - MandateRegistration
+      summary: UpBQ Update details of the customer's DD mandate
+      description: UpBQ Update details of the customer's DD mandate
+      operationId: UpdateMandateRegistration
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      - $ref: '#/components/parameters/MandateRegistrationID'
+      requestBody:
+        $ref: '#/components/requestBodies/MandateRegistration'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MandateRegistration'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/MandateRegistration/{mandateregistrationId}/Execute:
+    put:
+      tags:
+      - BQ - MandateRegistration
+      summary: ExBQ Execute an automated action against the DD Mandate (e.g. test proposed payment)
+      description: ExBQ Execute an automated action against the DD Mandate (e.g. test proposed payment)
+      operationId: ExecuteMandateRegistration
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      - $ref: '#/components/parameters/MandateRegistrationID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteMandateRegistrationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteMandateRegistrationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/MandateRegistration/{mandateregistrationId}/Request:
+    put:
+      tags:
+      - BQ - MandateRegistration
+      summary: ExBQ Request intervention with a customer's DD Mandate (e.g. retrieve paperwork)
+      description: ExBQ Request intervention with a customer's DD Mandate (e.g. retrieve paperwork)
+      operationId: RequestMandateRegistration
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      - $ref: '#/components/parameters/MandateRegistrationID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestMandateRegistrationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestMandateRegistrationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /DirectDebitMandate/{directdebitmandateId}/MandateRegistration/{mandateregistrationId}/Retrieve:
+    get:
+      tags:
+      - BQ - MandateRegistration
+      summary: ReBQ Retrieve details about a customer's DD mandate
+      description: ReBQ Retrieve details about a customer's DD mandate
+      operationId: RetrieveMandateRegistration
+      parameters:
+      - $ref: '#/components/parameters/DirectDebitMandateID'
+      - $ref: '#/components/parameters/MandateRegistrationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MandateRegistration'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    DirectDebitMandateDirectoryEntry:
+      type: object
+      properties:
+        MandatedCustomerReference:
+          type: object
+        MandateDescription:
+          type: string
+        MandateCollectionValidPeriod:
+          type: string
+    MandateRegistration:
+      type: object
+      properties:
+        DirectDebitMandateCustomerReference:
+          type: object
+        DirectDebitMandateCustomerPseudonym:
+          type: string
+        DirectDebitMandateBankReference:
+          type: object
+        DirectDebitMandateAccountReference:
+          type: object
+        DirectDebitMandateValidDates:
+          type: string
+        DirectDebitMandateTerms:
+          type: string
+        CorrespondenceInstanceReference:
+          type: object
+        CorrespondenceContent:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        DocumentContent:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    RegisterMandateRegistrationResponse:
+      type: object
+      properties:
+        MandateRegistration:
+          type: object
+          properties:
+            CorrespondenceInstanceReference:
+              type: object
+            CorrespondenceContent:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            DocumentContent:
+              type: string
+    ExecuteMandateRegistrationRequest:
+      type: object
+      properties:
+        MandateRegistration:
+          type: object
+          properties:
+            DirectDebitMandateCustomerPseudonym:
+              type: string
+    ExecuteMandateRegistrationResponse:
+      type: object
+      properties:
+        MandateRegistration:
+          type: object
+          properties:
+            DirectDebitMandateCustomerReference:
+              type: object
+            DirectDebitMandateBankReference:
+              type: object
+            DirectDebitMandateAccountReference:
+              type: object
+            DirectDebitMandateValidDates:
+              type: string
+            DirectDebitMandateTerms:
+              type: string
+    RequestMandateRegistrationRequest:
+      type: object
+      properties:
+        MandateRegistration:
+          type: object
+          properties:
+            DirectDebitMandateCustomerPseudonym:
+              type: string
+    RequestMandateRegistrationResponse:
+      type: object
+      properties:
+        MandateRegistration:
+          type: object
+          properties:
+            DirectDebitMandateCustomerReference:
+              type: object
+            DirectDebitMandateBankReference:
+              type: object
+            DirectDebitMandateAccountReference:
+              type: object
+            DirectDebitMandateValidDates:
+              type: string
+            DirectDebitMandateTerms:
+              type: string
+            CorrespondenceInstanceReference:
+              type: object
+            CorrespondenceContent:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            DocumentContent:
+              type: string
+  parameters:
+    DirectDebitMandateID:
+      name: directdebitmandateId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    MandateRegistrationID:
+      name: mandateregistrationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    DirectDebitMandateDirectoryEntry:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DirectDebitMandateDirectoryEntry'
+    MandateRegistration:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MandateRegistration'
+    ExecuteMandateRegistrationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteMandateRegistrationRequest'
+    RequestMandateRegistrationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestMandateRegistrationRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

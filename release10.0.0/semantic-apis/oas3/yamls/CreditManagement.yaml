@@ -1,0 +1,284 @@
+openapi: 3.0.1
+info:
+  title: Credit Management
+  description: This service domain provides a bank-wide/oversight function to qualify credit pricing for offered products and services to reflect the bank's appetite to write the business. This decision can override the standard product pricing procedure
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CreditManagement/10.0.0
+paths:
+  /CreditManagement/Evaluate:
+    post:
+      tags:
+      - CR - CreditPricingAssessment
+      summary: EvCR Evaluate a proposed transaction pricing against group credit policy
+      description: EvCR Evaluate a proposed transaction pricing against group credit policy
+      operationId: Evaluate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateCreditPricingAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateCreditPricingAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CreditManagement/{creditmanagementId}/Update:
+    put:
+      tags:
+      - CR - CreditPricingAssessment
+      summary: UpCR Update details of an active credit pricing assessment
+      description: UpCR Update details of an active credit pricing assessment
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CreditManagementID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCreditPricingAssessmentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCreditPricingAssessmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CreditManagement/{creditmanagementId}/Retrieve:
+    get:
+      tags:
+      - CR - CreditPricingAssessment
+      summary: ReCR Retrieve details about a credit pricing assessment
+      description: ReCR Retrieve details about a credit pricing assessment
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CreditManagementID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditPricingAssessment'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CreditPricingAssessment:
+      type: object
+      properties:
+        BusinessUnitReference:
+          type: object
+        CustomerReference:
+          type: object
+        SectorReference:
+          type: object
+        ProductType:
+          type: string
+        ProposedTransactionReference:
+          type: object
+        ProposedTransactionRecord:
+          type: string
+        ProposedTransactionType:
+          type: string
+        ProposedTransactionAmount:
+          type: number
+        ProposedTransactionRecordDate:
+          type: string
+        ProposedTransactionBookingEntity:
+          type: string
+        ProposedTransactionCreditPricingAssessment:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    EvaluateCreditPricingAssessmentRequest:
+      type: object
+      properties:
+        CreditPricingAssessment:
+          type: object
+          properties:
+            BusinessUnitReference:
+              type: object
+            CustomerReference:
+              type: object
+            SectorReference:
+              type: object
+            ProductType:
+              type: string
+            ProposedTransactionReference:
+              type: object
+            ProposedTransactionRecord:
+              type: string
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionAmount:
+              type: number
+            ProposedTransactionRecordDate:
+              type: string
+            ProposedTransactionBookingEntity:
+              type: string
+    EvaluateCreditPricingAssessmentResponse:
+      type: object
+      properties:
+        CreditPricingAssessment:
+          type: object
+          properties:
+            ProposedTransactionCreditPricingAssessment:
+              type: string
+    UpdateCreditPricingAssessmentRequest:
+      type: object
+      properties:
+        CreditPricingAssessment:
+          type: object
+          properties:
+            BusinessUnitReference:
+              type: object
+            CustomerReference:
+              type: object
+            SectorReference:
+              type: object
+            ProductType:
+              type: string
+            ProposedTransactionReference:
+              type: object
+            ProposedTransactionRecord:
+              type: string
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionAmount:
+              type: number
+            ProposedTransactionRecordDate:
+              type: string
+            ProposedTransactionBookingEntity:
+              type: string
+    UpdateCreditPricingAssessmentResponse:
+      type: object
+      properties:
+        CreditPricingAssessment:
+          type: object
+          properties:
+            BusinessUnitReference:
+              type: object
+            CustomerReference:
+              type: object
+            SectorReference:
+              type: object
+            ProductType:
+              type: string
+            ProposedTransactionReference:
+              type: object
+            ProposedTransactionRecord:
+              type: string
+            ProposedTransactionType:
+              type: string
+            ProposedTransactionAmount:
+              type: number
+            ProposedTransactionRecordDate:
+              type: string
+            ProposedTransactionBookingEntity:
+              type: string
+  parameters:
+    CreditManagementID:
+      name: creditmanagementId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    EvaluateCreditPricingAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateCreditPricingAssessmentRequest'
+    UpdateCreditPricingAssessmentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCreditPricingAssessmentRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

@@ -1,0 +1,603 @@
+openapi: 3.0.1
+info:
+  title: Customer Case
+  description: This service domain handles the initiation, tracking, resolution and reporting on customer cases (issues that typically require corrective response to some financial transaction)
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CustomerCase/10.0.0
+paths:
+  /CustomerCase/Initiate:
+    post:
+      tags:
+      - CR - CustomerCaseProcedure
+      summary: InCR Initiate a customer case procedure
+      description: InCR Initiate a customer case procedure
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerCaseProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCustomerCaseProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Update:
+    put:
+      tags:
+      - CR - CustomerCaseProcedure
+      summary: UpCR Update details about a customer case
+      description: UpCR Update details about a customer case
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerCaseProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerCaseProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Retrieve:
+    get:
+      tags:
+      - CR - CustomerCaseProcedure
+      summary: ReCR Retrieve details about a customer case
+      description: ReCR Retrieve details about a customer case
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerCaseProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Analysis/{analysisId}/Update:
+    put:
+      tags:
+      - BQ - Analysis
+      summary: UpBQ Update details of the analysis in a customer case
+      description: UpBQ Update details of the analysis in a customer case
+      operationId: UpdateAnalysis
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      - $ref: '#/components/parameters/AnalysisID'
+      requestBody:
+        $ref: '#/components/requestBodies/Analysis'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Analysis/{analysisId}/Retrieve:
+    get:
+      tags:
+      - BQ - Analysis
+      summary: ReBQ Retrieve details about the analysis of a customer case
+      description: ReBQ Retrieve details about the analysis of a customer case
+      operationId: RetrieveAnalysis
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      - $ref: '#/components/parameters/AnalysisID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveAnalysisResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Determination/{determinationId}/Update:
+    put:
+      tags:
+      - BQ - Determination
+      summary: UpBQ Update details of the determination in a customer case
+      description: UpBQ Update details of the determination in a customer case
+      operationId: UpdateDetermination
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      - $ref: '#/components/parameters/DeterminationID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateDeterminationRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateDeterminationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Determination/{determinationId}/Retrieve:
+    get:
+      tags:
+      - BQ - Determination
+      summary: ReBQ Retrieve details about the determination of a customer case
+      description: ReBQ Retrieve details about the determination of a customer case
+      operationId: RetrieveDetermination
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      - $ref: '#/components/parameters/DeterminationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDeterminationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Resolution/{resolutionId}/Update:
+    put:
+      tags:
+      - BQ - Resolution
+      summary: UpBQ Update details of the resolution tasks of a customer case
+      description: UpBQ Update details of the resolution tasks of a customer case
+      operationId: UpdateResolution
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      - $ref: '#/components/parameters/ResolutionID'
+      requestBody:
+        $ref: '#/components/requestBodies/Resolution'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resolution'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerCase/{customercaseId}/Resolution/{resolutionId}/Retrieve:
+    get:
+      tags:
+      - BQ - Resolution
+      summary: ReBQ Retrieve details about the resolution actions for a customer case
+      description: ReBQ Retrieve details about the resolution actions for a customer case
+      operationId: RetrieveResolution
+      parameters:
+      - $ref: '#/components/parameters/CustomerCaseID'
+      - $ref: '#/components/parameters/ResolutionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveResolutionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CustomerCaseProcedure:
+      type: object
+      properties:
+        CustomerCaseType:
+          type: string
+        ProductInstanceReference:
+          type: object
+        CustomerReference:
+          type: object
+        CustomerContactRecordReference:
+          type: object
+        ProductTransactionReference:
+          type: object
+        ProductTransactionRecord:
+          type: string
+        CaseLocation:
+          type: string
+        Date:
+          type: string
+        EmployeeOrBusinessUnitReference:
+          type: object
+        CustomerCaseResolutionSchedule:
+          type: string
+    Analysis:
+      type: object
+      properties:
+        CustomerContactRecord:
+          type: string
+        CaseAnalysisWorkProduct:
+          type: string
+        CaseAnalysisWorkTaskResult:
+          type: string
+    Resolution:
+      type: object
+      properties:
+        CorrespondenceInstanceReference:
+          type: object
+        CorrespondenceContent:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        DocumentContent:
+          type: string
+        Employee/BusinessUnitReference:
+          type: object
+        PaymentOrderReference:
+          type: object
+    Determination:
+      type: object
+      properties:
+        CustomerAgreementInstanceReference:
+          type: object
+        CustomerAgreement:
+          type: string
+        CaseDeterminationWorkProduct:
+          type: string
+        CaseDeterminationWorkTaskResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateCustomerCaseProcedureResponse:
+      type: object
+      properties:
+        CustomerCaseProcedure:
+          type: object
+          properties:
+            Date:
+              type: string
+            CustomerCaseResolutionSchedule:
+              type: string
+    RetrieveAnalysisResponse:
+      type: object
+      properties:
+        CustomerCaseProcedure:
+          type: object
+          properties:
+            CustomerCaseType:
+              type: string
+            ProductInstanceReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            ProductTransactionReference:
+              type: object
+            ProductTransactionRecord:
+              type: string
+            CaseLocation:
+              type: string
+            Date:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+            CustomerCaseResolutionSchedule:
+              type: string
+        Analysis:
+          type: object
+          properties:
+            CaseAnalysisWorkProduct:
+              type: string
+            CaseAnalysisWorkTaskResult:
+              type: string
+    UpdateDeterminationRequest:
+      type: object
+      properties:
+        Determination:
+          type: object
+          properties:
+            CustomerAgreementInstanceReference:
+              type: object
+            CaseDeterminationWorkProduct:
+              type: string
+            CaseDeterminationWorkTaskResult:
+              type: string
+    UpdateDeterminationResponse:
+      type: object
+      properties:
+        Determination:
+          type: object
+          properties:
+            CustomerAgreementInstanceReference:
+              type: object
+            CaseDeterminationWorkProduct:
+              type: string
+            CaseDeterminationWorkTaskResult:
+              type: string
+    RetrieveDeterminationResponse:
+      type: object
+      properties:
+        CustomerCaseProcedure:
+          type: object
+          properties:
+            CustomerCaseType:
+              type: string
+            ProductInstanceReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            ProductTransactionReference:
+              type: object
+            ProductTransactionRecord:
+              type: string
+            CaseLocation:
+              type: string
+            Date:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+            CustomerCaseResolutionSchedule:
+              type: string
+        Analysis:
+          type: object
+          properties:
+            CaseAnalysisWorkTaskResult:
+              type: string
+        Determination:
+          type: object
+          properties:
+            CustomerAgreementInstanceReference:
+              type: object
+            CaseDeterminationWorkProduct:
+              type: string
+            CaseDeterminationWorkTaskResult:
+              type: string
+    RetrieveResolutionResponse:
+      type: object
+      properties:
+        CustomerCaseProcedure:
+          type: object
+          properties:
+            CustomerCaseType:
+              type: string
+            ProductInstanceReference:
+              type: object
+            CustomerReference:
+              type: object
+            CustomerContactRecordReference:
+              type: object
+            ProductTransactionReference:
+              type: object
+            ProductTransactionRecord:
+              type: string
+            CaseLocation:
+              type: string
+            Date:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+            CustomerCaseResolutionSchedule:
+              type: string
+        Analysis:
+          type: object
+          properties:
+            CaseAnalysisWorkTaskResult:
+              type: string
+        Determination:
+          type: object
+          properties:
+            CaseDeterminationWorkTaskResult:
+              type: string
+        Resolution:
+          type: object
+          properties:
+            CorrespondenceInstanceReference:
+              type: object
+            CorrespondenceContent:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            DocumentContent:
+              type: string
+            PaymentOrderReference:
+              type: object
+  parameters:
+    CustomerCaseID:
+      name: customercaseId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AnalysisID:
+      name: analysisId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ResolutionID:
+      name: resolutionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    DeterminationID:
+      name: determinationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    CustomerCaseProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerCaseProcedure'
+    Analysis:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Analysis'
+    UpdateDeterminationRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateDeterminationRequest'
+    Resolution:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Resolution'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

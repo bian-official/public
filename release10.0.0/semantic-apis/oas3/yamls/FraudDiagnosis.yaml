@@ -1,0 +1,433 @@
+openapi: 3.0.1
+info:
+  title: Fraud Diagnosis
+  description: This service domain handles the evaluation of detected possible fraud to support an appropriate response to contain the exposure
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/FraudDiagnosis/10.0.0
+paths:
+  /FraudDiagnosis/Evaluate:
+    post:
+      tags:
+      - CR - FraudDiagnosisAnalysis
+      summary: EvCR Start a fraud diagnosis evaluation on a transaction
+      description: EvCR Start a fraud diagnosis evaluation on a transaction
+      operationId: Evaluate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateFraudDiagnosisAnalysisRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateFraudDiagnosisAnalysisResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudDiagnosis/{frauddiagnosisId}/Update:
+    put:
+      tags:
+      - CR - FraudDiagnosisAnalysis
+      summary: UpCR Update details for an active fraud diagnosis
+      description: UpCR Update details for an active fraud diagnosis
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/FraudDiagnosisID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateFraudDiagnosisAnalysisRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateFraudDiagnosisAnalysisResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudDiagnosis/{frauddiagnosisId}/Retrieve:
+    get:
+      tags:
+      - CR - FraudDiagnosisAnalysis
+      summary: ReCR Retrieve details about a fraud diagnosis
+      description: ReCR Retrieve details about a fraud diagnosis
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/FraudDiagnosisID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudDiagnosisAnalysis'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudDiagnosis/{frauddiagnosisId}/CustomerBehavior/{customerbehaviorId}/Retrieve:
+    get:
+      tags:
+      - BQ - CustomerBehavior
+      summary: ReBQ Retrieve details about a customer behavior analysis
+      description: ReBQ Retrieve details about a customer behavior analysis
+      operationId: RetrieveCustomerBehavior
+      parameters:
+      - $ref: '#/components/parameters/FraudDiagnosisID'
+      - $ref: '#/components/parameters/CustomerBehaviorID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudDiagnosisAnalysis'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudDiagnosis/{frauddiagnosisId}/EconomicModel/{economicmodelId}/Retrieve:
+    get:
+      tags:
+      - BQ - EconomicModel
+      summary: ReBQ Retrieve details about an economic model analysis
+      description: ReBQ Retrieve details about an economic model analysis
+      operationId: RetrieveEconomicModel
+      parameters:
+      - $ref: '#/components/parameters/FraudDiagnosisID'
+      - $ref: '#/components/parameters/EconomicModelID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudDiagnosisAnalysis'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudDiagnosis/{frauddiagnosisId}/AnalystReview/{analystreviewId}/Request:
+    put:
+      tags:
+      - BQ - AnalystReview
+      summary: RqBQ Request access to an analist for an active diagnosis
+      description: RqBQ Request access to an analist for an active diagnosis
+      operationId: RequestAnalystReview
+      parameters:
+      - $ref: '#/components/parameters/FraudDiagnosisID'
+      - $ref: '#/components/parameters/AnalystReviewID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestAnalystReviewRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalystReview'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudDiagnosis/{frauddiagnosisId}/AnalystReview/{analystreviewId}/Retrieve:
+    get:
+      tags:
+      - BQ - AnalystReview
+      summary: ReBQ Retrieve details about a analyst review of a transaction
+      description: ReBQ Retrieve details about a analyst review of a transaction
+      operationId: RetrieveAnalystReview
+      parameters:
+      - $ref: '#/components/parameters/FraudDiagnosisID'
+      - $ref: '#/components/parameters/AnalystReviewID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudDiagnosisAnalysis'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    FraudDiagnosisAnalysis:
+      type: object
+      properties:
+        ProductProductionSessionReference:
+          type: object
+        FraudDiagnosisEvaluationProfile:
+          type: string
+        FraudDiagnosisTransactionConsolidationRecord:
+          type: string
+        FraudEvaluationProductionAnomalyRecord:
+          type: string
+        FraudEvaluationProductionAnomalyProductionTransactionReference:
+          type: object
+        FraudDiagnosisDetermination:
+          type: string
+        FraudDiagnosisRecommendation:
+          type: string
+    EconomicModel:
+      type: object
+      properties:
+        EconomicModelAnalysisResult:
+          type: string
+        EconomicModelWorkProduct:
+          type: string
+    CustomerBehavior:
+      type: object
+      properties:
+        CustomerBehaviorAnalysisResult:
+          type: string
+        CustomerBehaviorAnalysisWorkProduct:
+          type: string
+    AnalystReview:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        OutboundContactReference:
+          type: object
+        AnalystReviewAnalysisResult:
+          type: string
+        AnalystReviewWorkProduct:
+          type: string
+        AnalystReviewRecommendedAction:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    EvaluateFraudDiagnosisAnalysisRequest:
+      type: object
+      properties:
+        FraudDiagnosisAnalysis:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: object
+            FraudDiagnosisEvaluationProfile:
+              type: string
+            FraudDiagnosisTransactionConsolidationRecord:
+              type: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: object
+    EvaluateFraudDiagnosisAnalysisResponse:
+      type: object
+      properties:
+        FraudDiagnosisAnalysis:
+          type: object
+          properties:
+            FraudDiagnosisEvaluationProfile:
+              type: string
+            FraudDiagnosisDetermination:
+              type: string
+            FraudDiagnosisRecommendation:
+              type: string
+    UpdateFraudDiagnosisAnalysisRequest:
+      type: object
+      properties:
+        FraudDiagnosisAnalysis:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: object
+            FraudDiagnosisEvaluationProfile:
+              type: string
+            FraudDiagnosisTransactionConsolidationRecord:
+              type: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: object
+    UpdateFraudDiagnosisAnalysisResponse:
+      type: object
+      properties:
+        FraudDiagnosisAnalysis:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: object
+            FraudDiagnosisEvaluationProfile:
+              type: string
+            FraudDiagnosisTransactionConsolidationRecord:
+              type: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: object
+    RequestAnalystReviewRequest:
+      type: object
+      properties:
+        AnalystReview:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+  parameters:
+    FraudDiagnosisID:
+      name: frauddiagnosisId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    EconomicModelID:
+      name: economicmodelId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CustomerBehaviorID:
+      name: customerbehaviorId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    AnalystReviewID:
+      name: analystreviewId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    EvaluateFraudDiagnosisAnalysisRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateFraudDiagnosisAnalysisRequest'
+    UpdateFraudDiagnosisAnalysisRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateFraudDiagnosisAnalysisRequest'
+    RequestAnalystReviewRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestAnalystReviewRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

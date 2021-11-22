@@ -1,0 +1,2285 @@
+openapi: 3.0.1
+info:
+  title: Loan
+  description: This service domain handles the fulfillment of a general loan product. This includes the initial set-up of the loan facility and the completion of scheduled and ad-hoc product processing tasks
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/Loan/10.0.0
+paths:
+  /Loan/Initiate:
+    post:
+      tags:
+      - CR - LoanFacility
+      summary: InCR Initiate a loan
+      description: InCR Initiate a loan
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateLoanFacilityRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateLoanFacilityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Update:
+    put:
+      tags:
+      - CR - LoanFacility
+      summary: UpCR Update details for an existing loan
+      description: UpCR Update details for an existing loan
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLoanFacilityRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateLoanFacilityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Retrieve:
+    get:
+      tags:
+      - CR - LoanFacility
+      summary: ReCR Retrieve details about a loan
+      description: ReCR Retrieve details about a loan
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveLoanFacilityResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Interest/{interestId}/Retrieve:
+    get:
+      tags:
+      - BQ - Interest
+      summary: ReBQ Retrieve details about interest applied to a loan
+      description: ReBQ Retrieve details about interest applied to a loan
+      operationId: RetrieveInterest
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/InterestID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveInterestResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/ServiceFees/{servicefeesId}/Execute:
+    put:
+      tags:
+      - BQ - ServiceFees
+      summary: ExBQ Execute a fee charge against a loan
+      description: ExBQ Execute a fee charge against a loan
+      operationId: ExecuteServiceFees
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/ServiceFeesID'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteServiceFeesRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteServiceFeesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/ServiceFees/{servicefeesId}/Retrieve:
+    get:
+      tags:
+      - BQ - ServiceFees
+      summary: ReBQ Retrieve details about a loan fees
+      description: ReBQ Retrieve details about a loan fees
+      operationId: RetrieveServiceFees
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/ServiceFeesID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveServiceFeesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Disbursement/{disbursementId}/Retrieve:
+    get:
+      tags:
+      - BQ - Disbursement
+      summary: ReBQ Retrieve details about a disbursement paid against a loan
+      description: ReBQ Retrieve details about a disbursement paid against a loan
+      operationId: RetrieveDisbursement
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/DisbursementID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDisbursementResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Maintenance/{maintenanceId}/Request:
+    put:
+      tags:
+      - BQ - Maintenance
+      summary: RqBQ Request a maintenance activity for a consumer load
+      description: RqBQ Request a maintenance activity for a consumer load
+      operationId: RequestMaintenance
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/MaintenanceID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestMaintenanceRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestMaintenanceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Maintenance/{maintenanceId}/Retrieve:
+    get:
+      tags:
+      - BQ - Maintenance
+      summary: ReBQ Retrieve details about maintenance processing for a loan
+      description: ReBQ Retrieve details about maintenance processing for a loan
+      operationId: RetrieveMaintenance
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/MaintenanceID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveMaintenanceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Withdrawal/{withdrawalId}/Update:
+    put:
+      tags:
+      - BQ - Withdrawal
+      summary: UpBQ Update details of a withdrawal from a loan
+      description: UpBQ Update details of a withdrawal from a loan
+      operationId: UpdateWithdrawal
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/WithdrawalID'
+      requestBody:
+        $ref: '#/components/requestBodies/Withdrawal'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Withdrawal'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Withdrawal/{withdrawalId}/Execute:
+    put:
+      tags:
+      - BQ - Withdrawal
+      summary: ExBQ Execute an automated withdrawal against a loan
+      description: ExBQ Execute an automated withdrawal against a loan
+      operationId: ExecuteWithdrawal
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/WithdrawalID'
+      requestBody:
+        $ref: '#/components/requestBodies/Withdrawal'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteWithdrawalResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Withdrawal/{withdrawalId}/Request:
+    put:
+      tags:
+      - BQ - Withdrawal
+      summary: RqBQ Request handling of a withdrawal
+      description: RqBQ Request handling of a withdrawal
+      operationId: RequestWithdrawal
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/WithdrawalID'
+      requestBody:
+        $ref: '#/components/requestBodies/Withdrawal'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestWithdrawalResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Withdrawal/{withdrawalId}/Retrieve:
+    get:
+      tags:
+      - BQ - Withdrawal
+      summary: ReBQ Retrieve details about a loan withdrawal
+      description: ReBQ Retrieve details about a loan withdrawal
+      operationId: RetrieveWithdrawal
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/WithdrawalID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveWithdrawalResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Repayment/{repaymentId}/Update:
+    put:
+      tags:
+      - BQ - Repayment
+      summary: UpBQ Update a repayment transaction made to the loan
+      description: UpBQ Update a repayment transaction made to the loan
+      operationId: UpdateRepayment
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RepaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateRepaymentRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateRepaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Repayment/{repaymentId}/Execute:
+    put:
+      tags:
+      - BQ - Repayment
+      summary: ExBQ Execute an automated repayment transaction
+      description: ExBQ Execute an automated repayment transaction
+      operationId: ExecuteRepayment
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RepaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/Repayment'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteRepaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Repayment/{repaymentId}/Request:
+    put:
+      tags:
+      - BQ - Repayment
+      summary: RqBQ Request handling of an exceptional repayment
+      description: RqBQ Request handling of an exceptional repayment
+      operationId: RequestRepayment
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RepaymentID'
+      requestBody:
+        $ref: '#/components/requestBodies/Repayment'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestRepaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Repayment/{repaymentId}/Retrieve:
+    get:
+      tags:
+      - BQ - Repayment
+      summary: ReBQ Retrieve details about a loan repayment
+      description: ReBQ Retrieve details about a loan repayment
+      operationId: RetrieveRepayment
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RepaymentID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRepaymentResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Restructuring/Initiate:
+    post:
+      tags:
+      - BQ - Restructuring
+      summary: InBQ Initiate loan account restructuring
+      description: InBQ Initiate loan account restructuring
+      operationId: InitiateRestructuring
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateRestructuringRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateRestructuringResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Restructuring/{restructuringId}/Update:
+    put:
+      tags:
+      - BQ - Restructuring
+      summary: UpBQ Update details of a loan or restructuring activities
+      description: UpBQ Update details of a loan or restructuring activities
+      operationId: UpdateRestructuring
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RestructuringID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateRestructuringRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateRestructuringResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Restructuring/{restructuringId}/Request:
+    put:
+      tags:
+      - BQ - Restructuring
+      summary: RqBQ Request activity associated with a restructuring effort
+      description: RqBQ Request activity associated with a restructuring effort
+      operationId: RequestRestructuring
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RestructuringID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestRestructuringRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restructuring'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /Loan/{loanId}/Restructuring/{restructuringId}/Retrieve:
+    get:
+      tags:
+      - BQ - Restructuring
+      summary: ReBQ Retrieve details about a loan restructuring task
+      description: ReBQ Retrieve details about a loan restructuring task
+      operationId: RetrieveRestructuring
+      parameters:
+      - $ref: '#/components/parameters/LoanID'
+      - $ref: '#/components/parameters/RestructuringID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRestructuringResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    LoanFacility:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        LoanNumber:
+          type: string
+        CustomerReference:
+          type: object
+        PartyReference:
+          type: object
+        CustomerAgreementReference:
+          type: object
+        CustomerCreditAssessmentReference:
+          type: object
+        InsuranceReference:
+          type: object
+        DelinquencyOrCollectionReference:
+          type: object
+        BankBranchOrLocationReference:
+          type: object
+        BankAccountingUnitReference:
+          type: object
+        LoanType:
+          type: string
+        LoanAmount:
+          type: number
+        LoanCurrency:
+          type: string
+        LoanRateType:
+          type: string
+        LoanApplicableRate:
+          type: object
+        RepaymentType:
+          type: string
+        InterestType:
+          type: string
+        InterestAccrualMethod:
+          type: string
+        LoanOriginationDate:
+          type: string
+        LoanMaturityDate:
+          type: string
+        CollateralReference:
+          type: object
+        CollateralAllocation:
+          type: string
+        TaxReference:
+          type: object
+        LoanAccessTerms:
+          type: string
+        EntitlementOptionDefinition:
+          type: string
+        EntitlementOptionSetting:
+          type: string
+        RestrictionOptionDefinition:
+          type: string
+        RestrictionOptionSetting:
+          type: string
+        Associations:
+          type: string
+        AssociationType:
+          type: string
+        AssociationObligationOrEntitlement:
+          type: string
+        AssociationReference:
+          type: object
+        LoanRepaymentSchedule:
+          type: string
+        StagedRepaymentStatement:
+          type: string
+        CustomerCommentary:
+          type: string
+        LoanOutstandingBalance:
+          type: string
+        DateType:
+          type: string
+        Date:
+          type: string
+    Repayment:
+      type: object
+      properties:
+        RepaymentTransactionType:
+          type: string
+        RepaymentTransactionPayerReference:
+          type: object
+        RepaymentTransactionPayerProductInstanceReference:
+          type: object
+        RepaymentTransactionPayerBankReference:
+          type: object
+        RepaymentTransactionAmount:
+          type: number
+        RepaymentTransactionCurrency:
+          type: string
+        RepaymentTransactionValueDate:
+          type: string
+    Restructuring:
+      type: object
+      properties:
+        RestructuringTask:
+          type: string
+        RestructuringEvaluation:
+          type: string
+        RestructuringWriteDown:
+          type: string
+    Disbursement:
+      type: object
+      properties:
+        DisbursementPayeeReference:
+          type: object
+        DisbursementPayeeProductInstanceReference:
+          type: object
+        DisbursementPayeeBankReference:
+          type: object
+        DisbursementAmount:
+          type: number
+        DisbursementCurrency:
+          type: string
+        DisbursementValueDate:
+          type: string
+    ServiceFees:
+      type: object
+      properties:
+        FeeConfigurationProfile:
+          type: string
+        FeeType:
+          type: string
+        FeeDefinition:
+          type: string
+        FeeApplicationRecord:
+          type: string
+        FeeTransaction:
+          type: string
+        TransactionDescription:
+          type: string
+        TransactionFeeType:
+          type: string
+        TransactionFeeCharge:
+          type: string
+        FeeProjectionsandCommitments:
+          type: string
+        ProjectedTransactionDescription:
+          type: string
+        ProjectedTransactionFeeType:
+          type: string
+        ProjectedTransactionFeeCharge:
+          type: string
+        FeeAccrualAmount:
+          type: number
+        AccrualFeeType:
+          type: string
+        AccrualFeeCharge:
+          type: string
+    Interest:
+      type: object
+      properties:
+        InterestRateType:
+          type: string
+        InterestRateApplicationSchedule:
+          type: object
+        InterestRateConfiguration:
+          type: object
+        InterestRate:
+          type: object
+        InterestApplicationRecord:
+          type: string
+        InterestTransaction:
+          type: string
+        TransactionDescription:
+          type: string
+        TransactionRateType:
+          type: string
+        TransactionInterestCharge:
+          type: string
+        InterestAccrualAmount:
+          type: number
+        InterestAccrualType:
+          type: string
+        InterestAccrualCharge:
+          type: string
+    Withdrawal:
+      type: object
+      properties:
+        PaymentTransaction:
+          type: string
+        PaymentTransactionType:
+          type: string
+        PaymentTransactionPayeeReference:
+          type: object
+        PaymentTransactionPayeeAccountReference:
+          type: object
+        PaymentTransactionPayeeBankReference:
+          type: object
+        PaymentTransactionAmount:
+          type: number
+        PaymentTransactionFeeType:
+          type: string
+        PaymentTransactionFeeCharge:
+          type: string
+        PaymentTransactionDate:
+          type: string
+        PaymentTransactionPaymentMechanism:
+          type: string
+        PaymentTransactionPaymentPurpose:
+          type: string
+        PaymentTransactionBankBranch/LocationReference:
+          type: object
+        PaymentTransactionStatus:
+          type: string
+    Maintenance:
+      type: object
+      properties:
+        MaintenanceReportType:
+          type: string
+        LoanTaxReport:
+          type: string
+        LoanFeeType:
+          type: string
+        LoanFees:
+          type: string
+        Penalties:
+          type: string
+        CollateralValuation:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateLoanFacilityRequest:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            DateType:
+              type: string
+    InitiateLoanFacilityResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+    UpdateLoanFacilityRequest:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+    UpdateLoanFacilityResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+    RetrieveLoanFacilityResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+    RetrieveInterestResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Interest:
+          type: object
+          properties:
+            InterestRateType:
+              type: string
+            InterestRateApplicationSchedule:
+              type: object
+            InterestRateConfiguration:
+              type: object
+            InterestApplicationRecord:
+              type: string
+            InterestTransaction:
+              type: string
+            TransactionDescription:
+              type: string
+            TransactionRateType:
+              type: string
+            TransactionInterestCharge:
+              type: string
+            InterestAccrualAmount:
+              type: number
+            InterestAccrualType:
+              type: string
+            InterestAccrualCharge:
+              type: string
+    ExecuteServiceFeesRequest:
+      type: object
+      properties:
+        ServiceFees:
+          type: object
+          properties:
+            FeeConfigurationProfile:
+              type: string
+            FeeType:
+              type: string
+            FeeApplicationRecord:
+              type: string
+            FeeTransaction:
+              type: string
+            TransactionDescription:
+              type: string
+            TransactionFeeType:
+              type: string
+            FeeProjectionsandCommitments:
+              type: string
+            ProjectedTransactionDescription:
+              type: string
+            ProjectedTransactionFeeType:
+              type: string
+            AccrualFeeType:
+              type: string
+    ExecuteServiceFeesResponse:
+      type: object
+      properties:
+        ServiceFees:
+          type: object
+          properties:
+            FeeConfigurationProfile:
+              type: string
+            FeeDefinition:
+              type: string
+            FeeApplicationRecord:
+              type: string
+            FeeTransaction:
+              type: string
+            TransactionFeeType:
+              type: string
+            TransactionFeeCharge:
+              type: string
+            FeeProjectionsandCommitments:
+              type: string
+            ProjectedTransactionFeeType:
+              type: string
+            ProjectedTransactionFeeCharge:
+              type: string
+            FeeAccrualAmount:
+              type: number
+            AccrualFeeType:
+              type: string
+            AccrualFeeCharge:
+              type: string
+    RetrieveServiceFeesResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        ServiceFees:
+          type: object
+          properties:
+            FeeConfigurationProfile:
+              type: string
+            FeeType:
+              type: string
+            FeeDefinition:
+              type: string
+            FeeApplicationRecord:
+              type: string
+            FeeTransaction:
+              type: string
+            TransactionDescription:
+              type: string
+            TransactionFeeType:
+              type: string
+            TransactionFeeCharge:
+              type: string
+            FeeProjectionsandCommitments:
+              type: string
+            ProjectedTransactionDescription:
+              type: string
+            ProjectedTransactionFeeType:
+              type: string
+            ProjectedTransactionFeeCharge:
+              type: string
+            FeeAccrualAmount:
+              type: number
+            AccrualFeeType:
+              type: string
+            AccrualFeeCharge:
+              type: string
+    RetrieveDisbursementResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            LoanOriginationDate:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Disbursement:
+          type: object
+          properties:
+            DisbursementPayeeReference:
+              type: object
+            DisbursementPayeeProductInstanceReference:
+              type: object
+            DisbursementPayeeBankReference:
+              type: object
+            DisbursementAmount:
+              type: number
+            DisbursementCurrency:
+              type: string
+            DisbursementValueDate:
+              type: string
+    RequestMaintenanceRequest:
+      type: object
+      properties:
+        Maintenance:
+          type: object
+          properties:
+            MaintenanceReportType:
+              type: string
+    RequestMaintenanceResponse:
+      type: object
+      properties:
+        Maintenance:
+          type: object
+          properties:
+            LoanTaxReport:
+              type: string
+            LoanFeeType:
+              type: string
+            LoanFees:
+              type: string
+            Penalties:
+              type: string
+            CollateralValuation:
+              type: string
+    RetrieveMaintenanceResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Maintenance:
+          type: object
+          properties:
+            MaintenanceReportType:
+              type: string
+            LoanTaxReport:
+              type: string
+            LoanFeeType:
+              type: string
+            LoanFees:
+              type: string
+            Penalties:
+              type: string
+            CollateralValuation:
+              type: string
+    ExecuteWithdrawalResponse:
+      type: object
+      properties:
+        Withdrawal:
+          type: object
+          properties:
+            PaymentTransactionStatus:
+              type: string
+    RequestWithdrawalResponse:
+      type: object
+      properties:
+        Withdrawal:
+          type: object
+          properties:
+            PaymentTransactionStatus:
+              type: string
+    RetrieveWithdrawalResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Withdrawal:
+          type: object
+          properties:
+            PaymentTransaction:
+              type: string
+            PaymentTransactionType:
+              type: string
+            PaymentTransactionPayeeReference:
+              type: object
+            PaymentTransactionPayeeAccountReference:
+              type: object
+            PaymentTransactionPayeeBankReference:
+              type: object
+            PaymentTransactionAmount:
+              type: number
+            PaymentTransactionFeeType:
+              type: string
+            PaymentTransactionFeeCharge:
+              type: string
+            PaymentTransactionDate:
+              type: string
+            PaymentTransactionPaymentMechanism:
+              type: string
+            PaymentTransactionPaymentPurpose:
+              type: string
+            PaymentTransactionBankBranchOrLocationReference:
+              type: object
+            PaymentTransactionStatus:
+              type: string
+    UpdateRepaymentRequest:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Repayment:
+          type: object
+          properties:
+            RepaymentTransactionType:
+              type: string
+            RepaymentTransactionPayerReference:
+              type: object
+            RepaymentTransactionPayerProductInstanceReference:
+              type: object
+            RepaymentTransactionPayerBankReference:
+              type: object
+            RepaymentTransactionAmount:
+              type: number
+            RepaymentTransactionCurrency:
+              type: string
+            RepaymentTransactionValueDate:
+              type: string
+    UpdateRepaymentResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Repayment:
+          type: object
+          properties:
+            RepaymentTransactionType:
+              type: string
+            RepaymentTransactionPayerReference:
+              type: object
+            RepaymentTransactionPayerProductInstanceReference:
+              type: object
+            RepaymentTransactionPayerBankReference:
+              type: object
+            RepaymentTransactionAmount:
+              type: number
+            RepaymentTransactionCurrency:
+              type: string
+            RepaymentTransactionValueDate:
+              type: string
+    ExecuteRepaymentResponse:
+      type: object
+      properties:
+        Repayment:
+          type: object
+          properties:
+            RepaymentTransactionValueDate:
+              type: string
+    RequestRepaymentResponse:
+      type: object
+      properties:
+        Repayment:
+          type: object
+          properties:
+            RepaymentTransactionValueDate:
+              type: string
+    RetrieveRepaymentResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            RepaymentType:
+              type: string
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Repayment:
+          type: object
+          properties:
+            RepaymentTransactionType:
+              type: string
+            RepaymentTransactionPayerReference:
+              type: object
+            RepaymentTransactionPayerProductInstanceReference:
+              type: object
+            RepaymentTransactionPayerBankReference:
+              type: object
+            RepaymentTransactionAmount:
+              type: number
+            RepaymentTransactionCurrency:
+              type: string
+            RepaymentTransactionValueDate:
+              type: string
+    InitiateRestructuringRequest:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Restructuring:
+          type: object
+          properties:
+            RestructuringTask:
+              type: string
+    InitiateRestructuringResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Restructuring:
+          type: object
+          properties:
+            RestructuringTask:
+              type: string
+            RestructuringEvaluation:
+              type: string
+            RestructuringWriteDown:
+              type: string
+    UpdateRestructuringRequest:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Restructuring:
+          type: object
+          properties:
+            RestructuringTask:
+              type: string
+            RestructuringEvaluation:
+              type: string
+            RestructuringWriteDown:
+              type: string
+    UpdateRestructuringResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Restructuring:
+          type: object
+          properties:
+            RestructuringTask:
+              type: string
+            RestructuringEvaluation:
+              type: string
+            RestructuringWriteDown:
+              type: string
+    RequestRestructuringRequest:
+      type: object
+      properties:
+        Restructuring:
+          type: object
+          properties:
+            RestructuringTask:
+              type: string
+    RetrieveRestructuringResponse:
+      type: object
+      properties:
+        LoanFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            LoanNumber:
+              type: string
+            CustomerReference:
+              type: object
+            PartyReference:
+              type: object
+            CustomerAgreementReference:
+              type: object
+            CustomerCreditAssessmentReference:
+              type: object
+            InsuranceReference:
+              type: object
+            DelinquencyOrCollectionReference:
+              type: object
+            BankBranchOrLocationReference:
+              type: object
+            BankAccountingUnitReference:
+              type: object
+            LoanType:
+              type: string
+            LoanAmount:
+              type: number
+            LoanCurrency:
+              type: string
+            LoanRateType:
+              type: string
+            LoanApplicableRate:
+              type: object
+            RepaymentType:
+              type: string
+            InterestType:
+              type: string
+            InterestAccrualMethod:
+              type: string
+            LoanOriginationDate:
+              type: string
+            LoanMaturityDate:
+              type: string
+            CollateralReference:
+              type: object
+            CollateralAllocation:
+              type: string
+            TaxReference:
+              type: object
+            LoanAccessTerms:
+              type: string
+            EntitlementOptionDefinition:
+              type: string
+            EntitlementOptionSetting:
+              type: string
+            RestrictionOptionDefinition:
+              type: string
+            RestrictionOptionSetting:
+              type: string
+            Associations:
+              type: string
+            AssociationType:
+              type: string
+            AssociationObligationOrEntitlement:
+              type: string
+            AssociationReference:
+              type: object
+            LoanRepaymentSchedule:
+              type: string
+            StagedRepaymentStatement:
+              type: string
+            CustomerCommentary:
+              type: string
+            LoanOutstandingBalance:
+              type: string
+            DateType:
+              type: string
+        Restructuring:
+          type: object
+          properties:
+            RestructuringTask:
+              type: string
+            RestructuringEvaluation:
+              type: string
+            RestructuringWriteDown:
+              type: string
+  parameters:
+    LoanID:
+      name: loanId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    RepaymentID:
+      name: repaymentId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    RestructuringID:
+      name: restructuringId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    DisbursementID:
+      name: disbursementId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ServiceFeesID:
+      name: servicefeesId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    InterestID:
+      name: interestId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    WithdrawalID:
+      name: withdrawalId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    MaintenanceID:
+      name: maintenanceId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateLoanFacilityRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateLoanFacilityRequest'
+    UpdateLoanFacilityRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateLoanFacilityRequest'
+    ExecuteServiceFeesRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteServiceFeesRequest'
+    RequestMaintenanceRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestMaintenanceRequest'
+    Withdrawal:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Withdrawal'
+    UpdateRepaymentRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateRepaymentRequest'
+    Repayment:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Repayment'
+    InitiateRestructuringRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateRestructuringRequest'
+    UpdateRestructuringRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateRestructuringRequest'
+    RequestRestructuringRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestRestructuringRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

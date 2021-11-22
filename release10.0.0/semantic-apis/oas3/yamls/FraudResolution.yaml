@@ -1,0 +1,509 @@
+openapi: 3.0.1
+info:
+  title: Fraud Resolution
+  description: This service domain sets up and processes a fraud case resulting from fraud behavior that has been detected during production processing
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/FraudResolution/10.0.0
+paths:
+  /FraudResolution/Initiate:
+    post:
+      tags:
+      - CR - FraudResolutionProcedure
+      summary: InCR Initiate a fraud case
+      description: InCR Initiate a fraud case
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/FraudResolutionProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateFraudResolutionProcedureResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudResolution/{fraudresolutionId}/Update:
+    put:
+      tags:
+      - CR - FraudResolutionProcedure
+      summary: UpCR Update details of an active fraud case
+      description: UpCR Update details of an active fraud case
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/FraudResolutionID'
+      requestBody:
+        $ref: '#/components/requestBodies/FraudResolutionProcedure'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudResolutionProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudResolution/{fraudresolutionId}/Retrieve:
+    get:
+      tags:
+      - CR - FraudResolutionProcedure
+      summary: ReCR Retrieve information about an active fraud case
+      description: ReCR Retrieve information about an active fraud case
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/FraudResolutionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudResolutionProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudResolution/{fraudresolutionId}/CaseAnalysis/{caseanalysisId}/Retrieve:
+    get:
+      tags:
+      - BQ - CaseAnalysis
+      summary: ReCR Retrieve information about an active fraud case analysis
+      description: ReCR Retrieve information about an active fraud case analysis
+      operationId: RetrieveCaseAnalysis
+      parameters:
+      - $ref: '#/components/parameters/FraudResolutionID'
+      - $ref: '#/components/parameters/CaseAnalysisID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudResolutionProcedure'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudResolution/{fraudresolutionId}/CaseDetermination/{casedeterminationId}/Retrieve:
+    get:
+      tags:
+      - BQ - CaseDetermination
+      summary: ReCR Retrieve information about an active fraud case determination
+      description: ReCR Retrieve information about an active fraud case determination
+      operationId: RetrieveCaseDetermination
+      parameters:
+      - $ref: '#/components/parameters/FraudResolutionID'
+      - $ref: '#/components/parameters/CaseDeterminationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCaseDeterminationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudResolution/{fraudresolutionId}/CaseResolution/{caseresolutionId}/Request:
+    put:
+      tags:
+      - BQ - CaseResolution
+      summary: RqBQ Request reworking of resolution to a case
+      description: RqBQ Request reworking of resolution to a case
+      operationId: RequestCaseResolution
+      parameters:
+      - $ref: '#/components/parameters/FraudResolutionID'
+      - $ref: '#/components/parameters/CaseResolutionID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaseResolution'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /FraudResolution/{fraudresolutionId}/CaseResolution/{caseresolutionId}/Retrieve:
+    get:
+      tags:
+      - BQ - CaseResolution
+      summary: ReCR Retrieve information about an active fraud case resolution
+      description: ReCR Retrieve information about an active fraud case resolution
+      operationId: RetrieveCaseResolution
+      parameters:
+      - $ref: '#/components/parameters/FraudResolutionID'
+      - $ref: '#/components/parameters/CaseResolutionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCaseResolutionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    FraudResolutionProcedure:
+      type: object
+      properties:
+        FraudCaseType:
+          type: string
+        ProductInstanceReference:
+          type: object
+        CustomerReference:
+          type: object
+        MerchantReference:
+          type: object
+        InterstedPartyReference:
+          type: object
+        ContactReference:
+          type: object
+        TransactionReference:
+          type: object
+        TransactionRecord:
+          type: string
+        CaseLocation:
+          type: string
+        Date:
+          type: string
+        EmployeeOrBusinessUnitReference:
+          type: object
+        FraudCaseWorkProducts:
+          type: string
+        FraudCaseResolutionSchedule:
+          type: string
+        FraudCaseStatus:
+          type: string
+    CaseDetermination:
+      type: object
+      properties:
+        CustomerAgreementReference:
+          type: object
+        CustomerAgreement:
+          type: string
+        MerchantAgreementReference:
+          type: object
+        MerchantAgreement:
+          type: string
+        InterestedPartyAgreementReference:
+          type: object
+        InterestedPartyAgreement:
+          type: string
+        FraudCaseDeterminationRecord:
+          type: string
+    CaseResolution:
+      type: object
+      properties:
+        FraudCaseResolutionRecord:
+          type: string
+        Employee/BusinessUnitReference:
+          type: object
+        CorrespondenceReference:
+          type: object
+        Adjustment/ChargebackReference:
+          type: object
+        ConsortiaReportingInstanceReference:
+          type: object
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        PaymentOrderReference:
+          type: object
+    CaseAnalysis:
+      type: object
+      properties:
+        FraudCaseRootCause:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateFraudResolutionProcedureResponse:
+      type: object
+      properties:
+        FraudResolutionProcedure:
+          type: object
+          properties:
+            FraudCaseType:
+              type: string
+            FraudCaseWorkProducts:
+              type: string
+            FraudCaseResolutionSchedule:
+              type: string
+            FraudCaseStatus:
+              type: string
+    RetrieveCaseDeterminationResponse:
+      type: object
+      properties:
+        FraudResolutionProcedure:
+          type: object
+          properties:
+            FraudCaseType:
+              type: string
+            ProductInstanceReference:
+              type: object
+            CustomerReference:
+              type: object
+            MerchantReference:
+              type: object
+            InterstedPartyReference:
+              type: object
+            ContactReference:
+              type: object
+            TransactionReference:
+              type: object
+            TransactionRecord:
+              type: string
+            CaseLocation:
+              type: string
+            Date:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+            FraudCaseWorkProducts:
+              type: string
+            FraudCaseResolutionSchedule:
+              type: string
+            FraudCaseStatus:
+              type: string
+        CaseAnalysis:
+          type: object
+          properties:
+            FraudCaseRootCause:
+              type: string
+        CaseDetermination:
+          type: object
+          properties:
+            CustomerAgreementReference:
+              type: object
+            MerchantAgreementReference:
+              type: object
+            InterestedPartyAgreementReference:
+              type: object
+            FraudCaseDeterminationRecord:
+              type: string
+    RetrieveCaseResolutionResponse:
+      type: object
+      properties:
+        FraudResolutionProcedure:
+          type: object
+          properties:
+            FraudCaseType:
+              type: string
+            ProductInstanceReference:
+              type: object
+            CustomerReference:
+              type: object
+            MerchantReference:
+              type: object
+            InterstedPartyReference:
+              type: object
+            ContactReference:
+              type: object
+            TransactionReference:
+              type: object
+            TransactionRecord:
+              type: string
+            CaseLocation:
+              type: string
+            Date:
+              type: string
+            EmployeeOrBusinessUnitReference:
+              type: object
+            FraudCaseWorkProducts:
+              type: string
+            FraudCaseResolutionSchedule:
+              type: string
+            FraudCaseStatus:
+              type: string
+        CaseAnalysis:
+          type: object
+          properties:
+            FraudCaseRootCause:
+              type: string
+        CaseDetermination:
+          type: object
+          properties:
+            FraudCaseDeterminationRecord:
+              type: string
+        CaseResolution:
+          type: object
+          properties:
+            FraudCaseResolutionRecord:
+              type: string
+            CorrespondenceReference:
+              type: object
+            AdjustmentOrChargebackReference:
+              type: object
+            ConsortiaReportingInstanceReference:
+              type: object
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            PaymentOrderReference:
+              type: object
+  parameters:
+    FraudResolutionID:
+      name: fraudresolutionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CaseDeterminationID:
+      name: casedeterminationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CaseResolutionID:
+      name: caseresolutionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CaseAnalysisID:
+      name: caseanalysisId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    FraudResolutionProcedure:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FraudResolutionProcedure'
+    CaseResolution:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaseResolution'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

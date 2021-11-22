@@ -1,0 +1,377 @@
+openapi: 3.0.1
+info:
+  title: Correspondent Bank Directory
+  description: This service domain maintains correspondent bank reference details. This includes correspondent bank payment parameters in particular bank limits and capturing transaction activity to track reciprocity
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CorrespondentBankDirectory/10.0.0
+paths:
+  /CorrespondentBankDirectory/Register:
+    post:
+      tags:
+      - CR - CorrespondentBankDirectoryEntry
+      summary: InCR Register a new correspondent bank in the catalog
+      description: InCR Register a new correspondent bank in the catalog
+      operationId: Register
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/RegisterCorrespondentBankDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CorrespondentBankDirectory/{correspondentbankdirectoryId}/Update:
+    put:
+      tags:
+      - CR - CorrespondentBankDirectoryEntry
+      summary: UpCR Update details of a correspondent bank in the catalog
+      description: UpCR Update details of a correspondent bank in the catalog
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CorrespondentBankDirectoryID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCorrespondentBankDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCorrespondentBankDirectoryEntryResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CorrespondentBankDirectory/{correspondentbankdirectoryId}/Request:
+    put:
+      tags:
+      - CR - CorrespondentBankDirectoryEntry
+      summary: RqCR Request that an existing entry is updated or revised
+      description: RqCR Request that an existing entry is updated or revised
+      operationId: Request
+      parameters:
+      - $ref: '#/components/parameters/CorrespondentBankDirectoryID'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestCorrespondentBankDirectoryEntryRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestCorrespondentBankDirectoryEntryResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CorrespondentBankDirectory/{correspondentbankdirectoryId}/Retrieve:
+    get:
+      tags:
+      - CR - CorrespondentBankDirectoryEntry
+      summary: ReCR Retrieve correspondent bank details from the catalog
+      description: ReCR Retrieve correspondent bank details from the catalog
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CorrespondentBankDirectoryID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCorrespondentBankDirectoryEntryResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CorrespondentBankDirectoryEntry:
+      type: object
+      properties:
+        CorrespondentBankReference:
+          type: object
+        ClearingOrSortCodes:
+          type: string
+        ContactAddresses:
+          type: string
+        LegalEntityIdentifiers:
+          type: string
+        BankHierarchy:
+          type: string
+        HolidayOrTimezoneSchedule:
+          type: string
+        VostroAccountReference:
+          type: object
+        NostroMirrorAccountReference:
+          type: object
+        CorrespondentBankAgreementReference:
+          type: object
+        CorrespondentBankAgreement:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    RegisterCorrespondentBankDirectoryEntryRequest:
+      type: object
+      properties:
+        CorrespondentBankDirectoryEntry:
+          type: object
+          properties:
+            CorrespondentBankReference:
+              type: object
+            ClearingOrSortCodes:
+              type: string
+            ContactAddresses:
+              type: string
+            LegalEntityIdentifiers:
+              type: string
+            BankHierarchy:
+              type: string
+            HolidayOrTimezoneSchedule:
+              type: string
+            VostroAccountReference:
+              type: object
+            NostroMirrorAccountReference:
+              type: object
+            CorrespondentBankAgreementReference:
+              type: object
+    UpdateCorrespondentBankDirectoryEntryRequest:
+      type: object
+      properties:
+        CorrespondentBankDirectoryEntry:
+          type: object
+          properties:
+            CorrespondentBankReference:
+              type: object
+            ClearingOrSortCodes:
+              type: string
+            ContactAddresses:
+              type: string
+            LegalEntityIdentifiers:
+              type: string
+            BankHierarchy:
+              type: string
+            HolidayOrTimezoneSchedule:
+              type: string
+            VostroAccountReference:
+              type: object
+            NostroMirrorAccountReference:
+              type: object
+            CorrespondentBankAgreementReference:
+              type: object
+    UpdateCorrespondentBankDirectoryEntryResponse:
+      type: object
+      properties:
+        CorrespondentBankDirectoryEntry:
+          type: object
+          properties:
+            CorrespondentBankReference:
+              type: object
+            ClearingOrSortCodes:
+              type: string
+            ContactAddresses:
+              type: string
+            LegalEntityIdentifiers:
+              type: string
+            BankHierarchy:
+              type: string
+            HolidayOrTimezoneSchedule:
+              type: string
+            VostroAccountReference:
+              type: object
+            NostroMirrorAccountReference:
+              type: object
+            CorrespondentBankAgreementReference:
+              type: object
+    RequestCorrespondentBankDirectoryEntryRequest:
+      type: object
+      properties:
+        CorrespondentBankDirectoryEntry:
+          type: object
+          properties:
+            CorrespondentBankReference:
+              type: object
+            ClearingOrSortCodes:
+              type: string
+            ContactAddresses:
+              type: string
+            LegalEntityIdentifiers:
+              type: string
+            BankHierarchy:
+              type: string
+            HolidayOrTimezoneSchedule:
+              type: string
+            VostroAccountReference:
+              type: object
+            NostroMirrorAccountReference:
+              type: object
+            CorrespondentBankAgreementReference:
+              type: object
+    RequestCorrespondentBankDirectoryEntryResponse:
+      type: object
+      properties:
+        CorrespondentBankDirectoryEntry:
+          type: object
+          properties:
+            CorrespondentBankReference:
+              type: object
+            ClearingOrSortCodes:
+              type: string
+            ContactAddresses:
+              type: string
+            LegalEntityIdentifiers:
+              type: string
+            BankHierarchy:
+              type: string
+            HolidayOrTimezoneSchedule:
+              type: string
+            VostroAccountReference:
+              type: object
+            NostroMirrorAccountReference:
+              type: object
+            CorrespondentBankAgreementReference:
+              type: object
+    RetrieveCorrespondentBankDirectoryEntryResponse:
+      type: object
+      properties:
+        CorrespondentBankDirectoryEntry:
+          type: object
+          properties:
+            CorrespondentBankReference:
+              type: object
+            ClearingOrSortCodes:
+              type: string
+            ContactAddresses:
+              type: string
+            LegalEntityIdentifiers:
+              type: string
+            BankHierarchy:
+              type: string
+            HolidayOrTimezoneSchedule:
+              type: string
+            VostroAccountReference:
+              type: object
+            NostroMirrorAccountReference:
+              type: object
+            CorrespondentBankAgreementReference:
+              type: object
+  parameters:
+    CorrespondentBankDirectoryID:
+      name: correspondentbankdirectoryId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    RegisterCorrespondentBankDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegisterCorrespondentBankDirectoryEntryRequest'
+    UpdateCorrespondentBankDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCorrespondentBankDirectoryEntryRequest'
+    RequestCorrespondentBankDirectoryEntryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestCorrespondentBankDirectoryEntryRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

@@ -1,0 +1,688 @@
+openapi: 3.0.1
+info:
+  title: Market Order
+  description: Market Order records an instruction from a customer or his or her representative to buy or sell securities. It follows the order during its lifetime and reports back to the requestor on the execution.
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/MarketOrder/10.0.0
+paths:
+  /MarketOrder/Initiate:
+    post:
+      tags:
+      - CR - MarketOrderTransaction
+      summary: InCR Initiate a market order
+      description: InCR Initiate a market order
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateMarketOrderTransactionRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateMarketOrderTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /MarketOrder/{marketorderId}/Update:
+    put:
+      tags:
+      - CR - MarketOrderTransaction
+      summary: UpCR Update details on an active market order
+      description: UpCR Update details on an active market order
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/MarketOrderID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateMarketOrderTransactionRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateMarketOrderTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /MarketOrder/{marketorderId}/Retrieve:
+    get:
+      tags:
+      - CR - MarketOrderTransaction
+      summary: ReCR Retrieve details about a market order
+      description: ReCR Retrieve details about a market order
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/MarketOrderID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveMarketOrderTransactionResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /MarketOrder/{marketorderId}/Compliance/{complianceId}/Retrieve:
+    get:
+      tags:
+      - BQ - Compliance
+      summary: ReBQ Retrieve details about a market order compliance check
+      description: ReBQ Retrieve details about a market order compliance check
+      operationId: RetrieveCompliance
+      parameters:
+      - $ref: '#/components/parameters/MarketOrderID'
+      - $ref: '#/components/parameters/ComplianceID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveComplianceResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /MarketOrder/{marketorderId}/FundingCheck/{fundingcheckId}/Retrieve:
+    get:
+      tags:
+      - BQ - FundingCheck
+      summary: ReBQ Retrieve details about a market order funding check
+      description: ReBQ Retrieve details about a market order funding check
+      operationId: RetrieveFundingCheck
+      parameters:
+      - $ref: '#/components/parameters/MarketOrderID'
+      - $ref: '#/components/parameters/FundingCheckID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveFundingCheckResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /MarketOrder/{marketorderId}/CustomerProcessing/{customerprocessingId}/Retrieve:
+    get:
+      tags:
+      - BQ - CustomerProcessing
+      summary: ReBQ Retrieve details about customer specific processing for a market order
+      description: ReBQ Retrieve details about customer specific processing for a market order
+      operationId: RetrieveCustomerProcessing
+      parameters:
+      - $ref: '#/components/parameters/MarketOrderID'
+      - $ref: '#/components/parameters/CustomerProcessingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCustomerProcessingResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /MarketOrder/{marketorderId}/TradeInitiation/{tradeinitiationId}/Retrieve:
+    get:
+      tags:
+      - BQ - TradeInitiation
+      summary: ReBQ Retrieve details about a market order's market trade
+      description: ReBQ Retrieve details about a market order's market trade
+      operationId: RetrieveTradeInitiation
+      parameters:
+      - $ref: '#/components/parameters/MarketOrderID'
+      - $ref: '#/components/parameters/TradeInitiationID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveTradeInitiationResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    MarketOrderTransaction:
+      type: object
+      properties:
+        MarketOrderInstructionType:
+          type: string
+        CustomerReference:
+          type: object
+        EmployeeOrBusinessUnitReference:
+          type: object
+        InvestmentPortfolioInstanceReference:
+          type: object
+        CustomerMarketOrderProcessingInstruction:
+          type: string
+        DocumentDirectoryEntryInstanceReference:
+          type: object
+        CorrespondenceInstanceReference:
+          type: object
+        MarketOrderTransaction:
+          type: string
+        InvestmentAccountArrangementInstanceReference:
+          type: object
+        CurrentAccountArrangementInstanceReference:
+          type: object
+        MarketOrderType:
+          type: string
+        SecurityType:
+          type: string
+        Amount:
+          type: string
+        DateType:
+          type: string
+        Date:
+          type: string
+    Compliance:
+      type: object
+      properties:
+        MarketOrderTransactionComplianceCheckType:
+          type: string
+        MarketOrderTransactionComplianceCheckResult:
+          type: string
+        MarketOrderTransactionComplianceTaskResult:
+          type: string
+    FundingCheck:
+      type: object
+      properties:
+        MarketOrderTransactionFundingCheckResult:
+          type: string
+    TradeInitiation:
+      type: object
+      properties:
+        MarketTradeTransactionInstanceReference:
+          type: object
+        MarketTradeTransactionInstanceStatus:
+          type: string
+        MarketTradeInitiationTaskResult:
+          type: string
+    CustomerProcessing:
+      type: object
+      properties:
+        MarketOrderCustomerProcessingCheckResult:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateMarketOrderTransactionRequest:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+    InitiateMarketOrderTransactionResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+    UpdateMarketOrderTransactionRequest:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+    UpdateMarketOrderTransactionResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+    RetrieveMarketOrderTransactionResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+    RetrieveComplianceResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+        Compliance:
+          type: object
+          properties:
+            MarketOrderTransactionComplianceCheckType:
+              type: string
+            MarketOrderTransactionComplianceCheckResult:
+              type: string
+            MarketOrderTransactionComplianceTaskResult:
+              type: string
+    RetrieveFundingCheckResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+        FundingCheck:
+          type: object
+          properties:
+            MarketOrderTransactionFundingCheckResult:
+              type: string
+    RetrieveCustomerProcessingResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+        CustomerProcessing:
+          type: object
+          properties:
+            MarketOrderCustomerProcessingCheckResult:
+              type: string
+    RetrieveTradeInitiationResponse:
+      type: object
+      properties:
+        MarketOrderTransaction:
+          type: object
+          properties:
+            MarketOrderInstructionType:
+              type: string
+            CustomerReference:
+              type: object
+            EmployeeOrBusinessUnitReference:
+              type: object
+            InvestmentPortfolioInstanceReference:
+              type: object
+            CustomerMarketOrderProcessingInstruction:
+              type: string
+            DocumentDirectoryEntryInstanceReference:
+              type: object
+            CorrespondenceInstanceReference:
+              type: object
+            InvestmentAccountArrangementInstanceReference:
+              type: object
+            CurrentAccountArrangementInstanceReference:
+              type: object
+            MarketOrderType:
+              type: string
+            SecurityType:
+              type: string
+            Amount:
+              type: string
+            DateType:
+              type: string
+        TradeInitiation:
+          type: object
+          properties:
+            MarketTradeTransactionInstanceReference:
+              type: object
+            MarketTradeTransactionInstanceStatus:
+              type: string
+            MarketTradeInitiationTaskResult:
+              type: string
+  parameters:
+    MarketOrderID:
+      name: marketorderId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ComplianceID:
+      name: complianceId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    FundingCheckID:
+      name: fundingcheckId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    TradeInitiationID:
+      name: tradeinitiationId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CustomerProcessingID:
+      name: customerprocessingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateMarketOrderTransactionRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateMarketOrderTransactionRequest'
+    UpdateMarketOrderTransactionRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateMarketOrderTransactionRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

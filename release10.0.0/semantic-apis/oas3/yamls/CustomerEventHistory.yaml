@@ -1,0 +1,905 @@
+openapi: 3.0.1
+info:
+  title: Customer Event History
+  description: This service domain captures, classifies and stores relationship, servicing and product fulfillment related customer events. In addition to servicing and product transaction details, the log can capture life/relationship events that are revealed during customer exchanges
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CustomerEventHistory/10.0.0
+paths:
+  /CustomerEventHistory/Initiate:
+    post:
+      tags:
+      - CR - CustomerEventLog
+      summary: InCR Initiate customer event history tracking for a customer
+      description: InCR Initiate customer event history tracking for a customer
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerEventLog'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Update:
+    put:
+      tags:
+      - CR - CustomerEventLog
+      summary: UpCR Update details about the log
+      description: UpCR Update details about the log
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerEventLog'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Retrieve:
+    get:
+      tags:
+      - CR - CustomerEventLog
+      summary: ReCR Retrieve details about the customer event log
+      description: ReCR Retrieve details about the customer event log
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Relationship/{relationshipId}/Update:
+    put:
+      tags:
+      - BQ - Relationship
+      summary: UpBQ Update captured relationship management event details
+      description: UpBQ Update captured relationship management event details
+      operationId: UpdateRelationship
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/RelationshipID'
+      requestBody:
+        $ref: '#/components/requestBodies/Relationship'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Relationship/{relationshipId}/Capture:
+    put:
+      tags:
+      - BQ - Relationship
+      summary: CaBQ Capture relationship management event details
+      description: CaBQ Capture relationship management event details
+      operationId: CaptureRelationship
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/RelationshipID'
+      requestBody:
+        $ref: '#/components/requestBodies/Relationship'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Relationship/{relationshipId}/Retrieve:
+    get:
+      tags:
+      - BQ - Relationship
+      summary: ReBQ Retrieve relationship management event details
+      description: ReBQ Retrieve relationship management event details
+      operationId: RetrieveRelationship
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/RelationshipID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Sales/{salesId}/Update:
+    put:
+      tags:
+      - BQ - Sales
+      summary: UpBQ Update captured sales event details
+      description: UpBQ Update captured sales event details
+      operationId: UpdateSales
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/SalesID'
+      requestBody:
+        $ref: '#/components/requestBodies/Sales'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sales'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Sales/{salesId}/Capture:
+    put:
+      tags:
+      - BQ - Sales
+      summary: CaBQ Capture sales event details
+      description: CaBQ Capture sales event details
+      operationId: CaptureSales
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/SalesID'
+      requestBody:
+        $ref: '#/components/requestBodies/Sales'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Sales/{salesId}/Retrieve:
+    get:
+      tags:
+      - BQ - Sales
+      summary: ReBQ Retrieve sales event details
+      description: ReBQ Retrieve sales event details
+      operationId: RetrieveSales
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/SalesID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Servicing/{servicingId}/Update:
+    put:
+      tags:
+      - BQ - Servicing
+      summary: UpBQ Update captured servicing event details
+      description: UpBQ Update captured servicing event details
+      operationId: UpdateServicing
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/ServicingID'
+      requestBody:
+        $ref: '#/components/requestBodies/Servicing'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Servicing'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Servicing/{servicingId}/Capture:
+    put:
+      tags:
+      - BQ - Servicing
+      summary: CaBQ Capture servicing event details
+      description: CaBQ Capture servicing event details
+      operationId: CaptureServicing
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/ServicingID'
+      requestBody:
+        $ref: '#/components/requestBodies/Servicing'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Servicing/{servicingId}/Retrieve:
+    get:
+      tags:
+      - BQ - Servicing
+      summary: ReBQ Retrieve servicing event details
+      description: ReBQ Retrieve servicing event details
+      operationId: RetrieveServicing
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/ServicingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/ProductProcessing/{productprocessingId}/Update:
+    put:
+      tags:
+      - BQ - ProductProcessing
+      summary: UpBQ Update captured product processing event details
+      description: UpBQ Update captured product processing event details
+      operationId: UpdateProductProcessing
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/ProductProcessingID'
+      requestBody:
+        $ref: '#/components/requestBodies/ProductProcessing'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductProcessing'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/ProductProcessing/{productprocessingId}/Capture:
+    put:
+      tags:
+      - BQ - ProductProcessing
+      summary: CaBQ Capture product processing event details
+      description: CaBQ Capture product processing event details
+      operationId: CaptureProductProcessing
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/ProductProcessingID'
+      requestBody:
+        $ref: '#/components/requestBodies/ProductProcessing'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/ProductProcessing/{productprocessingId}/Retrieve:
+    get:
+      tags:
+      - BQ - ProductProcessing
+      summary: ReBQ Retrieve product processing event details
+      description: ReBQ Retrieve product processing event details
+      operationId: RetrieveProductProcessing
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/ProductProcessingID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Fraud/{fraudId}/Update:
+    put:
+      tags:
+      - BQ - Fraud
+      summary: UpBQ Update captured fraud event details
+      description: UpBQ Update captured fraud event details
+      operationId: UpdateFraud
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/FraudID'
+      requestBody:
+        $ref: '#/components/requestBodies/Fraud'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fraud'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Fraud/{fraudId}/Capture:
+    put:
+      tags:
+      - BQ - Fraud
+      summary: CaBQ Capture fraud event details
+      description: CaBQ Capture fraud event details
+      operationId: CaptureFraud
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/FraudID'
+      requestBody:
+        $ref: '#/components/requestBodies/Fraud'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Fraud/{fraudId}/Retrieve:
+    get:
+      tags:
+      - BQ - Fraud
+      summary: ReBQ Retrieve fraud event details
+      description: ReBQ Retrieve fraud event details
+      operationId: RetrieveFraud
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/FraudID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Life/{lifeId}/Update:
+    put:
+      tags:
+      - BQ - Life
+      summary: UpBQ Update captured customer life event details
+      description: UpBQ Update captured customer life event details
+      operationId: UpdateLife
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/LifeID'
+      requestBody:
+        $ref: '#/components/requestBodies/Life'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Life'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Life/{lifeId}/Capture:
+    put:
+      tags:
+      - BQ - Life
+      summary: CaBQ Capture customer life event details
+      description: CaBQ Capture customer life event details
+      operationId: CaptureLife
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/LifeID'
+      requestBody:
+        $ref: '#/components/requestBodies/Life'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+                example: true
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerEventHistory/{customereventhistoryId}/Life/{lifeId}/Retrieve:
+    get:
+      tags:
+      - BQ - Life
+      summary: ReBQ Retrieve customer life event details
+      description: ReBQ Retrieve customer life event details
+      operationId: RetrieveLife
+      parameters:
+      - $ref: '#/components/parameters/CustomerEventHistoryID'
+      - $ref: '#/components/parameters/LifeID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEventLog'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CustomerEventLog:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+    Life:
+      type: object
+      properties:
+        CustomerLifeEventType:
+          type: string
+        CustomerContactRecordReference:
+          type: object
+        Employee/UnitReference:
+          type: object
+        CustomerLifeEventRecord:
+          type: string
+        Date/Time/Location:
+          type: string
+    ProductProcessing:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        ProductAction/EventType:
+          type: string
+        ProductAction/EventDescription:
+          type: string
+        ProductAction/EventResult:
+          type: string
+        Employee/UnitReference:
+          type: object
+        CustomerProductandServiceEventRecord:
+          type: string
+        Date/Time/Location:
+          type: string
+    Sales:
+      type: object
+      properties:
+        CustomerSalesEventType:
+          type: string
+        Employee/UnitReference:
+          type: object
+        ProductandServiceType:
+          type: string
+        LeadandOpportunityReference:
+          type: object
+        CustomerSalesEventRecord:
+          type: string
+        CommissionAgreementReference:
+          type: object
+        Date/Time/Location:
+          type: string
+    Relationship:
+      type: object
+      properties:
+        CustomerRelationshipEventType:
+          type: string
+        Employee/UnitReference:
+          type: object
+        CustomerRelationshipEventRecord:
+          type: string
+        CustomerRelationshipEventAction:
+          type: string
+        Date/Time/Location:
+          type: string
+    Fraud:
+      type: object
+      properties:
+        CustomerFraudCaseEventType:
+          type: string
+        CustomerContactRecordReference:
+          type: object
+        AccessedProductandService:
+          type: string
+        Employee/UnitReference:
+          type: object
+        FraudCaseReference:
+          type: object
+        Date/Time/Location:
+          type: string
+    Servicing:
+      type: object
+      properties:
+        CustomerServicingEventType:
+          type: string
+        CustomerContactRecordReference:
+          type: object
+        AccessedProductandService:
+          type: string
+        Channel/DeviceType:
+          type: string
+        ContactPurpose:
+          type: string
+        ContactResult:
+          type: string
+        Employee/UnitReference:
+          type: object
+        CustomerServicingEventRecord:
+          type: string
+        Date/Time/Location:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+  parameters:
+    CustomerEventHistoryID:
+      name: customereventhistoryId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    LifeID:
+      name: lifeId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ProductProcessingID:
+      name: productprocessingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    SalesID:
+      name: salesId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    RelationshipID:
+      name: relationshipId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    FraudID:
+      name: fraudId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    ServicingID:
+      name: servicingId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    CustomerEventLog:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerEventLog'
+    Relationship:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Relationship'
+    Sales:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Sales'
+    Servicing:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Servicing'
+    ProductProcessing:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductProcessing'
+    Fraud:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Fraud'
+    Life:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Life'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...

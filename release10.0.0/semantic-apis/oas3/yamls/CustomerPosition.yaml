@@ -1,0 +1,625 @@
+openapi: 3.0.1
+info:
+  title: Customer Position
+  description: This service domain maintains a consolidated financial position for a customer, combining details from all products and services in use. The position can cover available funds, credit, collateral, tax exposure and other financial measures as necessary
+  version: 10.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/BIAN-3/CustomerPosition/10.0.0
+paths:
+  /CustomerPosition/Initiate:
+    post:
+      tags:
+      - CR - CustomerPositionState
+      summary: InCR Initiation position monitoring for a customer
+      description: InCR Initiation position monitoring for a customer
+      operationId: Initiate
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateCustomerPositionStateRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCustomerPositionStateResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Update:
+    put:
+      tags:
+      - CR - CustomerPositionState
+      summary: UpCR Update the settings for customer position tracking
+      description: UpCR Update the settings for customer position tracking
+      operationId: Update
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateCustomerPositionStateRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomerPositionStateResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Retrieve:
+    get:
+      tags:
+      - CR - CustomerPositionState
+      summary: ReCR Retrieve details about a customer position
+      description: ReCR Retrieve details about a customer position
+      operationId: Retrieve
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPositionState'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Cashflow/{cashflowId}/Capture:
+    put:
+      tags:
+      - BQ - Cashflow
+      summary: CaBQ Capture product transaction reports (push from fulfillment)
+      description: CaBQ Capture product transaction reports (push from fulfillment)
+      operationId: CaptureCashflow
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      - $ref: '#/components/parameters/CashflowID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureCashflowRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureCashflowResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Cashflow/{cashflowId}/Retrieve:
+    get:
+      tags:
+      - BQ - Cashflow
+      summary: ReBQ retrieve details about a cash flow analysis as part of the customer position
+      description: ReBQ retrieve details about a cash flow analysis as part of the customer position
+      operationId: RetrieveCashflow
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      - $ref: '#/components/parameters/CashflowID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCashflowResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Credit/{creditId}/Capture:
+    put:
+      tags:
+      - BQ - Credit
+      summary: CaBQ Capture credit assessment reports (push from credit administration)
+      description: CaBQ Capture credit assessment reports (push from credit administration)
+      operationId: CaptureCredit
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      - $ref: '#/components/parameters/CreditID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureCreditRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureCreditResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Credit/{creditId}/Retrieve:
+    get:
+      tags:
+      - BQ - Credit
+      summary: ReBQ retrieve details about a credit analysis as part of the customer position
+      description: ReBQ retrieve details about a credit analysis as part of the customer position
+      operationId: RetrieveCredit
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      - $ref: '#/components/parameters/CreditID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPositionState'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Collateral/{collateralId}/Capture:
+    put:
+      tags:
+      - BQ - Collateral
+      summary: CaBQ Capture collateral allocation reports (push from collateral allocation management)
+      description: CaBQ Capture collateral allocation reports (push from collateral allocation management)
+      operationId: CaptureCollateral
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      - $ref: '#/components/parameters/CollateralID'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureCollateralRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureCollateralResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /CustomerPosition/{customerpositionId}/Collateral/{collateralId}/Retrieve:
+    get:
+      tags:
+      - BQ - Collateral
+      summary: ReBQ retrieve details about a collateral allocation as part of the customer position
+      description: ReBQ retrieve details about a collateral allocation as part of the customer position
+      operationId: RetrieveCollateral
+      parameters:
+      - $ref: '#/components/parameters/CustomerPositionID'
+      - $ref: '#/components/parameters/CollateralID'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCollateralResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        429:
+          $ref: '#/components/responses/TooManyRequestsError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    CustomerPositionState:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        CustomerPositionStateRecord:
+          type: string
+    Collateral:
+      type: object
+      properties:
+        CustomerReference:
+          type: object
+        CollateralAssetType:
+          type: string
+        CollateralAssetReference:
+          type: object
+        CollateralAssetDescription:
+          type: string
+        CollateralAssetAdministrationInstanceReference:
+          type: object
+        CollateralAssetStatus:
+          type: string
+        CollateralAssetValuation:
+          type: string
+        CollateralAssetAllocationProfile:
+          type: string
+        CollateralAssetValuationDate:
+          type: string
+        CollateralAssetLoantoValueRatio:
+          type: string
+        CustomerCollateralPositionAnalysisRecord:
+          type: string
+    Credit:
+      type: object
+      properties:
+        CustomerCreditRatingAssessment:
+          type: string
+        CustomerCreditRatingAssessmentType:
+          type: string
+        CustomerCreditRatingNarrative:
+          type: string
+        CustomerCreditPositionAnalysisRecord:
+          type: string
+    Cashflow:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: object
+        ProductArrangementInstanceReportType:
+          type: string
+        ProductArrangementInstanceReport:
+          type: string
+        ReportOptions/SelectionCriteria:
+          type: string
+        ReportPeriod:
+          type: string
+        ReportFormat/Template:
+          type: string
+        Report:
+          type: string
+        CustomerCashflowPositionAnalysisRecord:
+          type: string
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    InitiateCustomerPositionStateRequest:
+      type: object
+      properties:
+        CustomerPositionState:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+    InitiateCustomerPositionStateResponse:
+      type: object
+      properties:
+        CustomerPositionState:
+          type: object
+          properties:
+            CustomerPositionStateRecord:
+              type: string
+    UpdateCustomerPositionStateRequest:
+      type: object
+      properties:
+        CustomerPositionState:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+    UpdateCustomerPositionStateResponse:
+      type: object
+      properties:
+        CustomerPositionState:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+    CaptureCashflowRequest:
+      type: object
+      properties:
+        Cashflow:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductArrangementInstanceReportType:
+              type: string
+            ReportOptionsOrSelectionCriteria:
+              type: string
+            ReportPeriod:
+              type: string
+            ReportFormatOrTemplate:
+              type: string
+    CaptureCashflowResponse:
+      type: object
+      properties:
+        Cashflow:
+          type: object
+          properties:
+            CustomerCashflowPositionAnalysisRecord:
+              type: string
+    RetrieveCashflowResponse:
+      type: object
+      properties:
+        CustomerPositionState:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            CustomerPositionStateRecord:
+              type: string
+        Cashflow:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: object
+            ProductArrangementInstanceReportType:
+              type: string
+            ReportOptionsOrSelectionCriteria:
+              type: string
+            ReportPeriod:
+              type: string
+            ReportFormatOrTemplate:
+              type: string
+            CustomerCashflowPositionAnalysisRecord:
+              type: string
+    CaptureCreditRequest:
+      type: object
+      properties:
+        Credit:
+          type: object
+          properties:
+            CustomerCreditRatingAssessment:
+              type: string
+            CustomerCreditRatingAssessmentType:
+              type: string
+            CustomerCreditRatingNarrative:
+              type: string
+    CaptureCreditResponse:
+      type: object
+      properties:
+        Credit:
+          type: object
+          properties:
+            CustomerCreditPositionAnalysisRecord:
+              type: string
+    CaptureCollateralRequest:
+      type: object
+      properties:
+        Collateral:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            CollateralAssetType:
+              type: string
+            CollateralAssetReference:
+              type: object
+            CollateralAssetDescription:
+              type: string
+            CollateralAssetAdministrationInstanceReference:
+              type: object
+            CollateralAssetStatus:
+              type: string
+            CollateralAssetValuation:
+              type: string
+            CollateralAssetAllocationProfile:
+              type: string
+            CollateralAssetValuationDate:
+              type: string
+            CollateralAssetLoantoValueRatio:
+              type: string
+    CaptureCollateralResponse:
+      type: object
+      properties:
+        Collateral:
+          type: object
+          properties:
+            CustomerCollateralPositionAnalysisRecord:
+              type: string
+    RetrieveCollateralResponse:
+      type: object
+      properties:
+        CustomerPositionState:
+          type: object
+          properties:
+            CustomerReference:
+              type: object
+            CustomerPositionStateRecord:
+              type: string
+        Collateral:
+          type: object
+          properties:
+            CollateralAssetType:
+              type: string
+            CollateralAssetReference:
+              type: object
+            CollateralAssetDescription:
+              type: string
+            CollateralAssetAdministrationInstanceReference:
+              type: object
+            CollateralAssetStatus:
+              type: string
+            CollateralAssetValuation:
+              type: string
+            CollateralAssetAllocationProfile:
+              type: string
+            CollateralAssetValuationDate:
+              type: string
+            CollateralAssetLoantoValueRatio:
+              type: string
+            CustomerCollateralPositionAnalysisRecord:
+              type: string
+  parameters:
+    CustomerPositionID:
+      name: customerpositionId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CollateralID:
+      name: collateralId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CreditID:
+      name: creditId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    CashflowID:
+      name: cashflowId
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  requestBodies:
+    InitiateCustomerPositionStateRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateCustomerPositionStateRequest'
+    UpdateCustomerPositionStateRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateCustomerPositionStateRequest'
+    CaptureCashflowRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureCashflowRequest'
+    CaptureCreditRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureCreditRequest'
+    CaptureCollateralRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureCollateralRequest'
+  responses:
+    HTTPError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFoundError:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequestsError:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+...
