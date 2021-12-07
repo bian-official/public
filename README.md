@@ -1,5 +1,12 @@
 ![image](https://user-images.githubusercontent.com/75980500/109956689-d6e5d280-7cdb-11eb-86be-c853000a5b7e.png)
 
+The Banking Industry Architecture Network (BIAN) is a collaborative not-for-profit ecosystem formed of leading banks, technology providers, consultants and academics from all over the globe.
+
+Together this network of professionals is dedicated to lowering the cost of banking and boosting speed to innovation in the industry. Members combine their industry expertise to define a revolutionary banking technology framework that standardises and simplifies core banking architecture, which has typically been convoluted and outdated. Based on service oriented architecture principles, the comprehensive model provides a future-proofed solution for banks that fosters industry collaboration.
+
+
+
+
 
 
 
