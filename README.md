@@ -5,14 +5,16 @@ The Banking Industry Architecture Network (BIAN) is a collaborative not-for-prof
 Together this network of professionals is dedicated to lowering the cost of banking and boosting speed to innovation in the industry. Members combine their industry expertise to define a revolutionary banking technology framework that standardises and simplifies core banking architecture, which has typically been convoluted and outdated. Based on service oriented architecture principles, the comprehensive model provides a future-proofed solution for banks that fosters industry collaboration.
 
 
+**BIAN Portal**
 
-
-
+The BIAN Portal with access to the Model and APIs can be accessed at : https://portal.bian.org/
 
 
 **Download**
 
-BIAN Semantic APIs from: https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
+BIAN Semantic APIs:
+1. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
+2. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
 
 Each Swagger represents a BIAN Service Domain.
 
