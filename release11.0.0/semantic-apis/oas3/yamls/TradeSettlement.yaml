@@ -781,213 +781,676 @@ components:
           type: string
           format: string
       description: Status Attributes
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The required status/situation and or tasks that need to be completed prior to the initiation of the workstep
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: Name by which a party is known and which is usually used to identify that party. (ISO20022)
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: The operating unit/employee responsible for the workstep
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The timing and key actions/milestones making up the workstep
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: The Market Trade Cash Settlement Workstep specific Business Service
+    proceduretype:
+      type: object
+      properties:
+        ProcedureTypeName:
+          $ref: '#/components/schemas/name'
+        ProcedureType:
+          type: string
+          description: ''
+          format: proceduretypevalues
+      description: A Classification value that distinguishes between the type of process undertaken within Procedure
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    instructiondate:
+      type: object
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/date'
+        InstructionDateType:
+          type: string
+          description: ''
+          format: instructiondatetypevalues
+      description: ''
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+    instructionlifecyclestatus:
+      type: object
+      properties:
+        InstructionLifecycleStatusType:
+          type: string
+          description: ''
+          format: instructionlifecylestatustypevalues
+        InstructionLifecycleStatus:
+          $ref: '#/components/schemas/status'
+      description: 'A characteristic of instruction which refers to the LifecycleStatus of instruction (e.g., requested, executed, fulfilled, etc.); '
+    instructionidentification:
+      type: object
+      properties:
+        InstructionIdentifier:
+          $ref: '#/components/schemas/identifier'
+        InstructionIdentifierType:
+          type: string
+          description: ''
+          format: instructionidentificationtypevalues
+      description: "An identifier that allows to uniquely refer to an instance of an Instruction.\n"
+    instructiontypevalues:
+      enum:
+        - PaymentInstruction
+        - DeliveryOrder
+        - InformationRequest
+        - ExchangeInstruction
+        - AllocationInstruction
+        - MaintenanceInstruction
+      type: string
+      description: ">\n* `PaymentInstruction` - \n* `DeliveryOrder` - \n* `InformationRequest` - \n* `ExchangeInstruction` - \n* `AllocationInstruction` - \n* `MaintenanceInstruction` - \n"
+    log:
+      type: object
+      properties:
+        LogType:
+          type: string
+          description: ''
+          format: string
+        LogPeriod:
+          type: string
+          description: ''
+          format: string
+        LogDate:
+          type: string
+          description: Key dates associated with the log (e.g. start time).
+          format: string
+        LogIdentification:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    instruction:
+      type: object
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/instructiondate'
+        InstructionStatus:
+          $ref: '#/components/schemas/instructionlifecyclestatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/instructionidentification'
+        InstructionType:
+          $ref: '#/components/schemas/instructiontypevalues'
+        InstructionResult:
+          $ref: '#/components/schemas/text'
+        InstructionDescription:
+          $ref: '#/components/schemas/text'
+        InstructionLog:
+          $ref: '#/components/schemas/log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/text'
+      description: Request to process something (most refers to Asset Type)
+    procedure:
+      type: object
+      properties:
+        ProcedureType:
+          $ref: '#/components/schemas/proceduretype'
+        ProcedureDateTime:
+          $ref: '#/components/schemas/datetime'
+        ProcedureRequest:
+          $ref: '#/components/schemas/instruction'
+        ProcedureSchedule:
+          $ref: '#/components/schemas/schedule'
+        ProcedureStatus:
+          $ref: '#/components/schemas/status'
+      description: Reference to Market Trade Cash Settlement Workstep
+    worksteptype:
+      type: object
+      properties:
+        WorkstepTypeName:
+          $ref: '#/components/schemas/name'
+        WorkstepType:
+          type: string
+          description: ''
+          format: worksteptypevalues
+      description: A Classification value that distinguishes between the type of workstep undertaken within Procedure
+    workstep:
+      type: object
+      properties:
+        WorkstepResult:
+          type: string
+          description: ''
+          format: string
+        WorkstepType:
+          $ref: '#/components/schemas/worksteptype'
+        WorkstepDescription:
+          $ref: '#/components/schemas/text'
+        WorkstepDateTime:
+          $ref: '#/components/schemas/datetime'
+        WorkstepStatus:
+          $ref: '#/components/schemas/status'
+      description: Reference to Market Trade Cash Settlement Workstep
     MarketTradeCashSettlementWorkstep:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation and or tasks that need to be completed prior to the initiation of the workstep
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for the workstep
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones making up the workstep
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Market Trade Cash Settlement Workstep specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and reference to subsequent actions that may be triggered on completion of the workstep
-          format: condition
+          $ref: '#/components/schemas/condition'
         TradeSettlementProcedureReference:
-          type: string
-          description: Reference to Market Trade Cash Settlement Workstep
-          format: procedure
+          $ref: '#/components/schemas/procedure'
         MarketTradeCashSettlementWorkstepReference:
-          type: string
-          description: Reference to Market Trade Cash Settlement Workstep
-          format: workstep
+          $ref: '#/components/schemas/workstep'
         MarketTradeCashSettlementWorkstepType:
-          type: string
-          description: The type of Market Trade Cash Settlement Workstep
-          format: text
+          $ref: '#/components/schemas/text'
       description: A course of action for doing Market Trade Cash Settlement Workstep in the context of executing the Market Trade Cash Settlement Workstep
     MarketTradeSecuritiesSettlementWorkstep:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation and or tasks that need to be completed prior to the initiation of the workstep
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for the workstep
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones making up the workstep
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Market Trade Securities Settlement Workstep specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and reference to subsequent actions that may be triggered on completion of the workstep
-          format: condition
+          $ref: '#/components/schemas/condition'
         TradeSettlementProcedureReference:
-          type: string
-          description: Reference to Market Trade Securities Settlement Workstep
-          format: procedure
+          $ref: '#/components/schemas/procedure'
         MarketTradeSecuritiesSettlementWorkstepReference:
-          type: string
-          description: Reference to Market Trade Securities Settlement Workstep
-          format: workstep
+          $ref: '#/components/schemas/workstep'
         MarketTradeSecuritiesSettlementWorkstepType:
-          type: string
-          description: The type of Market Trade Securities Settlement Workstep
-          format: text
+          $ref: '#/components/schemas/text'
       description: A course of action for doing Market Trade Cash Settlement Workstep in the context of executing the Market Trade Cash Settlement Workstep
     MarketTradeSettlementConfirmationWorkstep:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation and or tasks that need to be completed prior to the initiation of the workstep
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for the workstep
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones making up the workstep
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Market Trade Settlement Confirmation Workstep specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and reference to subsequent actions that may be triggered on completion of the workstep
-          format: condition
+          $ref: '#/components/schemas/condition'
         TradeSettlementProcedureReference:
-          type: string
-          description: Reference to Market Trade Settlement Confirmation Workstep
-          format: procedure
+          $ref: '#/components/schemas/procedure'
         MarketTradeSettlementConfirmationWorkstepReference:
-          type: string
-          description: Reference to Market Trade Settlement Confirmation Workstep
-          format: workstep
+          $ref: '#/components/schemas/workstep'
         MarketTradeSettlementConfirmationWorkstepType:
-          type: string
-          description: The type of Market Trade Settlement Confirmation Workstep
-          format: text
+          $ref: '#/components/schemas/text'
       description: A course of action for doing Market Trade Cash Settlement Workstep in the context of executing the Market Trade Cash Settlement Workstep
+    workproduct:
+      type: object
+      properties:
+        WorkProductType:
+          type: string
+          description: ''
+          format: workproducttypevalues
+        WorkProductIdentifoication:
+          type: string
+          description: ''
+          format: string
+      description: ''
     TradeSettlementOutcome:
       type: object
       properties:
         TradeSettlementWorkProduct:
-          type: string
-          description: ''
-          format: workproduct
+          $ref: '#/components/schemas/workproduct'
         TradeSettlementProcedure:
+          $ref: '#/components/schemas/procedure'
+      description: A course of action for doing Market Trade Cash Settlement Workstep in the context of executing the Market Trade Cash Settlement Workstep
+    feature:
+      type: object
+      properties:
+        FeatureType:
           type: string
           description: ''
-          format: procedure
-      description: A course of action for doing Market Trade Cash Settlement Workstep in the context of executing the Market Trade Cash Settlement Workstep
+          format: string
+      description: A selected optional business service as subject matter of Trade Settlement Procedure
+    financialfacility:
+      type: object
+      properties:
+        FinancialFacility:
+          type: string
+          description: ''
+          format: class
+      description: Reference to the Financial Facility related to Trade Settlement Procedure
+    servicetype:
+      type: object
+      properties:
+        ServiceTypeName:
+          $ref: '#/components/schemas/name'
+        ServiceType:
+          type: string
+          description: ''
+          format: servicetypevalues
+      description: A Classification value that distinguishes between the type of services in Trade Settlement Procedure
+    productidentification:
+      type: object
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/identifier'
+        ProductIdentificationType:
+          type: string
+          description: ''
+          format: productidentificationtypevalues
+      description: The identifier of product e.g. ISIN Code.
+    bankingproducttypevalues:
+      enum:
+        - LoanProduct
+        - CurrentAccountProduct
+        - SavingAccountProduct
+      type: string
+      description: ">\n* `LoanProduct` - \n* `CurrentAccountProduct` - \n* `SavingAccountProduct` - \n"
+    productlifecyclestatus:
+      type: object
+      properties:
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ProductLifecycleStatusType:
+          type: string
+          description: ''
+          format: productlifecyclestatustypevalues
+      description: 'Refers to the lifecycle of a product (e.g., initiated, announced, active, obsolete, withdrawn).'
+    bankingproduct:
+      type: object
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/productidentification'
+        ProductType:
+          $ref: '#/components/schemas/bankingproducttypevalues'
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/productlifecyclestatus'
+        ProductPriority:
+          $ref: '#/components/schemas/text'
+        ProductDescription:
+          $ref: '#/components/schemas/text'
+        ProductVersion:
+          $ref: '#/components/schemas/text'
+      description: Reference to the product or service that is related to Trade Settlement Procedure
+    transactiondate:
+      type: object
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/datetime'
+        TransactionDateType:
+          type: string
+          description: ''
+          format: transactiondatetypevalues
+      description: "The Date that the transaction has occurred or is planned to occur.\nA characteristic of transaction which refers to the LifecycleDate of transaction (e.g., initiated date, executed date, fulfillment date). "
+    transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: ">\n* `FinancialTransaction` - \n* `BusinessTransaction` - \n* `BankingTransaction` - \n* `AccountingTransaction` - \n* `BookingTransaction` - \n* `AllocationTransaction` - \n* `DeliveryTransaction` - \n* `ProductionTransaction` - \n"
+    transactionlifecyclestatus:
+      type: object
+      properties:
+        TransactionLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        TransactionLifecycleStatusType:
+          type: string
+          description: ''
+          format: transactionlifecyclestatustypevalues
+      description: 'A characteristic of transaction which refers to the LifecycleStatus of transaction (e.g., initiated, executed, confirmed, cancelled, etc.) '
+    transaction:
+      type: object
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/transactiondate'
+        TransactionType:
+          $ref: '#/components/schemas/transactiontypevalues'
+        TransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionStatus:
+          $ref: '#/components/schemas/transactionlifecyclestatus'
+        TransactionName:
+          $ref: '#/components/schemas/name'
+      description: Reference to the transaction that is related to Trade Settlement Procedure
+    actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\n* `Initiate` - \n* `Execute` - \n* `Create` - \n* `Transfer` - \n* `Pay` - \n* `Deliver` - \n* `Apply` - \n* `Calculate` - \n"
+    action:
+      type: object
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/actiontypevalues'
+      description: ''
+    arrangementlifecyclestatus:
+      type: object
+      properties:
+        ArrangementLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ArrangementLifecycleStatusType:
+          type: string
+          description: ''
+          format: arrangementlifecyclestatustypevalues
+      description: 'A characteristic of arrangement which refers to the LifecycleStatus of arrangement (e.g., requested, proposed, offered, accepted, cancelled, terminated, fulfilled, etc.)'
+    subject:
+      type: object
+      properties:
+        Subject:
+          type: string
+          description: A thing that is discussed or dealt whit in agreement/arrangement about doing or not doing (as action) something.
+          format: class
+      description: ''
+    arrangementtypevalues:
+      enum:
+        - SweepArrangement
+        - WithdrawalArrangement
+        - DepositArrangement
+        - InterestArrangement
+        - FeeArrangement
+        - LienArrangement
+        - InformationArrangement
+        - PaymentServiceArrangement
+        - EntitlementArrangement
+        - PeriodArrangement
+        - CollateralArrangement
+        - LimitArrangement
+        - AccessArrangement
+        - CardPaymentArrangement
+        - StandingOrderArrangement
+        - OverdraftArrangement
+        - RepaymentArrangement
+        - StatementArrangement
+        - CreditTransferArrangement
+        - ProductAndServiceArrangement
+        - FactoringArrangement
+        - RolloverArrangement
+      type: string
+      description: ">\n* `SweepArrangement` - An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\n* `WithdrawalArrangement` - An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \n* `DepositArrangement` - An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \n* `InterestArrangement` - An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\n* `FeeArrangement` - An arrangement into which is promised to apply a charge for services rendered. \n* `LienArrangement` - An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \n* `InformationArrangement` - An arrangement concerning the information the bank will provide about the agreement/account\n* `PaymentServiceArrangement` - An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \n* `EntitlementArrangement` - Right or obligation linked to the involvement of a party in an agreement\n* `PeriodArrangement` - \n* `CollateralArrangement` - An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \n* `LimitArrangement` - An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \n* `AccessArrangement` - An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\n* `CardPaymentArrangement` - An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \n* `StandingOrderArrangement` - An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \n* `OverdraftArrangement` - An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \n* `RepaymentArrangement` - An arrangement into which is promised for paying back money previously borrowed from a lender. \n* `StatementArrangement` - An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \n* `CreditTransferArrangement` - An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \n* `ProductAndServiceArrangement` - \n* `FactoringArrangement` - \n* `RolloverArrangement` - Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \n"
+    arrangement:
+      type: object
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/arrangementlifecyclestatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/subject'
+        Arrangementtype:
+          $ref: '#/components/schemas/arrangementtypevalues'
+      description: Reference to the Financial Transaction Arrangement that is related to Trade Settlement Procedure
+    agreementtypevalues:
+      enum:
+        - CustomerAgreement
+        - SupplierAgreement
+        - BrokerAgreement
+        - SalesAgreement
+        - PurchaseAgreement
+        - MaintenanceAgreement
+        - ProductAgreement
+        - ProductSalesAgreement
+        - ResourceAgreement
+      type: string
+      description: ">\n* `CustomerAgreement` - \n* `SupplierAgreement` - \n* `BrokerAgreement` - \n* `SalesAgreement` - \n* `PurchaseAgreement` - \n* `MaintenanceAgreement` - \n* `ProductAgreement` - \n* `ProductSalesAgreement` - \n* `ResourceAgreement` - \n"
+    agreementlifecyclestatus:
+      type: object
+      properties:
+        AgreementLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        AgreementLifecycleStatusType:
+          type: string
+          description: ''
+          format: agreementlifecyclestatustypevalues
+      description: 'A characteristic of agreement which refers to the LifecycleStatus of agreement (e.g., potential, offered, confirmed, completed, signed, terminated).'
+    agreement:
+      type: object
+      properties:
+        AgreementSignedDate:
+          $ref: '#/components/schemas/date'
+        AgreementType:
+          $ref: '#/components/schemas/agreementtypevalues'
+        AgreementValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        AgreementVersion:
+          $ref: '#/components/schemas/text'
+        AgreementStatus:
+          $ref: '#/components/schemas/agreementlifecyclestatus'
+        AgreementSubjectMatter:
+          $ref: '#/components/schemas/text'
+        AgreementIdentification:
+          $ref: '#/components/schemas/identifier'
+        AgreementDate:
+          $ref: '#/components/schemas/datetime'
+      description: Reference to the Customer Agreement that is related to Trade Settlement Procedure
     TradeSettlementProcedure:
       type: object
       properties:
         TradeSettlementProcedureParameterType:
-          type: string
-          description: A Classification value that distinguishes between Procedures according to the type of business services and/or type of concern defined within Trade Settlement Procedure
-          format: text
+          $ref: '#/components/schemas/text'
         TradeSettlementProcedureSelectedOption:
-          type: string
-          description: A selected optional business service as subject matter of Trade Settlement Procedure
-          format: feature
+          $ref: '#/components/schemas/feature'
         TradeSettlementProcedureRequest:
-          type: string
-          description: Request to process Trade Settlement Procedure
-          format: instruction
+          $ref: '#/components/schemas/instruction'
         TradeSettlementProcedureSchedule:
-          type: string
-          description: Timetable to process Trade Settlement Procedure
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         TradeSettlementProcedureStatus:
-          type: string
-          description: The status of Trade Settlement Procedure
-          format: status
+          $ref: '#/components/schemas/status'
         TradeSettlementProcedureAssociatedPartyReference:
-          type: string
-          description: Reference to the party who is involved in Trade Settlement Procedure
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         TradeSettlementProcedureBusinessUnitReference:
-          type: string
-          description: Reference to the business unit which is involved in Trade Settlement Procedure
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         TradeSettlementProcedureServiceProviderReference:
-          type: string
-          description: Reference to the party who is the service provider of Trade Settlement Procedure
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         TradeSettlementProcedureFinancialFacilityReference:
-          type: string
-          description: Reference to the Financial Facility related to Trade Settlement Procedure
-          format: financialfacility
+          $ref: '#/components/schemas/financialfacility'
         TradeSettlementProcedureEmployeeReference:
-          type: string
-          description: Reference to the employee who is involved in Trade Settlement Procedure
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         TradeSettlementProcedureCustomerReference:
-          type: string
-          description: Reference to the customer who is involved in Trade Settlement Procedure
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         TradeSettlementProcedureType:
-          type: string
-          description: A Classification value that distinguishes between the type of process undertaken within Trade Settlement Procedure
-          format: proceduretype
+          $ref: '#/components/schemas/proceduretype'
         TradeSettlementProcedureServiceProviderSchedule:
-          type: string
-          description: The schedule according to which the service provider will process the Trade Settlement Procedure
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         TradeSettlementProcedureServiceType:
-          type: string
-          description: A Classification value that distinguishes between the type of services in Trade Settlement Procedure
-          format: servicetype
+          $ref: '#/components/schemas/servicetype'
         TradeSettlementProcedureProductandServiceType:
           type: string
           description: A Classification value that distinguishes between the type of products/services related to Trade Settlement Procedure
           format: bankingproducttype
         TradeSettlementProcedureProductandServiceInstance:
-          type: string
-          description: Reference to the product or service that is related to Trade Settlement Procedure
-          format: bankingproduct
+          $ref: '#/components/schemas/bankingproduct'
         TradeSettlementProcedureTransactionType:
           type: string
           description: A Classification value that distinguishes between the type of transactions in Trade Settlement Procedure
           format: transactiontype
         TradeSettlementProcedureTransaction:
-          type: string
-          description: Reference to the transaction that is related to Trade Settlement Procedure
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         TradeSettlementProcedureFinancialTransactionArrangement:
-          type: string
-          description: Reference to the Financial Transaction Arrangement that is related to Trade Settlement Procedure
-          format: arrangement
+          $ref: '#/components/schemas/arrangement'
         TradeSettlementProcedureCustomerAgreementReference:
-          type: string
-          description: Reference to the Customer Agreement that is related to Trade Settlement Procedure
-          format: agreement
+          $ref: '#/components/schemas/agreement'
         TradeSettlementProcedureReference:
-          type: string
-          description: An unique reference to an item or an occurrence of Trade Settlement Procedure
-          format: procedure
+          $ref: '#/components/schemas/procedure'
       description: 'Complete work tasks following a defined procedure in support of general office activities and product and service delivery within Trade Settlement. '
     ControlTradeSettlementProcedureRequest:
       type: object
@@ -996,85 +1459,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Control Trade Settlement Procedure'
     ControlTradeSettlementProcedureResponse:
       type: object
@@ -1083,85 +1510,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Control Trade Settlement Procedure'
     ExchangeTradeSettlementProcedureRequest:
       type: object
@@ -1170,85 +1561,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Exchange Trade Settlement Procedure'
     ExchangeTradeSettlementProcedureResponse:
       type: object
@@ -1257,85 +1612,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Exchange Trade Settlement Procedure'
     ExecuteTradeSettlementProcedureRequest:
       type: object
@@ -1344,85 +1663,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Execute Trade Settlement Procedure'
     ExecuteTradeSettlementProcedureResponse:
       type: object
@@ -1431,85 +1714,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Execute Trade Settlement Procedure'
     InitiateTradeSettlementProcedureRequest:
       type: object
@@ -1518,85 +1765,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Initiate Trade Settlement Procedure'
     InitiateTradeSettlementProcedureResponse:
       type: object
@@ -1605,85 +1816,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Initiate Trade Settlement Procedure'
     NotifyTradeSettlementProcedureRequest:
       type: object
@@ -1692,85 +1867,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Notify Trade Settlement Procedure'
     NotifyTradeSettlementProcedureResponse:
       type: object
@@ -1779,85 +1918,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Notify Trade Settlement Procedure'
     RequestTradeSettlementProcedureRequest:
       type: object
@@ -1866,85 +1969,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Request Trade Settlement Procedure'
     RequestTradeSettlementProcedureResponse:
       type: object
@@ -1953,85 +2020,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Request Trade Settlement Procedure'
     RetrieveTradeSettlementProcedureRequest:
       type: object
@@ -2040,85 +2071,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Retrieve Trade Settlement Procedure'
     RetrieveTradeSettlementProcedureResponse:
       type: object
@@ -2127,85 +2122,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Retrieve Trade Settlement Procedure'
     UpdateTradeSettlementProcedureRequest:
       type: object
@@ -2214,85 +2173,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Input: Update Trade Settlement Procedure'
     UpdateTradeSettlementProcedureResponse:
       type: object
@@ -2301,85 +2224,49 @@ components:
           type: object
           properties:
             TradeSettlementProcedureParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             TradeSettlementProcedureSelectedOption:
-              type: string
-              description: "\n"
-              format: feature
+              $ref: '#/components/schemas/feature'
             TradeSettlementProcedureRequest:
-              type: string
-              description: "\n"
-              format: instruction
+              $ref: '#/components/schemas/instruction'
             TradeSettlementProcedureSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureStatus:
-              type: string
-              description: "\n"
-              format: status
+              $ref: '#/components/schemas/status'
             TradeSettlementProcedureAssociatedPartyReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureBusinessUnitReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureServiceProviderReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureFinancialFacilityReference:
-              type: string
-              description: "\n"
-              format: financialfacility
+              $ref: '#/components/schemas/financialfacility'
             TradeSettlementProcedureEmployeeReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureCustomerReference:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             TradeSettlementProcedureType:
-              type: string
-              description: "\n"
-              format: proceduretype
+              $ref: '#/components/schemas/proceduretype'
             TradeSettlementProcedureServiceProviderSchedule:
-              type: string
-              description: "\n"
-              format: schedule
+              $ref: '#/components/schemas/schedule'
             TradeSettlementProcedureServiceType:
-              type: string
-              description: "\n"
-              format: servicetype
+              $ref: '#/components/schemas/servicetype'
             TradeSettlementProcedureProductandServiceType:
               type: string
               description: "\n"
               format: bankingproducttype
             TradeSettlementProcedureProductandServiceInstance:
-              type: string
-              description: "\n"
-              format: bankingproduct
+              $ref: '#/components/schemas/bankingproduct'
             TradeSettlementProcedureTransactionType:
               type: string
               description: "\n"
               format: transactiontype
             TradeSettlementProcedureFinancialTransactionArrangement:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             TradeSettlementProcedureCustomerAgreementReference:
-              type: string
-              description: "\n"
-              format: agreement
+              $ref: '#/components/schemas/agreement'
             TradeSettlementProcedureReference:
-              type: string
-              description: "\n"
-              format: procedure
+              $ref: '#/components/schemas/procedure'
       description: 'Output: Update Trade Settlement Procedure'
   responses:
     BadRequest:

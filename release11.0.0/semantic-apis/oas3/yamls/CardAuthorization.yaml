@@ -317,37 +317,354 @@ components:
           description: The returned available balance is used to perform credit check - uses product instance reference to identify account
           format: string
       description: "All kind of verifications \n\nExamples: Password verification"
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The required status/situation before the test can be applied
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The schedule and timing of the testing performed
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: ''
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: The <BQ> specific Business Service
+    assessmenttypevalues:
+      enum:
+        - AssetValuation
+        - ProductMatching
+        - Authorization
+        - Authentication
+        - QualityAssurance
+        - Audit
+        - ComplianceCheck
+        - FundingCheck
+        - SuitabilityCheck
+        - PerformanceCheck
+        - ImpactAssessment
+        - RiskAssessment
+        - Rating
+      type: string
+      description: ">\n* `AssetValuation` - \n* `ProductMatching` - \n* `Authorization` - \n* `Authentication` - \n* `QualityAssurance` - \n* `Audit` - \n* `ComplianceCheck` - \n* `FundingCheck` - \n* `SuitabilityCheck` - \n* `PerformanceCheck` - \n* `ImpactAssessment` - \n* `RiskAssessment` - \n* `Rating` - \n"
+    model:
+      type: object
+      properties:
+        ModelType:
+          type: string
+          description: 'The type or category of model  '
+          format: string
+        ModelPurpose:
+          type: string
+          description: A description of the model that clarifies the intended analysis/insights provided
+          format: string
+        ModelVersion:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: An identifier that allows to uniquely refer to an instance of a Document.
+    financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjustment
+        - Debitnoterelatedtofinancialadjustment
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\n* `Meteredserviceinvoice` - Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\n* `Creditnoterelatedtofinancialadjustment` - Document is a credit note for the final amount settled for a commercial transaction.\n* `Debitnoterelatedtofinancialadjustment` - Document is a debit note for the final amount settled for a commercial transaction.\n* `Commercialinvoice` - Document is an invoice.\n* `Creditnote` - Document is a credit note.\n* `Debitnote` - Document is a debit note.\n* `Hireinvoice` - Document is an invoice for the hiring of human resources or renting goods or equipment.\n* `Selfbilledinvoice` - Document is an invoice issued by the debtor.\n* `Remittanceadvicemessage` - Document is a remittance advice sent separately from the current transaction.\n* `Relatedpaymentinstruction` - Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\n* `Commercialcontract` - Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\n* `Foreignexchangedealreference` - Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\n* `Statementofaccount` - Document is a statement of the transactions posted to the debtor's account at the supplier.\n* `Dispatchadvice` - Document is a dispatch advice.\n* `Purchaseorder` - Document is a purchase order.\n* `Structuredcommunicationreference` - Document is a structured communication reference provided by the creditor to identify the referred transaction.\n* `Billoflading` - Document is a shipping notice.\n* `Voucher` - Document is an electronic payment document.\n* `Accountreceivableopenitem` - Document is a payment that applies to a specific source document.\n* `Tradeservicesutilitytransaction` - Document is a transaction identifier as assigned by the Trade Services Utility.\n* `Cashierreceipt` - When the Sale system print the Cashier copy of the Payment receipt.\n* `Customerreceipt` - When the Sale System requires   the POI system to print the Customer receipt.\n* `Journal` - When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal (it is sometimes a Sale Logging/Journal Printer).\n* `Salereceipt` - When the Sale System requires the POI system to print the Sale receipt.\n"
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: 'Status of the document (e.g. delivered, paid, etc.). ISO20022'
+    documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\n* `CreationDate` - \n* `CapturingDate` - \n* `VersionDate` - \n* `ValueDate` - \n* `IssueDate` - \n"
+    document:
+      type: object
+      properties:
+        DocumentIdentifer:
+          $ref: '#/components/schemas/identifier'
+        DocumentVersion:
+          type: string
+          description: ''
+          format: number
+        DocumentType:
+          $ref: '#/components/schemas/financialdocumenttypevalues'
+        DocumentStatus:
+          $ref: '#/components/schemas/status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/datetime'
+        DocumentName:
+          $ref: '#/components/schemas/name'
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/documentdatetimetypevalues'
+        DocumentPurpose:
+          $ref: '#/components/schemas/text'
+        DocumentFormat:
+          $ref: '#/components/schemas/text'
+        DocumentSubject:
+          $ref: '#/components/schemas/text'
+        DocumentDescription:
+          $ref: '#/components/schemas/text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+      description: Document that provides background or corroborating information regarding an assessment(s).
+    requirement:
+      type: object
+      properties:
+        RequirementType:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: Date when the assessment expires. (ISO20022)
+    assessment:
+      type: object
+      properties:
+        AssessmentType:
+          $ref: '#/components/schemas/assessmenttypevalues'
+        AssessmentMethod:
+          $ref: '#/components/schemas/text'
+        AssessmentSchedule:
+          $ref: '#/components/schemas/schedule'
+        AssessmentDescription:
+          $ref: '#/components/schemas/text'
+        AssessmentModel:
+          $ref: '#/components/schemas/model'
+        AssessmentDateTime:
+          $ref: '#/components/schemas/datetime'
+        AssessmentResult:
+          $ref: '#/components/schemas/text'
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/document'
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/document'
+        AssessmentRequiredAdjustment:
+          $ref: '#/components/schemas/text'
+        AssessmentRequirement:
+          $ref: '#/components/schemas/requirement'
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/date'
+      description: Reference to the Credit Card Authorization Assessment
+    test:
+      type: object
+      properties:
+        TestResult:
+          type: string
+          description: ''
+          format: string
+        TestGuidance:
+          type: string
+          description: ''
+          format: string
+        TestType:
+          type: string
+          description: ''
+          format: string
+        TestDescription:
+          type: string
+          description: ''
+          format: string
+      description: Reference to Authorization
     Authorization:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the test can be applied
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The schedule and timing of the testing performed
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         VersionNumber:
           type: string
           description: The test version employed
           format: number
         BusinessService:
-          type: string
-          description: The <BQ> specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         CreditCardAuthorizationAssessmentReference:
-          type: string
-          description: Reference to the Credit Card Authorization Assessment
-          format: assessment
+          $ref: '#/components/schemas/assessment'
         AuthorizationReference:
-          type: string
-          description: Reference to Authorization
-          format: test
+          $ref: '#/components/schemas/test'
         AuthorizationType:
-          type: string
-          description: The type of Authorization
-          format: text
+          $ref: '#/components/schemas/text'
       description: "All kind of verifications \n\nExamples: Password verification"
     DeviceCheck:
       type: object
@@ -401,6 +718,28 @@ components:
           description: Result of the fraud check
           format: string
       description: "All kind of verifications \n\nExamples: Password verification"
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: The currency that the transaction is made in
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: The amount corresponding to the type
     CreditCardAuthorizationAssessment:
       type: object
       properties:
@@ -449,17 +788,13 @@ components:
           description: 'The type of transaction (purchase, cash advance, etc.)'
           format: string
         CardTransactionCurrency:
-          type: string
-          description: The currency that the transaction is made in
-          format: currencycode
+          $ref: '#/components/schemas/currencycode'
         CardTransactionAmountType:
           type: string
           description: 'Type of amount (e.g. original amount, billing currency amount, conversion rate, FX Mark-up)'
           format: string
         CardTransactionAmount:
-          type: string
-          description: The amount corresponding to the type
-          format: amount
+          $ref: '#/components/schemas/amount'
         CardTransactionMerchantReference:
           type: string
           description: Refers to the merchant initiating settlement
@@ -473,9 +808,7 @@ components:
           description: 'Details of the transaction (e.g. purchased service/product, purpose)'
           format: object
         CardTransactionDateTime:
-          type: string
-          description: Significant dates and times associated with the transaction
-          format: date
+          $ref: '#/components/schemas/date'
         CardTransactionFXConversionCharge:
           type: string
           description: The applied currency conversion charge
@@ -540,9 +873,7 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -560,9 +891,7 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             CardTransactionFXConversionCharge:
               type: string
               description: "\n"
@@ -583,9 +912,7 @@ components:
           type: object
           properties:
             CardTransactionDateTime:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             CardTransactionAuthorizationRecord:
               type: string
               description: "\n"
@@ -642,9 +969,7 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -662,9 +987,7 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             CardTransactionFXConversionCharge:
               type: string
               description: "\n"
@@ -729,9 +1052,7 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -749,9 +1070,7 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             CardTransactionFXConversionCharge:
               type: string
               description: "\n"
@@ -816,9 +1135,7 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -836,9 +1153,7 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             CardTransactionFXConversionCharge:
               type: string
               description: "\n"
@@ -1006,9 +1321,7 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -1026,9 +1339,7 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             CardTransactionFXConversionCharge:
               type: string
               description: "\n"

@@ -626,49 +626,388 @@ components:
           type: string
           format: string
       description: Status Attributes
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: Name by which a party is known and which is usually used to identify that party. (ISO20022)
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    instructiondate:
+      type: object
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/date'
+        InstructionDateType:
+          type: string
+          description: ''
+          format: instructiondatetypevalues
+      description: ''
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+    instructionlifecyclestatus:
+      type: object
+      properties:
+        InstructionLifecycleStatusType:
+          type: string
+          description: ''
+          format: instructionlifecylestatustypevalues
+        InstructionLifecycleStatus:
+          $ref: '#/components/schemas/status'
+      description: 'A characteristic of instruction which refers to the LifecycleStatus of instruction (e.g., requested, executed, fulfilled, etc.); '
+    instructionidentification:
+      type: object
+      properties:
+        InstructionIdentifier:
+          $ref: '#/components/schemas/identifier'
+        InstructionIdentifierType:
+          type: string
+          description: ''
+          format: instructionidentificationtypevalues
+      description: "An identifier that allows to uniquely refer to an instance of an Instruction.\n"
+    instructiontypevalues:
+      enum:
+        - PaymentInstruction
+        - DeliveryOrder
+        - InformationRequest
+        - ExchangeInstruction
+        - AllocationInstruction
+        - MaintenanceInstruction
+      type: string
+      description: ">\n* `PaymentInstruction` - \n* `DeliveryOrder` - \n* `InformationRequest` - \n* `ExchangeInstruction` - \n* `AllocationInstruction` - \n* `MaintenanceInstruction` - \n"
+    log:
+      type: object
+      properties:
+        LogType:
+          type: string
+          description: ''
+          format: string
+        LogPeriod:
+          type: string
+          description: ''
+          format: string
+        LogDate:
+          type: string
+          description: Key dates associated with the log (e.g. start time).
+          format: string
+        LogIdentification:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    instruction:
+      type: object
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/instructiondate'
+        InstructionStatus:
+          $ref: '#/components/schemas/instructionlifecyclestatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/instructionidentification'
+        InstructionType:
+          $ref: '#/components/schemas/instructiontypevalues'
+        InstructionResult:
+          $ref: '#/components/schemas/text'
+        InstructionDescription:
+          $ref: '#/components/schemas/text'
+        InstructionLog:
+          $ref: '#/components/schemas/log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/text'
+      description: ''
+    accountstatus:
+      type: object
+      properties:
+        AccountStatus:
+          $ref: '#/components/schemas/status'
+        AccountStatusType:
+          type: string
+          description: ''
+          format: accountstatustypevalues
+      description: "A characteristic of account which refers to the LifecycleStatus of account like opened, closed, blocked, etc.\n\nSpecifies the current state of an account. (ISO20022)"
+    accountidentification:
+      type: object
+      properties:
+        AccountIdentificationType:
+          type: string
+          description: ''
+          format: accountidentificationtypevalues
+        AccountIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: The identifier of account like Account Number.
+    accountdate:
+      type: object
+      properties:
+        AccountDateType:
+          type: string
+          description: ''
+          format: accountdatetypevalues
+        AccountDate:
+          $ref: '#/components/schemas/datetime'
+      description: 'A characteristic of account which refers to LifecycleDate of account (e.g., ClosingDate, OpeningDate, LiveDate, etc.) '
+    accounttype:
+      type: object
+      properties:
+        AccountType:
+          type: string
+          description: ''
+          format: accounttypevalues
+        AccountTypeName:
+          $ref: '#/components/schemas/name'
+      description: 'Specifies the category of account like payment account, loan account, cash account, securities account, etc. '
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: ''
+    accountbalance:
+      type: object
+      properties:
+        AccountBalance:
+          $ref: '#/components/schemas/amount'
+        AccountBalanceType:
+          type: string
+          description: ''
+          format: accountbalancetypevalues
+        AccounBalanceDate:
+          $ref: '#/components/schemas/datetime'
+      description: "The state of the obligations managed on the account, the result of all entries on the account.\n\nNumerical representation of the net increases and decreases in an account at a specific point in time. (ISO20022)\n\nBanking: Amount available in an account for withdrawal or use.\nRead more: http://www.businessdictionary.com/definition/balance.html\n\nBookkeeping: Difference between the debit and credit sides of an account.\nRead more: http://www.businessdictionary.com/definition/balance.html"
+    accountcurrency:
+      type: object
+      properties:
+        AccountCurrencyType:
+          type: string
+          description: ''
+          format: accountcurrencytypevalues
+        AccountCurrency:
+          $ref: '#/components/schemas/currencycode'
+      description: ''
+    account:
+      type: object
+      properties:
+        AccountStatus:
+          $ref: '#/components/schemas/accountstatus'
+        AccountIdentification:
+          $ref: '#/components/schemas/accountidentification'
+        AccountDate:
+          $ref: '#/components/schemas/accountdate'
+        AccountType:
+          $ref: '#/components/schemas/accounttype'
+        AccountPurpose:
+          $ref: '#/components/schemas/text'
+        AccountBalance:
+          $ref: '#/components/schemas/accountbalance'
+        AccountCurrency:
+          $ref: '#/components/schemas/accountcurrency'
+        AccountDescription:
+          $ref: '#/components/schemas/text'
+      description: ''
+    paymentcardtype:
+      type: object
+      properties:
+        PaymentCardType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PaymentCardTypeName:
+          $ref: '#/components/schemas/name'
+      description: 'Type of card, e.g., credit card. (ISO20022)'
+    paymentcard:
+      type: object
+      properties:
+        CardType:
+          $ref: '#/components/schemas/paymentcardtype'
+        CardNumber:
+          type: string
+          description: Number embossed on a card that links the card to the account owner and account servicer (sometimes called personal account number or PAN). (ISO20022)
+          format: number
+        CardStartDate:
+          $ref: '#/components/schemas/datetime'
+        CardExpiryDate:
+          $ref: '#/components/schemas/datetime'
+        CardSecurityCode:
+          type: string
+          description: 'Security code written on the card, sometimes called card security code (CSC). (ISO20022)'
+          format: number
+        CardVerificationValue:
+          type: string
+          description: ''
+          format: number
+        BankIdentificationNumber:
+          $ref: '#/components/schemas/identifier'
+      description: ''
     TokenAssignment:
       type: object
       properties:
         TokenIdentificationCode:
-          type: string
-          description: ''
-          format: identifier
+          $ref: '#/components/schemas/identifier'
         TokenServiceProviderReference:
-          type: string
-          description: ''
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         RequestorReference:
-          type: string
-          description: ''
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         RequestReference:
-          type: string
-          description: ''
-          format: instruction
+          $ref: '#/components/schemas/instruction'
         RequestReasonDescription:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         PaymentAccountReference:
-          type: string
-          description: ''
-          format: account
+          $ref: '#/components/schemas/account'
         CardReference:
-          type: string
-          description: ''
-          format: paymentcard
+          $ref: '#/components/schemas/paymentcard'
         IdentificationandVerificationMethodType:
           type: string
           description: 'Enumeration: Asserted Authentication, Risk Based Noninteractive Authentication, Interactive Authentication'
           format: ''
         TokenStatus:
-          type: string
-          description: 'Enumeration: Active, Expired, Cancelled'
-          format: status
+          $ref: '#/components/schemas/status'
         TokenStatusDate:
-          type: string
-          description: ''
-          format: datetime
+          $ref: '#/components/schemas/datetime'
       description: ''
     ChequesAssignment:
       type: object
@@ -818,13 +1157,9 @@ components:
           description: 'Access/usage entitlements, can be by product instance (e.g. value, location, frequency and duration access constraints)'
           format: string
         IssueDate:
-          type: string
-          description: The date the issued device is registered
-          format: date
+          $ref: '#/components/schemas/date'
         ValidFrom-ToDate:
-          type: string
-          description: The refresh period for the issued device
-          format: date
+          $ref: '#/components/schemas/date'
       description: "Maintain an inventory or holding of some resource and make assignments/allocations as requested  within Issued Device Administration. \nExample: Track the inventory and administer the distribution of central cash holdings throughout the branch & ATM network."
     InitiateIssuedDeviceAllocationRequest:
       type: object
@@ -849,9 +1184,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
       description: 'Input: PrCR Allocate an issued device (selected type will internally invoke assignment type)'
     InitiateIssuedDeviceAllocationResponse:
       type: object
@@ -868,13 +1201,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
       description: 'Output: PrCR Allocate an issued device (selected type will internally invoke assignment type)'
     RetrieveIssuedDeviceAllocationResponse:
       type: object
@@ -899,13 +1228,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
       description: 'Output: ReCR Retrieve details about an allocation'
     InitiatePasswordAssignmentRequest:
       type: object
@@ -930,13 +1255,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         PasswordAssignment:
           type: object
           properties:
@@ -964,13 +1285,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         PasswordAssignment:
           type: object
           properties:
@@ -1006,9 +1323,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         PasswordAssignment:
           type: object
           properties:
@@ -1044,9 +1359,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         PasswordAssignment:
           type: object
           properties:
@@ -1104,13 +1417,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         PasswordAssignment:
           type: object
           properties:
@@ -1154,13 +1463,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         QuestionAssignment:
           type: object
           properties:
@@ -1188,13 +1493,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         QuestionAssignment:
           type: object
           properties:
@@ -1234,9 +1535,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         QuestionAssignment:
           type: object
           properties:
@@ -1272,9 +1571,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         QuestionAssignment:
           type: object
           properties:
@@ -1332,9 +1629,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         QuestionAssignment:
           type: object
           properties:
@@ -1382,9 +1677,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         DeviceAssignment:
           type: object
           properties:
@@ -1436,9 +1729,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         DeviceAssignment:
           type: object
           properties:
@@ -1512,9 +1803,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         DeviceAssignment:
           type: object
           properties:
@@ -1566,13 +1855,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         BiometricAssignment:
           type: object
           properties:
@@ -1604,13 +1889,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         BiometricAssignment:
           type: object
           properties:
@@ -1642,9 +1923,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         BiometricAssignment:
           type: object
           properties:
@@ -1680,9 +1959,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         BiometricAssignment:
           type: object
           properties:
@@ -1718,9 +1995,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         BiometricAssignment:
           type: object
           properties:
@@ -1756,9 +2031,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         ReaderAssignment:
           type: object
           properties:
@@ -1802,9 +2075,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         ReaderAssignment:
           type: object
           properties:
@@ -1870,9 +2141,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         ReaderAssignment:
           type: object
           properties:
@@ -1916,13 +2185,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         ChequesAssignment:
           type: object
           properties:
@@ -1954,13 +2219,9 @@ components:
               description: "\n"
               format: string
             IssueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         ChequesAssignment:
           type: object
           properties:
@@ -1988,9 +2249,7 @@ components:
               description: "\n"
               format: string
             ValidFrom-ToDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
         ChequesAssignment:
           type: object
           properties:

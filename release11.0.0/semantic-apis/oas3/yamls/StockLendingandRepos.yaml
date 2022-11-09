@@ -781,102 +781,354 @@ components:
           type: string
           format: string
       description: Status Attributes
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The required status/situation prior to the execution of the task
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The timing and key actions/milestones involved in completing the transaction task
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: ''
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: The Repo Transaction Cash Transfer Task specific Business Service
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: An identifier that allows to uniquely refer to an instance of a transaction.
+    transactiondate:
+      type: object
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/datetime'
+        TransactionDateType:
+          type: string
+          description: ''
+          format: transactiondatetypevalues
+      description: "The Date that the transaction has occurred or is planned to occur.\nA characteristic of transaction which refers to the LifecycleDate of transaction (e.g., initiated date, executed date, fulfillment date). "
+    transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: ">\n* `FinancialTransaction` - \n* `BusinessTransaction` - \n* `BankingTransaction` - \n* `AccountingTransaction` - \n* `BookingTransaction` - \n* `AllocationTransaction` - \n* `DeliveryTransaction` - \n* `ProductionTransaction` - \n"
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+    transactionlifecyclestatus:
+      type: object
+      properties:
+        TransactionLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        TransactionLifecycleStatusType:
+          type: string
+          description: ''
+          format: transactionlifecyclestatustypevalues
+      description: 'A characteristic of transaction which refers to the LifecycleStatus of transaction (e.g., initiated, executed, confirmed, cancelled, etc.) '
+    transaction:
+      type: object
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/transactiondate'
+        TransactionType:
+          $ref: '#/components/schemas/transactiontypevalues'
+        TransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionStatus:
+          $ref: '#/components/schemas/transactionlifecyclestatus'
+        TransactionName:
+          $ref: '#/components/schemas/name'
+      description: Reference to Repo Transaction Cash Transfer Task
     RepoTransactionCashTransferTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Repo Transaction Cash Transfer Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         RepoTransactionReference:
-          type: string
-          description: Reference to Repo Transaction Cash Transfer Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         RepoTransactionCashTransferTaskReference:
           type: string
           description: Reference to Repo Transaction Cash Transfer Task
           format: task
         RepoTransactionCashTransferTaskType:
-          type: string
-          description: The type of Repo Transaction Cash Transfer Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Repo Transaction Cash Transfer Task is a discrete action or task that is required in the execution of the Repo Transaction Cash Transfer Task
     RepoTransactionSecurityTransferTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Repo Transaction Security Transfer Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         RepoTransactionReference:
-          type: string
-          description: Reference to Repo Transaction Security Transfer Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         RepoTransactionSecurityTransferTaskReference:
           type: string
           description: Reference to Repo Transaction Security Transfer Task
           format: task
         RepoTransactionSecurityTransferTaskType:
-          type: string
-          description: The type of Repo Transaction Security Transfer Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Repo Transaction Cash Transfer Task is a discrete action or task that is required in the execution of the Repo Transaction Cash Transfer Task
     RepoTransactionInitiationTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Repo Transaction Initiation Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         RepoTransactionReference:
-          type: string
-          description: Reference to Repo Transaction Initiation Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         RepoTransactionInitiationTaskReference:
           type: string
           description: Reference to Repo Transaction Initiation Task
           format: task
         RepoTransactionInitiationTaskType:
-          type: string
-          description: The type of Repo Transaction Initiation Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Repo Transaction Cash Transfer Task is a discrete action or task that is required in the execution of the Repo Transaction Cash Transfer Task
+    feetransaction:
+      type: object
+      properties:
+        FeeType:
+          type: string
+          description: Type of the applied Fee
+          format: string
+        AccruedFeeAmount:
+          type: string
+          description: 'Total fee charged '
+          format: string
+        FeeAmount:
+          type: string
+          description: "Amount of money paid for the charge\nAmount of money asked or paid for the charge (ISO20022)\n"
+          format: string
+      description: ''
+    interesttransactiontypevalues:
+      enum:
+        - InterestAllocationTransaction
+        - InterestPaymentTransaction
+        - InterestAdjustmentTransaction
+      type: string
+      description: ">\n* `InterestAllocationTransaction` - \n* `InterestPaymentTransaction` - \n* `InterestAdjustmentTransaction` - \n"
+    rate:
+      type: object
+      properties:
+        RateValue:
+          type: string
+          description: ''
+          format: string
+        RateUnit:
+          type: string
+          description: "The unit of measure like Percentage or BPS\n\nBasis points (BPS) refers to a common unit of measure for interest rates and other percentages in finance."
+          format: string
+        RatePeriod:
+          type: string
+          description: ''
+          format: string
+        RateCapitalUnit:
+          type: string
+          description: ''
+          format: string
+      description: The actual interest rate used for the payment of the interest for the specified interest period. (ISO20022)
+    interesttransaction:
+      type: object
+      properties:
+        InterestTransactionAmount:
+          type: string
+          description: Amount of applied interest
+          format: string
+        InterestTransactionDescription:
+          type: string
+          description: Description of InterestTransaction
+          format: string
+        InterestTransactionType:
+          $ref: '#/components/schemas/interesttransactiontypevalues'
+        InterestRate:
+          $ref: '#/components/schemas/rate'
+        InteretType:
+          type: string
+          description: "Type of an applied Interest\n\nSpecifies the type of interest associated with a trade. (ISO20022)"
+          format: string
+      description: ''
+    workproduct:
+      type: object
+      properties:
+        WorkProductType:
+          type: string
+          description: ''
+          format: workproducttypevalues
+        WorkProductIdentifoication:
+          type: string
+          description: ''
+          format: string
+      description: ''
     StockLendingandReposOutcome:
       type: object
       properties:
@@ -885,85 +1137,141 @@ components:
           description: ''
           format: calendar
         StockLendingandReposCounterparty:
-          type: string
-          description: ''
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         StockLendingandReposDividend:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         StockLendingandReposFees:
-          type: string
-          description: ''
-          format: feetransaction
+          $ref: '#/components/schemas/feetransaction'
         StockLendingandReposInterest:
-          type: string
-          description: ''
-          format: interesttransaction
+          $ref: '#/components/schemas/interesttransaction'
         StockLendingandReposMargining:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         StockLendingandReposNotionalPrincipal:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         StockLendingandReposOptions:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         StockLendingandReposRates:
-          type: string
-          description: ''
-          format: rate
+          $ref: '#/components/schemas/rate'
         StockLendingandReposSettlement:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         StockLendingandReposWorkProduct:
+          $ref: '#/components/schemas/workproduct'
+      description: The Repo Transaction Cash Transfer Task is a discrete action or task that is required in the execution of the Repo Transaction Cash Transfer Task
+    servicetype:
+      type: object
+      properties:
+        ServiceTypeName:
+          $ref: '#/components/schemas/name'
+        ServiceType:
           type: string
           description: ''
-          format: workproduct
-      description: The Repo Transaction Cash Transfer Task is a discrete action or task that is required in the execution of the Repo Transaction Cash Transfer Task
+          format: servicetypevalues
+      description: ''
+    service:
+      type: object
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/name'
+        ServiceDescription:
+          $ref: '#/components/schemas/text'
+        ServiceType:
+          $ref: '#/components/schemas/servicetype'
+      description: A selected optional business service as subject matter of Repo Transaction
+    repurchasetypevalues:
+      enum:
+        - Swap
+        - Repurchasecall
+        - Pairoff
+        - Reporate
+        - Rollover
+        - Topup
+        - Withdrawal
+        - Principalexposureadjustment
+      type: string
+      description: ">\n* `Swap` - Relates to a Swap/Substitution.\n* `Repurchasecall` - Relates to a change in the closing or maturity date.\n* `Pairoff` - Relates to a pair-off: the transaction is paired off and netted against one or more previous transactions.\n* `Reporate` - Is part of a pair-off.\n* `Rollover` - Relates to a repo rollover of a position extending the closing or maturity date.\n* `Topup` - Relates to a repo rollover of a position extending the closing or maturity date.\n* `Withdrawal` - Relates to a repo rollover of a position extending the closing or maturity date.\n* `Principalexposureadjustment` - Relates to a principal adjustment.\n"
+    repotransaction:
+      type: object
+      properties:
+        RepoTransaction:
+          type: string
+          description: A Transaction that is the result of fulfillment of Repo Arrangement
+          format: class
+      description: An unique reference to an item or an occurrence of Repo Transaction
+    repurchaseagreementtypevalues:
+      enum:
+        - SpecificCollateral
+        - GeneralCollateral
+      type: string
+      description: ">\n* `SpecificCollateral` - Repurchase agreement where a single, pre-defined, financial instrument is sold and repurchased. (IS020022)\n* `GeneralCollateral` - Repurchase agreement where the agreement allows for the sale and repurchase of any of a selection of assets from a pool of eligible assets. (ISO20022)\n"
+    repurchaseagreement:
+      type: object
+      properties:
+        RepurchaseAgreementType:
+          $ref: '#/components/schemas/repurchaseagreementtypevalues'
+      description: ''
+    repurchaseagreementinvolvementtypevalues:
+      enum:
+        - Investor/Lender
+        - Borrower
+        - Dealer
+        - Tri-PartyAgent
+      type: string
+      description: ">\n* `Investor/Lender` - \n* `Borrower` - \n* `Dealer` - \n* `Tri-PartyAgent` - A tri-party agent, acts as an intermediary between the two parties to the repo to facilitate services like collateral selection, payment and settlement, custody and management during the life of the transaction.\n"
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: ''
+    repoarrangement:
+      type: object
+      properties:
+        RepurchaseRate:
+          $ref: '#/components/schemas/rate'
+        TerminationDateTime:
+          $ref: '#/components/schemas/datetime'
+        RepurchaseAmount:
+          $ref: '#/components/schemas/amount'
+        RepurchaseType:
+          $ref: '#/components/schemas/repurchasetypevalues'
+      description: ''
     RepoTransaction:
       type: object
       properties:
         RepoTransactionParameterType:
-          type: string
-          description: A Classification value that distinguishes between business service transaction within Repo Transaction
-          format: text
+          $ref: '#/components/schemas/text'
         RepoTransactionSelectedOption:
-          type: string
-          description: A selected optional business service as subject matter of Repo Transaction
-          format: service
+          $ref: '#/components/schemas/service'
         RepoTransactionStatus:
-          type: string
-          description: The status of Repo Transaction
-          format: transactionlifecyclestatus
+          $ref: '#/components/schemas/transactionlifecyclestatus'
         RepoTransactionType:
-          type: string
-          description: A Classification value that specifies type of transaction for this  Repo Transaction
-          format: repurchasetypevalues
+          $ref: '#/components/schemas/repurchasetypevalues'
         RepoTransactionReference:
-          type: string
-          description: An unique reference to an item or an occurrence of Repo Transaction
-          format: repotransaction
+          $ref: '#/components/schemas/repotransaction'
         RepurchaseAgreementReference:
-          type: string
-          description: ''
-          format: repurchaseagreement
+          $ref: '#/components/schemas/repurchaseagreement'
         RepurchaseAgreementInvolvedPartyReference:
-          type: string
-          description: ''
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         RepurchaseAgreementInvolvementType:
-          type: string
-          description: ''
-          format: repurchaseagreementinvolvementtypevalues
+          $ref: '#/components/schemas/repurchaseagreementinvolvementtypevalues'
         RepurchaseArrangementReference:
-          type: string
-          description: ''
-          format: repoarrangement
+          $ref: '#/components/schemas/repoarrangement'
       description: 'Execute a well-bounded financial transaction/task, typically involving largely automated/structured fulfillment processing within Stock Lending and Repos. '
     ControlRepoTransactionRequest:
       type: object
@@ -972,25 +1280,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Control Repo Transaction'
     ControlRepoTransactionResponse:
       type: object
@@ -999,25 +1297,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Control Repo Transaction'
     ExchangeRepoTransactionRequest:
       type: object
@@ -1026,25 +1314,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Exchange Repo Transaction'
     ExchangeRepoTransactionResponse:
       type: object
@@ -1053,25 +1331,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Exchange Repo Transaction'
     ExecuteRepoTransactionRequest:
       type: object
@@ -1080,25 +1348,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Execute Repo Transaction'
     ExecuteRepoTransactionResponse:
       type: object
@@ -1107,25 +1365,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Execute Repo Transaction'
     InitiateRepoTransactionRequest:
       type: object
@@ -1134,25 +1382,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Initiate Repo Transaction'
     InitiateRepoTransactionResponse:
       type: object
@@ -1161,25 +1399,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Initiate Repo Transaction'
     NotifyRepoTransactionRequest:
       type: object
@@ -1188,25 +1416,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Notify Repo Transaction'
     NotifyRepoTransactionResponse:
       type: object
@@ -1215,25 +1433,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Notify Repo Transaction'
     RequestRepoTransactionRequest:
       type: object
@@ -1242,25 +1450,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Request Repo Transaction'
     RequestRepoTransactionResponse:
       type: object
@@ -1269,25 +1467,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Request Repo Transaction'
     RetrieveRepoTransactionRequest:
       type: object
@@ -1296,25 +1484,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Retrieve Repo Transaction'
     RetrieveRepoTransactionResponse:
       type: object
@@ -1323,25 +1501,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Retrieve Repo Transaction'
     UpdateRepoTransactionRequest:
       type: object
@@ -1350,25 +1518,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Input: Update Repo Transaction'
     UpdateRepoTransactionResponse:
       type: object
@@ -1377,25 +1535,15 @@ components:
           type: object
           properties:
             RepoTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             RepoTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             RepoTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             RepoTransactionType:
-              type: string
-              description: "\n"
-              format: repurchasetypevalues
+              $ref: '#/components/schemas/repurchasetypevalues'
             RepoTransactionReference:
-              type: string
-              description: "\n"
-              format: repotransaction
+              $ref: '#/components/schemas/repotransaction'
       description: 'Output: Update Repo Transaction'
   responses:
     BadRequest:

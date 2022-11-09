@@ -1490,357 +1490,647 @@ components:
           type: string
           format: string
       description: Status Attributes
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The required status/situation before the routine can be undertaken
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: Name by which a party is known and which is usually used to identify that party. (ISO20022)
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: The operating unit/employee responsible for performing the routine
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The timing and key actions/milestones involved in completing the routine
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: 'The Fund Investor, Middle and Back Office Service Routine specific Business Service'
+    goal:
+      type: object
+      properties:
+        GoalType:
+          type: string
+          description: The type of goal
+          format: string
+        GoalDefinition:
+          type: string
+          description: 'A definition of the goal, including the intended actions required to achieve the goal'
+          format: string
+        GoalOrganisation:
+          type: string
+          description: Identifies the interested parties and their roles and responsibilities for the specific actions supporting the achievement of the goal
+          format: ''
+        GoalResult:
+          type: string
+          description: 'Assessment of how the work is progressing towards achieving the goal, including projections of likely outcomes'
+          format: string
+      description: ''
+    budgettype:
+      type: object
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/name'
+        BudgetType:
+          type: string
+          description: ''
+          format: budgettypevalues
+      description: A Classification value that specifies the type of Budget
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: ''
+    budgetarrangement:
+      type: object
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/amount'
+      description: 'An arrangement which is specifying an estimate of costs, revenues, and resources over a specified period, reflecting a reading of future financial conditions and goals. (adapted from Business Dictionary)'
+    plannedaction:
+      type: object
+      properties:
+        PlannedAction:
+          type: string
+          description: 'An action that is arranged in a plan for doing or achieving something '
+          format: class
+      description: 'An action that is arranged in a plan for doing or achieving something '
+    plantype:
+      type: object
+      properties:
+        PlanTypeName:
+          $ref: '#/components/schemas/name'
+        PlanType:
+          type: string
+          description: ''
+          format: plantypevalues
+      description: A Classification value that specifies the type of Plan
+    plan:
+      type: object
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/goal'
+        PlanBudget:
+          $ref: '#/components/schemas/budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/plannedaction'
+        PlanType:
+          $ref: '#/components/schemas/plantype'
+        PlanOrganisation:
+          type: string
+          description: ''
+          format: string
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/text'
+      description: 'Reference to Fund Investor, Middle and Back Office Service Routine'
     FundInvestor_MiddleandBackOfficeServiceRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: 'The Fund Investor, Middle and Back Office Service Routine specific Business Service'
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: 'Reference to Fund Investor, Middle and Back Office Service Routine'
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundInvestor_MiddleandBackOfficeServiceRoutineReference:
-          type: string
-          description: 'Reference to Fund Investor, Middle and Back Office Service Routine'
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundInvestor_MiddleandBackOfficeServiceRoutineType:
-          type: string
-          description: 'The type of Fund Investor, Middle and Back Office Service Routine'
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundManagementFeeRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Management Fee Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Management Fee Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundManagementFeeRoutineReference:
-          type: string
-          description: Reference to Fund Management Fee Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundManagementFeeRoutineType:
-          type: string
-          description: The type of Fund Management Fee Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundInflowsandOutflowRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Inflows and Outflow Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Inflows and Outflow Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundInflowsandOutflowRoutineReference:
-          type: string
-          description: Reference to Fund Inflows and Outflow Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundInflowsandOutflowRoutineType:
-          type: string
-          description: The type of Fund Inflows and Outflow Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundAccountingRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Accounting Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Accounting Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundAccountingRoutineReference:
-          type: string
-          description: Reference to Fund Accounting Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundAccountingRoutineType:
-          type: string
-          description: The type of Fund Accounting Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundEnrolmentRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Enrolment Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Enrolment Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundEnrolmentRoutineReference:
-          type: string
-          description: Reference to Fund Enrolment Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundEnrolmentRoutineType:
-          type: string
-          description: The type of Fund Enrolment Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundDevelopmentRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Development Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Development Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundDevelopmentRoutineReference:
-          type: string
-          description: Reference to Fund Development Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundDevelopmentRoutineType:
-          type: string
-          description: The type of Fund Development Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundFinancialReportingRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Financial Reporting Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Financial Reporting Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundFinancialReportingRoutineReference:
-          type: string
-          description: Reference to Fund Financial Reporting Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundFinancialReportingRoutineType:
-          type: string
-          description: The type of Fund Financial Reporting Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
     FundTaxAdministrationRoutine:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation before the routine can be undertaken
-          format: condition
+          $ref: '#/components/schemas/condition'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for performing the routine
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the routine
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Fund Tax Administration Routine specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status once the routine has been completed (note the need to fulfill a routine may recur frequently)
-          format: condition
+          $ref: '#/components/schemas/condition'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: Reference to Fund Tax Administration Routine
-          format: plan
+          $ref: '#/components/schemas/plan'
         FundTaxAdministrationRoutineReference:
-          type: string
-          description: Reference to Fund Tax Administration Routine
-          format: plannedaction
+          $ref: '#/components/schemas/plannedaction'
         FundTaxAdministrationRoutineType:
-          type: string
-          description: The type of Fund Tax Administration Routine
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
+    analysistypevalues:
+      enum:
+        - PerformanceAnalysis
+        - ActivityAnalysis
+      type: string
+      description: ">\n* `PerformanceAnalysis` - \n* `ActivityAnalysis` - \n"
+    financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjustment
+        - Debitnoterelatedtofinancialadjustment
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\n* `Meteredserviceinvoice` - Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\n* `Creditnoterelatedtofinancialadjustment` - Document is a credit note for the final amount settled for a commercial transaction.\n* `Debitnoterelatedtofinancialadjustment` - Document is a debit note for the final amount settled for a commercial transaction.\n* `Commercialinvoice` - Document is an invoice.\n* `Creditnote` - Document is a credit note.\n* `Debitnote` - Document is a debit note.\n* `Hireinvoice` - Document is an invoice for the hiring of human resources or renting goods or equipment.\n* `Selfbilledinvoice` - Document is an invoice issued by the debtor.\n* `Remittanceadvicemessage` - Document is a remittance advice sent separately from the current transaction.\n* `Relatedpaymentinstruction` - Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\n* `Commercialcontract` - Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\n* `Foreignexchangedealreference` - Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\n* `Statementofaccount` - Document is a statement of the transactions posted to the debtor's account at the supplier.\n* `Dispatchadvice` - Document is a dispatch advice.\n* `Purchaseorder` - Document is a purchase order.\n* `Structuredcommunicationreference` - Document is a structured communication reference provided by the creditor to identify the referred transaction.\n* `Billoflading` - Document is a shipping notice.\n* `Voucher` - Document is an electronic payment document.\n* `Accountreceivableopenitem` - Document is a payment that applies to a specific source document.\n* `Tradeservicesutilitytransaction` - Document is a transaction identifier as assigned by the Trade Services Utility.\n* `Cashierreceipt` - When the Sale system print the Cashier copy of the Payment receipt.\n* `Customerreceipt` - When the Sale System requires   the POI system to print the Customer receipt.\n* `Journal` - When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal (it is sometimes a Sale Logging/Journal Printer).\n* `Salereceipt` - When the Sale System requires the POI system to print the Sale receipt.\n"
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: 'Status of the document (e.g. delivered, paid, etc.). ISO20022'
+    documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\n* `CreationDate` - \n* `CapturingDate` - \n* `VersionDate` - \n* `ValueDate` - \n* `IssueDate` - \n"
+    document:
+      type: object
+      properties:
+        DocumentIdentifer:
+          $ref: '#/components/schemas/identifier'
+        DocumentVersion:
+          type: string
+          description: ''
+          format: number
+        DocumentType:
+          $ref: '#/components/schemas/financialdocumenttypevalues'
+        DocumentStatus:
+          $ref: '#/components/schemas/status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/datetime'
+        DocumentName:
+          $ref: '#/components/schemas/name'
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/documentdatetimetypevalues'
+        DocumentPurpose:
+          $ref: '#/components/schemas/text'
+        DocumentFormat:
+          $ref: '#/components/schemas/text'
+        DocumentSubject:
+          $ref: '#/components/schemas/text'
+        DocumentDescription:
+          $ref: '#/components/schemas/text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+      description: ''
+    analysis:
+      type: object
+      properties:
+        AnalysisType:
+          $ref: '#/components/schemas/analysistypevalues'
+        AnalysisResult:
+          $ref: '#/components/schemas/text'
+        AnalysisPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        AnalysisDocument:
+          $ref: '#/components/schemas/document'
+        AnalysisDateTime:
+          $ref: '#/components/schemas/datetime'
+        AnalysisSpecification:
+          $ref: '#/components/schemas/text'
+      description: ''
+    actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\n* `Initiate` - \n* `Execute` - \n* `Create` - \n* `Transfer` - \n* `Pay` - \n* `Deliver` - \n* `Apply` - \n* `Calculate` - \n"
+    action:
+      type: object
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/actiontypevalues'
+      description: ''
+    arrangementlifecyclestatus:
+      type: object
+      properties:
+        ArrangementLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ArrangementLifecycleStatusType:
+          type: string
+          description: ''
+          format: arrangementlifecyclestatustypevalues
+      description: 'A characteristic of arrangement which refers to the LifecycleStatus of arrangement (e.g., requested, proposed, offered, accepted, cancelled, terminated, fulfilled, etc.)'
+    subject:
+      type: object
+      properties:
+        Subject:
+          type: string
+          description: A thing that is discussed or dealt whit in agreement/arrangement about doing or not doing (as action) something.
+          format: class
+      description: ''
+    arrangementtypevalues:
+      enum:
+        - SweepArrangement
+        - WithdrawalArrangement
+        - DepositArrangement
+        - InterestArrangement
+        - FeeArrangement
+        - LienArrangement
+        - InformationArrangement
+        - PaymentServiceArrangement
+        - EntitlementArrangement
+        - PeriodArrangement
+        - CollateralArrangement
+        - LimitArrangement
+        - AccessArrangement
+        - CardPaymentArrangement
+        - StandingOrderArrangement
+        - OverdraftArrangement
+        - RepaymentArrangement
+        - StatementArrangement
+        - CreditTransferArrangement
+        - ProductAndServiceArrangement
+        - FactoringArrangement
+        - RolloverArrangement
+      type: string
+      description: ">\n* `SweepArrangement` - An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\n* `WithdrawalArrangement` - An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \n* `DepositArrangement` - An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \n* `InterestArrangement` - An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\n* `FeeArrangement` - An arrangement into which is promised to apply a charge for services rendered. \n* `LienArrangement` - An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \n* `InformationArrangement` - An arrangement concerning the information the bank will provide about the agreement/account\n* `PaymentServiceArrangement` - An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \n* `EntitlementArrangement` - Right or obligation linked to the involvement of a party in an agreement\n* `PeriodArrangement` - \n* `CollateralArrangement` - An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \n* `LimitArrangement` - An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \n* `AccessArrangement` - An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\n* `CardPaymentArrangement` - An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \n* `StandingOrderArrangement` - An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \n* `OverdraftArrangement` - An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \n* `RepaymentArrangement` - An arrangement into which is promised for paying back money previously borrowed from a lender. \n* `StatementArrangement` - An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \n* `CreditTransferArrangement` - An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \n* `ProductAndServiceArrangement` - \n* `FactoringArrangement` - \n* `RolloverArrangement` - Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \n"
+    arrangement:
+      type: object
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/arrangementlifecyclestatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/subject'
+        Arrangementtype:
+          $ref: '#/components/schemas/arrangementtypevalues'
+      description: ''
     MutualFundAdministrationOutcome:
       type: object
       properties:
         MutualFundAdministrationPerformanceAnalysis:
-          type: string
-          description: ''
-          format: analysis
+          $ref: '#/components/schemas/analysis'
         MutualFundAdministrationActivityAnalysis:
-          type: string
-          description: ''
-          format: analysis
+          $ref: '#/components/schemas/analysis'
         MutualFundAdministrationAdministrativePlan:
-          type: string
-          description: ''
-          format: plan
+          $ref: '#/components/schemas/plan'
         MutualFundAdministrationAdministrationTask:
+          $ref: '#/components/schemas/arrangement'
+      description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
+    accountbalance:
+      type: object
+      properties:
+        AccountBalance:
+          $ref: '#/components/schemas/amount'
+        AccountBalanceType:
           type: string
           description: ''
-          format: arrangement
-      description: 'The Fund Investor, Middle and Back Office Service Routine is an activity that is performed as one aspect of carrying out the Fund Investor, Middle and Back Office Service Routine'
+          format: accountbalancetypevalues
+        AccounBalanceDate:
+          $ref: '#/components/schemas/datetime'
+      description: Balance of budget which is arranged whitin Mutual Fund Administrative Plan
     MutualFundAdministrativePlan:
       type: object
       properties:
         MutualFundAdministrativePlanBudgetType:
-          type: string
-          description: A Classification value that distinguishes between Budgets within Mutual Fund Administrative Plan according to the type of resource and/or activity that is budgetted
-          format: budgettype
+          $ref: '#/components/schemas/budgettype'
         MutualFundAdministrativePlanBudget:
-          type: string
-          description: Amount of budget which is arranged whitin Mutual Fund Administrative Plan
-          format: amount
+          $ref: '#/components/schemas/amount'
         MutualFundAdministrativePlanAssignment:
           type: string
           description: The assignment of a required activity to a responsibe party in Mutual Fund Administrative Plan
           format: assignment
         MutualFundAdministrativePlanDuty:
-          type: string
-          description: The set of administrative responsibilities defined in Mutual Fund Administrative Plan
-          format: arrangement
+          $ref: '#/components/schemas/arrangement'
         MutualFundAdministrativePlanAssociatedParty:
-          type: string
-          description: Party who is involved in Mutual Fund Administrative Plan
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         MutualFundAdministrativePlanBudgetBalance:
-          type: string
-          description: Balance of budget which is arranged whitin Mutual Fund Administrative Plan
-          format: accountbalance
+          $ref: '#/components/schemas/accountbalance'
         MutualFundAdministrativePlanSubjectMatter:
           type: string
           description: The subject matter of Mutual Fund Administrative Plan
           format: object
         MutualFundAdministrativePlanType:
-          type: string
-          description: The type of Mutual Fund Administrative Plan
-          format: plantype
+          $ref: '#/components/schemas/plantype'
         MutualFundAdministrativePlanReference:
-          type: string
-          description: An unique reference to an item or an occurrence of Mutual Fund Administrative Plan
-          format: plan
+          $ref: '#/components/schemas/plan'
         MutualFundAdministrativePlanDescription:
-          type: string
-          description: Documentation of Mutual Fund Administrative Plan
-          format: text
+          $ref: '#/components/schemas/text'
       description: 'Handle and assign the day to day activities, capture time, costs and income for an operational unit within Mutual Fund Administration. '
     ControlMutualFundAdministrativePlanRequest:
       type: object
@@ -1849,41 +2139,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Control Mutual Fund Administrative Plan'
     ControlMutualFundAdministrativePlanResponse:
       type: object
@@ -1892,41 +2168,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Control Mutual Fund Administrative Plan'
     CreateMutualFundAdministrativePlanRequest:
       type: object
@@ -1935,41 +2197,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Create Mutual Fund Administrative Plan'
     CreateMutualFundAdministrativePlanResponse:
       type: object
@@ -1978,41 +2226,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Create Mutual Fund Administrative Plan'
     ExchangeMutualFundAdministrativePlanRequest:
       type: object
@@ -2021,41 +2255,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Exchange Mutual Fund Administrative Plan'
     ExchangeMutualFundAdministrativePlanResponse:
       type: object
@@ -2064,41 +2284,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Exchange Mutual Fund Administrative Plan'
     GrantMutualFundAdministrativePlanRequest:
       type: object
@@ -2107,41 +2313,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Grant Mutual Fund Administrative Plan'
     GrantMutualFundAdministrativePlanResponse:
       type: object
@@ -2150,41 +2342,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Grant Mutual Fund Administrative Plan'
     NotifyMutualFundAdministrativePlanRequest:
       type: object
@@ -2193,41 +2371,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Notify Mutual Fund Administrative Plan'
     NotifyMutualFundAdministrativePlanResponse:
       type: object
@@ -2236,41 +2400,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Notify Mutual Fund Administrative Plan'
     RequestMutualFundAdministrativePlanRequest:
       type: object
@@ -2279,41 +2429,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Request Mutual Fund Administrative Plan'
     RequestMutualFundAdministrativePlanResponse:
       type: object
@@ -2322,41 +2458,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Request Mutual Fund Administrative Plan'
     RetrieveMutualFundAdministrativePlanRequest:
       type: object
@@ -2365,41 +2487,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Retrieve Mutual Fund Administrative Plan'
     RetrieveMutualFundAdministrativePlanResponse:
       type: object
@@ -2408,41 +2516,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Retrieve Mutual Fund Administrative Plan'
     UpdateMutualFundAdministrativePlanRequest:
       type: object
@@ -2451,41 +2545,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Input: Update Mutual Fund Administrative Plan'
     UpdateMutualFundAdministrativePlanResponse:
       type: object
@@ -2494,41 +2574,27 @@ components:
           type: object
           properties:
             MutualFundAdministrativePlanBudgetType:
-              type: string
-              description: "\n"
-              format: budgettype
+              $ref: '#/components/schemas/budgettype'
             MutualFundAdministrativePlanAssignment:
               type: string
               description: "\n"
               format: assignment
             MutualFundAdministrativePlanDuty:
-              type: string
-              description: "\n"
-              format: arrangement
+              $ref: '#/components/schemas/arrangement'
             MutualFundAdministrativePlanAssociatedParty:
-              type: string
-              description: "\n"
-              format: involvedparty
+              $ref: '#/components/schemas/involvedparty'
             MutualFundAdministrativePlanBudgetBalance:
-              type: string
-              description: "\n"
-              format: accountbalance
+              $ref: '#/components/schemas/accountbalance'
             MutualFundAdministrativePlanSubjectMatter:
               type: string
               description: "\n"
               format: object
             MutualFundAdministrativePlanType:
-              type: string
-              description: "\n"
-              format: plantype
+              $ref: '#/components/schemas/plantype'
             MutualFundAdministrativePlanReference:
-              type: string
-              description: "\n"
-              format: plan
+              $ref: '#/components/schemas/plan'
             MutualFundAdministrativePlanDescription:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
       description: 'Output: Update Mutual Fund Administrative Plan'
   responses:
     BadRequest:

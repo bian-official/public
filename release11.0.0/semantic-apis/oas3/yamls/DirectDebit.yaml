@@ -543,37 +543,83 @@ components:
           type: string
           format: string
       description: Status Attributes
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The required status/situation prior to the implementation of the feature
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The timing and key actions/milestones involved in completing the fulfillment feature instance
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: ''
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: The Batch Debit specific Business Service
+    financialfacility:
+      type: object
+      properties:
+        FinancialFacility:
+          type: string
+          description: ''
+          format: class
+      description: Reference to the Direct Debit Facility
     BatchDebit:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the implementation of the feature
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the fulfillment feature instance
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Batch Debit specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the feature instance has been fulfilled
-          format: condition
+          $ref: '#/components/schemas/condition'
         DirectDebitFacilityReference:
-          type: string
-          description: Reference to the Direct Debit Facility
-          format: financialfacility
+          $ref: '#/components/schemas/financialfacility'
         BatchDebitReference:
           type: string
           description: Reference to the Batch Debit
           format: object
         BatchDebitType:
-          type: string
-          description: The type of Batch Debit
-          format: text
+          $ref: '#/components/schemas/text'
       description: The configuration and execution of Batch Debit arrangement within the Direct Debit Facility
     Reporting:
       type: object
@@ -587,9 +633,7 @@ components:
           description: The timing and key actions/milestones involved in completing the fulfillment feature instance
           format: string
         BusinessService:
-          type: string
-          description: The Direct Debit Arrangement specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         ReportingPostconditions:
           type: string
           description: The completion status and any triggered/dependent actions once the feature instance has been fulfilled
@@ -627,9 +671,7 @@ components:
           description: The timing and key actions/milestones involved in completing the fulfillment feature instance
           format: string
         FundsAvailableCheck:
-          type: string
-          description: The Direct Debit Arrangement specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         FundsAvailableCheckPostconditions:
           type: string
           description: The completion status and any triggered/dependent actions once the feature instance has been fulfilled
@@ -679,9 +721,7 @@ components:
           description: The timing and key actions/milestones involved in completing the fulfillment feature instance
           format: string
         DirectDebitMandateCheck:
-          type: string
-          description: The Direct Debit Arrangement specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         VerifyMandatePostconditions:
           type: string
           description: The completion status and any triggered/dependent actions once the feature instance has been fulfilled
@@ -719,9 +759,7 @@ components:
           description: The timing and key actions/milestones involved in completing the fulfillment feature instance
           format: string
         DirectDebitPaymentTracking:
-          type: string
-          description: The Direct Debit Arrangement specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         PaymentTrackingPostconditions:
           type: string
           description: The completion status and any triggered/dependent actions once the feature instance has been fulfilled
@@ -759,9 +797,7 @@ components:
           description: The timing and key actions/milestones involved in completing the fulfillment feature instance
           format: string
         DirectDebitPaymentInitiation:
-          type: string
-          description: The Direct Debit Arrangement specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         PaymentInitiationPostconditions:
           type: string
           description: The completion status and any triggered/dependent actions once the feature instance has been fulfilled
@@ -787,6 +823,14 @@ components:
           description: ''
           format: string
       description: The configuration and execution of Batch Debit arrangement within the Direct Debit Facility
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: The curreny which is arranged in Direct Debit Arrangement
     DirectDebitFacility:
       type: object
       properties:
@@ -815,9 +859,7 @@ components:
           description: The status of Direct Debit Arrangement
           format: string
         DirectDebitFacilityCurrency:
-          type: string
-          description: The curreny which is arranged in Direct Debit Arrangement
-          format: currencycode
+          $ref: '#/components/schemas/currencycode'
         DirectDebitFacilityRegulationReference:
           type: string
           description: Reference to the regulation which is defined in Direct Debit Arrangement
@@ -874,9 +916,7 @@ components:
               description: "\n"
               format: string
             DirectDebitFacilityCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             DirectDebitFacilityRegulationReference:
               type: string
               description: "\n"
@@ -1034,9 +1074,7 @@ components:
               description: "\n"
               format: string
             DirectDebitPaymentInitiation:
-              type: string
-              description: "\n"
-              format: businessservice
+              $ref: '#/components/schemas/businessservice'
             PaymentInitiationPostconditions:
               type: string
               description: "\n"
@@ -1077,9 +1115,7 @@ components:
               description: "\n"
               format: string
             DirectDebitPaymentTracking:
-              type: string
-              description: "\n"
-              format: businessservice
+              $ref: '#/components/schemas/businessservice'
             PaymentTrackingPostconditions:
               type: string
               description: "\n"
@@ -1120,9 +1156,7 @@ components:
               description: "\n"
               format: string
             BusinessService:
-              type: string
-              description: "\n"
-              format: businessservice
+              $ref: '#/components/schemas/businessservice'
             ReportingPostconditions:
               type: string
               description: "\n"
@@ -1163,9 +1197,7 @@ components:
               description: "\n"
               format: string
             DirectDebitMandateCheck:
-              type: string
-              description: "\n"
-              format: businessservice
+              $ref: '#/components/schemas/businessservice'
             VerifyMandatePostconditions:
               type: string
               description: "\n"
