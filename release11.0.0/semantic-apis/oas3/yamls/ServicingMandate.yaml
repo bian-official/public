@@ -1,0 +1,651 @@
+openapi: 3.0.1
+info:
+  title: Servicing Mandate
+  description: This service domain maintains the allowed customer servicing arrangements for a service provider covering general access to the bank's products and services and optionally customer specific arrangements
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 11.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/BIAN/ServicingMandate/11.0.0
+paths:
+  /ServicingMandate/Evaluate:
+    post:
+      tags:
+        - CR - ServicingMandateAgreement
+      summary: EvCR Agree terms for a third party servicing mandate
+      description: EvCR Agree terms for a third party servicing mandate
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateServicingMandateAgreementRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateServicingMandateAgreementResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ServicingMandate/{servicingmandateid}/Update':
+    put:
+      tags:
+        - CR - ServicingMandateAgreement
+      summary: UpCR Update terms for a third part mandate
+      description: UpCR Update terms for a third part mandate
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/servicingmandateid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateServicingMandateAgreementRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateServicingMandateAgreementResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ServicingMandate/{servicingmandateid}/Retrieve':
+    get:
+      tags:
+        - CR - ServicingMandateAgreement
+      summary: ReCR Retrieve details about a third party mandate
+      description: ReCR Retrieve details about a third party mandate
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/servicingmandateid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveServicingMandateAgreementResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ServicingMandate/{servicingmandateid}/CustomerMandate/{customermandateid}/Evaluate':
+    post:
+      tags:
+        - BQ - CustomerMandate
+      summary: EvBQ Agree terms for a customer mandate under the service mandate
+      description: EvBQ Agree terms for a customer mandate under the service mandate
+      operationId: EvaluateCustomerMandate
+      parameters:
+        - $ref: '#/components/parameters/servicingmandateid'
+        - $ref: '#/components/parameters/customermandateid'
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateCustomerMandateRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateCustomerMandateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ServicingMandate/{servicingmandateid}/CustomerMandate/{customermandateid}/Update':
+    put:
+      tags:
+        - BQ - CustomerMandate
+      summary: UpBQ Update details of the customer mandate
+      description: UpBQ Update details of the customer mandate
+      operationId: UpdateCustomerMandate
+      parameters:
+        - $ref: '#/components/parameters/servicingmandateid'
+        - $ref: '#/components/parameters/customermandateid'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerMandate'
+      responses:
+        '200':
+          $ref: '#/components/responses/CustomerMandate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ServicingMandate/{servicingmandateid}/CustomerMandate/{customermandateid}/Retrieve':
+    get:
+      tags:
+        - BQ - CustomerMandate
+      summary: ReBQ Retrieve details about the customer mandate
+      description: ReBQ Retrieve details about the customer mandate
+      operationId: RetrieveCustomerMandate
+      parameters:
+        - $ref: '#/components/parameters/servicingmandateid'
+        - $ref: '#/components/parameters/customermandateid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveCustomerMandateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    CustomerMandate:
+      type: object
+      properties:
+        CustomerReference:
+          type: string
+          description: Reference to the individual customer be accessed through the servicing order
+          format: object
+        ServicingMandateAgreementCustomerProductandServiceProfile:
+          type: string
+          description: Details the specific customer access allowed under the mandate
+          format: string
+        ProductandServiceType:
+          type: string
+          description: A type of product or service covered by the mandate
+          format: string
+        ServicingMandateAgreementCustomerProductandServiceTypeAccess:
+          type: string
+          description: Defines if and under what terms a product/service can be accessed for this customer under the mandate
+          format: string
+        ServicingMandateAgreementCustomerProductandServiceTypeUsage:
+          type: string
+          description: Records the usage of products/service under the mandate for control purposes
+          format: string
+      description: Reference to the terms in force for a specific customer for this service provider
+    ServicingMandateAgreement:
+      type: object
+      properties:
+        CustomerReference:
+          type: string
+          description: Reference to the third party service provider with the servicing mandate (also a bank customer)
+          format: object
+        ServicingMandateAgreementType:
+          type: string
+          description: The type of third party mandates (e.g. PSD2)
+          format: string
+        ServicingMandateAgreementJurisdiction:
+          type: string
+          description: The defines any limitation on the geographic coverage/scope of the mandate
+          format: string
+        ServicingMandateAgreementValidFromToDate:
+          type: string
+          description: The term for the mandate to be in force
+          format: date
+        ServicingMandateAgreementResponsibleParties:
+          type: string
+          description: Reference to any involved authorities and interested parties
+          format: string
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          description: Reference to any supporting documents
+          format: object
+        ServicingMandateAgreementProductandServiceProfileReference:
+          type: string
+          description: Reference to the record that defines allowed access
+          format: object
+        ServicingMandateAgreementProductandServiceProfile:
+          type: string
+          description: The record of the overarching product/service access profile permitted under the servicing mandate
+          format: string
+        ProductandServiceType:
+          type: string
+          description: A type of product or service covered by the mandate
+          format: string
+        ServicingMandateAgreementProductandServiceTypeEligibility:
+          type: string
+          description: Defines if and under what terms a product/service is accessible under the mandate
+          format: string
+      description: "Maintain the terms and conditions that apply to a commercial relationship within Servicing Mandate.\n\n\n"
+    EvaluateServicingMandateAgreementRequest:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementJurisdiction:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            ServicingMandateAgreementResponsibleParties:
+              type: string
+              description: "\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+      description: 'Input: EvCR Agree terms for a third party servicing mandate'
+    EvaluateServicingMandateAgreementResponse:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementProductandServiceProfileReference:
+              type: string
+              description: "\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementProductandServiceTypeEligibility:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: EvCR Agree terms for a third party servicing mandate'
+    UpdateServicingMandateAgreementRequest:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementJurisdiction:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            ServicingMandateAgreementResponsibleParties:
+              type: string
+              description: "\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementProductandServiceProfileReference:
+              type: string
+              description: "\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementProductandServiceTypeEligibility:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Input: UpCR Update terms for a third part mandate'
+    UpdateServicingMandateAgreementResponse:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementJurisdiction:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            ServicingMandateAgreementResponsibleParties:
+              type: string
+              description: "\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementProductandServiceProfileReference:
+              type: string
+              description: "\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementProductandServiceTypeEligibility:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: UpCR Update terms for a third part mandate'
+    RetrieveServicingMandateAgreementResponse:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementJurisdiction:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            ServicingMandateAgreementResponsibleParties:
+              type: string
+              description: "\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementProductandServiceProfileReference:
+              type: string
+              description: "\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementProductandServiceTypeEligibility:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about a third party mandate'
+    EvaluateCustomerMandateRequest:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementJurisdiction:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            ServicingMandateAgreementProductandServiceProfileReference:
+              type: string
+              description: "\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementProductandServiceTypeEligibility:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Input: EvBQ Agree terms for a customer mandate under the service mandate'
+    EvaluateCustomerMandateResponse:
+      type: object
+      properties:
+        CustomerMandate:
+          type: object
+          properties:
+            ServicingMandateAgreementCustomerProductandServiceProfile:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementCustomerProductandServiceTypeAccess:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementCustomerProductandServiceTypeUsage:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: EvBQ Agree terms for a customer mandate under the service mandate'
+    RetrieveCustomerMandateResponse:
+      type: object
+      properties:
+        ServicingMandateAgreement:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            ServicingMandateAgreementType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementJurisdiction:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementValidFromToDate:
+              type: string
+              description: "\n"
+              format: date
+            ServicingMandateAgreementProductandServiceProfileReference:
+              type: string
+              description: "\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementProductandServiceTypeEligibility:
+              type: string
+              description: "\n"
+              format: string
+        CustomerMandate:
+          type: object
+          properties:
+            ServicingMandateAgreementCustomerProductandServiceProfile:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementCustomerProductandServiceTypeAccess:
+              type: string
+              description: "\n"
+              format: string
+            ServicingMandateAgreementCustomerProductandServiceTypeUsage:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about the customer mandate'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateServicingMandateAgreementResponse:
+      description: EvaluateServicingMandateAgreementResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateServicingMandateAgreementResponse'
+    UpdateServicingMandateAgreementResponse:
+      description: UpdateServicingMandateAgreementResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateServicingMandateAgreementResponse'
+    RetrieveServicingMandateAgreementResponse:
+      description: RetrieveServicingMandateAgreementResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveServicingMandateAgreementResponse'
+    EvaluateCustomerMandateResponse:
+      description: EvaluateCustomerMandateResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateCustomerMandateResponse'
+    CustomerMandate:
+      description: CustomerMandate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerMandate'
+    RetrieveCustomerMandateResponse:
+      description: RetrieveCustomerMandateResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveCustomerMandateResponse'
+  parameters:
+    servicingmandateid:
+      name: servicingmandateid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    customermandateid:
+      name: customermandateid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateServicingMandateAgreementRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateServicingMandateAgreementRequest'
+      required: true
+    UpdateServicingMandateAgreementRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateServicingMandateAgreementRequest'
+      required: true
+    EvaluateCustomerMandateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateCustomerMandateRequest'
+      required: true
+    CustomerMandate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerMandate'
+      required: true

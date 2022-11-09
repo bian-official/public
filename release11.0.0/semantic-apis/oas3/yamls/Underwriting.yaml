@@ -1,0 +1,671 @@
+openapi: 3.0.1
+info:
+  title: Underwriting
+  description: This service domain manages the underwriting decision process for products as appropriate (including many loan types and some insurance products)
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 11.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/BIAN/Underwriting/11.0.0
+paths:
+  /Underwriting/Evaluate:
+    post:
+      tags:
+        - CR - UnderwritingAssessment
+      summary: EvCR Evaluate an underwriting decision
+      description: EvCR Evaluate an underwriting decision
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateUnderwritingAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateUnderwritingAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Underwriting/{underwritingid}/Update':
+    put:
+      tags:
+        - CR - UnderwritingAssessment
+      summary: UpCR Update details for an underwriting assessment
+      description: UpCR Update details for an underwriting assessment
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/underwritingid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateUnderwritingAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateUnderwritingAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Underwriting/{underwritingid}/Retrieve':
+    get:
+      tags:
+        - CR - UnderwritingAssessment
+      summary: ReCR Retrieve details about an underwriting assessment
+      description: ReCR Retrieve details about an underwriting assessment
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/underwritingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveUnderwritingAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    UnderwritingAssessment:
+      type: object
+      properties:
+        UnderwritingGuidelines:
+          type: string
+          description: Guidelines provided for applying for an underwriting decision - list submission requirements
+          format: string
+        RequiredCustomerEmploymentHistoryDetails:
+          type: string
+          description: Outlines the employment details required
+          format: string
+        RequiredCustomerDebtAssetStatement:
+          type: string
+          description: Outlines the type of debt/asset details required
+          format: string
+        RequiredCustomerCreditAssessment:
+          type: string
+          description: Outlines the required credit assessment details required
+          format: string
+        RequiredCollateralCoverage:
+          type: string
+          description: Outlines the details of collateral required
+          format: string
+        RequiredCustomerProductandServicePaymentHistory:
+          type: string
+          description: Outlines the extent of the product usage history required
+          format: string
+        RequiredCustomerDocuments:
+          type: string
+          description: 'Lists required documentation (e.g. for proof of identity, assets, collateral)'
+          format: string
+        ProposedTransactionDetails:
+          type: string
+          description: …
+          format: string
+        ProductInstanceReference:
+          type: string
+          description: The associated product instance for the underwriting decision
+          format: object
+        ProposedLoanTerms:
+          type: string
+          description: The proposed loan terms
+          format: string
+        ProposedLoanAmount:
+          type: string
+          description: The proposed loan amount
+          format: amount
+        LoanPurpose:
+          type: string
+          description: The purpose for the loan  (e.g. mortgage for primary residence/rental)
+          format: string
+        CustomerReference:
+          type: string
+          description: Reference to the applying customer
+          format: object
+        CustomerReferenceDetails:
+          type: string
+          description: Reference details known about the customer
+          format: object
+        CustomerProductEligibilityTerms:
+          type: string
+          description: Definition of the terms under which the customer eligible for the loan
+          format: string
+        CustomerEmploymentHistory:
+          type: string
+          description: The customer's employment record
+          format: string
+        CustomerIncomeStatement:
+          type: string
+          description: The customers historical income statement (for individuals)
+          format: string
+        CustomerDebtStatement:
+          type: string
+          description: Covers bank and known non-bank managed debts
+          format: string
+        CustomerAssetStatement:
+          type: string
+          description: Covers bank and known non-bank managed assets
+          format: string
+        CustomerCreditAssessment:
+          type: string
+          description: Reference to the bank's credit assessment of the customer
+          format: string
+        CustomerProductandServicePaymentHistory:
+          type: string
+          description: Reference to product reports covering payment history
+          format: string
+        CollateralItemReference:
+          type: string
+          description: Reference to the customers collateral holdings that are available
+          format: object
+        CollateralItemType:
+          type: string
+          description: The type of collateral
+          format: string
+        CollateralItemValuation:
+          type: string
+          description: The valuation of the collateral (applying the required loan to asset ratio)
+          format: string
+        DocumentReference:
+          type: string
+          description: Reference to associated documents of significance
+          format: object
+        UnderwritingAssessmentDecision:
+          type: string
+          description: Details of the underwriting decision
+          format: string
+        UnderwritingAssessmentWorkProduct:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the task'
+          format: string
+      description: 'To test or assess an entity, possibly against some formal qualification or certification requirement within Underwriting. '
+    EvaluateUnderwritingAssessmentRequest:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            UnderwritingGuidelines:
+              type: string
+              description: "\n"
+              format: string
+            ProposedTransactionDetails:
+              type: string
+              description: "\n"
+              format: string
+            ProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ProposedLoanTerms:
+              type: string
+              description: "\n"
+              format: string
+            ProposedLoanAmount:
+              type: string
+              description: "\n"
+              format: amount
+            LoanPurpose:
+              type: string
+              description: "\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            CustomerReferenceDetails:
+              type: string
+              description: "\n"
+              format: object
+            CustomerProductEligibilityTerms:
+              type: string
+              description: "\n"
+              format: string
+            CustomerIncomeStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerDebtStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerAssetStatement:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemReference:
+              type: string
+              description: "\n"
+              format: object
+            CollateralItemType:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemValuation:
+              type: string
+              description: "\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\n"
+              format: object
+      description: 'Input: EvCR Evaluate an underwriting decision'
+    EvaluateUnderwritingAssessmentResponse:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            UnderwritingGuidelines:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerEmploymentHistoryDetails:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerDebtAssetStatement:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerCreditAssessment:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCollateralCoverage:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerProductandServicePaymentHistory:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerDocuments:
+              type: string
+              description: "\n"
+              format: string
+            ProposedTransactionDetails:
+              type: string
+              description: "\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\n"
+              format: object
+            UnderwritingAssessmentDecision:
+              type: string
+              description: "\n"
+              format: string
+            UnderwritingAssessmentWorkProduct:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: EvCR Evaluate an underwriting decision'
+    UpdateUnderwritingAssessmentRequest:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            ProposedTransactionDetails:
+              type: string
+              description: "\n"
+              format: string
+            ProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ProposedLoanTerms:
+              type: string
+              description: "\n"
+              format: string
+            ProposedLoanAmount:
+              type: string
+              description: "\n"
+              format: amount
+            LoanPurpose:
+              type: string
+              description: "\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            CustomerReferenceDetails:
+              type: string
+              description: "\n"
+              format: object
+            CustomerProductEligibilityTerms:
+              type: string
+              description: "\n"
+              format: string
+            CustomerEmploymentHistory:
+              type: string
+              description: "\n"
+              format: string
+            CustomerIncomeStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerDebtStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerAssetStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerCreditAssessment:
+              type: string
+              description: "\n"
+              format: string
+            CustomerProductandServicePaymentHistory:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemReference:
+              type: string
+              description: "\n"
+              format: object
+            CollateralItemType:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemValuation:
+              type: string
+              description: "\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\n"
+              format: object
+      description: 'Input: UpCR Update details for an underwriting assessment'
+    UpdateUnderwritingAssessmentResponse:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            ProposedTransactionDetails:
+              type: string
+              description: "\n"
+              format: string
+            ProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ProposedLoanTerms:
+              type: string
+              description: "\n"
+              format: string
+            ProposedLoanAmount:
+              type: string
+              description: "\n"
+              format: amount
+            LoanPurpose:
+              type: string
+              description: "\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            CustomerReferenceDetails:
+              type: string
+              description: "\n"
+              format: object
+            CustomerProductEligibilityTerms:
+              type: string
+              description: "\n"
+              format: string
+            CustomerEmploymentHistory:
+              type: string
+              description: "\n"
+              format: string
+            CustomerIncomeStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerDebtStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerAssetStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerCreditAssessment:
+              type: string
+              description: "\n"
+              format: string
+            CustomerProductandServicePaymentHistory:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemReference:
+              type: string
+              description: "\n"
+              format: object
+            CollateralItemType:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemValuation:
+              type: string
+              description: "\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\n"
+              format: object
+      description: 'Output: UpCR Update details for an underwriting assessment'
+    RetrieveUnderwritingAssessmentResponse:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            UnderwritingGuidelines:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerEmploymentHistoryDetails:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerDebtAssetStatement:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerCreditAssessment:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCollateralCoverage:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerProductandServicePaymentHistory:
+              type: string
+              description: "\n"
+              format: string
+            RequiredCustomerDocuments:
+              type: string
+              description: "\n"
+              format: string
+            ProposedTransactionDetails:
+              type: string
+              description: "\n"
+              format: string
+            ProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            ProposedLoanTerms:
+              type: string
+              description: "\n"
+              format: string
+            ProposedLoanAmount:
+              type: string
+              description: "\n"
+              format: amount
+            LoanPurpose:
+              type: string
+              description: "\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\n"
+              format: object
+            CustomerReferenceDetails:
+              type: string
+              description: "\n"
+              format: object
+            CustomerProductEligibilityTerms:
+              type: string
+              description: "\n"
+              format: string
+            CustomerIncomeStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerDebtStatement:
+              type: string
+              description: "\n"
+              format: string
+            CustomerAssetStatement:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemReference:
+              type: string
+              description: "\n"
+              format: object
+            CollateralItemType:
+              type: string
+              description: "\n"
+              format: string
+            CollateralItemValuation:
+              type: string
+              description: "\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\n"
+              format: object
+            UnderwritingAssessmentDecision:
+              type: string
+              description: "\n"
+              format: string
+            UnderwritingAssessmentWorkProduct:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about an underwriting assessment'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateUnderwritingAssessmentResponse:
+      description: EvaluateUnderwritingAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateUnderwritingAssessmentResponse'
+    UpdateUnderwritingAssessmentResponse:
+      description: UpdateUnderwritingAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateUnderwritingAssessmentResponse'
+    RetrieveUnderwritingAssessmentResponse:
+      description: RetrieveUnderwritingAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveUnderwritingAssessmentResponse'
+  parameters:
+    underwritingid:
+      name: underwritingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateUnderwritingAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateUnderwritingAssessmentRequest'
+      required: true
+    UpdateUnderwritingAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateUnderwritingAssessmentRequest'
+      required: true

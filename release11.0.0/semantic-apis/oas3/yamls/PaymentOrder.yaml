@@ -1,0 +1,795 @@
+openapi: 3.0.1
+info:
+  title: Payment Order
+  description: 'This service domain handles the bank-side processing of funds transfers, making the necessary bank and regulatory checks on the involved parties and applying their payment preferences where appropriate'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 11.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/BIAN/PaymentOrder/11.0.0
+paths:
+  /PaymentOrder/Initiate:
+    post:
+      tags:
+        - CR - PaymentOrderProcedure
+      summary: InCR Initiate a payment order procedure
+      description: InCR Initiate a payment order procedure
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentOrderProcedureRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiatePaymentOrderProcedureResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentOrder/{paymentorderid}/Update':
+    put:
+      tags:
+        - CR - PaymentOrderProcedure
+      summary: UpCR Update details of a payment order instruction
+      description: UpCR Update details of a payment order instruction
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/paymentorderid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentOrderProcedureRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdatePaymentOrderProcedureResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentOrder/{paymentorderid}/Retrieve':
+    get:
+      tags:
+        - CR - PaymentOrderProcedure
+      summary: ReCR Retrieve details about a payment order instruction
+      description: ReCR Retrieve details about a payment order instruction
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/paymentorderid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrievePaymentOrderProcedureResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentOrder/{paymentorderid}/OrderConfirmation/{orderconfirmationid}/Retrieve':
+    get:
+      tags:
+        - BQ - OrderConfirmation
+      summary: ReBQ Retrieve details about a payment order confirmation process
+      description: ReBQ Retrieve details about a payment order confirmation process
+      operationId: RetrieveOrderConfirmation
+      parameters:
+        - $ref: '#/components/parameters/paymentorderid'
+        - $ref: '#/components/parameters/orderconfirmationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveOrderConfirmationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentOrder/{paymentorderid}/ExecutionInitiation/{executioninitiationid}/Retrieve':
+    get:
+      tags:
+        - BQ - ExecutionInitiation
+      summary: ReBQ Retrieve details about the payment execution processing
+      description: ReBQ Retrieve details about the payment execution processing
+      operationId: RetrieveExecutionInitiation
+      parameters:
+        - $ref: '#/components/parameters/paymentorderid'
+        - $ref: '#/components/parameters/executioninitiationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveExecutionInitiationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    OrderConfirmation:
+      type: object
+      properties:
+        PaymentOrderComplianceCheckType:
+          type: string
+          description: 'The type of compliance check performed (e.g. AML, Watchlists)'
+          format: string
+        PaymentOrderComplianceCheckResult:
+          type: string
+          description: The outcome of the compliance check
+          format: string
+        OrderConfirmationTaskResult:
+          type: string
+          description: Details of the overall confirmation checking process
+          format: string
+      description: "The main worsteps to be followed in th eexecution of the procedure\n\nExamples: Invoice generation"
+    ExecutionInitiation:
+      type: object
+      properties:
+        PaymentExecutionProcedureInstanceReference:
+          type: string
+          description: The reference to the payment execution processing task
+          format: object
+        PaymentExecutionProcedureInstanceStatus:
+          type: string
+          description: The returned status of the payment execution processing
+          format: string
+        ExecutionInitiationTaskResult:
+          type: string
+          description: Details of the execution initiation task
+          format: string
+      description: "The main worsteps to be followed in th eexecution of the procedure\n\nExamples: Invoice generation"
+    PaymentOrderProcedure:
+      type: object
+      properties:
+        PaymentTransactionInitiatorReference:
+          type: string
+          description: Reference to the initiator of the transaction
+          format: object
+        PayerReference:
+          type: string
+          description: Reference to the payer
+          format: object
+        PayerBankReference:
+          type: string
+          description: Reference to the payer's bank
+          format: object
+        PayerProductInstanceReference:
+          type: string
+          description: Reference to the payer's account (the source of funds)
+          format: object
+        PayeeReference:
+          type: string
+          description: The target for the payment
+          format: object
+        PayeeBankReference:
+          type: string
+          description: Reference to the payee's bank
+          format: object
+        PayeeProductInstanceReference:
+          type: string
+          description: Reference to the payee's account (the target for the funds)
+          format: object
+        Amount:
+          type: string
+          description: Key amounts included in the transaction
+          format: string
+        Currency:
+          type: string
+          description: Currency for the amounts
+          format: string
+        DateType:
+          type: string
+          description: 'Key dates associated with the transaction (e.g. order, booking, execution, value date, interest bearing)'
+          format: string
+        Date:
+          type: string
+          description: Value of the specific date
+          format: string
+        PaymentMechanismType:
+          type: string
+          description: 'Requested payment mechanism (e.g. ACH, SWIFT)'
+          format: string
+        PaymentInstructions:
+          type: string
+          description: Any specific payment instructions as appropriate
+          format: string
+        InterestedParties:
+          type: string
+          description: 'Where specific involved parties may impact order confirmation (e.g. presenting, authorizing, updating, joint account holder)'
+          format: string
+        ProductType:
+          type: string
+          description: Allows for a type of product to have specific default payment instructions
+          format: string
+        SettlementInstructions:
+          type: string
+          description: 'Requested settlement instructions, may be overridden by execution'
+          format: string
+      description: 'Complete work tasks following a defined procedure in support of general office activities and product and service delivery within Payment Order. '
+    InitiatePaymentOrderProcedureRequest:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentInstructions:
+              type: string
+              description: "\n"
+              format: string
+            InterestedParties:
+              type: string
+              description: "\n"
+              format: string
+            ProductType:
+              type: string
+              description: "\n"
+              format: string
+            SettlementInstructions:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Input: InCR Initiate a payment order procedure'
+    InitiatePaymentOrderProcedureResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: InCR Initiate a payment order procedure'
+    UpdatePaymentOrderProcedureRequest:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentInstructions:
+              type: string
+              description: "\n"
+              format: string
+            InterestedParties:
+              type: string
+              description: "\n"
+              format: string
+            ProductType:
+              type: string
+              description: "\n"
+              format: string
+            SettlementInstructions:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Input: UpCR Update details of a payment order instruction'
+    UpdatePaymentOrderProcedureResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentInstructions:
+              type: string
+              description: "\n"
+              format: string
+            InterestedParties:
+              type: string
+              description: "\n"
+              format: string
+            ProductType:
+              type: string
+              description: "\n"
+              format: string
+            SettlementInstructions:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: UpCR Update details of a payment order instruction'
+    RetrievePaymentOrderProcedureResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentInstructions:
+              type: string
+              description: "\n"
+              format: string
+            InterestedParties:
+              type: string
+              description: "\n"
+              format: string
+            ProductType:
+              type: string
+              description: "\n"
+              format: string
+            SettlementInstructions:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about a payment order instruction'
+    RetrieveOrderConfirmationResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentInstructions:
+              type: string
+              description: "\n"
+              format: string
+            InterestedParties:
+              type: string
+              description: "\n"
+              format: string
+            ProductType:
+              type: string
+              description: "\n"
+              format: string
+            SettlementInstructions:
+              type: string
+              description: "\n"
+              format: string
+        OrderConfirmation:
+          type: object
+          properties:
+            PaymentOrderComplianceCheckType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentOrderComplianceCheckResult:
+              type: string
+              description: "\n"
+              format: string
+            OrderConfirmationTaskResult:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about a payment order confirmation process'
+    RetrieveExecutionInitiationResponse:
+      type: object
+      properties:
+        PaymentOrderProcedure:
+          type: object
+          properties:
+            PaymentTransactionInitiatorReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            Amount:
+              type: string
+              description: "\n"
+              format: string
+            Currency:
+              type: string
+              description: "\n"
+              format: string
+            DateType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentMechanismType:
+              type: string
+              description: "\n"
+              format: string
+            PaymentInstructions:
+              type: string
+              description: "\n"
+              format: string
+            InterestedParties:
+              type: string
+              description: "\n"
+              format: string
+            ProductType:
+              type: string
+              description: "\n"
+              format: string
+            SettlementInstructions:
+              type: string
+              description: "\n"
+              format: string
+        ExecutionInitiation:
+          type: object
+          properties:
+            PaymentExecutionProcedureInstanceReference:
+              type: string
+              description: "\n"
+              format: object
+            PaymentExecutionProcedureInstanceStatus:
+              type: string
+              description: "\n"
+              format: string
+            ExecutionInitiationTaskResult:
+              type: string
+              description: "\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about the payment execution processing'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InitiatePaymentOrderProcedureResponse:
+      description: InitiatePaymentOrderProcedureResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentOrderProcedureResponse'
+    UpdatePaymentOrderProcedureResponse:
+      description: UpdatePaymentOrderProcedureResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentOrderProcedureResponse'
+    RetrievePaymentOrderProcedureResponse:
+      description: RetrievePaymentOrderProcedureResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrievePaymentOrderProcedureResponse'
+    RetrieveOrderConfirmationResponse:
+      description: RetrieveOrderConfirmationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveOrderConfirmationResponse'
+    RetrieveExecutionInitiationResponse:
+      description: RetrieveExecutionInitiationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveExecutionInitiationResponse'
+  parameters:
+    paymentorderid:
+      name: paymentorderid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    orderconfirmationid:
+      name: orderconfirmationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    executioninitiationid:
+      name: executioninitiationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    InitiatePaymentOrderProcedureRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentOrderProcedureRequest'
+      required: true
+    UpdatePaymentOrderProcedureRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentOrderProcedureRequest'
+      required: true
