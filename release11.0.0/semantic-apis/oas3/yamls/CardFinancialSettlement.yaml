@@ -326,36 +326,6 @@ components:
           description: Defines card settlement fees/terms in force
           format: string
       description: "The main worsteps to be followed in th eexecution of the procedure\n\nExamples: Invoice generation"
-    currencycode:
-      type: object
-      properties:
-        Currencycode:
-          type: string
-          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
-          format: datatype
-      description: The currency that the transaction is made in
-    amount:
-      type: object
-      properties:
-        AmountValue:
-          type: string
-          description: ''
-          format: string
-        AmountCurrency:
-          $ref: '#/components/schemas/currencycode'
-        DecimalPointPosition:
-          type: string
-          description: "Decimal point position starts calulating from the right\n"
-          format: string
-      description: The amount corresponding to the type
-    date:
-      type: object
-      properties:
-        DateContent:
-          type: string
-          description: ''
-          format: string
-      description: Significant dates and times associated with the transaction
     Consolidation:
       type: object
       properties:
@@ -384,13 +354,17 @@ components:
           description: 'The type of transaction (purchase, cash advance, etc.)'
           format: string
         CardTransactionCurrency:
-          $ref: '#/components/schemas/currencycode'
+          type: string
+          description: The currency that the transaction is made in
+          format: currencycode
         CardTransactionAmountType:
           type: string
           description: 'Type of amount (e.g. original amount, billing currency amount, conversion rate, FX Mark-up)'
           format: string
         CardTransactionAmount:
-          $ref: '#/components/schemas/amount'
+          type: string
+          description: The amount corresponding to the type
+          format: amount
         CardTransactionMerchantReference:
           type: string
           description: Refers to the merchant initiating settlement
@@ -404,7 +378,9 @@ components:
           description: 'Details of the transaction (e.g. purchased service/product, purpose)'
           format: object
         CardTransactionDateTime:
-          $ref: '#/components/schemas/date'
+          type: string
+          description: Significant dates and times associated with the transaction
+          format: date
       description: "The main worsteps to be followed in th eexecution of the procedure\n\nExamples: Invoice generation"
     Instruction:
       type: object
@@ -430,7 +406,9 @@ components:
           description: 'Defines the type of settlement process (e.g. scheduled processing, ad-hoc processing)'
           format: string
         CardFinancialSettlementProcessDateTime:
-          $ref: '#/components/schemas/date'
+          type: string
+          description: The scheduled time for the process - likely initiation time
+          format: date
         CardFinancialSettlementServiceSchedule:
           type: string
           description: 'Defines the type and scheduling of card settlement processing, includes Issuer and Acquirer involvement/scheduling details as necessary'
@@ -478,7 +456,9 @@ components:
           type: object
           properties:
             CardFinancialSettlementProcessDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             CardFinancialSettlementServiceSchedule:
               type: string
               description: "\n"
@@ -495,7 +475,9 @@ components:
               description: "\n"
               format: string
             CardFinancialSettlementProcessDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             CardFinancialSettlementServiceSchedule:
               type: string
               description: "\n"
@@ -520,7 +502,9 @@ components:
               description: "\n"
               format: string
             CardFinancialSettlementProcessDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             CardFinancialSettlementServiceSchedule:
               type: string
               description: "\n"
@@ -549,7 +533,9 @@ components:
               description: "\n"
               format: string
             CardFinancialSettlementProcessDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             CardFinancialSettlementServiceSchedule:
               type: string
               description: "\n"
@@ -590,7 +576,9 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -608,7 +596,9 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Input: UpBQ Update consolidated transaction details for a settlement procedure'
     UpdateConsolidationResponse:
       type: object
@@ -637,7 +627,9 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -655,7 +647,9 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Output: UpBQ Update consolidated transaction details for a settlement procedure'
     RetrieveConsolidationResponse:
       type: object
@@ -699,7 +693,9 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -717,7 +713,9 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Output: ReBQ Retrieve consolidated transaction details for a settlement procedure'
     RetrieveProcessingResponse:
       type: object
@@ -761,7 +759,9 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -779,7 +779,9 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
         Processing:
           type: object
           properties:
@@ -834,7 +836,9 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -852,7 +856,9 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
         Processing:
           type: object
           properties:
@@ -918,7 +924,9 @@ components:
               description: "\n"
               format: string
             CardTransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             CardTransactionAmountType:
               type: string
               description: "\n"
@@ -936,7 +944,9 @@ components:
               description: "\n"
               format: object
             CardTransactionDateTime:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
         Processing:
           type: object
           properties:

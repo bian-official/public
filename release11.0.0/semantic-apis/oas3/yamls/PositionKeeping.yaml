@@ -177,14 +177,6 @@ components:
           type: string
           format: string
       description: Status Attributes
-    date:
-      type: object
-      properties:
-        DateContent:
-          type: string
-          description: ''
-          format: string
-      description: The date of the transaction
     FinancialTransactionCapture:
       type: object
       properties:
@@ -197,16 +189,10 @@ components:
           description: The logged financial transaction. Note the log can be structured with double entry representations (i.e. capture credit/debit pair)
           format: string
         PostingValueDate:
-          $ref: '#/components/schemas/date'
-      description: "A collection of the events/transactions recorded by the log\n\nExamples: Customer life event, Servicing event"
-    currencycode:
-      type: object
-      properties:
-        Currencycode:
           type: string
-          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
-          format: datatype
-      description: The currency for the logged  transactions
+          description: The date of the transaction
+          format: date
+      description: "A collection of the events/transactions recorded by the log\n\nExamples: Customer life event, Servicing event"
     FinancialPositionLog:
       type: object
       properties:
@@ -227,7 +213,9 @@ components:
           description: 'Reference to a counterparty for the log if appropriate (e.g. merchant reference, card network reference)'
           format: object
         BaseCurrency:
-          $ref: '#/components/schemas/currencycode'
+          type: string
+          description: The currency for the logged  transactions
+          format: currencycode
         InterestApplicationRecord:
           type: string
           description: The record of applied interest if interest calculations are supported
@@ -289,7 +277,9 @@ components:
           description: Value of the specific date type
           format: string
         InitiationDate:
-          $ref: '#/components/schemas/date'
+          type: string
+          description: The date and time the log was initiated. Note the log will have a complex internal calendar structure for extract and reporting
+          format: date
         Status:
           type: string
           description: 'The status of the log entry (e.g. active, in-suspense etc.)'
@@ -318,7 +308,9 @@ components:
               description: "\n"
               format: object
             BaseCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             InterestApplicationRecord:
               type: string
               description: "\n"
@@ -352,7 +344,9 @@ components:
               description: "\n"
               format: string
             InitiationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Input: InCR Initiate a position keeping transaction log'
     InitiateFinancialPositionLogResponse:
       type: object
@@ -424,7 +418,9 @@ components:
               description: "\n"
               format: object
             BaseCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             InterestApplicationRecord:
               type: string
               description: "\n"
@@ -458,7 +454,9 @@ components:
               description: "\n"
               format: string
             InitiationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             Status:
               type: string
               description: "\n"
@@ -487,7 +485,9 @@ components:
               description: "\n"
               format: object
             BaseCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             InterestApplicationRecord:
               type: string
               description: "\n"
@@ -521,7 +521,9 @@ components:
               description: "\n"
               format: string
             InitiationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             Status:
               type: string
               description: "\n"
@@ -550,7 +552,9 @@ components:
               description: "\n"
               format: object
             BaseCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             InterestApplicationRecord:
               type: string
               description: "\n"
@@ -604,7 +608,9 @@ components:
               description: "\n"
               format: string
             InitiationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             Status:
               type: string
               description: "\n"
@@ -625,7 +631,9 @@ components:
               description: "\n"
               format: string
             PostingValueDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Output: ReBQ Retrieve details of financial transactions captured in the log'
   responses:
     BadRequest:

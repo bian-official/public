@@ -255,36 +255,6 @@ components:
           type: string
           format: string
       description: Status Attributes
-    currencycode:
-      type: object
-      properties:
-        Currencycode:
-          type: string
-          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
-          format: datatype
-      description: ''
-    amount:
-      type: object
-      properties:
-        AmountValue:
-          type: string
-          description: ''
-          format: string
-        AmountCurrency:
-          $ref: '#/components/schemas/currencycode'
-        DecimalPointPosition:
-          type: string
-          description: "Decimal point position starts calulating from the right\n"
-          format: string
-      description: The amount of the repayment transaction (amount applied to the open item outstanding balance)
-    date:
-      type: object
-      properties:
-        DateContent:
-          type: string
-          description: ''
-          format: string
-      description: Key dates associated with the transaction (e.g. value date)
     Repayment:
       type: object
       properties:
@@ -305,11 +275,17 @@ components:
           description: The type of repayment transaction (e.g. wire)
           format: string
         TransactionAmount:
-          $ref: '#/components/schemas/amount'
+          type: string
+          description: The amount of the repayment transaction (amount applied to the open item outstanding balance)
+          format: amount
         TransactionCurrency:
-          $ref: '#/components/schemas/currencycode'
+          type: string
+          description: The currency of the payment
+          format: currencycode
         TransactionDate:
-          $ref: '#/components/schemas/date'
+          type: string
+          description: Key dates associated with the transaction (e.g. value date)
+          format: date
       description: "The main worsteps to be followed in th eexecution of the procedure\n\nExamples: Invoice generation"
     Tracking:
       type: object
@@ -335,7 +311,9 @@ components:
           description: The content of the billing statement used in the bill
           format: string
         CustomerBillingAmount:
-          $ref: '#/components/schemas/amount'
+          type: string
+          description: The amount of the customer bill
+          format: amount
       description: "The main worsteps to be followed in th eexecution of the procedure\n\nExamples: Invoice generation"
     OpenItemProcedure:
       type: object
@@ -365,7 +343,9 @@ components:
           description: The outstanding balance
           format: string
         LoanTerminationDate:
-          $ref: '#/components/schemas/date'
+          type: string
+          description: The date the loan agreement is terminated
+          format: date
         RepaymentStatement:
           type: string
           description: A statement of repayment transactions made against the item
@@ -402,7 +382,9 @@ components:
               description: "\n"
               format: string
             LoanTerminationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Input: InCR Initiate an open item procedure'
     InitiateOpenItemProcedureResponse:
       type: object
@@ -446,7 +428,9 @@ components:
               description: "\n"
               format: string
             LoanTerminationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             RepaymentStatement:
               type: string
               description: "\n"
@@ -479,7 +463,9 @@ components:
               description: "\n"
               format: string
             CustomerBillingAmount:
-              $ref: '#/components/schemas/amount'
+              type: string
+              description: "\n"
+              format: amount
       description: 'Output: ReBQ Retrieve tracking details about an open item'
     InitiateRepaymentRequest:
       type: object
@@ -512,7 +498,9 @@ components:
               description: "\n"
               format: string
             LoanTerminationDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
             RepaymentStatement:
               type: string
               description: "\n"
@@ -537,11 +525,17 @@ components:
               description: "\n"
               format: string
             TransactionAmount:
-              $ref: '#/components/schemas/amount'
+              type: string
+              description: "\n"
+              format: amount
             TransactionCurrency:
-              $ref: '#/components/schemas/currencycode'
+              type: string
+              description: "\n"
+              format: currencycode
             TransactionDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Input: InBQ Initiate repayment transaction against an open item'
     InitiateRepaymentResponse:
       type: object
@@ -550,7 +544,9 @@ components:
           type: object
           properties:
             TransactionDate:
-              $ref: '#/components/schemas/date'
+              type: string
+              description: "\n"
+              format: date
       description: 'Output: InBQ Initiate repayment transaction against an open item'
     RetrieveRepaymentResponse:
       type: object
