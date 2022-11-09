@@ -281,6 +281,159 @@ components:
           type: string
           format: string
       description: Status Attributes
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: The type of Trading Counterparty Credit Limit Indicator
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: ''
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: The Trading Counterparty Credit Limit Indicator specific Business Service
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: The operating unit/employee responsible for monitoring Trading Counterparty Credit Limit Indicator by applying the Trading Counterparty Credit Limit Indicator indicator
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The completion status once Trading Counterparty Credit Limit Indicator has been monitored by applying the Trading Counterparty Credit Limit Indicator indicator
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The timing and key actions/milestones involved in monitoring Trading Counterparty Credit Limit Indicator by applying the Trading Counterparty Credit Limit Indicator indicator
     TradingCounterpartyCreditLimitIndicator:
       type: object
       properties:
@@ -293,97 +446,302 @@ components:
           description: Reference to Trading Counterparty Credit Limit Indicator
           format: object
         TradingCounterpartyCreditLimitIndicatorType:
-          type: string
-          description: The type of Trading Counterparty Credit Limit Indicator
-          format: text
+          $ref: '#/components/schemas/text'
         BusinessService:
-          type: string
-          description: The Trading Counterparty Credit Limit Indicator specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         BusinessUnitEmployeeReference:
-          type: string
-          description: The operating unit/employee responsible for monitoring Trading Counterparty Credit Limit Indicator by applying the Trading Counterparty Credit Limit Indicator indicator
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         Postconditions:
-          type: string
-          description: The completion status once Trading Counterparty Credit Limit Indicator has been monitored by applying the Trading Counterparty Credit Limit Indicator indicator
-          format: condition
+          $ref: '#/components/schemas/condition'
         Preconditions:
-          type: string
-          description: The required status/situation before Trading Counterparty Credit Limit Indicator can be monitored by applying the Trading Counterparty Credit Limit Indicator indicator
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in monitoring Trading Counterparty Credit Limit Indicator by applying the Trading Counterparty Credit Limit Indicator indicator
-          format: schedule
+          $ref: '#/components/schemas/schedule'
       description: 'The Trading Counterparty Credit Limit Indicator is one integral indicator that can be included in Trading Counterparty Credit Limit Indicator monitoring '
     CreditRiskOperationsOutcome:
       type: object
       properties:
         CreditRiskOperationsDashboard:
+          $ref: '#/components/schemas/text'
+      description: 'The Trading Counterparty Credit Limit Indicator is one integral indicator that can be included in Trading Counterparty Credit Limit Indicator monitoring '
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: The status of Trading Credit Position Measurement
+    log:
+      type: object
+      properties:
+        LogType:
           type: string
           description: ''
-          format: text
-      description: 'The Trading Counterparty Credit Limit Indicator is one integral indicator that can be included in Trading Counterparty Credit Limit Indicator monitoring '
+          format: string
+        LogPeriod:
+          type: string
+          description: ''
+          format: string
+        LogDate:
+          type: string
+          description: Key dates associated with the log (e.g. start time).
+          format: string
+        LogIdentification:
+          type: string
+          description: ''
+          format: string
+      description: Reference to the log of (usage) ativities/events  of Trading Credit Position Measurement
+    productidentification:
+      type: object
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/identifier'
+        ProductIdentificationType:
+          type: string
+          description: ''
+          format: productidentificationtypevalues
+      description: The identifier of product e.g. ISIN Code.
+    bankingproducttypevalues:
+      enum:
+        - LoanProduct
+        - CurrentAccountProduct
+        - SavingAccountProduct
+      type: string
+      description: ">\n* `LoanProduct` - \n* `CurrentAccountProduct` - \n* `SavingAccountProduct` - \n"
+    productlifecyclestatus:
+      type: object
+      properties:
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ProductLifecycleStatusType:
+          type: string
+          description: ''
+          format: productlifecyclestatustypevalues
+      description: 'Refers to the lifecycle of a product (e.g., initiated, announced, active, obsolete, withdrawn).'
+    bankingproduct:
+      type: object
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/productidentification'
+        ProductType:
+          $ref: '#/components/schemas/bankingproducttypevalues'
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/productlifecyclestatus'
+        ProductPriority:
+          $ref: '#/components/schemas/text'
+        ProductDescription:
+          $ref: '#/components/schemas/text'
+        ProductVersion:
+          $ref: '#/components/schemas/text'
+      description: Reference to the product which is the subject matter of Trading Credit Position Measurement
+    limittype:
+      type: object
+      properties:
+        LimitTypeName:
+          $ref: '#/components/schemas/name'
+        LimitType:
+          type: string
+          description: ''
+          format: limittypevalues
+      description: Nature of the limit.
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: Currency unit used to specify the limit amount. (ISO20022)
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: 'Amount of money of the limit, expressed in a currency. (ISO20022)'
+    limitstatus:
+      type: object
+      properties:
+        LimitStatus:
+          $ref: '#/components/schemas/status'
+        LimitStatusType:
+          type: string
+          description: ''
+          format: limitstatustypevalues
+      description: Current status of the limit.
+    rate:
+      type: object
+      properties:
+        RateValue:
+          type: string
+          description: ''
+          format: string
+        RateUnit:
+          type: string
+          description: "The unit of measure like Percentage or BPS\n\nBasis points (BPS) refers to a common unit of measure for interest rates and other percentages in finance."
+          format: string
+        RatePeriod:
+          type: string
+          description: ''
+          format: string
+        RateCapitalUnit:
+          type: string
+          description: ''
+          format: string
+      description: Specifies that the limit is a percentage of a related amount. (ISO20022)
+    frequency:
+      type: object
+      properties:
+        FrequencyCode:
+          type: string
+          description: ''
+          format: frequencycodevalues
+        FrequencyName:
+          $ref: '#/components/schemas/name'
+        FrequencyDefinition:
+          $ref: '#/components/schemas/text'
+      description: Specifies the periodicity linked to a limit for example the periodicity can indicate that the limit can be reached daily or monthly. (ISO20022)
+    limitarrangement:
+      type: object
+      properties:
+        LimitType:
+          $ref: '#/components/schemas/limittype'
+        LimitCurrency:
+          $ref: '#/components/schemas/currencycode'
+        LimitValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        LimitAmount:
+          $ref: '#/components/schemas/amount'
+        LimitStatus:
+          $ref: '#/components/schemas/limitstatus'
+        LimitRate:
+          $ref: '#/components/schemas/rate'
+        LimitFrequency:
+          $ref: '#/components/schemas/frequency'
+      description: Reference to Tresholds and Limits for monitoring Trading Credit Position Measurement
+    actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\n* `Initiate` - \n* `Execute` - \n* `Create` - \n* `Transfer` - \n* `Pay` - \n* `Deliver` - \n* `Apply` - \n* `Calculate` - \n"
+    action:
+      type: object
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/actiontypevalues'
+      description: ''
+    arrangementlifecyclestatus:
+      type: object
+      properties:
+        ArrangementLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ArrangementLifecycleStatusType:
+          type: string
+          description: ''
+          format: arrangementlifecyclestatustypevalues
+      description: 'A characteristic of arrangement which refers to the LifecycleStatus of arrangement (e.g., requested, proposed, offered, accepted, cancelled, terminated, fulfilled, etc.)'
+    subject:
+      type: object
+      properties:
+        Subject:
+          type: string
+          description: A thing that is discussed or dealt whit in agreement/arrangement about doing or not doing (as action) something.
+          format: class
+      description: ''
+    arrangementtypevalues:
+      enum:
+        - SweepArrangement
+        - WithdrawalArrangement
+        - DepositArrangement
+        - InterestArrangement
+        - FeeArrangement
+        - LienArrangement
+        - InformationArrangement
+        - PaymentServiceArrangement
+        - EntitlementArrangement
+        - PeriodArrangement
+        - CollateralArrangement
+        - LimitArrangement
+        - AccessArrangement
+        - CardPaymentArrangement
+        - StandingOrderArrangement
+        - OverdraftArrangement
+        - RepaymentArrangement
+        - StatementArrangement
+        - CreditTransferArrangement
+        - ProductAndServiceArrangement
+        - FactoringArrangement
+        - RolloverArrangement
+      type: string
+      description: ">\n* `SweepArrangement` - An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\n* `WithdrawalArrangement` - An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \n* `DepositArrangement` - An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \n* `InterestArrangement` - An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\n* `FeeArrangement` - An arrangement into which is promised to apply a charge for services rendered. \n* `LienArrangement` - An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \n* `InformationArrangement` - An arrangement concerning the information the bank will provide about the agreement/account\n* `PaymentServiceArrangement` - An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \n* `EntitlementArrangement` - Right or obligation linked to the involvement of a party in an agreement\n* `PeriodArrangement` - \n* `CollateralArrangement` - An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \n* `LimitArrangement` - An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \n* `AccessArrangement` - An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\n* `CardPaymentArrangement` - An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \n* `StandingOrderArrangement` - An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \n* `OverdraftArrangement` - An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \n* `RepaymentArrangement` - An arrangement into which is promised for paying back money previously borrowed from a lender. \n* `StatementArrangement` - An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \n* `CreditTransferArrangement` - An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \n* `ProductAndServiceArrangement` - \n* `FactoringArrangement` - \n* `RolloverArrangement` - Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \n"
+    arrangement:
+      type: object
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/arrangementlifecyclestatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/subject'
+        Arrangementtype:
+          $ref: '#/components/schemas/arrangementtypevalues'
+      description: Reference to Notification Arrangements for monitoring Trading Credit Position Measurement
     TradingCreditPositionMeasurement:
       type: object
       properties:
         TradingCreditPositionMeasurementParameterType:
-          type: string
-          description: A Classification value that distinguishes between states according to the type of business services and/or type of concern defined within Trading Credit Position Measurement
-          format: text
+          $ref: '#/components/schemas/text'
         TradingCreditPositionMeasurementSelectedOption:
-          type: string
-          description: A selected optional business service as subject matter of Trading Credit Position Measurement
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         TradingCreditPositionMeasurementType:
-          type: string
-          description: The type of Trading Credit Position Measurement
-          format: text
+          $ref: '#/components/schemas/text'
         TradingCreditPositionMeasurementReference:
           type: string
           description: An unique reference to an item or an occurrence of Trading Credit Position Measurement
           format: object
         TradingCreditPositionMeasurementDescription:
-          type: string
-          description: Documentation of Trading Credit Position Measurement
-          format: text
+          $ref: '#/components/schemas/text'
         TradingCreditPositionMeasurementSchedule:
-          type: string
-          description: Timetable to monitor Trading Credit Position Measurement
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         TradingCreditPositionMeasurementStatus:
-          type: string
-          description: The status of Trading Credit Position Measurement
-          format: status
+          $ref: '#/components/schemas/status'
         TradingCreditPositionMeasurementUsageLog:
-          type: string
-          description: Reference to the log of (usage) ativities/events  of Trading Credit Position Measurement
-          format: log
+          $ref: '#/components/schemas/log'
         TradingCreditPositionMeasurementUpdateLog:
-          type: string
-          description: Reference to the log of (update) ativities/events of Trading Credit Position Measurement
-          format: log
+          $ref: '#/components/schemas/log'
         TradingCreditPositionMeasurementCustomerReference:
-          type: string
-          description: Reference to the customer who is involved in Trading Credit Position Measurement
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         TradingCreditPositionMeasurementProductReference:
-          type: string
-          description: Reference to the product which is the subject matter of Trading Credit Position Measurement
-          format: bankingproduct
+          $ref: '#/components/schemas/bankingproduct'
         TradingCreditPositionMeasurementServiceConfiguration:
-          type: string
-          description: The configuration of Trading Credit Position Measurement
-          format: text
+          $ref: '#/components/schemas/text'
         TradingCreditPositionMeasurementServiceConfigurationTresholdsandLimits:
-          type: string
-          description: Reference to Tresholds and Limits for monitoring Trading Credit Position Measurement
-          format: limitarrangement
+          $ref: '#/components/schemas/limitarrangement'
         TradingCreditPositionMeasurementServiceConfigurationNotificationArrangements:
-          type: string
-          description: Reference to Notification Arrangements for monitoring Trading Credit Position Measurement
-          format: arrangement
+          $ref: '#/components/schemas/arrangement'
       description: 'Monitor and define the status/rating of some entity within Credit Risk Operations. '
   responses:
     BadRequest:

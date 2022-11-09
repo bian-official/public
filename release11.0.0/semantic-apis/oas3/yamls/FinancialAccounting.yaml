@@ -177,6 +177,36 @@ components:
           type: string
           format: string
       description: Status Attributes
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: The posting amount as a credit-debit pair
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: The date and time of the posting
     LedgerPosting:
       type: object
       properties:
@@ -185,13 +215,9 @@ components:
           description: 'Defines the posting location in the account ledger according to the chart of accounts (e.g. based on customer, transaction type)'
           format: string
         PostingAmount(creditdebitpair):
-          type: string
-          description: The posting amount as a credit-debit pair
-          format: amount
+          $ref: '#/components/schemas/amount'
         PostingValueDate:
-          type: string
-          description: The date and time of the posting
-          format: date
+          $ref: '#/components/schemas/date'
         PostingResult:
           type: string
           description: Any confirmation notification
@@ -217,9 +243,7 @@ components:
           description: Reference to applicable account booking rules
           format: string
         BaseCurrency:
-          type: string
-          description: The currency for the postings
-          format: currencycode
+          $ref: '#/components/schemas/currencycode'
         Status:
           type: string
           description: 'Status of the financial log (e.g. active, in-suspense)'
@@ -248,9 +272,7 @@ components:
               description: "\n"
               format: string
             BaseCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
       description: 'Input: InCR Initiate a financial accounting log (account)'
     InitiateFinancialBookingLogResponse:
       type: object
@@ -286,9 +308,7 @@ components:
               description: "\n"
               format: string
             BaseCurrency:
-              type: string
-              description: "\n"
-              format: currencycode
+              $ref: '#/components/schemas/currencycode'
             Status:
               type: string
               description: "\n"
@@ -305,13 +325,9 @@ components:
               description: "\n"
               format: string
             PostingAmount(creditdebitpair):
-              type: string
-              description: "\n"
-              format: amount
+              $ref: '#/components/schemas/amount'
             PostingValueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
       description: 'Input: CaBQ Post to the financial account'
     CaptureLedgerPostingResponse:
       type: object
@@ -335,13 +351,9 @@ components:
               description: "\n"
               format: string
             PostingAmount(creditdebitpair):
-              type: string
-              description: "\n"
-              format: amount
+              $ref: '#/components/schemas/amount'
             PostingValueDate:
-              type: string
-              description: "\n"
-              format: date
+              $ref: '#/components/schemas/date'
             PostingResult:
               type: string
               description: "\n"

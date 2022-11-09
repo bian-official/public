@@ -1286,198 +1286,414 @@ components:
           type: string
           format: string
       description: Status Attributes
+    condition:
+      type: object
+      properties:
+        Condition:
+          type: string
+          description: "Condition is a premise upon which the fulfillment of an agreement depends \n\nGeneral and special arrangements, provisions, requirements, rules, specifications, and standards that form an integral part of an agreement or contract.\n\nRead more: http://www.businessdictionary.com/definition/terms-and-conditions.html\n\n"
+          format: class
+      description: The required status/situation prior to the execution of the task
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          type: string
+          description: ''
+          format: string
+      description: The timing and key actions/milestones involved in completing the transaction task
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: ''
+    businessservicetypevalues:
+      type: object
+      properties:
+        Businessservicetypevalues:
+          type: string
+          description: ''
+          format: enumeration
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    businessservice:
+      type: object
+      properties:
+        BusinessServiceName:
+          $ref: '#/components/schemas/name'
+        BusinessServiceType:
+          $ref: '#/components/schemas/businessservicetypevalues'
+        BusinessServiceDescription:
+          $ref: '#/components/schemas/text'
+      description: The Customer Payment Task specific Business Service
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: 'A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)'
+          format: datatype
+      description: ''
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          type: string
+          description: ''
+          format: partyidentificationtypevalues
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\n* `Agreementinvolvement` - \n* `Partyinvolvement` - \n* `Arrangementinvolvement` - \n* `Designspecificationinvolvement` - \n* `Relationshipinvolvement` - \n* `Locationinvolvement` - \n* `Bankguaranteeinvolvement` - \n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: ''
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: An identifier that allows to uniquely refer to an instance of a transaction.
+    transactiondate:
+      type: object
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/datetime'
+        TransactionDateType:
+          type: string
+          description: ''
+          format: transactiondatetypevalues
+      description: "The Date that the transaction has occurred or is planned to occur.\nA characteristic of transaction which refers to the LifecycleDate of transaction (e.g., initiated date, executed date, fulfillment date). "
+    transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: ">\n* `FinancialTransaction` - \n* `BusinessTransaction` - \n* `BankingTransaction` - \n* `AccountingTransaction` - \n* `BookingTransaction` - \n* `AllocationTransaction` - \n* `DeliveryTransaction` - \n* `ProductionTransaction` - \n"
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+    transactionlifecyclestatus:
+      type: object
+      properties:
+        TransactionLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        TransactionLifecycleStatusType:
+          type: string
+          description: ''
+          format: transactionlifecyclestatustypevalues
+      description: 'A characteristic of transaction which refers to the LifecycleStatus of transaction (e.g., initiated, executed, confirmed, cancelled, etc.) '
+    transaction:
+      type: object
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/transactiondate'
+        TransactionType:
+          $ref: '#/components/schemas/transactiontypevalues'
+        TransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionStatus:
+          $ref: '#/components/schemas/transactionlifecyclestatus'
+        TransactionName:
+          $ref: '#/components/schemas/name'
+      description: Reference to Customer Payment Task
     CustomerPaymentTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Customer Payment Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         BankGuaranteeTransactionReference:
-          type: string
-          description: Reference to Customer Payment Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         CustomerPaymentTaskReference:
           type: string
           description: Reference to Customer Payment Task
           format: task
         CustomerPaymentTaskType:
-          type: string
-          description: The type of Customer Payment Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
     BankGuaranteeCollectionsTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Bank Guarantee Collections Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         BankGuaranteeTransactionReference:
-          type: string
-          description: Reference to Bank Guarantee Collections Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         BankGuaranteeCollectionsTaskReference:
           type: string
           description: Reference to Bank Guarantee Collections Task
           format: task
         BankGuaranteeCollectionsTaskType:
-          type: string
-          description: The type of Bank Guarantee Collections Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
     BankGuaranteeIssuanceandBookingTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Bank Guarantee Issuance and Booking Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         BankGuaranteeTransactionReference:
-          type: string
-          description: Reference to Bank Guarantee Issuance and Booking Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         BankGuaranteeIssuanceandBookingTaskReference:
           type: string
           description: Reference to Bank Guarantee Issuance and Booking Task
           format: task
         BankGuaranteeIssuanceandBookingTaskType:
-          type: string
-          description: The type of Bank Guarantee Issuance and Booking Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
     BankGuaranteeDefinitionandPricingTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Bank Guarantee Definition and Pricing Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         BankGuaranteeTransactionReference:
-          type: string
-          description: Reference to Bank Guarantee Definition and Pricing Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         BankGuaranteeDefinitionandPricingTaskReference:
           type: string
           description: Reference to Bank Guarantee Definition and Pricing Task
           format: task
         BankGuaranteeDefinitionandPricingTaskType:
-          type: string
-          description: The type of Bank Guarantee Definition and Pricing Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
     CustomerCollateralAllocationTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Customer Collateral Allocation Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         BankGuaranteeTransactionReference:
-          type: string
-          description: Reference to Customer Collateral Allocation Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         CustomerCollateralAllocationTaskReference:
           type: string
           description: Reference to Customer Collateral Allocation Task
           format: task
         CustomerCollateralAllocationTaskType:
-          type: string
-          description: The type of Customer Collateral Allocation Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
     BankGuaranteePayoutTask:
       type: object
       properties:
         Preconditions:
-          type: string
-          description: The required status/situation prior to the execution of the task
-          format: condition
+          $ref: '#/components/schemas/condition'
         Schedule:
-          type: string
-          description: The timing and key actions/milestones involved in completing the transaction task
-          format: schedule
+          $ref: '#/components/schemas/schedule'
         BusinessService:
-          type: string
-          description: The Bank Guarantee Payout Task specific Business Service
-          format: businessservice
+          $ref: '#/components/schemas/businessservice'
         Postconditions:
-          type: string
-          description: The completion status and any triggered/dependent actions once the task has been completed
-          format: condition
+          $ref: '#/components/schemas/condition'
         BankGuaranteeTransactionReference:
-          type: string
-          description: Reference to Bank Guarantee Payout Task
-          format: transaction
+          $ref: '#/components/schemas/transaction'
         BankGuaranteePayoutTaskReference:
           type: string
           description: Reference to Bank Guarantee Payout Task
           format: task
         BankGuaranteePayoutTaskType:
-          type: string
-          description: The type of Bank Guarantee Payout Task
-          format: text
+          $ref: '#/components/schemas/text'
       description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
+    feetransaction:
+      type: object
+      properties:
+        FeeType:
+          type: string
+          description: Type of the applied Fee
+          format: string
+        AccruedFeeAmount:
+          type: string
+          description: 'Total fee charged '
+          format: string
+        FeeAmount:
+          type: string
+          description: "Amount of money paid for the charge\nAmount of money asked or paid for the charge (ISO20022)\n"
+          format: string
+      description: ''
+    interesttransactiontypevalues:
+      enum:
+        - InterestAllocationTransaction
+        - InterestPaymentTransaction
+        - InterestAdjustmentTransaction
+      type: string
+      description: ">\n* `InterestAllocationTransaction` - \n* `InterestPaymentTransaction` - \n* `InterestAdjustmentTransaction` - \n"
+    rate:
+      type: object
+      properties:
+        RateValue:
+          type: string
+          description: ''
+          format: string
+        RateUnit:
+          type: string
+          description: "The unit of measure like Percentage or BPS\n\nBasis points (BPS) refers to a common unit of measure for interest rates and other percentages in finance."
+          format: string
+        RatePeriod:
+          type: string
+          description: ''
+          format: string
+        RateCapitalUnit:
+          type: string
+          description: ''
+          format: string
+      description: The actual interest rate used for the payment of the interest for the specified interest period. (ISO20022)
+    interesttransaction:
+      type: object
+      properties:
+        InterestTransactionAmount:
+          type: string
+          description: Amount of applied interest
+          format: string
+        InterestTransactionDescription:
+          type: string
+          description: Description of InterestTransaction
+          format: string
+        InterestTransactionType:
+          $ref: '#/components/schemas/interesttransactiontypevalues'
+        InterestRate:
+          $ref: '#/components/schemas/rate'
+        InteretType:
+          type: string
+          description: "Type of an applied Interest\n\nSpecifies the type of interest associated with a trade. (ISO20022)"
+          format: string
+      description: ''
+    workproduct:
+      type: object
+      properties:
+        WorkProductType:
+          type: string
+          description: ''
+          format: workproducttypevalues
+        WorkProductIdentifoication:
+          type: string
+          description: ''
+          format: string
+      description: ''
     BankGuaranteeOutcome:
       type: object
       properties:
@@ -1486,93 +1702,234 @@ components:
           description: ''
           format: calendar
         BankGuaranteeCounterparty:
-          type: string
-          description: ''
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         BankGuaranteeDividend:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         BankGuaranteeFees:
-          type: string
-          description: ''
-          format: feetransaction
+          $ref: '#/components/schemas/feetransaction'
         BankGuaranteeInterest:
-          type: string
-          description: ''
-          format: interesttransaction
+          $ref: '#/components/schemas/interesttransaction'
         BankGuaranteeMargining:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         BankGuaranteeNotionalPrincipal:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         BankGuaranteeOptions:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         BankGuaranteeRates:
-          type: string
-          description: ''
-          format: rate
+          $ref: '#/components/schemas/rate'
         BankGuaranteeSettlement:
-          type: string
-          description: ''
-          format: text
+          $ref: '#/components/schemas/text'
         BankGuaranteeWorkProduct:
+          $ref: '#/components/schemas/workproduct'
+      description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
+    servicetype:
+      type: object
+      properties:
+        ServiceTypeName:
+          $ref: '#/components/schemas/name'
+        ServiceType:
           type: string
           description: ''
-          format: workproduct
-      description: The Customer Payment Task is a discrete action or task that is required in the execution of the Customer Payment Task
+          format: servicetypevalues
+      description: ''
+    service:
+      type: object
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/name'
+        ServiceDescription:
+          $ref: '#/components/schemas/text'
+        ServiceType:
+          $ref: '#/components/schemas/servicetype'
+      description: A selected optional business service as subject matter of Bank Guarantee Transaction
+    bankguaranteetransactiontypevalues:
+      enum:
+        - BGPaymentTransaction
+        - BGBookingTransaction
+        - CollateralAllocationTransaction
+        - BGIssuingTransaction
+      type: string
+      description: ">\n* `BGPaymentTransaction` - \n* `BGBookingTransaction` - \n* `CollateralAllocationTransaction` - \n* `BGIssuingTransaction` - \n"
+    bankguaranteetransaction:
+      type: object
+      properties:
+        BankGuaranteeTransactionType:
+          $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
+      description: An unique reference to an item or an occurrence of Bank Guarantee Transaction
+    financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjustment
+        - Debitnoterelatedtofinancialadjustment
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\n* `Meteredserviceinvoice` - Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\n* `Creditnoterelatedtofinancialadjustment` - Document is a credit note for the final amount settled for a commercial transaction.\n* `Debitnoterelatedtofinancialadjustment` - Document is a debit note for the final amount settled for a commercial transaction.\n* `Commercialinvoice` - Document is an invoice.\n* `Creditnote` - Document is a credit note.\n* `Debitnote` - Document is a debit note.\n* `Hireinvoice` - Document is an invoice for the hiring of human resources or renting goods or equipment.\n* `Selfbilledinvoice` - Document is an invoice issued by the debtor.\n* `Remittanceadvicemessage` - Document is a remittance advice sent separately from the current transaction.\n* `Relatedpaymentinstruction` - Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\n* `Commercialcontract` - Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\n* `Foreignexchangedealreference` - Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\n* `Statementofaccount` - Document is a statement of the transactions posted to the debtor's account at the supplier.\n* `Dispatchadvice` - Document is a dispatch advice.\n* `Purchaseorder` - Document is a purchase order.\n* `Structuredcommunicationreference` - Document is a structured communication reference provided by the creditor to identify the referred transaction.\n* `Billoflading` - Document is a shipping notice.\n* `Voucher` - Document is an electronic payment document.\n* `Accountreceivableopenitem` - Document is a payment that applies to a specific source document.\n* `Tradeservicesutilitytransaction` - Document is a transaction identifier as assigned by the Trade Services Utility.\n* `Cashierreceipt` - When the Sale system print the Cashier copy of the Payment receipt.\n* `Customerreceipt` - When the Sale System requires   the POI system to print the Customer receipt.\n* `Journal` - When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal (it is sometimes a Sale Logging/Journal Printer).\n* `Salereceipt` - When the Sale System requires the POI system to print the Sale receipt.\n"
+    documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\n* `CreationDate` - \n* `CapturingDate` - \n* `VersionDate` - \n* `ValueDate` - \n* `IssueDate` - \n"
+    document:
+      type: object
+      properties:
+        DocumentIdentifer:
+          $ref: '#/components/schemas/identifier'
+        DocumentVersion:
+          type: string
+          description: ''
+          format: number
+        DocumentType:
+          $ref: '#/components/schemas/financialdocumenttypevalues'
+        DocumentStatus:
+          $ref: '#/components/schemas/status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/datetime'
+        DocumentName:
+          $ref: '#/components/schemas/name'
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/documentdatetimetypevalues'
+        DocumentPurpose:
+          $ref: '#/components/schemas/text'
+        DocumentFormat:
+          $ref: '#/components/schemas/text'
+        DocumentSubject:
+          $ref: '#/components/schemas/text'
+        DocumentDescription:
+          $ref: '#/components/schemas/text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+      description: ''
+    bankguaranteeagreement:
+      type: object
+      properties:
+        BankGuaranteeAgreement:
+          type: string
+          description: "An agreement made by a bank or other financial instituation, where the bank assures or guarantees a beneficiary to pay a debt in case the actual customer who owes the money cannot pay.\n\n\nBank Guarantee vs Letter of Credit \n\n- A bank guarantee is a promise from a lending institution that ensures the bank will step up if a debtor can't cover a debt.\n\n- Letters of credit are also financial promises on behalf of one party in a transaction and are especially significant in international trade.\n\nLetter of credit is an financial document for assured payments, i.e. an undertaking of the buyer's bank to make payment to seller, against the documents stated. A bank guarantee is a guarantee given by the bank to the beneficiary on behalf of the applicant, to effect payment, if the applicant defaults in payment."
+          format: class
+      description: ''
+    bankguaranteeinvolvementtypevalues:
+      enum:
+        - Applicant
+        - Beneficiary
+        - Bank
+        - Guarantor
+      type: string
+      description: ">\n* `Applicant` - The party that requests a bank guarantee from the bank and borrows from a creditor\n\n* `Beneficiary` - The party that receives a partial guarantee\n* `Bank` - The party that agrees to sign and assures payment in case the applicant fails to repay the loan\n\n\n* `Guarantor` - Legal entity, other than the issuer, who gives a guarantee. The guarantor becomes liable in case of default.(ISO20022)\n"
+    bankguaranteearrangementtypevalues:
+      enum:
+        - BGPricingArrangement
+        - BGPaymentArrangement
+        - CollateralArrangement
+        - BGPayoutArrangement
+      type: string
+      description: ">\n* `BGPricingArrangement` - \n* `BGPaymentArrangement` - \n* `CollateralArrangement` - \n* `BGPayoutArrangement` - \n"
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          type: string
+          description: ''
+          format: string
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+      description: Amount covered by the guarantee. (ISO20022)
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: 'Key dates of a guarantee like ExpiryDate, MaturityDate, '
+    bankguaranteearrangement:
+      type: object
+      properties:
+        BankGuaranteeArrangementType:
+          $ref: '#/components/schemas/bankguaranteearrangementtypevalues'
+        CoveredAmount:
+          $ref: '#/components/schemas/amount'
+        EffectivePeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        ExcessAmount:
+          $ref: '#/components/schemas/amount'
+        GuaranteeDate:
+          $ref: '#/components/schemas/date'
+      description: ''
+    guaranteetype:
+      type: object
+      properties:
+        Guaranteetypename:
+          $ref: '#/components/schemas/name'
+        Guaranteetypescheme:
+          $ref: '#/components/schemas/text'
+      description: ''
+    bankguarantee:
+      type: object
+      properties:
+        BankGuaranteeType:
+          $ref: '#/components/schemas/guaranteetype'
+      description: ''
     BankGuaranteeTransaction:
       type: object
       properties:
         BankGuaranteeTransactionParameterType:
-          type: string
-          description: A Classification value that distinguishes between business service transaction within Bank Guarantee Transaction
-          format: text
+          $ref: '#/components/schemas/text'
         BankGuaranteeTransactionSelectedOption:
-          type: string
-          description: A selected optional business service as subject matter of Bank Guarantee Transaction
-          format: service
+          $ref: '#/components/schemas/service'
         BankGuaranteeTransactionStatus:
-          type: string
-          description: The status of Bank Guarantee Transaction
-          format: transactionlifecyclestatus
+          $ref: '#/components/schemas/transactionlifecyclestatus'
         BankGuaranteeTransactionType:
-          type: string
-          description: A Classification value that specifies type of transaction for this  Bank Guarantee Transaction
-          format: bankguaranteetransactiontypevalues
+          $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
         BankGuaranteeTransactionReference:
-          type: string
-          description: An unique reference to an item or an occurrence of Bank Guarantee Transaction
-          format: bankguaranteetransaction
+          $ref: '#/components/schemas/bankguaranteetransaction'
         BankGuaranteeDocumentReference:
-          type: string
-          description: ''
-          format: document
+          $ref: '#/components/schemas/document'
         BankGuaranteeAgreementReference:
-          type: string
-          description: ''
-          format: bankguaranteeagreement
+          $ref: '#/components/schemas/bankguaranteeagreement'
         BankGuaranteeInvolvedPartyReference:
-          type: string
-          description: ''
-          format: involvedparty
+          $ref: '#/components/schemas/involvedparty'
         BankGuaranteeInvolvementType:
-          type: string
-          description: ''
-          format: bankguaranteeinvolvementtypevalues
+          $ref: '#/components/schemas/bankguaranteeinvolvementtypevalues'
         BankGuaranteeArrangementReference:
-          type: string
-          description: ''
-          format: bankguaranteearrangement
+          $ref: '#/components/schemas/bankguaranteearrangement'
         BankGuaranteeFinancialInstrument:
-          type: string
-          description: ''
-          format: bankguarantee
+          $ref: '#/components/schemas/bankguarantee'
       description: 'Execute a well-bounded financial transaction/task, typically involving largely automated/structured fulfillment processing within Bank Guarantee. '
     ControlBankGuaranteeTransactionRequest:
       type: object
@@ -1581,25 +1938,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Input: Control Bank Guarantee Transaction'
     ControlBankGuaranteeTransactionResponse:
       type: object
@@ -1608,25 +1955,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Output: Control Bank Guarantee Transaction'
     ExchangeBankGuaranteeTransactionRequest:
       type: object
@@ -1635,25 +1972,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Input: Exchange Bank Guarantee Transaction'
     ExchangeBankGuaranteeTransactionResponse:
       type: object
@@ -1662,25 +1989,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Output: Exchange Bank Guarantee Transaction'
     NotifyBankGuaranteeTransactionRequest:
       type: object
@@ -1689,25 +2006,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Input: Notify Bank Guarantee Transaction'
     NotifyBankGuaranteeTransactionResponse:
       type: object
@@ -1716,25 +2023,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Output: Notify Bank Guarantee Transaction'
     RequestBankGuaranteeTransactionRequest:
       type: object
@@ -1743,25 +2040,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Input: Request Bank Guarantee Transaction'
     RequestBankGuaranteeTransactionResponse:
       type: object
@@ -1770,25 +2057,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Output: Request Bank Guarantee Transaction'
     RetrieveBankGuaranteeTransactionRequest:
       type: object
@@ -1797,25 +2074,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Input: Retrieve Bank Guarantee Transaction'
     RetrieveBankGuaranteeTransactionResponse:
       type: object
@@ -1824,25 +2091,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Output: Retrieve Bank Guarantee Transaction'
     UpdateBankGuaranteeTransactionRequest:
       type: object
@@ -1851,25 +2108,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Input: Update Bank Guarantee Transaction'
     UpdateBankGuaranteeTransactionResponse:
       type: object
@@ -1878,25 +2125,15 @@ components:
           type: object
           properties:
             BankGuaranteeTransactionParameterType:
-              type: string
-              description: "\n"
-              format: text
+              $ref: '#/components/schemas/text'
             BankGuaranteeTransactionSelectedOption:
-              type: string
-              description: "\n"
-              format: service
+              $ref: '#/components/schemas/service'
             BankGuaranteeTransactionStatus:
-              type: string
-              description: "\n"
-              format: transactionlifecyclestatus
+              $ref: '#/components/schemas/transactionlifecyclestatus'
             BankGuaranteeTransactionType:
-              type: string
-              description: "\n"
-              format: bankguaranteetransactiontypevalues
+              $ref: '#/components/schemas/bankguaranteetransactiontypevalues'
             BankGuaranteeTransactionReference:
-              type: string
-              description: "\n"
-              format: bankguaranteetransaction
+              $ref: '#/components/schemas/bankguaranteetransaction'
       description: 'Output: Update Bank Guarantee Transaction'
   responses:
     BadRequest:
