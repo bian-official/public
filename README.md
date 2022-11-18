@@ -2,6 +2,7 @@
 
 
 https://bian.org/
+
 https://portal.bian.org/ 
 
 The Banking Industry Architecture Network (BIAN) is a collaborative not-for-profit ecosystem formed of leading banks, technology providers, consultants and academics from all over the globe.
