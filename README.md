@@ -18,9 +18,10 @@ The BIAN Portal with access to the Model and APIs can be accessed at : https://p
 **Download**
 
 BIAN Semantic APIs:
-1. Release 11.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release11.0.0/semantic-apis/oas3/yamls
-2. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
-3. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
+1. Release 12.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/semantic-apis/oas3/yamls
+2. Release 11.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release11.0.0/semantic-apis/oas3/yamls
+3. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
+4. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
 
 Each Swagger represents a BIAN Service Domain.
 
