@@ -1,0 +1,856 @@
+openapi: 3.0.1
+info:
+  title: Transaction Engine
+  description: Orchestrate a schedule of payment transaction and reporting activities for the fulfillment of certain long term instruments or structured facilities
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/TransactionEngine/12.0.0
+paths:
+  /TransactionEngine/Initiate:
+    post:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: InCR Initiate delegated transaction processing for a product instance
+      description: InCR Initiate delegated transaction processing for a product instance
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateTransactionScheduleFacilityRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateTransactionScheduleFacilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Update':
+    put:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: UpCR Update details for an active transaction processing arrangement
+      description: UpCR Update details for an active transaction processing arrangement
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateTransactionScheduleFacilityRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateTransactionScheduleFacilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Execute':
+    put:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: ExCR Execute an automated function for a transaction processing arrangement
+      description: ExCR Execute an automated function for a transaction processing arrangement
+      operationId: Execute
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteTransactionScheduleFacilityRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ExecuteTransactionScheduleFacilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Retrieve':
+    get:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: ReCR Retrieve details about delegated transaction processing for a product instance
+      description: ReCR Retrieve details about delegated transaction processing for a product instance
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveTransactionScheduleFacilityResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: "Data or set of data \n\n- A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)"
+          format: datatype
+      description: ''
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+      type: string
+      description: ">\r\n* `Principal` - \r\n* `Actual` - Actual amount.\r\n* `Estimated` - Estimated amount (the final amount could be above or below).\r\n* `Maximum` - Maximum amount (the final amount must be less or equal).\r\n* `Default` - Default amount.\r\n* `Replacement` - Replacement amount.\r\n* `Incremental` - Incremental amount for reservation.\r\n* `Decremental` - Decremental amount for reservation.\r\n* `Reserved` - Reserved or updated reserved amount for reservation.\r\n* `Available` - \r\n* `Used` - \r\n"
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/value'
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+        AmountType:
+          $ref: '#/components/schemas/amounttypevalues'
+      description: The volume or value of the transaction CurrencyAndAmount|CurrencyAndAmount (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022  ()
+    TransactionScheduleFacility:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: string
+          description: Reference to the product instance for which the transaction processing is being handled
+          format: object
+        ProductandServiceType:
+          type: string
+          description: 'The type or category of product or service that is being supported (e.g. mortgage, term loan)'
+          format: string
+        TransactionScheduleFulfillmentSchedule:
+          type: string
+          description: 'The processing schedule, covering reporting and financial transactions that are to be executed'
+          format: string
+        TransactionScheduleWorkTaskRecord:
+          type: string
+          description: A record of an instance of the work tasks that can be performed by the service on behalf of the fulfillment product instance
+          format: string
+        TransactionScheduleWorkTaskType:
+          type: string
+          description: The type of work task (e.g. generate report/notification)
+          format: string
+        TransactionScheduleWorkTaskDescription:
+          type: string
+          description: Description of the task performed
+          format: string
+        TransactionScheduleWorkTaskWorkProducts:
+          type: string
+          description: 'File of consolidated notes, forms and documents for the work task'
+          format: string
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          description: Reference to associated documents
+          format: object
+        TransactionScheduleWorkTaskResult:
+          type: string
+          description: Details of the outcome or result of the work task
+          format: string
+        TransactionScheduleTaskFeeTransaction:
+          type: string
+          description: A record of an applied fee if applicable (this is charged to the parent product instance)
+          format: string
+        TransactionScheduleWorkTaskFeeTransactionDescription:
+          type: string
+          description: General description of the fee
+          format: string
+        TransactionScheduleWorkTaskFeeTransactionType:
+          type: string
+          description: The fee type applied
+          format: string
+        TransactionScheduleWorkTaskFeeTransactionCharge:
+          type: string
+          description: The derived fee amount to be charged
+          format: string
+        TransactionScheduleFinancialTransaction:
+          type: string
+          description: Details of the financial transactions that are executed on behalf of the fulfillment product instance
+          format: string
+        TransactionScheduleFinancialTransactionProductInstanceReference:
+          type: string
+          description: Identifies the payment source of the transaction - usually a reference to the parent product instance
+          format: object
+        TransactionScheduleFinancialTransactionType:
+          type: string
+          description: The sub-type of financial transaction
+          format: string
+        TransactionScheduleFinancialTransactionDescription:
+          type: string
+          description: Any necessary details describing the purpose or reference properties of the transaction
+          format: string
+        TransactionScheduleFinancialTransactionAmount:
+          $ref: '#/components/schemas/amount'
+        CorrespondenceInstanceReference:
+          type: string
+          description: Reference to the correspondence generated for the transaction (e.g. confirmation note)
+          format: object
+        DateType:
+          type: string
+          description: 'Key dates and times associated with the transaction schedule financial transaction (e.g. initiation date, confirmation date)'
+          format: string
+        Date:
+          type: string
+          description: Value of the date type
+          format: string
+      description: 'Fulfill any scheduled and ad-hoc obligations under a service arrangement, most typically for a financial product or facility within Transaction Engine. '
+    InitiateTransactionScheduleFacilityRequest:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: InCR Initiate delegated transaction processing for a product instance'
+    InitiateTransactionScheduleFacilityResponse:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleWorkTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleTaskFeeTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionCharge:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionAmount:
+              $ref: '#/components/schemas/amount'
+            CorrespondenceInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: InCR Initiate delegated transaction processing for a product instance'
+    UpdateTransactionScheduleFacilityRequest:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleWorkTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleTaskFeeTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionCharge:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionAmount:
+              $ref: '#/components/schemas/amount'
+            CorrespondenceInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: UpCR Update details for an active transaction processing arrangement'
+    UpdateTransactionScheduleFacilityResponse:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleWorkTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleTaskFeeTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionCharge:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionAmount:
+              $ref: '#/components/schemas/amount'
+            CorrespondenceInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: UpCR Update details for an active transaction processing arrangement'
+    ExecuteTransactionScheduleFacilityRequest:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: ExCR Execute an automated function for a transaction processing arrangement'
+    ExecuteTransactionScheduleFacilityResponse:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleWorkTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleTaskFeeTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionCharge:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionAmount:
+              $ref: '#/components/schemas/amount'
+            CorrespondenceInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ExCR Execute an automated function for a transaction processing arrangement'
+    RetrieveTransactionScheduleFacilityResponse:
+      type: object
+      properties:
+        TransactionScheduleFacility:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFulfillmentSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleWorkTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleTaskFeeTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleWorkTaskFeeTransactionCharge:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransaction:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            TransactionScheduleFinancialTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionScheduleFinancialTransactionAmount:
+              $ref: '#/components/schemas/amount'
+            CorrespondenceInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about delegated transaction processing for a product instance'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InitiateTransactionScheduleFacilityResponse:
+      description: InitiateTransactionScheduleFacilityResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateTransactionScheduleFacilityResponse'
+    UpdateTransactionScheduleFacilityResponse:
+      description: UpdateTransactionScheduleFacilityResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTransactionScheduleFacilityResponse'
+    ExecuteTransactionScheduleFacilityResponse:
+      description: ExecuteTransactionScheduleFacilityResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteTransactionScheduleFacilityResponse'
+    RetrieveTransactionScheduleFacilityResponse:
+      description: RetrieveTransactionScheduleFacilityResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveTransactionScheduleFacilityResponse'
+  parameters:
+    transactionengineid:
+      name: transactionengineid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    InitiateTransactionScheduleFacilityRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateTransactionScheduleFacilityRequest'
+      required: true
+    UpdateTransactionScheduleFacilityRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTransactionScheduleFacilityRequest'
+      required: true
+    ExecuteTransactionScheduleFacilityRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteTransactionScheduleFacilityRequest'
+      required: true

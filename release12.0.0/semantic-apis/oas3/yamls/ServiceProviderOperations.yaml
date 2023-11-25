@@ -1,0 +1,588 @@
+openapi: 3.0.1
+info:
+  title: Service Provider Operations
+  description: This Service Domain handles the range of operational actions used in production interactions with an external service provider.
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/ServiceProviderOperations/12.0.0
+paths:
+  '/ServiceProviderOperations/{serviceprovideroperationsid}/Retrieve':
+    get:
+      tags:
+        - CR - ServiceProviderRegistrationOperatingSession
+      summary: Retrieve Service Provider Registration Operating Session
+      description: Retrieve Service Provider Registration Operating Session
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/serviceprovideroperationsid'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceProviderRegistrationOperatingSession'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: "Data or set of data \n\n- A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)"
+          format: datatype
+      description: ''
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: "Name by which a party is known and which is usually used to identify that party. (ISO20022)\n"
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\r\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\r\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\r\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    partyidentificationtypevalues:
+      enum:
+        - Taxidentificationnumber
+        - Nationalregistrationnumber
+        - Registrationauthorityidentification
+        - LEI(LegalEntityIdentifier)
+        - Alienregistrationnumber
+        - Passportnumber
+        - Taxexemptidentificationnumber
+        - Corporateidentification
+        - Driverlicensenumber
+        - Foreigninvestmentidentitynumber
+        - Socialsecuritynumber
+        - Identitycardnumber
+        - Concat
+        - Nationalregistrationidentificationnumber
+      type: string
+      description: ">\r\n* `Taxidentificationnumber` - Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` - Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. (ISO20022)\r\n* `Registrationauthorityidentification` - An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. (ISO20022)\r\n* `LEI(LegalEntityIdentifier)` - \r\n* `Alienregistrationnumber` - Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` - Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` - Number assigned to a tax exempt entity.\r\n* `Corporateidentification` - Number assigned to a corporate entity.\r\n* `Driverlicensenumber` - Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` - Number assigned to a foreign investor (other than the alien number).\r\n* `Socialsecuritynumber` - Number assigned by a social security agency.\r\n* `Identitycardnumber` - Number assigned by a national authority to an identity card.\r\n* `Concat` - Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` - National registration identification number. In Singapore this is known as the NRIC.\r\n"
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          $ref: '#/components/schemas/partyidentificationtypevalues'
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    partylegalstructuretypevalues:
+      enum:
+        - Individual
+        - CommunityInterestCompany
+        - CharitableIncorporatedOrganisation
+        - Co-Operative
+        - Charity
+        - GeneralPartnership
+        - LimitedLiabilityPartnership
+        - ScottishLimitedPartnership
+        - LimitedPartnership
+        - PrivateLimitedCompany
+        - PublicLimitedCompany
+        - Sole(SoleTrader)
+      type: string
+      description: ">\r\n* `Individual` - \r\n* `CommunityInterestCompany` - \r\n* `CharitableIncorporatedOrganisation` - \r\n* `Co-Operative` - \r\n* `Charity` - \r\n* `GeneralPartnership` - \r\n* `LimitedLiabilityPartnership` - \r\n* `ScottishLimitedPartnership` - \r\n* `LimitedPartnership` - \r\n* `PrivateLimitedCompany` - \r\n* `PublicLimitedCompany` - \r\n* `Sole(SoleTrader)` - \r\n"
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+        PartyLegalStructureType:
+          $ref: '#/components/schemas/partylegalstructuretypevalues'
+      description: ''
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\r\n* `Agreementinvolvement` - \r\n* `Partyinvolvement` - \r\n* `Arrangementinvolvement` - \r\n* `Designspecificationinvolvement` - \r\n* `Relationshipinvolvement` - \r\n* `Locationinvolvement` - \r\n* `Bankguaranteeinvolvement` - \r\n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: " ||\r\n|"
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: "An unique reference to an item or an occurrence of <CR>\n GenericIdentification|GenericIdentification (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022 BM ()"
+    CustomerRequests:
+      type: object
+      properties:
+        CustomerRequestIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    devicetypevalues:
+      enum:
+        - Securecardreader
+        - Nonsecurecardreader
+        - Mobile
+        - Tablet
+        - Personalcomputer
+        - Othernational
+        - Otherprivate
+        - Wearable
+        - Vehicle
+        - Embedded
+        - Keyfob
+        - Jewellery
+        - Sticker
+        - Gamingdevice
+        - Watch
+        - Unknown
+        - BiometricDevice
+      type: string
+      description: ">\r\n* `Securecardreader` - Secure card reader attached to the customer device\r\n* `Nonsecurecardreader` - Non-secure card reader attached to the customer device.\r\n* `Mobile` - Mobile phone\r\n* `Tablet` - Tablet\r\n* `Personalcomputer` - Personal computer\r\n* `Othernational` - Other device defined at national level\r\n* `Otherprivate` - Other device defined in a private way.\r\n* `Wearable` - Wearable device.\r\n* `Vehicle` - Vehicle.\r\n* `Embedded` - Embedded in a device.\r\n* `Keyfob` - Key Fob\r\n* `Jewellery` - Jewellery\r\n* `Sticker` - Sticker\r\n* `Gamingdevice` - Gaming Device\r\n* `Watch` - Watch\r\n* `Unknown` - Device type unknown\r\n* `BiometricDevice` - A biometric device is a security identification and authentication device. Such devices use automated methods of verifying or recognising the identity of a living person based on a physiological or behavioral characteristic.\nhttps://en.wikipedia.org/wiki/Biometric_device\n\r\n"
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: "The life cycle stage of a device\n\ne.g. active, defect"
+    geographicalareatypevalues:
+      enum:
+        - Continent
+        - Country
+        - State
+        - District
+        - Province
+        - Town
+        - City
+        - Region
+      type: string
+      description: ">\r\n* `Continent` - \r\n* `Country` - \r\n* `State` - \r\n* `District` - \r\n* `Province` - \r\n* `Town` - \r\n* `City` - \r\n* `Region` - \r\n"
+    addresstypevalues:
+      enum:
+        - PostalAddress
+        - GeolocationAddress
+        - LatitudeAddress
+        - LongitudeAddress
+        - ElectronicAddress
+      type: string
+      description: ">\r\n* `PostalAddress` - \r\n* `GeolocationAddress` - \r\n* `LatitudeAddress` - \r\n* `LongitudeAddress` - \r\n* `ElectronicAddress` - \r\n"
+    address:
+      type: object
+      properties:
+        AddressType:
+          $ref: '#/components/schemas/addresstypevalues'
+        LocationReference:
+          $ref: '#/components/schemas/location'
+      description: ''
+    location:
+      type: object
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/text'
+        LocationDateTime:
+          $ref: '#/components/schemas/datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/status'
+        LocationType:
+          $ref: '#/components/schemas/geographicalareatypevalues'
+        LocationZoningType:
+          $ref: '#/components/schemas/text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/text'
+        LocationValue:
+          $ref: '#/components/schemas/value'
+        LocationCapacity:
+          $ref: '#/components/schemas/text'
+        LocationIdentification:
+          $ref: '#/components/schemas/identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/address'
+        LocationName:
+          $ref: '#/components/schemas/name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/text'
+      description: Geographical location of the device.
+    country:
+      type: object
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/involvedparty'
+      description: Country of the location.
+    deviceoperatingsystemtypevalues:
+      enum:
+        - Android
+        - Ios
+        - Windows
+        - Blackberry
+        - Tizen
+        - Othernational
+        - Otherprivate
+      type: string
+      description: ">\r\n* `Android` - Android operating system.\r\n* `Ios` - iOS operating system.\r\n* `Windows` - Windows operating system.\r\n* `Blackberry` - Blackberry operating system.\r\n* `Tizen` - Tizen operating system.\r\n* `Othernational` - Other nationally defined code.\r\n* `Otherprivate` - Other privately defined code.\r\n"
+    deviceidentificationtypevalues:
+      enum:
+        - IMEI
+        - Serialnumber
+        - Secureelementidentification
+        - Othernational
+        - Otherprivate
+      type: string
+      description: ">\r\n* `IMEI` - International Mobile Equipment Identity.\r\n* `Serialnumber` - Device serial number.\r\n* `Secureelementidentification` - Secure element ID.\r\n* `Othernational` - Other nationally assigned code.\r\n* `Otherprivate` - Other privately assigned code.\r\n"
+    device:
+      type: object
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/identifier'
+        DeviceType:
+          $ref: '#/components/schemas/devicetypevalues'
+        DeviceProperty:
+          $ref: '#/components/schemas/text'
+        DeviceElement:
+          $ref: '#/components/schemas/text'
+        DeviceStatus:
+          $ref: '#/components/schemas/status'
+        DeviceVersion:
+          type: string
+          description: ''
+          format: number
+        DeviceDateTime:
+          $ref: '#/components/schemas/datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/text'
+        DeviceName:
+          $ref: '#/components/schemas/name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/text'
+        DeviceLocation:
+          $ref: '#/components/schemas/location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/text'
+        DeviceCountry:
+          $ref: '#/components/schemas/country'
+        DeviceAddress:
+          $ref: '#/components/schemas/address'
+        DeviceAddressType:
+          $ref: '#/components/schemas/addresstypevalues'
+        DeviceOperatingSystem:
+          $ref: '#/components/schemas/deviceoperatingsystemtypevalues'
+        DeviceIdentificationType:
+          $ref: '#/components/schemas/deviceidentificationtypevalues'
+      description: ''
+    tokenidentificationandverificationmethodtypevalues:
+      enum:
+        - AssertedAuthentication
+        - RiskBasedNoninteractiveAuthentication
+        - InteractiveAuthentication
+      type: string
+      description: ">\r\n* `AssertedAuthentication` - \r\n* `RiskBasedNoninteractiveAuthentication` - \r\n* `InteractiveAuthentication` - \r\n"
+    tokenrequest:
+      type: object
+      properties:
+        TokenRequestIdentification:
+          $ref: '#/components/schemas/identifier'
+        TokenRequestReason:
+          $ref: '#/components/schemas/text'
+      description: ''
+    tokenstoragelocationtypevalues:
+      enum:
+        - Device
+        - Onfile
+        - Cardacceptorwallet
+        - Issuerwallet
+        - Thirdpartywallet
+        - Otherprivate
+        - Othernational
+      type: string
+      description: ">\r\n* `Device` - Stored in device.\r\n* `Onfile` - Storage is on file.\r\n* `Cardacceptorwallet` - Storage is in wallet managed by card acceptor.\r\n* `Issuerwallet` - Storage is in wallet managed by Issuer.\r\n* `Thirdpartywallet` - Storage location is in wallet managed by a third party.\r\n* `Otherprivate` - Code defined by private agreement.\r\n* `Othernational` - Code defined by national standards organisation.\r\n"
+    tokenprotectionmethodtypevalues:
+      enum:
+        - Software
+        - Trustedexectutionenvironment
+        - Secureelement
+        - Secureenclave
+        - Otherprivate
+        - Othernational
+        - Trustedplatformmodule
+        - Virtualtrustedexecutionenvironment
+      type: string
+      description: ">\r\n* `Software` - Software protection method.\r\n* `Trustedexectutionenvironment` - Trusted execution environment method.\r\n* `Secureelement` - Secure element method.\r\n* `Secureenclave` - Secure enclave method.\r\n* `Otherprivate` - Other privately assigned code.\r\n* `Othernational` - Other code assigned by national organisation.\r\n* `Trustedplatformmodule` - Trusted Platform Module (TPM).\r\n* `Virtualtrustedexecutionenvironment` - Virtual trusted execution environment\r\n"
+    tokenstatustypevalues:
+      enum:
+        - Active
+        - Expired
+        - Cancelled
+        - Generated
+        - Stored
+        - Mapped
+        - Routed
+        - Suspension
+        - Updated
+      type: string
+      description: ">\r\n* `Active` - \r\n* `Expired` - \r\n* `Cancelled` - \r\n* `Generated` - \r\n* `Stored` - \r\n* `Mapped` - \r\n* `Routed` - \r\n* `Suspension` - \r\n* `Updated` - \r\n"
+    tokentypevalues:
+      enum:
+        - RefreshToken
+        - AccessToken
+        - SecurityToken
+        - AuthenticationToken
+      type: string
+      description: ">\r\n* `RefreshToken` - \r\n* `AccessToken` - \r\n* `SecurityToken` - \r\n* `AuthenticationToken` - \r\n"
+    Tokens:
+      type: object
+      properties:
+        TokenDeviceReference:
+          $ref: '#/components/schemas/device'
+        TokenIdentification:
+          $ref: '#/components/schemas/identifier'
+        TokenIdentificationandVerificationMethod:
+          $ref: '#/components/schemas/tokenidentificationandverificationmethodtypevalues'
+        TokenRequest:
+          $ref: '#/components/schemas/tokenrequest'
+        TokenStatusDate:
+          $ref: '#/components/schemas/datetime'
+        TokenStorageLocation:
+          $ref: '#/components/schemas/tokenstoragelocationtypevalues'
+        TokenProtectionMethod:
+          $ref: '#/components/schemas/tokenprotectionmethodtypevalues'
+        TokenStatus:
+          $ref: '#/components/schemas/tokenstatustypevalues'
+        ConsentID:
+          $ref: '#/components/schemas/identifier'
+        TokenType:
+          $ref: '#/components/schemas/tokentypevalues'
+      description: ''
+    consentstatustypevalues:
+      enum:
+        - Authorised
+        - AwaitingAuthorization
+        - Rejected
+        - Revoked
+      type: string
+      description: ">\r\n* `Authorised` - \r\n* `AwaitingAuthorization` - \r\n* `Rejected` - \r\n* `Revoked` - \r\n"
+    obaccountaccesspermissiontypevalues:
+      enum:
+        - Readaccountsbasic
+        - Readaccountsdetail
+        - Readbalances
+        - Readbeneficiariesbasic
+        - Readbeneficiariesdetail
+        - Readdirectdebits
+        - Readoffers
+        - Readpan
+        - Readparty
+        - Readpartypsu
+        - Readproducts
+        - Readscheduledpaymentsbasic
+        - Readscheduledpaymentsdetail
+        - Readstandingordersbasic
+        - Readstandingordersdetail
+        - Readstatementsbasic
+        - Readstatementsdetail
+        - Readtransactionsbasic
+        - Readtransactionscredits
+        - Readtransactionsdebits
+        - Readtransactionsdetail
+      type: string
+      description: ">\r\n* `Readaccountsbasic` - Ability to read basic account information\r\n* `Readaccountsdetail` - Ability to read account identification details\r\n* `Readbalances` - Ability to read all balance information\r\n* `Readbeneficiariesbasic` - Ability to read basic beneficiary details\r\n* `Readbeneficiariesdetail` - Ability to read account identification details for the beneficiary\r\n* `Readdirectdebits` - Ability to read all direct debit information\r\n* `Readoffers` - Ability to read all offer information\r\n* `Readpan` - Request to access PAN in the clear across the available endpoints.\r\n* `Readparty` - Ability to read party information on the account owner.\r\n* `Readpartypsu` - Ability to read party information on the PSU logged in.\r\n* `Readproducts` - Ability to read all product information relating to the account\r\n* `Readscheduledpaymentsbasic` - Ability to read basic statement details\r\n* `Readscheduledpaymentsdetail` - \r\n* `Readstandingordersbasic` - \r\n* `Readstandingordersdetail` - \r\n* `Readstatementsbasic` - Ability to read basic statement details\r\n* `Readstatementsdetail` - Ability to read statement data elements which may leak other information about the account\r\n* `Readtransactionsbasic` - Ability to read basic transaction information\r\n* `Readtransactionscredits` - \r\n* `Readtransactionsdebits` - Ability to read only debit transactions\r\n* `Readtransactionsdetail` - Ability to read transaction data elements which may hold silent party details\r\n"
+    DataSharingConsentsInstanceRecoed:
+      type: object
+      properties:
+        ConsentID:
+          $ref: '#/components/schemas/identifier'
+        CreationDateTime:
+          $ref: '#/components/schemas/datetime'
+        TransactionToDateTime:
+          $ref: '#/components/schemas/datetime'
+        Status:
+          $ref: '#/components/schemas/consentstatustypevalues'
+        ExpirationDateTime:
+          $ref: '#/components/schemas/datetime'
+        Risk:
+          $ref: '#/components/schemas/text'
+        TransactionFromDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusUpdateDateTime:
+          $ref: '#/components/schemas/datetime'
+        Permissions:
+          $ref: '#/components/schemas/obaccountaccesspermissiontypevalues'
+      description: ''
+    serviceproviderregistration:
+      type: object
+      properties:
+        Identification:
+          $ref: '#/components/schemas/identifier'
+        Method:
+          $ref: '#/components/schemas/text'
+        Status:
+          $ref: '#/components/schemas/status'
+        Datetime:
+          $ref: '#/components/schemas/datetime'
+        InvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+        ValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+      description: " ||\r\n|"
+    ServiceProviderRegistrationOperatingSession:
+      type: object
+      properties:
+        ServiceProviderRegistrationReference:
+          $ref: '#/components/schemas/serviceproviderregistration'
+        ServiceProviderRegistrationOperatingSessionReference:
+          $ref: '#/components/schemas/identifier'
+        ServiceProviderReference:
+          $ref: '#/components/schemas/involvedparty'
+        TPPReference:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ServiceProviderRegistrationOperatingSession:
+      description: ServiceProviderRegistrationOperatingSession
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServiceProviderRegistrationOperatingSession'
+  parameters:
+    serviceprovideroperationsid:
+      name: serviceprovideroperationsid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string

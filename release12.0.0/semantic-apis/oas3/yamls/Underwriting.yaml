@@ -1,0 +1,1235 @@
+openapi: 3.0.1
+info:
+  title: Underwriting
+  description: This service domain manages the underwriting decision process for products as appropriate (including many loan types and some insurance products)
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/Underwriting/12.0.0
+paths:
+  /Underwriting/Evaluate:
+    post:
+      tags:
+        - CR - UnderwritingAssessment
+      summary: EvCR Evaluate an underwriting decision
+      description: EvCR Evaluate an underwriting decision
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateUnderwritingAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateUnderwritingAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Underwriting/{underwritingid}/Update':
+    put:
+      tags:
+        - CR - UnderwritingAssessment
+      summary: UpCR Update details for an underwriting assessment
+      description: UpCR Update details for an underwriting assessment
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/underwritingid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateUnderwritingAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateUnderwritingAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Underwriting/{underwritingid}/Retrieve':
+    get:
+      tags:
+        - CR - UnderwritingAssessment
+      summary: ReCR Retrieve details about an underwriting assessment
+      description: ReCR Retrieve details about an underwriting assessment
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/underwritingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveUnderwritingAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: "The purpose for the loan  (e.g. mortgage for primary residence/rental) ||\r\n|"
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: ''
+    rulesettypevalues:
+      enum:
+        - Policy
+        - Regulation
+        - Law
+        - Guideline
+        - Criterion
+        - Standard
+      type: string
+      description: ">\r\n* `Policy` - Rule that governs business execution.\n\nThe set of basic principles and associated guidelines, formulated and enforced by the governing body of an organization, to direct and limit its actions in pursuit of long-term goals. (Business Dictionary)\n\r\n* `Regulation` - A rule used to carry out a law (FIBO)\n\nBusiness Dictionary: a rule (with or without the coercive power of law) employed in controlling, directing, or managing an activity, organization, or system. \n\nThe set of rules and legislation governing certain actions. \nhttps://financial-dictionary.thefreedictionary.com/Regulatory\r\n* `Law` - A binding rule that the courts will enforce.\nA system of rules and guidelines which are enforced through social institutions to govern behavior. (FIBO)\n\r\n* `Guideline` - A recommended practice (adapted from Business Dictionary)\nA general rule, principle, or piece of advice.\r\n* `Criterion` - A principle or standard by which something may be judged or decided.\n\nRead more: http://www.businessdictionary.com/definition/criterion.html\r\n* `Standard` - A rule considered by an authority or by general consent as a basis of comparison\r\n"
+    rulesettype:
+      type: object
+      properties:
+        RuleSetTypeName:
+          $ref: '#/components/schemas/name'
+        RuleSetType:
+          $ref: '#/components/schemas/rulesettypevalues'
+      description: ''
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: "Data or set of data \n\n- A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)"
+          format: datatype
+      description: ''
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\r\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\r\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\r\n"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          type: string
+          description: ''
+          format: string
+        TimeZoneCode:
+          type: string
+          description: ''
+          format: string
+        DaylightSavingIndicator:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    partyidentificationtypevalues:
+      enum:
+        - Taxidentificationnumber
+        - Nationalregistrationnumber
+        - Registrationauthorityidentification
+        - LEI(LegalEntityIdentifier)
+        - Alienregistrationnumber
+        - Passportnumber
+        - Taxexemptidentificationnumber
+        - Corporateidentification
+        - Driverlicensenumber
+        - Foreigninvestmentidentitynumber
+        - Socialsecuritynumber
+        - Identitycardnumber
+        - Concat
+        - Nationalregistrationidentificationnumber
+      type: string
+      description: ">\r\n* `Taxidentificationnumber` - Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` - Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. (ISO20022)\r\n* `Registrationauthorityidentification` - An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. (ISO20022)\r\n* `LEI(LegalEntityIdentifier)` - \r\n* `Alienregistrationnumber` - Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` - Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` - Number assigned to a tax exempt entity.\r\n* `Corporateidentification` - Number assigned to a corporate entity.\r\n* `Driverlicensenumber` - Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` - Number assigned to a foreign investor (other than the alien number).\r\n* `Socialsecuritynumber` - Number assigned by a social security agency.\r\n* `Identitycardnumber` - Number assigned by a national authority to an identity card.\r\n* `Concat` - Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` - National registration identification number. In Singapore this is known as the NRIC.\r\n"
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          $ref: '#/components/schemas/partyidentificationtypevalues'
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    partylegalstructuretypevalues:
+      enum:
+        - Individual
+        - CommunityInterestCompany
+        - CharitableIncorporatedOrganisation
+        - Co-Operative
+        - Charity
+        - GeneralPartnership
+        - LimitedLiabilityPartnership
+        - ScottishLimitedPartnership
+        - LimitedPartnership
+        - PrivateLimitedCompany
+        - PublicLimitedCompany
+        - Sole(SoleTrader)
+      type: string
+      description: ">\r\n* `Individual` - \r\n* `CommunityInterestCompany` - \r\n* `CharitableIncorporatedOrganisation` - \r\n* `Co-Operative` - \r\n* `Charity` - \r\n* `GeneralPartnership` - \r\n* `LimitedLiabilityPartnership` - \r\n* `ScottishLimitedPartnership` - \r\n* `LimitedPartnership` - \r\n* `PrivateLimitedCompany` - \r\n* `PublicLimitedCompany` - \r\n* `Sole(SoleTrader)` - \r\n"
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+        PartyLegalStructureType:
+          $ref: '#/components/schemas/partylegalstructuretypevalues'
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\r\n* `Agreementinvolvement` - \r\n* `Partyinvolvement` - \r\n* `Arrangementinvolvement` - \r\n* `Designspecificationinvolvement` - \r\n* `Relationshipinvolvement` - \r\n* `Locationinvolvement` - \r\n* `Bankguaranteeinvolvement` - \r\n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: "Reference to the applying customer ||\r\n|"
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+    ruleset:
+      type: object
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/text'
+        RuleSetType:
+          $ref: '#/components/schemas/rulesettype'
+        RuleSetName:
+          $ref: '#/components/schemas/name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/status'
+      description: Guidelines provided for applying for an underwriting decision - list submission requirements GovernanceRules|GovernanceRules (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022 BM ()
+    requirement:
+      type: object
+      properties:
+        RequirementType:
+          type: string
+          description: ''
+          format: string
+      description: "Outlines the extent of the product usage history required ||\r\n|"
+    financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjustment
+        - Debitnoterelatedtofinancialadjustment
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\r\n* `Meteredserviceinvoice` - Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` - Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` - Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` - Document is an invoice.\r\n* `Creditnote` - Document is a credit note.\r\n* `Debitnote` - Document is a debit note.\r\n* `Hireinvoice` - Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` - Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` - Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` - Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` - Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` - Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` - Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` - Document is a dispatch advice.\r\n* `Purchaseorder` - Document is a purchase order.\r\n* `Structuredcommunicationreference` - Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` - Document is a shipping notice.\r\n* `Voucher` - Document is an electronic payment document.\r\n* `Accountreceivableopenitem` - Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` - Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` - When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` - When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` - When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal (it is sometimes a Sale Logging/Journal Printer).\r\n* `Salereceipt` - When the Sale System requires the POI system to print the Sale receipt.\r\n"
+    documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\r\n* `CreationDate` - \r\n* `CapturingDate` - \r\n* `VersionDate` - \r\n* `ValueDate` - \r\n* `IssueDate` - \r\n"
+    document:
+      type: object
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/identifier'
+        DocumentVersion:
+          type: string
+          description: ''
+          format: number
+        DocumentType:
+          $ref: '#/components/schemas/financialdocumenttypevalues'
+        DocumentStatus:
+          $ref: '#/components/schemas/status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/datetime'
+        DocumentName:
+          $ref: '#/components/schemas/name'
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/documentdatetimetypevalues'
+        DocumentPurpose:
+          $ref: '#/components/schemas/text'
+        DocumentFormat:
+          $ref: '#/components/schemas/text'
+        DocumentSubject:
+          $ref: '#/components/schemas/text'
+        DocumentDescription:
+          $ref: '#/components/schemas/text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+      description: "Reference to associated documents of significance Document _x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+    transactiondatetypevalues:
+      enum:
+        - TransactionExecutedDate
+        - TransactionFulfillmentDate
+        - TransactionInitiatedDate
+        - TransactionCancelledDate
+        - TransactionApprovedDate
+      type: string
+      description: ">\r\n* `TransactionExecutedDate` - \r\n* `TransactionFulfillmentDate` - \r\n* `TransactionInitiatedDate` - \r\n* `TransactionCancelledDate` - \r\n* `TransactionApprovedDate` - \r\n"
+    transactiondate:
+      type: object
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/datetime'
+        TransactionDateType:
+          $ref: '#/components/schemas/transactiondatetypevalues'
+      description: "The Date that the transaction has occurred or is planned to occur.\nA characteristic of transaction which refers to the LifecycleDate of transaction (e.g., initiated date, executed date, fulfillment date). "
+    transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: ">\r\n* `FinancialTransaction` - \r\n* `BusinessTransaction` - \r\n* `BankingTransaction` - \r\n* `AccountingTransaction` - \r\n* `BookingTransaction` - \r\n* `AllocationTransaction` - \r\n* `DeliveryTransaction` - \r\n* `ProductionTransaction` - \r\n"
+    transactionstatustypevalues:
+      enum:
+        - Initiated
+        - Executed
+        - Cancelled
+        - Confirmed
+        - Suspended
+        - Pending
+        - Completed
+        - Notified
+        - Booked
+        - Rejected
+      type: string
+      description: ">\r\n* `Initiated` - \r\n* `Executed` - \r\n* `Cancelled` - \r\n* `Confirmed` - \r\n* `Suspended` - \r\n* `Pending` - \r\n* `Completed` - \r\n* `Notified` - \r\n* `Booked` - \r\n* `Rejected` - \r\n"
+    transactionlifecyclestatus:
+      type: object
+      properties:
+        TransactionLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        TransactionLifecycleStatusType:
+          $ref: '#/components/schemas/transactionstatustypevalues'
+      description: 'A characteristic of transaction which refers to the LifecycleStatus of transaction (e.g., initiated, executed, confirmed, cancelled, etc.) '
+    transaction:
+      type: object
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/transactiondate'
+        TransactionType:
+          $ref: '#/components/schemas/transactiontypevalues'
+        TransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionStatus:
+          $ref: '#/components/schemas/transactionlifecyclestatus'
+        TransactionName:
+          $ref: '#/components/schemas/name'
+      description: "… ||\r\n|"
+    productidentificationtypevalues:
+      enum:
+        - ISINCode
+        - PackageCode
+        - Buyersitemnumber
+        - Commercialdescriptioncodename
+        - EAN
+        - Harmonizedtariffcodename
+        - Manufacturersitemnumber
+        - Modelnumber
+        - Partnumber
+        - Quotacategory
+        - Stylenumber
+        - Suppliersitemnumber
+        - Universalproductcode
+      type: string
+      description: ">\r\n* `ISINCode` - \r\n* `PackageCode` - \r\n* `Buyersitemnumber` - Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` - A code to identify a product based on applicable commercial conditions.\r\n* `EAN` - The unique EAN (European Article Number) code.\r\n* `Harmonizedtariffcodename` - Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` - Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` - Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` - Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` - Product identifier used by the retail industry.\r\n* `Stylenumber` - Identification of the style of a product.\r\n* `Suppliersitemnumber` - Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` - Number assigned to a manufacturer's product by the Product Code Council.\r\n"
+    productidentification:
+      type: object
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/identifier'
+        ProductIdentificationType:
+          $ref: '#/components/schemas/productidentificationtypevalues'
+      description: The identifier of product e.g. ISIN Code.
+    bankingproducttypevalues:
+      enum:
+        - LoanProduct
+        - CurrentAccountProduct
+        - SavingAccountProduct
+        - BrokeredProduct
+        - TermDepositProduct
+      type: string
+      description: ">\r\n* `LoanProduct` - \r\n* `CurrentAccountProduct` - \r\n* `SavingAccountProduct` - \r\n* `BrokeredProduct` - \r\n* `TermDepositProduct` - \r\n"
+    productlifecyclestatustypevalues:
+      enum:
+        - Initiated
+        - Announced
+        - Sold
+        - Obsolete
+        - Active
+      type: string
+      description: ">\r\n* `Initiated` - \r\n* `Announced` - \r\n* `Sold` - \r\n* `Obsolete` - \r\n* `Active` - \r\n"
+    productlifecyclestatus:
+      type: object
+      properties:
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ProductLifecycleStatusType:
+          $ref: '#/components/schemas/productlifecyclestatustypevalues'
+      description: 'Refers to the lifecycle of a product (e.g., initiated, announced, active, obsolete, withdrawn).'
+    bankingproduct:
+      type: object
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/productidentification'
+        ProductType:
+          $ref: '#/components/schemas/bankingproducttypevalues'
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/productlifecyclestatus'
+        ProductPriority:
+          $ref: '#/components/schemas/text'
+        ProductDescription:
+          $ref: '#/components/schemas/text'
+        ProductVersion:
+          $ref: '#/components/schemas/text'
+        ProductName:
+          $ref: '#/components/schemas/name'
+      description: "The associated product instance for the underwriting decision Product_x000D_\n|Product (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022 BM ()"
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+      type: string
+      description: ">\r\n* `Principal` - \r\n* `Actual` - Actual amount.\r\n* `Estimated` - Estimated amount (the final amount could be above or below).\r\n* `Maximum` - Maximum amount (the final amount must be less or equal).\r\n* `Default` - Default amount.\r\n* `Replacement` - Replacement amount.\r\n* `Incremental` - Incremental amount for reservation.\r\n* `Decremental` - Decremental amount for reservation.\r\n* `Reserved` - Reserved or updated reserved amount for reservation.\r\n* `Available` - \r\n* `Used` - \r\n"
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/value'
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+        AmountType:
+          $ref: '#/components/schemas/amounttypevalues'
+      description: The proposed loan amount CurrencyAndAmount|CurrencyAndAmount (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022  ()
+    arrangementtypevalues:
+      enum:
+        - SweepArrangement
+        - WithdrawalArrangement
+        - DepositArrangement
+        - InterestArrangement
+        - FeeArrangement
+        - LienArrangement
+        - InformationArrangement
+        - PaymentArrangement
+        - EntitlementArrangement
+        - PeriodArrangement
+        - CollateralArrangement
+        - LimitArrangement
+        - AccessArrangement
+        - CardPaymentArrangement
+        - StandingOrderArrangement
+        - OverdraftArrangement
+        - RepaymentArrangement
+        - StatementArrangement
+        - CreditTransferArrangement
+        - ProductAndServiceArrangement
+        - FactoringArrangement
+        - RolloverArrangement
+        - RestructuringArrangement
+        - InsuranceArrangement
+        - CollectionArrangement
+        - UnderwritingArrangement
+        - TerminationArrangement
+        - MaturityArrangement
+      type: string
+      description: ">\r\n* `SweepArrangement` - An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\r\n* `WithdrawalArrangement` - An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \r\n* `DepositArrangement` - An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \r\n* `InterestArrangement` - An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\r\n* `FeeArrangement` - An arrangement into which is promised to apply a charge for services rendered. \r\n* `LienArrangement` - An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \r\n* `InformationArrangement` - An arrangement concerning the information the bank will provide about the agreement/account\r\n* `PaymentArrangement` - An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \r\n* `EntitlementArrangement` - Right or obligation linked to the involvement of a party in an agreement\r\n* `PeriodArrangement` - \r\n* `CollateralArrangement` - An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \r\n* `LimitArrangement` - An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \r\n* `AccessArrangement` - An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\r\n* `CardPaymentArrangement` - An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \r\n* `StandingOrderArrangement` - An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \r\n* `OverdraftArrangement` - An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \r\n* `RepaymentArrangement` - An arrangement into which is promised for paying back money previously borrowed from a lender. \r\n* `StatementArrangement` - An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \r\n* `CreditTransferArrangement` - An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \r\n* `ProductAndServiceArrangement` - \r\n* `FactoringArrangement` - \r\n* `RolloverArrangement` - Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \r\n* `RestructuringArrangement` - \r\n* `InsuranceArrangement` - \r\n* `CollectionArrangement` - An arrangement into which is promised to collect past-due debts from borrowers\r\n* `UnderwritingArrangement` - A contractual agreement between parties that commits the underwriter to assuming risk.\r\n* `TerminationArrangement` - \r\n* `MaturityArrangement` - \r\n"
+    loanarrangement:
+      type: object
+      properties:
+        LoanOriginationDate:
+          $ref: '#/components/schemas/date'
+        LoanMaturityDate:
+          $ref: '#/components/schemas/date'
+        LoanEndDate:
+          $ref: '#/components/schemas/date'
+        LoanAmount:
+          $ref: '#/components/schemas/amount'
+        LoanArrangementType:
+          $ref: '#/components/schemas/arrangementtypevalues'
+      description: The proposed loan terms Loan|Loan (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022 BM ()
+    partyprofiletypevalues:
+      enum:
+        - CommercialProfile
+        - KYCProfile
+        - RiskProfile
+        - FinancialProfile
+      type: string
+      description: ">\r\n* `CommercialProfile` - \r\n* `KYCProfile` - \r\n* `RiskProfile` - \r\n* `FinancialProfile` - \r\n"
+    profile:
+      type: object
+      properties:
+        Profile:
+          type: string
+          description: A brief description of the characteristics of something or someone. (Business Dictionary)
+          format: class
+      description: ''
+    partyprofile:
+      type: object
+      properties:
+        PartyProfileType:
+          $ref: '#/components/schemas/partyprofiletypevalues'
+        MoneyLaunderingCheck:
+          type: string
+          description: Status of an identity check to prevent money laundering. This includes the counter-terrorism check. (ISO20022)
+          format: string
+        CreditRating:
+          type: string
+          description: ''
+          format: string
+        RiskLevel:
+          type: string
+          description: Specifies the customers money laundering risk. (ISO20022)
+          format: string
+        DueDiligenceCheck:
+          type: string
+          description: 'Specifies the type of due diligence checks carried out on a party. '
+          format: string
+        SourceOfWealth:
+          type: string
+          description: Indicates the main sources of the money. (ISO20022)
+          format: string
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        ProfileReference:
+          $ref: '#/components/schemas/profile'
+      description: "Reference details known about the customer Party/Persons/PersonProfile_x000D_\n|Party/Persons/PersonProfile (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022 BM () ()"
+    producttermandconditiontypevalues:
+      enum:
+        - ProductGeneralTermAndCondition
+        - ProductContextSpecificTermAndCondition
+        - ProductCombinationTermAndCondition
+        - ProductSpecificPricingTermAndCondition
+        - ProductMatchingTermAndCondition
+        - CustomerDefinedProductAndServiceTermAndCondition
+        - BankDefinedProductAndServiceTermAndCondition
+        - ProductEligibilityTermAndCondition
+      type: string
+      description: ">\r\n* `ProductGeneralTermAndCondition` - A value of Product TermAndCondition Type whereby product general terms and conditions will be defined.\r\n* `ProductContextSpecificTermAndCondition` - A value of Product TermAndCondition Type whereby product context specific terms and conditions (e.g., regulation, market, sale) will be defined.\n\r\n* `ProductCombinationTermAndCondition` - \r\n* `ProductSpecificPricingTermAndCondition` - \r\n* `ProductMatchingTermAndCondition` - \r\n* `CustomerDefinedProductAndServiceTermAndCondition` - \r\n* `BankDefinedProductAndServiceTermAndCondition` - \r\n* `ProductEligibilityTermAndCondition` - \r\n"
+    producttermandconditiontype:
+      type: object
+      properties:
+        ProductTermAndConditionTypeValues:
+          $ref: '#/components/schemas/producttermandconditiontypevalues'
+        ProductTermAndConditionTypeName:
+          type: string
+          description: ''
+          format: string
+        ProductTermAndConditionTypeDescription:
+          type: string
+          description: ''
+          format: string
+      description: ''
+    producttermandcondition:
+      type: object
+      properties:
+        ProductTermAndConditionType:
+          $ref: '#/components/schemas/producttermandconditiontype'
+      description: "Definition of the terms under which the customer eligible for the loan ||\r\n|"
+    reporttypevalues:
+      enum:
+        - FinancialReport
+        - BusinessReport
+        - ManagementReport
+        - Statement
+        - MaintenanceReport
+        - RegulatoryReport
+        - TaxReport
+      type: string
+      description: ">\r\n* `FinancialReport` - \r\n* `BusinessReport` - \r\n* `ManagementReport` - \r\n* `Statement` - \r\n* `MaintenanceReport` - \r\n* `RegulatoryReport` - \r\n* `TaxReport` - \r\n"
+    report:
+      type: object
+      properties:
+        ReportType:
+          $ref: '#/components/schemas/reporttypevalues'
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        ReportVersion:
+          type: string
+          description: ''
+          format: number
+        ReportDateTime:
+          $ref: '#/components/schemas/datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/text'
+      description: "Reference to product reports covering payment history ||\r\n|"
+    customerstatement:
+      type: object
+      properties:
+        CustomerStatementType:
+          type: string
+          description: ''
+          format: string
+      description: "Covers bank and known non-bank managed assets ||\r\n|"
+    customercreditratingassessment:
+      type: object
+      properties:
+        CreditRatingAssessmentType:
+          type: string
+          description: ''
+          format: ''
+      description: "Reference to the bank's credit assessment of the customer ||\r\n|"
+    collateraltypevalues:
+      enum:
+        - Letterofcredit
+        - Cash
+        - Securities
+        - Physicalentities
+        - Insurance
+        - Stockcertificate
+        - Bond
+        - Bankguarantee
+        - Other
+        - Commodity
+        - Automobile
+        - Industrialvehicle
+        - Commercialtruck
+        - Railvehicle
+        - Nauticalcommercialvehicle
+        - Nauticalleisurevehicle
+        - Aeroplane
+        - Machinetool
+        - Industrialequipment
+        - Officeequipment
+        - Itequipment
+        - Medicalequipment
+        - Energyrelatedequipment
+        - Commercialbuilding
+      type: string
+      description: The type of collateral CollateralTypeCode|CollateralTypeCode (https://www.iso20022.org/standardsrepository/type/CollateralTypeCode)|Standard|ISO20022 BM ()
+    servicetypevalues:
+      enum:
+        - ITService
+        - AdministrativeService
+        - SystemService
+        - FinancialService
+        - InformationService
+        - BusinessService
+      type: string
+      description: ">\r\n* `ITService` - \r\n* `AdministrativeService` - \r\n* `SystemService` - \r\n* `FinancialService` - \r\n* `InformationService` - \r\n* `BusinessService` - \r\n"
+    feature:
+      type: object
+      properties:
+        FeatureType:
+          $ref: '#/components/schemas/text'
+        FeatureIdentification:
+          $ref: '#/components/schemas/identifier'
+        FeatureName:
+          $ref: '#/components/schemas/name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        FeatureDescription:
+          $ref: '#/components/schemas/text'
+      description: A characteristic of service which refers 1) mainly to the function or condition of service. 2) to non-functional features like quality and security
+    service:
+      type: object
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/name'
+        ServiceDescription:
+          $ref: '#/components/schemas/text'
+        ServiceType:
+          $ref: '#/components/schemas/servicetypevalues'
+        ServiceIdentification:
+          $ref: '#/components/schemas/identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/status'
+        ServiceFeature:
+          $ref: '#/components/schemas/feature'
+      description: 'External identifier assigned by an asset valuation service provider to refer to an instance of Asset Valuation '
+    rate:
+      type: object
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/value'
+        RateUnit:
+          $ref: '#/components/schemas/text'
+        RatePeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/text'
+      description: ''
+    assetvaluation:
+      type: object
+      properties:
+        AssetValue:
+          $ref: '#/components/schemas/value'
+        AssetValueType:
+          $ref: '#/components/schemas/text'
+        AssetValuationType:
+          $ref: '#/components/schemas/text'
+        AssetValuationDate:
+          $ref: '#/components/schemas/datetime'
+        AssetValuationServiceReference:
+          $ref: '#/components/schemas/service'
+        AssetValuationRate:
+          $ref: '#/components/schemas/rate'
+        AssetValuationStatus:
+          $ref: '#/components/schemas/status'
+        AssetValuationValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+      description: ''
+    collateralassetstatusvalues:
+      enum:
+        - Offered
+        - UnderAssessment
+        - Transferred
+        - Allocated
+        - FreeForAllocation
+        - AllocatedToAnotherLoan
+        - IssuedForExecution
+      type: string
+      description: ">\r\n* `Offered` - \r\n* `UnderAssessment` - \r\n* `Transferred` - \r\n* `Allocated` - \r\n* `FreeForAllocation` - \r\n* `AllocatedToAnotherLoan` - \r\n* `IssuedForExecution` - \r\n"
+    collateralasset:
+      type: object
+      properties:
+        CollateralAssetIdentification:
+          $ref: '#/components/schemas/identifier'
+        CollateralAssetType:
+          $ref: '#/components/schemas/collateraltypevalues'
+        CollateralAssetValuation:
+          $ref: '#/components/schemas/assetvaluation'
+        CollateralAssetStatus:
+          $ref: '#/components/schemas/collateralassetstatusvalues'
+      description: Reference to the customers collateral holdings that are available Asset|Asset (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022 BM ()
+    collateralassetvaluation:
+      type: object
+      properties:
+        CollateralAssetValuationStatus:
+          type: string
+          description: Valuation status of the collateral asset (ISO20022)
+          format: string
+        CollateralAssetValuationDate:
+          type: string
+          description: Valuation date of the collateral asset (ISO20022)
+          format: string
+        CollateralAssetValuationAmount:
+          type: string
+          description: The amount of valuation of a collateral asset
+          format: string
+        CollateralAssetValuationCurrency:
+          type: string
+          description: Currency used for the valuation of a collateral asset. (ISO20022)
+          format: string
+      description: "The valuation of the collateral (applying the required loan to asset ratio) ||\r\n|"
+    underwritingassessment:
+      type: object
+      properties:
+        UnderwritingAssessmentIdentifier:
+          $ref: '#/components/schemas/identifier'
+      description: "Details of the underwriting decision ||\r\n|"
+    workproducttypevalues:
+      enum:
+        - Document
+        - WorkingPaper
+        - ActivityLog
+        - Form
+        - File
+        - MeetingSchedule
+        - MeetingMinute
+      type: string
+      description: ">\r\n* `Document` - \r\n* `WorkingPaper` - \r\n* `ActivityLog` - \r\n* `Form` - \r\n* `File` - File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` - \r\n* `MeetingMinute` - \r\n"
+    workproduct:
+      type: object
+      properties:
+        WorkProductType:
+          $ref: '#/components/schemas/workproducttypevalues'
+        WorkProductIdentifoication:
+          type: string
+          description: ''
+          format: string
+      description: "Work documentation, forms and schedules produced and referenced during the task ||\r\n|"
+    UnderwritingAssessment:
+      type: object
+      properties:
+        UnderwritingGuidelines:
+          $ref: '#/components/schemas/ruleset'
+        RequiredCustomerEmploymentHistoryDetails:
+          $ref: '#/components/schemas/requirement'
+        RequiredCustomerDebtAssetStatement:
+          $ref: '#/components/schemas/requirement'
+        RequiredCustomerCreditAssessment:
+          $ref: '#/components/schemas/requirement'
+        RequiredCollateralCoverage:
+          $ref: '#/components/schemas/requirement'
+        RequiredCustomerProductandServicePaymentHistory:
+          $ref: '#/components/schemas/requirement'
+        RequiredCustomerDocuments:
+          $ref: '#/components/schemas/document'
+        ProposedTransactionDetails:
+          $ref: '#/components/schemas/transaction'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/bankingproduct'
+        ProposedLoanTerms:
+          $ref: '#/components/schemas/loanarrangement'
+        ProposedLoanAmount:
+          $ref: '#/components/schemas/amount'
+        LoanPurpose:
+          $ref: '#/components/schemas/text'
+        CustomerReference:
+          $ref: '#/components/schemas/involvedparty'
+        CustomerReferenceDetails:
+          $ref: '#/components/schemas/partyprofile'
+        CustomerProductEligibilityTerms:
+          $ref: '#/components/schemas/producttermandcondition'
+        CustomerEmploymentHistory:
+          $ref: '#/components/schemas/report'
+        CustomerIncomeStatement:
+          $ref: '#/components/schemas/customerstatement'
+        CustomerDebtStatement:
+          $ref: '#/components/schemas/customerstatement'
+        CustomerAssetStatement:
+          $ref: '#/components/schemas/customerstatement'
+        CustomerCreditAssessment:
+          $ref: '#/components/schemas/customercreditratingassessment'
+        CustomerProductandServicePaymentHistory:
+          $ref: '#/components/schemas/report'
+        CollateralItemReference:
+          $ref: '#/components/schemas/collateralasset'
+        CollateralItemType:
+          $ref: '#/components/schemas/collateraltypevalues'
+        CollateralItemValuation:
+          $ref: '#/components/schemas/collateralassetvaluation'
+        DocumentReference:
+          $ref: '#/components/schemas/document'
+        UnderwritingAssessmentDecision:
+          $ref: '#/components/schemas/underwritingassessment'
+        UnderwritingAssessmentWorkProduct:
+          $ref: '#/components/schemas/workproduct'
+      description: 'To test or assess an entity, possibly against some formal qualification or certification requirement within Underwriting. '
+    EvaluateUnderwritingAssessmentRequest:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            UnderwritingGuidelines:
+              $ref: '#/components/schemas/ruleset'
+            ProposedTransactionDetails:
+              $ref: '#/components/schemas/transaction'
+            ProductInstanceReference:
+              $ref: '#/components/schemas/bankingproduct'
+            ProposedLoanTerms:
+              $ref: '#/components/schemas/loanarrangement'
+            ProposedLoanAmount:
+              $ref: '#/components/schemas/amount'
+            LoanPurpose:
+              $ref: '#/components/schemas/text'
+            CustomerReference:
+              $ref: '#/components/schemas/involvedparty'
+            CustomerReferenceDetails:
+              $ref: '#/components/schemas/partyprofile'
+            CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/producttermandcondition'
+            CustomerIncomeStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerDebtStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerAssetStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CollateralItemReference:
+              $ref: '#/components/schemas/collateralasset'
+            CollateralItemType:
+              $ref: '#/components/schemas/collateraltypevalues'
+            CollateralItemValuation:
+              $ref: '#/components/schemas/collateralassetvaluation'
+            DocumentReference:
+              $ref: '#/components/schemas/document'
+      description: 'Input: EvCR Evaluate an underwriting decision'
+    EvaluateUnderwritingAssessmentResponse:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            UnderwritingGuidelines:
+              $ref: '#/components/schemas/ruleset'
+            RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/requirement'
+            RequiredCollateralCoverage:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerDocuments:
+              $ref: '#/components/schemas/document'
+            ProposedTransactionDetails:
+              $ref: '#/components/schemas/transaction'
+            DocumentReference:
+              $ref: '#/components/schemas/document'
+            UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/underwritingassessment'
+            UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/workproduct'
+      description: 'Output: EvCR Evaluate an underwriting decision'
+    UpdateUnderwritingAssessmentRequest:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            ProposedTransactionDetails:
+              $ref: '#/components/schemas/transaction'
+            ProductInstanceReference:
+              $ref: '#/components/schemas/bankingproduct'
+            ProposedLoanTerms:
+              $ref: '#/components/schemas/loanarrangement'
+            ProposedLoanAmount:
+              $ref: '#/components/schemas/amount'
+            LoanPurpose:
+              $ref: '#/components/schemas/text'
+            CustomerReference:
+              $ref: '#/components/schemas/involvedparty'
+            CustomerReferenceDetails:
+              $ref: '#/components/schemas/partyprofile'
+            CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/producttermandcondition'
+            CustomerEmploymentHistory:
+              $ref: '#/components/schemas/report'
+            CustomerIncomeStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerDebtStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerAssetStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerCreditAssessment:
+              $ref: '#/components/schemas/customercreditratingassessment'
+            CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/report'
+            CollateralItemReference:
+              $ref: '#/components/schemas/collateralasset'
+            CollateralItemType:
+              $ref: '#/components/schemas/collateraltypevalues'
+            CollateralItemValuation:
+              $ref: '#/components/schemas/collateralassetvaluation'
+            DocumentReference:
+              $ref: '#/components/schemas/document'
+      description: 'Input: UpCR Update details for an underwriting assessment'
+    UpdateUnderwritingAssessmentResponse:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            ProposedTransactionDetails:
+              $ref: '#/components/schemas/transaction'
+            ProductInstanceReference:
+              $ref: '#/components/schemas/bankingproduct'
+            ProposedLoanTerms:
+              $ref: '#/components/schemas/loanarrangement'
+            ProposedLoanAmount:
+              $ref: '#/components/schemas/amount'
+            LoanPurpose:
+              $ref: '#/components/schemas/text'
+            CustomerReference:
+              $ref: '#/components/schemas/involvedparty'
+            CustomerReferenceDetails:
+              $ref: '#/components/schemas/partyprofile'
+            CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/producttermandcondition'
+            CustomerEmploymentHistory:
+              $ref: '#/components/schemas/report'
+            CustomerIncomeStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerDebtStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerAssetStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerCreditAssessment:
+              $ref: '#/components/schemas/customercreditratingassessment'
+            CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/report'
+            CollateralItemReference:
+              $ref: '#/components/schemas/collateralasset'
+            CollateralItemType:
+              $ref: '#/components/schemas/collateraltypevalues'
+            CollateralItemValuation:
+              $ref: '#/components/schemas/collateralassetvaluation'
+            DocumentReference:
+              $ref: '#/components/schemas/document'
+      description: 'Output: UpCR Update details for an underwriting assessment'
+    RetrieveUnderwritingAssessmentResponse:
+      type: object
+      properties:
+        UnderwritingAssessment:
+          type: object
+          properties:
+            UnderwritingGuidelines:
+              $ref: '#/components/schemas/ruleset'
+            RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/requirement'
+            RequiredCollateralCoverage:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/requirement'
+            RequiredCustomerDocuments:
+              $ref: '#/components/schemas/document'
+            ProposedTransactionDetails:
+              $ref: '#/components/schemas/transaction'
+            ProductInstanceReference:
+              $ref: '#/components/schemas/bankingproduct'
+            ProposedLoanTerms:
+              $ref: '#/components/schemas/loanarrangement'
+            ProposedLoanAmount:
+              $ref: '#/components/schemas/amount'
+            LoanPurpose:
+              $ref: '#/components/schemas/text'
+            CustomerReference:
+              $ref: '#/components/schemas/involvedparty'
+            CustomerReferenceDetails:
+              $ref: '#/components/schemas/partyprofile'
+            CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/producttermandcondition'
+            CustomerIncomeStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerDebtStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CustomerAssetStatement:
+              $ref: '#/components/schemas/customerstatement'
+            CollateralItemReference:
+              $ref: '#/components/schemas/collateralasset'
+            CollateralItemType:
+              $ref: '#/components/schemas/collateraltypevalues'
+            CollateralItemValuation:
+              $ref: '#/components/schemas/collateralassetvaluation'
+            DocumentReference:
+              $ref: '#/components/schemas/document'
+            UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/underwritingassessment'
+            UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/workproduct'
+      description: 'Output: ReCR Retrieve details about an underwriting assessment'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateUnderwritingAssessmentResponse:
+      description: EvaluateUnderwritingAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateUnderwritingAssessmentResponse'
+    UpdateUnderwritingAssessmentResponse:
+      description: UpdateUnderwritingAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateUnderwritingAssessmentResponse'
+    RetrieveUnderwritingAssessmentResponse:
+      description: RetrieveUnderwritingAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveUnderwritingAssessmentResponse'
+  parameters:
+    underwritingid:
+      name: underwritingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateUnderwritingAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateUnderwritingAssessmentRequest'
+      required: true
+    UpdateUnderwritingAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateUnderwritingAssessmentRequest'
+      required: true
