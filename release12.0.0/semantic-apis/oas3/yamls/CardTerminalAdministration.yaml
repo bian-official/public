@@ -1,0 +1,616 @@
+openapi: 3.0.1
+info:
+  title: Card Terminal Administration
+  description: 'This service domain administers the POS Network including the inventory, terminal characteristics, deployment and status of the POS devices.'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/CardTerminalAdministration/12.0.0
+paths:
+  /CardTerminalAdministration/Provide:
+    post:
+      tags:
+        - CR - CardPOSDeviceAllocation
+      summary: PrCR Initial provision and registering of a point of sale (POS) device
+      description: PrCR Initial provision and registering of a point of sale (POS) device
+      operationId: Provide
+      requestBody:
+        $ref: '#/components/requestBodies/CardPOSDeviceAllocation'
+      responses:
+        '200':
+          $ref: '#/components/responses/CardPOSDeviceAllocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Update':
+    put:
+      tags:
+        - CR - CardPOSDeviceAllocation
+      summary: UpCR Update details about the POS device
+      description: UpCR Update details about the POS device
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+      requestBody:
+        $ref: '#/components/requestBodies/CardPOSDeviceAllocation'
+      responses:
+        '200':
+          $ref: '#/components/responses/CardPOSDeviceAllocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Retrieve':
+    get:
+      tags:
+        - CR - CardPOSDeviceAllocation
+      summary: ReCR Retrieve details about the POS device
+      description: ReCR Retrieve details about the POS device
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveCardPOSDeviceAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Allocation/Provide':
+    post:
+      tags:
+        - BQ - Allocation
+      summary: PrBQ Provide/allocate the device to a merchant
+      description: PrBQ Provide/allocate the device to a merchant
+      operationId: ProvideAllocation
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+      requestBody:
+        $ref: '#/components/requestBodies/ProvideAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProvideAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Allocation/{allocationid}/Update':
+    put:
+      tags:
+        - BQ - Allocation
+      summary: UpBQ Update merchant allocation details
+      description: UpBQ Update merchant allocation details
+      operationId: UpdateAllocation
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+        - $ref: '#/components/parameters/allocationid'
+      requestBody:
+        $ref: '#/components/requestBodies/Allocation'
+      responses:
+        '200':
+          $ref: '#/components/responses/Allocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Allocation/{allocationid}/Capture':
+    put:
+      tags:
+        - BQ - Allocation
+      summary: CaBQ Capture details about the allocation (e.g. report out of service state)
+      description: CaBQ Capture details about the allocation (e.g. report out of service state)
+      operationId: CaptureAllocation
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+        - $ref: '#/components/parameters/allocationid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Allocation/{allocationid}/Grant':
+    put:
+      tags:
+        - BQ - Allocation
+      summary: GrBQ Obtain usage authorization grant for the device (may restrict usage)
+      description: GrBQ Obtain usage authorization grant for the device (may restrict usage)
+      operationId: GrantAllocation
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+        - $ref: '#/components/parameters/allocationid'
+      requestBody:
+        $ref: '#/components/requestBodies/GrantAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/GrantAllocationRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CardTerminalAdministration/{cardterminaladministrationid}/Allocation/{allocationid}/Retrieve':
+    get:
+      tags:
+        - BQ - Allocation
+      summary: ReBQ Retrieve details about the POS device allocation
+      description: ReBQ Retrieve details about the POS device allocation
+      operationId: RetrieveAllocation
+      parameters:
+        - $ref: '#/components/parameters/cardterminaladministrationid'
+        - $ref: '#/components/parameters/allocationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    Allocation:
+      type: object
+      properties:
+        MerchantReference:
+          type: string
+          description: Reference to the Card merchant registered with the device
+          format: object
+        MerchantType:
+          type: string
+          description: 'The type of merchant (e.g. retailer, hotel)'
+          format: string
+        MerchantLocation:
+          type: string
+          description: The physical location/address of the retailer and the device
+          format: string
+        CardPOSDeviceConfiguration:
+          type: string
+          description: 'The configuration defines its operational characteristics/capabilities e.g. (PIN pad, transaction capture, tip handling, transaction descriptive, manual entry, security keys, balancing, receipt options/text, communication options, card types, currencies, etc.)'
+          format: string
+      description: "Set of rules for the purpose of deciding if or if not something is applicable\n\nExamples: Staff assignment, Facility allocation."
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: 'Key dates and times relating to the repair (e.g. reported, scheduled, effort, returned to service) ISODate|ISODate (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022 BM ()'
+    CardPOSDeviceAllocation:
+      type: object
+      properties:
+        CardPOSDeviceReference:
+          type: string
+          description: Reference identification for the POS device
+          format: object
+        CardPOSDeviceIdentifier:
+          type: string
+          description: Any unique identification properties (e.g. serial number)
+          format: string
+        CardPOSDeviceType:
+          type: string
+          description: The specific make and type of device
+          format: string
+        CardPOSDeviceSoftwareType:
+          type: string
+          description: The type of software running on the device
+          format: string
+        CardPOSDeviceSoftwareVersion:
+          type: string
+          description: The version of the software on the device
+          format: string
+        CardPOSDeviceAcquiredDate:
+          $ref: '#/components/schemas/date'
+        CardPOSRepairRecord:
+          type: string
+          description: Record of the maintenance/repair history of the device
+          format: string
+        CardPOSRepairDetails:
+          type: string
+          description: Description of the repair or maintenance work done (includes costs as appropriate)
+          format: string
+        CardPOSRepairDates:
+          $ref: '#/components/schemas/date'
+        CardPOSDeviceStatus:
+          type: string
+          description: 'The status of the POS device (e.g. testing, in production, help inventory, under repair, replaced/terminated)'
+          format: string
+      description: "Maintain an inventory or holding of some resource and make assignments/allocations as requested  within Card Terminal Administration. \nExample: Track the inventory and administer the distribution of central cash holdings throughout the branch & ATM network."
+    RetrieveCardPOSDeviceAllocationResponse:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CardPOSDeviceIdentifier:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceType:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceSoftwareType:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceSoftwareVersion:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceAcquiredDate:
+              $ref: '#/components/schemas/date'
+            CardPOSRepairRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSRepairDetails:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSRepairDates:
+              $ref: '#/components/schemas/date'
+            CardPOSDeviceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about the POS device'
+    ProvideAllocationRequest:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CardPOSDeviceIdentifier:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceType:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceSoftwareType:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceSoftwareVersion:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+        Allocation:
+          type: object
+          properties:
+            MerchantReference:
+              type: string
+              description: "\r\n"
+              format: object
+            MerchantType:
+              type: string
+              description: "\r\n"
+              format: string
+            MerchantLocation:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceConfiguration:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: PrBQ Provide/allocate the device to a merchant'
+    ProvideAllocationResponse:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: PrBQ Provide/allocate the device to a merchant'
+    CaptureAllocationRequest:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaBQ Capture details about the allocation (e.g. report out of service state)'
+    CaptureAllocationResponse:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaBQ Capture details about the allocation (e.g. report out of service state)'
+    GrantAllocationRequest:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CardPOSDeviceIdentifier:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: GrBQ Obtain usage authorization grant for the device (may restrict usage)'
+    RetrieveAllocationResponse:
+      type: object
+      properties:
+        CardPOSDeviceAllocation:
+          type: object
+          properties:
+            CardPOSDeviceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CardPOSDeviceIdentifier:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceType:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceSoftwareType:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceSoftwareVersion:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+        Allocation:
+          type: object
+          properties:
+            MerchantReference:
+              type: string
+              description: "\r\n"
+              format: object
+            MerchantType:
+              type: string
+              description: "\r\n"
+              format: string
+            MerchantLocation:
+              type: string
+              description: "\r\n"
+              format: string
+            CardPOSDeviceConfiguration:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about the POS device allocation'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    CardPOSDeviceAllocation:
+      description: CardPOSDeviceAllocation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CardPOSDeviceAllocation'
+    RetrieveCardPOSDeviceAllocationResponse:
+      description: RetrieveCardPOSDeviceAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveCardPOSDeviceAllocationResponse'
+    ProvideAllocationResponse:
+      description: ProvideAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProvideAllocationResponse'
+    Allocation:
+      description: Allocation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Allocation'
+    CaptureAllocationResponse:
+      description: CaptureAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureAllocationResponse'
+    GrantAllocationRequest:
+      description: GrantAllocationRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GrantAllocationRequest'
+    RetrieveAllocationResponse:
+      description: RetrieveAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveAllocationResponse'
+  parameters:
+    cardterminaladministrationid:
+      name: cardterminaladministrationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    allocationid:
+      name: allocationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    CardPOSDeviceAllocation:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CardPOSDeviceAllocation'
+      required: true
+    ProvideAllocationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProvideAllocationRequest'
+      required: true
+    Allocation:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Allocation'
+      required: true
+    CaptureAllocationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureAllocationRequest'
+      required: true
+    GrantAllocationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GrantAllocationRequest'
+      required: true

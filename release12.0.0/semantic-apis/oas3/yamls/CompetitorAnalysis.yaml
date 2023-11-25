@@ -1,0 +1,531 @@
+openapi: 3.0.1
+info:
+  title: Competitor Analysis
+  description: 'Solicit, consolidate and analyze competitor specific public domain data to develop competitor insights and comparisons'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/CompetitorAnalysis/12.0.0
+paths:
+  /CompetitorAnalysis/Evaluate:
+    post:
+      tags:
+        - CR - CompetitorAnalysis
+      summary: EvCR Initialize competitor analysis
+      description: EvCR Initialize competitor analysis
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateCompetitorAnalysisRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateCompetitorAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CompetitorAnalysis/{competitoranalysisid}/Execute':
+    put:
+      tags:
+        - CR - CompetitorAnalysis
+      summary: ExCR Obtain an automated refresh of maintained competitor analysis
+      description: ExCR Obtain an automated refresh of maintained competitor analysis
+      operationId: Execute
+      parameters:
+        - $ref: '#/components/parameters/competitoranalysisid'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteCompetitorAnalysisRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ExecuteCompetitorAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CompetitorAnalysis/{competitoranalysisid}/Request':
+    put:
+      tags:
+        - CR - CompetitorAnalysis
+      summary: RqCR Request a manual intervention in the development of competitor analysis
+      description: RqCR Request a manual intervention in the development of competitor analysis
+      operationId: Request
+      parameters:
+        - $ref: '#/components/parameters/competitoranalysisid'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestCompetitorAnalysisRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/RequestCompetitorAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CompetitorAnalysis/{competitoranalysisid}/Retrieve':
+    get:
+      tags:
+        - CR - CompetitorAnalysis
+      summary: ReCR Retrieve details about competitor analysis activity
+      description: ReCR Retrieve details about competitor analysis activity
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/competitoranalysisid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveCompetitorAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    AnalysisAlgorithm:
+      type: object
+      properties:
+        AnalysisAlgorithmType:
+          type: string
+          description: 'Defines the type of algorithm/approach employed (e.g. competitor reviews, public domain research)'
+          format: string
+        AnalysisAlgorithmSpecification:
+          type: string
+          description: Description of the specific algorithms used and the approach taken to develop the competitor analysis
+          format: string
+        AnalysisAlgorithmReferencedMarketResearchRecord:
+          type: string
+          description: The externally sourced general market research sources and any internal intelligence used in the competitor analysis
+          format: object
+        MarketResearchReportTypeReference:
+          type: string
+          description: Reference to a specific type of predefined market research report or database
+          format: string
+        MarketResearchReportTypeDefinition:
+          type: string
+          description: Describes the available market research report content (e.g. customer social network usage analysis)
+          format: string
+        MarketResearchReportVersionPeriod:
+          type: string
+          description: Defines the version and period covered by the research
+          format: string
+        MarketResearchReport:
+          type: string
+          description: Is the content of the report or database in any suitable form
+          format: string
+        AnalysisAlgorithmRequestRecord:
+          type: string
+          description: Request record for the competitor analysis algorithm/approach execution. Note this is defined in the general competitor analysis request and interpreted internally as the specific approach/algorithm is selected as necessary
+          format: string
+        AnalysisAlgorithmRequest:
+          type: string
+          description: The specific details of the request
+          format: string
+        AnalysisAlgorithmWorkProducts:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the analysis'
+          format: string
+        AnalysisAlgorithmRequestResult:
+          type: string
+          description: The output from executing the algorithm
+          format: string
+        AnalysisAlgorithmUsageRecord:
+          type: string
+          description: The record of the use of the specific competitor analysis algorithm/approach
+          format: string
+        AnalysisAlgorithmUsage:
+          type: string
+          description: A record of the usage of the algorithm
+          format: string
+        AnalysisAlgorithmImpact:
+          type: string
+          description: A record of reported impact/accuracy of the competitor analysis algorithm/approach
+          format: string
+      description: "A collection of models/calculations/algoritms that can be applied to a subject or activity\n\nExamples: Average balance calculation, Propensity to buy"
+    CompetitorAnalysis:
+      type: object
+      properties:
+        CompetitorAnalysisType:
+          type: string
+          description: The type of research view provided by the research (e.g. pricing comparison)
+          format: string
+        CompetitorAnalysisSpecification:
+          type: string
+          description: The definition of the specific competitor analysis
+          format: string
+        CompetitorAnalysisGuidance:
+          type: string
+          description: Guidance on usage and interpretation of the competitor analysis (e.g. qualifying the accuracy/confidence of any findings)
+          format: string
+        CompetitorAnalysisAlgorithmReference:
+          type: string
+          description: Reference to the algorithm/approach used to generate the analysis
+          format: object
+        CompetitorAnalysisRequestRecord:
+          type: string
+          description: Request record for the competitor analysis
+          format: string
+        CompetitorAnalysisRequest:
+          type: string
+          description: The specific details of the request
+          format: string
+        EmployeeBusinessUnitReference:
+          type: string
+          description: The employee/business unit requesting the analysis
+          format: object
+        CompetitorAnalysisRequestWorkProducts:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the analysis'
+          format: string
+        CompetitorAnalysisRequestResult:
+          type: string
+          description: The output from performing the analysis
+          format: string
+        CompetitorAnalysisUsageRecord:
+          type: string
+          description: Usage record of the competitor analysis maintained/developed by the function
+          format: string
+        CompetitorAnalysisUsage:
+          type: string
+          description: A record of the usage of the analysis
+          format: string
+        CompetitorAnalysisImpact:
+          type: string
+          description: A record of reported impact/accuracy of the competitor analysis
+          format: string
+      description: "Analyze the performance or behavior of some on-going activity or entity  within Competitor Analysis. \nExamples: Provide behavioral insights and analysis into customer behavior and analyze financial market activity in order to identify opportunities, define pricing and evaluate risks.\n\nAnalyze the performance or behavior of some on-going activity or entity. Examples: Provide behavioral insights and analysis into customer behavior and analyze financial market activity in order to identify opportunities, define pricing and evaluate risks."
+    EvaluateCompetitorAnalysisRequest:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisType:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisAlgorithmReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: EvCR Initialize competitor analysis'
+    EvaluateCompetitorAnalysisResponse:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisType:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisSpecification:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisGuidance:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisAlgorithmReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: EvCR Initialize competitor analysis'
+    ExecuteCompetitorAnalysisRequest:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: ExCR Obtain an automated refresh of maintained competitor analysis'
+    ExecuteCompetitorAnalysisResponse:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ExCR Obtain an automated refresh of maintained competitor analysis'
+    RequestCompetitorAnalysisRequest:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: RqCR Request a manual intervention in the development of competitor analysis'
+    RequestCompetitorAnalysisResponse:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: RqCR Request a manual intervention in the development of competitor analysis'
+    RetrieveCompetitorAnalysisResponse:
+      type: object
+      properties:
+        CompetitorAnalysis:
+          type: object
+          properties:
+            CompetitorAnalysisType:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisSpecification:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisGuidance:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisAlgorithmReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CompetitorAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CompetitorAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about competitor analysis activity'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateCompetitorAnalysisResponse:
+      description: EvaluateCompetitorAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateCompetitorAnalysisResponse'
+    ExecuteCompetitorAnalysisResponse:
+      description: ExecuteCompetitorAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteCompetitorAnalysisResponse'
+    RequestCompetitorAnalysisResponse:
+      description: RequestCompetitorAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestCompetitorAnalysisResponse'
+    RetrieveCompetitorAnalysisResponse:
+      description: RetrieveCompetitorAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveCompetitorAnalysisResponse'
+  parameters:
+    competitoranalysisid:
+      name: competitoranalysisid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateCompetitorAnalysisRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateCompetitorAnalysisRequest'
+      required: true
+    ExecuteCompetitorAnalysisRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteCompetitorAnalysisRequest'
+      required: true
+    RequestCompetitorAnalysisRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestCompetitorAnalysisRequest'
+      required: true

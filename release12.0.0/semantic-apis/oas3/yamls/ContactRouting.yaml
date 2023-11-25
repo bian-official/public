@@ -1,0 +1,601 @@
+openapi: 3.0.1
+info:
+  title: Contact Routing
+  description: 'The Contact Routing service domain tracks servicing resource availability and uses any known details about the customer contact (e.g. identity, indicated purpose of call, status of the relationship) to make an optimal routing decision. The routing selection may include matching the required product knowledge/skills to the available servicing resources.'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/ContactRouting/12.0.0
+paths:
+  /ContactRouting/Provide:
+    post:
+      tags:
+        - CR - CustomerServicingResourceAllocation
+      summary: PrCR Enable the service resource pool allocation
+      description: PrCR Enable the service resource pool allocation
+      operationId: Provide
+      requestBody:
+        $ref: '#/components/requestBodies/ProvideCustomerServicingResourceAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ProvideCustomerServicingResourceAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Update':
+    put:
+      tags:
+        - CR - CustomerServicingResourceAllocation
+      summary: UpCR Update details about the servicing resource pool
+      description: UpCR Update details about the servicing resource pool
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerServicingResourceAllocation'
+      responses:
+        '200':
+          $ref: '#/components/responses/CustomerServicingResourceAllocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Capture':
+    put:
+      tags:
+        - CR - CustomerServicingResourceAllocation
+      summary: CaCR Capture servicing resource pool data (e.g. resource status/availability)
+      description: CaCR Capture servicing resource pool data (e.g. resource status/availability)
+      operationId: Capture
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureCustomerServicingResourceAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureCustomerServicingResourceAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Retrieve':
+    get:
+      tags:
+        - CR - CustomerServicingResourceAllocation
+      summary: ReCR Retrieve details about the servicing resource assignments
+      description: ReCR Retrieve details about the servicing resource assignments
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveCustomerServicingResourceAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Allocation/{allocationid}/Request':
+    put:
+      tags:
+        - BQ - Allocation
+      summary: PrBQ Request a servicing resource (can be qualification and future booking)
+      description: PrBQ Request a servicing resource (can be qualification and future booking)
+      operationId: RequestAllocation
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+        - $ref: '#/components/parameters/allocationid'
+      requestBody:
+        $ref: '#/components/requestBodies/CustomerServicingResourceAllocation'
+      responses:
+        '200':
+          $ref: '#/components/responses/CustomerServicingResourceAllocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Allocation/{allocationid}/Update':
+    put:
+      tags:
+        - BQ - Allocation
+      summary: UpBQ Update details of a servicing resource allocation
+      description: UpBQ Update details of a servicing resource allocation
+      operationId: UpdateAllocation
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+        - $ref: '#/components/parameters/allocationid'
+      requestBody:
+        $ref: '#/components/requestBodies/Allocation'
+      responses:
+        '200':
+          $ref: '#/components/responses/Allocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Allocation/{allocationid}/Capture':
+    put:
+      tags:
+        - BQ - Allocation
+      summary: CaBQ Capture data for an active allocation (e.g. availability)
+      description: CaBQ Capture data for an active allocation (e.g. availability)
+      operationId: CaptureAllocation
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+        - $ref: '#/components/parameters/allocationid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ContactRouting/{contactroutingid}/Allocation/{allocationid}/Retrieve':
+    get:
+      tags:
+        - BQ - Allocation
+      summary: ReBQ Retrieve details about a servicing resource allocation
+      description: ReBQ Retrieve details about a servicing resource allocation
+      operationId: RetrieveAllocation
+      parameters:
+        - $ref: '#/components/parameters/contactroutingid'
+        - $ref: '#/components/parameters/allocationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveAllocationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    Allocation:
+      type: object
+      properties:
+        AllocationRequestType:
+          type: string
+          description: 'Defines the type of allocation (e.g. next available, qualification based, future reservation)'
+          format: string
+        CustomerServicingRequestRecord:
+          type: string
+          description: 'Contains details of servicing resource request. This can be simple for next available agent, or detail specific required qualifications and expertise'
+          format: string
+        CustomerContactRecord:
+          type: string
+          description: Extracts from the active contact can be used to support more advance selection logic to identify the best available servicing specialist resource
+          format: string
+        AllocationTaskResult:
+          type: string
+          description: The result of the allocation task
+          format: string
+      description: "Set of rules for the purpose of deciding if or if not something is applicable\n\nExamples: Staff assignment, Facility allocation."
+    CustomerServicingResourceAllocation:
+      type: object
+      properties:
+        ServicingResourceAllocationServiceSchedule:
+          type: string
+          description: Maintains the allocation status of available service resources. Can include future booking commitments
+          format: string
+        ServicingResourceReference:
+          type: string
+          description: Reference to a servicing resource
+          format: object
+        ServicingResourceRecord:
+          type: string
+          description: Details about a registered servicing resource/specialist
+          format: string
+        ServicingResourceQualificationProfile:
+          type: string
+          description: 'Details the qualification, expertise and level of experience of a servicing specialist'
+          format: string
+        ServicingPositionReference:
+          type: string
+          description: Reference to the assigned servicing position for the resource for the current session
+          format: object
+        ServicingResourceAvailabilitySchedule:
+          type: string
+          description: Details the time the resource plans to be and is actually available for allocations
+          format: string
+        ServicingResourceStatus:
+          type: string
+          description: Tracks the current status indicating availability for assignment
+          format: string
+        ServicingSessionReference:
+          type: string
+          description: Reference to a servicing session assignments made
+          format: object
+      description: "Maintain an inventory or holding of some resource and make assignments/allocations as requested  within Contact Routing. \nExample: Track the inventory and administer the distribution of central cash holdings throughout the branch & ATM network."
+    ProvideCustomerServicingResourceAllocationRequest:
+      type: object
+      properties:
+        CustomerServicingResourceAllocation:
+          type: object
+          properties:
+            ServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ServicingResourceRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceQualificationProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceAvailabilitySchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: PrCR Enable the service resource pool allocation'
+    ProvideCustomerServicingResourceAllocationResponse:
+      type: object
+      properties:
+        CustomerServicingResourceAllocation:
+          type: object
+          properties:
+            ServicingResourceAllocationServiceSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ServicingResourceRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceQualificationProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingPositionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ServicingResourceAvailabilitySchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+      description: 'Output: PrCR Enable the service resource pool allocation'
+    CaptureCustomerServicingResourceAllocationRequest:
+      type: object
+      properties:
+        CustomerServicingResourceAllocation:
+          type: object
+          properties:
+            ServicingResourceRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceAvailabilitySchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaCR Capture servicing resource pool data (e.g. resource status/availability)'
+    CaptureCustomerServicingResourceAllocationResponse:
+      type: object
+      properties:
+        CustomerServicingResourceAllocation:
+          type: object
+          properties:
+            ServicingResourceRecord:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaCR Capture servicing resource pool data (e.g. resource status/availability)'
+    RetrieveCustomerServicingResourceAllocationResponse:
+      type: object
+      properties:
+        CustomerServicingResourceAllocation:
+          type: object
+          properties:
+            ServicingResourceAllocationServiceSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ServicingResourceRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceQualificationProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingPositionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ServicingResourceAvailabilitySchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingResourceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            ServicingSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+      description: 'Output: ReCR Retrieve details about the servicing resource assignments'
+    CaptureAllocationRequest:
+      type: object
+      properties:
+        Allocation:
+          type: object
+          properties:
+            AllocationRequestType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerServicingRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecord:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaBQ Capture data for an active allocation (e.g. availability)'
+    CaptureAllocationResponse:
+      type: object
+      properties:
+        Allocation:
+          type: object
+          properties:
+            AllocationTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaBQ Capture data for an active allocation (e.g. availability)'
+    RetrieveAllocationResponse:
+      type: object
+      properties:
+        Allocation:
+          type: object
+          properties:
+            AllocationRequestType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerServicingRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            AllocationTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about a servicing resource allocation'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ProvideCustomerServicingResourceAllocationResponse:
+      description: ProvideCustomerServicingResourceAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProvideCustomerServicingResourceAllocationResponse'
+    CustomerServicingResourceAllocation:
+      description: CustomerServicingResourceAllocation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerServicingResourceAllocation'
+    CaptureCustomerServicingResourceAllocationResponse:
+      description: CaptureCustomerServicingResourceAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureCustomerServicingResourceAllocationResponse'
+    RetrieveCustomerServicingResourceAllocationResponse:
+      description: RetrieveCustomerServicingResourceAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveCustomerServicingResourceAllocationResponse'
+    Allocation:
+      description: Allocation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Allocation'
+    CaptureAllocationResponse:
+      description: CaptureAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureAllocationResponse'
+    RetrieveAllocationResponse:
+      description: RetrieveAllocationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveAllocationResponse'
+  parameters:
+    contactroutingid:
+      name: contactroutingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    allocationid:
+      name: allocationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    ProvideCustomerServicingResourceAllocationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProvideCustomerServicingResourceAllocationRequest'
+      required: true
+    CustomerServicingResourceAllocation:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerServicingResourceAllocation'
+      required: true
+    CaptureCustomerServicingResourceAllocationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureCustomerServicingResourceAllocationRequest'
+      required: true
+    Allocation:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Allocation'
+      required: true
+    CaptureAllocationRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureAllocationRequest'
+      required: true

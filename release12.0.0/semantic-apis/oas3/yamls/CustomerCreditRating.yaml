@@ -1,0 +1,963 @@
+openapi: 3.0.1
+info:
+  title: Customer Credit Rating
+  description: This service domain maintains and administers the bank's credit assessment for customers based on consolidated internal data and optionally by referencing external credit agency reports
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/CustomerCreditRating/12.0.0
+paths:
+  /CustomerCreditRating/Initiate:
+    post:
+      tags:
+        - CR - CustomerCreditRatingState
+      summary: InCR Initiate credit state monitoring for a customer
+      description: InCR Initiate credit state monitoring for a customer
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateCustomerCreditRatingStateRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateCustomerCreditRatingStateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/Execute':
+    put:
+      tags:
+        - CR - CustomerCreditRatingState
+      summary: ExCR Execute an automated task for credit state (e.g. auto refresh)
+      description: ExCR Execute an automated task for credit state (e.g. auto refresh)
+      operationId: Execute
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteCustomerCreditRatingStateRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ExecuteCustomerCreditRatingStateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/Request':
+    put:
+      tags:
+        - CR - CustomerCreditRatingState
+      summary: RqCR Request manual intervention for credit state (e.g. revise underlying assessment)
+      description: RqCR Request manual intervention for credit state (e.g. revise underlying assessment)
+      operationId: Request
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestCustomerCreditRatingStateRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/RequestCustomerCreditRatingStateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/Retrieve':
+    get:
+      tags:
+        - CR - CustomerCreditRatingState
+      summary: ReCR Retrieve details about credit state monitoring for a customer
+      description: ReCR Retrieve details about credit state monitoring for a customer
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveCustomerCreditRatingStateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/Alerts/{alertsid}/Capture':
+    put:
+      tags:
+        - BQ - Alerts
+      summary: CaBQ Capture notification of a credit alert
+      description: CaBQ Capture notification of a credit alert
+      operationId: CaptureAlerts
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+        - $ref: '#/components/parameters/alertsid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureAlertsRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureAlertsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/Alerts/{alertsid}/Retrieve':
+    get:
+      tags:
+        - BQ - Alerts
+      summary: ReBQ Retrieve details about a credit alert
+      description: ReBQ Retrieve details about a credit alert
+      operationId: RetrieveAlerts
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+        - $ref: '#/components/parameters/alertsid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveAlertsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/InternalReporting/{internalreportingid}/Capture':
+    put:
+      tags:
+        - BQ - InternalReporting
+      summary: CaBQ Capture internal product reports to support credit analysis
+      description: CaBQ Capture internal product reports to support credit analysis
+      operationId: CaptureInternalReporting
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+        - $ref: '#/components/parameters/internalreportingid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureInternalReportingRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureInternalReportingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/InternalReporting/{internalreportingid}/Retrieve':
+    get:
+      tags:
+        - BQ - InternalReporting
+      summary: ReBQ Retrieve details about internal reporting to the credit monitoring activity
+      description: ReBQ Retrieve details about internal reporting to the credit monitoring activity
+      operationId: RetrieveInternalReporting
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+        - $ref: '#/components/parameters/internalreportingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveInternalReportingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/ExternalReporting/{externalreportingid}/Capture':
+    put:
+      tags:
+        - BQ - ExternalReporting
+      summary: CaBQ Capture external credit reports to support credit analysis and state
+      description: CaBQ Capture external credit reports to support credit analysis and state
+      operationId: CaptureExternalReporting
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+        - $ref: '#/components/parameters/externalreportingid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureExternalReportingRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureExternalReportingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/CustomerCreditRating/{customercreditratingid}/ExternalReporting/{externalreportingid}/Retrieve':
+    get:
+      tags:
+        - BQ - ExternalReporting
+      summary: ReBQ Retrieve details about external reporting to the credit monitoring activity
+      description: ReBQ Retrieve details about external reporting to the credit monitoring activity
+      operationId: RetrieveExternalReporting
+      parameters:
+        - $ref: '#/components/parameters/customercreditratingid'
+        - $ref: '#/components/parameters/externalreportingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveExternalReportingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    InternalReporting:
+      type: object
+      properties:
+        ProductandServiceActivityReportReference:
+          type: string
+          description: Reference to the internal bank product and service activity report that is used for the credit assessment
+          format: object
+        ProductandServiceActivityReportSchedule:
+          type: string
+          description: The schedule for the upload of the data file/report
+          format: string
+        ProductandServiceActivityReport:
+          type: string
+          description: The report data file/report of customer production activity
+          format: string
+      description: "A collection of information feeds/measures that can be used to track the status of one or more items/entitites\n\nExamples: Composite position, Customer alert"
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: The date/time the value was last refreshed ISODate|ISODate (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022 BM ()
+    ExternalReporting:
+      type: object
+      properties:
+        RatingAgencyReportSchedule:
+          type: string
+          description: The schedule for the upload of the data file/report from the external agency (can be ad-hoc)
+          format: string
+        RatingAgencyCreditReportType:
+          type: string
+          description: 'Defines the type of credit assessment report provided  (e.g. reference check, credit score, long/short form credit report)'
+          format: string
+        Referencetotheratingagencycreditreport:
+          type: string
+          description: Reference to the report provided by the agency
+          format: string
+        RatingAgencyCreditReport:
+          type: string
+          description: The customer's credit report from the agency
+          format: string
+        RatingAgencyCreditReportDate:
+          $ref: '#/components/schemas/date'
+      description: "A collection of information feeds/measures that can be used to track the status of one or more items/entitites\n\nExamples: Composite position, Customer alert"
+    Alerts:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: string
+          description: The product/service instance that generated the alert
+          format: object
+        EmployeeBusinessUnitReference:
+          type: string
+          description: The individual source of the alert - if not automated by production
+          format: object
+        CustomerCreditAlertType:
+          type: string
+          description: 'The type of alert (e.g. missed payment, limit breach)'
+          format: string
+        CustomerCreditAlertDescription:
+          type: string
+          description: Details of the event behind the notification
+          format: string
+        Date:
+          type: string
+          description: The date and time of the notification
+          format: string
+      description: "A collection of information feeds/measures that can be used to track the status of one or more items/entitites\n\nExamples: Composite position, Customer alert"
+    CustomerCreditRatingState:
+      type: object
+      properties:
+        CustomerReference:
+          type: string
+          description: Reference to the associated customer (can currently be a person or a company)
+          format: object
+        CustomerCreditRatingStatusType:
+          type: string
+          description: 'The type of credit status being monitored (e.g. consumer, small business, corporate)'
+          format: string
+        CustomerCreditRatingSchedule:
+          type: string
+          description: 'The schedule for refreshing the credit state and supporting analysis, and update history as appropriate'
+          format: string
+        CustomerCreditRatingAssessmentRecord:
+          type: string
+          description: The record of the underlying credit assessment performed to support the credit rating state
+          format: string
+        AssessmentCustomerBehaviorModelReference:
+          type: string
+          description: Reference to the customer behavior model(s) used to develop any underlying analysis for determining the credit state
+          format: object
+        CreditRatingAssessmentType:
+          type: string
+          description: The type of analysis performed to support the credit state
+          format: string
+        CreditRatingAssessmentDate:
+          $ref: '#/components/schemas/date'
+        CreditRatingAssessmentWorkProducts:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the analysis'
+          format: string
+        CreditRatingAssessmentResult:
+          type: string
+          description: The resulting report from the credit rating assessment
+          format: string
+        CustomerCreditRatingRecord:
+          type: string
+          description: A record of the customers credit state
+          format: string
+        CustomerCreditRatingState:
+          type: string
+          description: Is the current credit rating or score (typically a ranking value e.g. 1-10)
+          format: string
+        CustomerCreditRatingAssessment:
+          type: string
+          description: Any underlying analysis records and results that support the credit rating
+          format: string
+        CustomerCreditRatingNarrative:
+          type: string
+          description: A structured report outlining basis for the credit rating
+          format: string
+        CustomerCreditRatingDate:
+          $ref: '#/components/schemas/date'
+      description: 'Monitor and define the status/rating of some entity within Customer Credit Rating. '
+    InitiateCustomerCreditRatingStateRequest:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerCreditRatingStatusType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingDate:
+              $ref: '#/components/schemas/date'
+      description: 'Input: InCR Initiate credit state monitoring for a customer'
+    InitiateCustomerCreditRatingStateResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerCreditRatingSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingNarrative:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingDate:
+              $ref: '#/components/schemas/date'
+      description: 'Output: InCR Initiate credit state monitoring for a customer'
+    ExecuteCustomerCreditRatingStateRequest:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            AssessmentCustomerBehaviorModelReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CreditRatingAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentDate:
+              $ref: '#/components/schemas/date'
+      description: 'Input: ExCR Execute an automated task for credit state (e.g. auto refresh)'
+    ExecuteCustomerCreditRatingStateResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentDate:
+              $ref: '#/components/schemas/date'
+            CreditRatingAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ExCR Execute an automated task for credit state (e.g. auto refresh)'
+    RequestCustomerCreditRatingStateRequest:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            AssessmentCustomerBehaviorModelReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CreditRatingAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentDate:
+              $ref: '#/components/schemas/date'
+      description: 'Input: RqCR Request manual intervention for credit state (e.g. revise underlying assessment)'
+    RequestCustomerCreditRatingStateResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentDate:
+              $ref: '#/components/schemas/date'
+            CreditRatingAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: RqCR Request manual intervention for credit state (e.g. revise underlying assessment)'
+    RetrieveCustomerCreditRatingStateResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerCreditRatingStatusType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingAssessmentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            AssessmentCustomerBehaviorModelReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CreditRatingAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentDate:
+              $ref: '#/components/schemas/date'
+            CreditRatingAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            CreditRatingAssessmentResult:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingNarrative:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditRatingDate:
+              $ref: '#/components/schemas/date'
+      description: 'Output: ReCR Retrieve details about credit state monitoring for a customer'
+    CaptureAlertsRequest:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+        Alerts:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerCreditAlertType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditAlertDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            Date:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaBQ Capture notification of a credit alert'
+    CaptureAlertsResponse:
+      type: object
+      properties:
+        Alerts:
+          type: object
+          properties:
+            Date:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaBQ Capture notification of a credit alert'
+    RetrieveAlertsResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+        Alerts:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerCreditAlertType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerCreditAlertDescription:
+              type: string
+              description: "\r\n"
+              format: string
+            Date:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about a credit alert'
+    CaptureInternalReportingRequest:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+        InternalReporting:
+          type: object
+          properties:
+            ProductandServiceActivityReportReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceActivityReportSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaBQ Capture internal product reports to support credit analysis'
+    CaptureInternalReportingResponse:
+      type: object
+      properties:
+        InternalReporting:
+          type: object
+          properties:
+            ProductandServiceActivityReportSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaBQ Capture internal product reports to support credit analysis'
+    RetrieveInternalReportingResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+        InternalReporting:
+          type: object
+          properties:
+            ProductandServiceActivityReportReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceActivityReportSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about internal reporting to the credit monitoring activity'
+    CaptureExternalReportingRequest:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+        ExternalReporting:
+          type: object
+          properties:
+            RatingAgencyReportSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            RatingAgencyCreditReportType:
+              type: string
+              description: "\r\n"
+              format: string
+            RatingAgencyCreditReportDate:
+              $ref: '#/components/schemas/date'
+      description: 'Input: CaBQ Capture external credit reports to support credit analysis and state'
+    CaptureExternalReportingResponse:
+      type: object
+      properties:
+        ExternalReporting:
+          type: object
+          properties:
+            RatingAgencyReportSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            Referencetotheratingagencycreditreport:
+              type: string
+              description: "\r\n"
+              format: string
+            RatingAgencyCreditReportDate:
+              $ref: '#/components/schemas/date'
+      description: 'Output: CaBQ Capture external credit reports to support credit analysis and state'
+    RetrieveExternalReportingResponse:
+      type: object
+      properties:
+        CustomerCreditRatingState:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+        ExternalReporting:
+          type: object
+          properties:
+            RatingAgencyReportSchedule:
+              type: string
+              description: "\r\n"
+              format: string
+            RatingAgencyCreditReportType:
+              type: string
+              description: "\r\n"
+              format: string
+            Referencetotheratingagencycreditreport:
+              type: string
+              description: "\r\n"
+              format: string
+            RatingAgencyCreditReportDate:
+              $ref: '#/components/schemas/date'
+      description: 'Output: ReBQ Retrieve details about external reporting to the credit monitoring activity'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InitiateCustomerCreditRatingStateResponse:
+      description: InitiateCustomerCreditRatingStateResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateCustomerCreditRatingStateResponse'
+    ExecuteCustomerCreditRatingStateResponse:
+      description: ExecuteCustomerCreditRatingStateResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteCustomerCreditRatingStateResponse'
+    RequestCustomerCreditRatingStateResponse:
+      description: RequestCustomerCreditRatingStateResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestCustomerCreditRatingStateResponse'
+    RetrieveCustomerCreditRatingStateResponse:
+      description: RetrieveCustomerCreditRatingStateResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveCustomerCreditRatingStateResponse'
+    CaptureAlertsResponse:
+      description: CaptureAlertsResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureAlertsResponse'
+    RetrieveAlertsResponse:
+      description: RetrieveAlertsResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveAlertsResponse'
+    CaptureInternalReportingResponse:
+      description: CaptureInternalReportingResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureInternalReportingResponse'
+    RetrieveInternalReportingResponse:
+      description: RetrieveInternalReportingResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveInternalReportingResponse'
+    CaptureExternalReportingResponse:
+      description: CaptureExternalReportingResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureExternalReportingResponse'
+    RetrieveExternalReportingResponse:
+      description: RetrieveExternalReportingResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveExternalReportingResponse'
+  parameters:
+    customercreditratingid:
+      name: customercreditratingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    alertsid:
+      name: alertsid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    internalreportingid:
+      name: internalreportingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    externalreportingid:
+      name: externalreportingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    InitiateCustomerCreditRatingStateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateCustomerCreditRatingStateRequest'
+      required: true
+    ExecuteCustomerCreditRatingStateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteCustomerCreditRatingStateRequest'
+      required: true
+    RequestCustomerCreditRatingStateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestCustomerCreditRatingStateRequest'
+      required: true
+    CaptureAlertsRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureAlertsRequest'
+      required: true
+    CaptureInternalReportingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureInternalReportingRequest'
+      required: true
+    CaptureExternalReportingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureExternalReportingRequest'
+      required: true

@@ -1,0 +1,798 @@
+openapi: 3.0.1
+info:
+  title: Channel Activity History
+  description: This service domains consolidates and captures customer channel usage activity to support channel activity analysis and also can be referenced for customer access authorization and routing decisions
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/ChannelActivityHistory/12.0.0
+paths:
+  /ChannelActivityHistory/Initiate:
+    post:
+      tags:
+        - CR - ChannelActivityLog
+      summary: InCR Initiate channel activity logging for a customer
+      description: InCR Initiate channel activity logging for a customer
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/ChannelActivityLog'
+      responses:
+        '200':
+          $ref: '#/components/responses/ChannelActivityLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{channelactivityhistoryid}/Update':
+    put:
+      tags:
+        - CR - ChannelActivityLog
+      summary: UpCR Update channel activity logging details for a customer
+      description: UpCR Update channel activity logging details for a customer
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/channelactivityhistoryid'
+      requestBody:
+        $ref: '#/components/requestBodies/ChannelActivityLog'
+      responses:
+        '200':
+          $ref: '#/components/responses/ChannelActivityLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{channelactivityhistoryid}/Retrieve':
+    get:
+      tags:
+        - CR - ChannelActivityLog
+      summary: ReCR Retrieve details about customer channel activity logging
+      description: ReCR Retrieve details about customer channel activity logging
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/channelactivityhistoryid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveChannelActivityLogResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{channelactivityhistoryid}/Event/{eventid}/Update':
+    put:
+      tags:
+        - BQ - Event
+      summary: UpBQ Update a logged event for a customer
+      description: UpBQ Update a logged event for a customer
+      operationId: UpdateEvent
+      parameters:
+        - $ref: '#/components/parameters/channelactivityhistoryid'
+        - $ref: '#/components/parameters/eventid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateEventRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateEventResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{channelactivityhistoryid}/Event/{eventid}/Capture':
+    put:
+      tags:
+        - BQ - Event
+      summary: CaBQ Capture a channel access event in the log
+      description: CaBQ Capture a channel access event in the log
+      operationId: CaptureEvent
+      parameters:
+        - $ref: '#/components/parameters/channelactivityhistoryid'
+        - $ref: '#/components/parameters/eventid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureEventRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureEventRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{channelactivityhistoryid}/Event/{eventid}/Retrieve':
+    get:
+      tags:
+        - BQ - Event
+      summary: ReBQ Retrieve details about a logged channel activity event
+      description: ReBQ Retrieve details about a logged channel activity event
+      operationId: RetrieveEvent
+      parameters:
+        - $ref: '#/components/parameters/channelactivityhistoryid'
+        - $ref: '#/components/parameters/eventid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveEventResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    Event:
+      type: object
+      properties:
+        EmployeeReference:
+          type: string
+          description: The servicing resource for assisted customer exchanges
+          format: object
+        ProductReference:
+          type: string
+          description: The type of product involved
+          format: object
+        ProductInstanceReference:
+          type: string
+          description: Reference to the specific product accessed by the proposed transaction
+          format: object
+        CustomerContactRecordReference:
+          type: string
+          description: Reference to the contact record for the active contact where the transaction is sourced
+          format: object
+        CustomerContactRecord:
+          type: string
+          description: The contact record consolidates all aspects of the contact that is cross-referenced by all  contact functions and called servicing sessions that make up the contact
+          format: string
+        CustomerContactRecordCustomerReference:
+          type: string
+          description: The customer reference as provided by the contacting party and verified by the authentication function
+          format: object
+        CustomerContactRecordContactDevice:
+          type: string
+          description: The contact device can be determined by the channel operations facilities (e.g. URL/ANI-phone number)
+          format: string
+        CustomerContactRecordAuthenticationStatus:
+          type: string
+          description: The contact authentication level is determined by the authentication function and can be updated during the contact
+          format: string
+        CustomerContactRecordRoutingSelectionStatus:
+          type: string
+          description: The routing selections made through the contact
+          format: string
+        CustomerContactRecordMenuSelection:
+          type: string
+          description: The requested service from a menu option can be indicated by the customer when initiating or during contact
+          format: string
+        CustomerContactRecordServicingRequest:
+          type: string
+          description: The customer may provide details of servicing resource request when initiating or during contact
+          format: string
+        CustomerContactRecordServicingEventHistory:
+          type: string
+          description: 'Contact Handler can reference recent servicing activity for routing, security and servicing purposes (obtained from Service Domain Channel Activity History)'
+          format: string
+        CustomerContactRecordServicingPositionReference:
+          type: string
+          description: 'Reference to the servicing position - can be where an inbound contact is routed, or the source of an outbound contact request'
+          format: object
+        CustomerContactRecordServicingResourceReference:
+          type: string
+          description: Reference to the servicing resource - can be to handle an inbound contact or the source of an outbound contact request
+          format: object
+        CustomerContactRecordActivityRecord:
+          type: string
+          description: 'Records the actions performed during contact, including all dialogue sessions'
+          format: string
+        CustomerSessionDialogueReference:
+          type: string
+          description: Reference to any contact session dialogue records created during the contact - there can be several
+          format: object
+        CustomerSessionDialogueRecord:
+          type: string
+          description: The session dialogue log of actions is returned to SD-Contact Handler and added to the contact record
+          format: string
+        CustomerContactRecordDuration:
+          type: string
+          description: Records the start and end date times for the contact
+          format: string
+        CustomerContactActivityRecord:
+          type: string
+          description: 'Description of all actions performed during the contact, including all sessions'
+          format: string
+        CustomerContactResult:
+          type: string
+          description: The interim result of the contact (subject to transaction approval)
+          format: string
+        ChannelActivityHistoryReportReference:
+          type: string
+          description: Reference to a channel activity report extracted for the customer
+          format: object
+        ChannelActivityHistoryReportFromto:
+          type: string
+          description: The period for the channel activity report
+          format: string
+        ChannelActivityHistoryReport:
+          type: string
+          description: The content of the report extracting recent channel activity records to support the transaction authorization decision
+          format: string
+        TransactionAuthorizationResult:
+          type: string
+          description: Indicates success or failure or required increased authentication level to be acquired for authorization
+          format: string
+      description: "A collection of the events/transactions recorded by the log\n\nExamples: Customer life event, Servicing event"
+    ChannelActivityLog:
+      type: object
+      properties:
+        CustomerReference:
+          type: string
+          description: Reference to the customer being logged
+          format: object
+        Date:
+          type: string
+          description: Key dates associated with the log (e.g. start time)
+          format: string
+      description: 'Maintain a log of transactions or activity, typically a financial account/journal or a log of activity to support behavioral analysis within Channel Activity History. '
+    RetrieveChannelActivityLogResponse:
+      type: object
+      properties:
+        ChannelActivityLog:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Date:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about customer channel activity logging'
+    UpdateEventRequest:
+      type: object
+      properties:
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordContactDevice:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordMenuSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingRequest:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingPositionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerSessionDialogueReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerSessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordDuration:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactResult:
+              type: string
+              description: "\r\n"
+              format: string
+            ChannelActivityHistoryReportReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ChannelActivityHistoryReportFromto:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionAuthorizationResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: UpBQ Update a logged event for a customer'
+    UpdateEventResponse:
+      type: object
+      properties:
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordContactDevice:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordMenuSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingRequest:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingPositionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerSessionDialogueReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerSessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordDuration:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactResult:
+              type: string
+              description: "\r\n"
+              format: string
+            ChannelActivityHistoryReportReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ChannelActivityHistoryReportFromto:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionAuthorizationResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: UpBQ Update a logged event for a customer'
+    CaptureEventRequest:
+      type: object
+      properties:
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordContactDevice:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordMenuSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingRequest:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingPositionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerSessionDialogueReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerSessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordDuration:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactResult:
+              type: string
+              description: "\r\n"
+              format: string
+            ChannelActivityHistoryReportReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ChannelActivityHistoryReportFromto:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionAuthorizationResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaBQ Capture a channel access event in the log'
+    RetrieveEventResponse:
+      type: object
+      properties:
+        ChannelActivityLog:
+          type: object
+          properties:
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Date:
+              type: string
+              description: "\r\n"
+              format: string
+        Event:
+          type: object
+          properties:
+            EmployeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordContactDevice:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordMenuSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingRequest:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingEventHistory:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordServicingPositionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordServicingResourceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerContactRecordActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerSessionDialogueReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerSessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactRecordDuration:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactActivityRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerContactResult:
+              type: string
+              description: "\r\n"
+              format: string
+            ChannelActivityHistoryReportReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ChannelActivityHistoryReportFromto:
+              type: string
+              description: "\r\n"
+              format: string
+            TransactionAuthorizationResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about a logged channel activity event'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    ChannelActivityLog:
+      description: ChannelActivityLog
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChannelActivityLog'
+    RetrieveChannelActivityLogResponse:
+      description: RetrieveChannelActivityLogResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveChannelActivityLogResponse'
+    UpdateEventResponse:
+      description: UpdateEventResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateEventResponse'
+    CaptureEventRequest:
+      description: CaptureEventRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureEventRequest'
+    RetrieveEventResponse:
+      description: RetrieveEventResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveEventResponse'
+  parameters:
+    channelactivityhistoryid:
+      name: channelactivityhistoryid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    eventid:
+      name: eventid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    ChannelActivityLog:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChannelActivityLog'
+      required: true
+    UpdateEventRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateEventRequest'
+      required: true
+    CaptureEventRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureEventRequest'
+      required: true
