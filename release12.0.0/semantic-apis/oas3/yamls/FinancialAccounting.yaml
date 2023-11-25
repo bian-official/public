@@ -1,0 +1,497 @@
+openapi: 3.0.1
+info:
+  title: Financial Accounting
+  description: 'The Financial Accounting Service Domain takes in financial facts and based on these, creates accounting instructions that will update the general ledger and sub ledger accounts'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/FinancialAccounting/12.0.0
+paths:
+  /FinancialAccounting/Initiate:
+    post:
+      tags:
+        - CR - FinancialBookingLog
+      summary: InCR Initiate a financial accounting log (account)
+      description: InCR Initiate a financial accounting log (account)
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateFinancialBookingLogRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateFinancialBookingLogResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{financialaccountingid}/Update':
+    put:
+      tags:
+        - CR - FinancialBookingLog
+      summary: UpCR Update details for an active financial account
+      description: UpCR Update details for an active financial account
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/financialaccountingid'
+      requestBody:
+        $ref: '#/components/requestBodies/FinancialBookingLog'
+      responses:
+        '200':
+          $ref: '#/components/responses/FinancialBookingLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{financialaccountingid}/Retrieve':
+    get:
+      tags:
+        - CR - FinancialBookingLog
+      summary: ReCR Retrieve information about the log
+      description: ReCR Retrieve information about the log
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/financialaccountingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveFinancialBookingLogResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{financialaccountingid}/LedgerPosting/{ledgerpostingid}/Update':
+    put:
+      tags:
+        - BQ - LedgerPosting
+      summary: UpBQ Update details of a posting (repair)
+      description: UpBQ Update details of a posting (repair)
+      operationId: UpdateLedgerPosting
+      parameters:
+        - $ref: '#/components/parameters/financialaccountingid'
+        - $ref: '#/components/parameters/ledgerpostingid'
+      requestBody:
+        $ref: '#/components/requestBodies/LedgerPosting'
+      responses:
+        '200':
+          $ref: '#/components/responses/LedgerPosting'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{financialaccountingid}/LedgerPosting/{ledgerpostingid}/Capture':
+    put:
+      tags:
+        - BQ - LedgerPosting
+      summary: CaBQ Post to the financial account
+      description: CaBQ Post to the financial account
+      operationId: CaptureLedgerPosting
+      parameters:
+        - $ref: '#/components/parameters/financialaccountingid'
+        - $ref: '#/components/parameters/ledgerpostingid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureLedgerPostingRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureLedgerPostingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{financialaccountingid}/LedgerPosting/{ledgerpostingid}/Retrieve':
+    get:
+      tags:
+        - BQ - LedgerPosting
+      summary: ReBQ Retrieve details of postings from the account
+      description: ReBQ Retrieve details of postings from the account
+      operationId: RetrieveLedgerPosting
+      parameters:
+        - $ref: '#/components/parameters/financialaccountingid'
+        - $ref: '#/components/parameters/ledgerpostingid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveLedgerPostingResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: "Data or set of data \n\n- A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)"
+          format: datatype
+      description: ''
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: The currency for the postings CurrencyCode|CurrencyCode (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022 BM ()
+    amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+      type: string
+      description: ">\r\n* `Principal` - \r\n* `Actual` - Actual amount.\r\n* `Estimated` - Estimated amount (the final amount could be above or below).\r\n* `Maximum` - Maximum amount (the final amount must be less or equal).\r\n* `Default` - Default amount.\r\n* `Replacement` - Replacement amount.\r\n* `Incremental` - Incremental amount for reservation.\r\n* `Decremental` - Decremental amount for reservation.\r\n* `Reserved` - Reserved or updated reserved amount for reservation.\r\n* `Available` - \r\n* `Used` - \r\n"
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/value'
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          type: string
+          description: "Decimal point position starts calulating from the right\n"
+          format: string
+        AmountType:
+          $ref: '#/components/schemas/amounttypevalues'
+      description: The posting amount as a credit-debit pair
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: The date and time of the posting
+    LedgerPosting:
+      type: object
+      properties:
+        PostingDirection:
+          type: string
+          description: 'Defines the posting location in the account ledger according to the chart of accounts (e.g. based on customer, transaction type)'
+          format: string
+        PostingAmount(creditdebitpair):
+          $ref: '#/components/schemas/amount'
+        PostingValueDate:
+          $ref: '#/components/schemas/date'
+        PostingResult:
+          type: string
+          description: Any confirmation notification
+          format: string
+      description: "A collection of the events/transactions recorded by the log\n\nExamples: Customer life event, Servicing event"
+    FinancialBookingLog:
+      type: object
+      properties:
+        FinancialAccountType:
+          type: string
+          description: 'The type of accounting facility (e.g. journal, sub-ledger)'
+          format: string
+        ProductandServiceReference:
+          type: string
+          description: Reference to the associated product or service for which this is the underlying accounting
+          format: object
+        BusinessUnitReference:
+          type: string
+          description: Reference to the owning business unit and associated business activity
+          format: object
+        ChartofAccountBookingRules:
+          type: string
+          description: Reference to applicable account booking rules
+          format: string
+        BaseCurrency:
+          $ref: '#/components/schemas/currencycode'
+        Status:
+          type: string
+          description: 'Status of the financial log (e.g. active, in-suspense)'
+          format: string
+      description: 'Maintain a log of transactions or activity, typically a financial account/journal or a log of activity to support behavioral analysis within Financial Accounting. '
+    InitiateFinancialBookingLogRequest:
+      type: object
+      properties:
+        FinancialBookingLog:
+          type: object
+          properties:
+            FinancialAccountType:
+              type: string
+              description: "\r\n"
+              format: string
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ChartofAccountBookingRules:
+              type: string
+              description: "\r\n"
+              format: string
+            BaseCurrency:
+              $ref: '#/components/schemas/currencycode'
+      description: 'Input: InCR Initiate a financial accounting log (account)'
+    InitiateFinancialBookingLogResponse:
+      type: object
+      properties:
+        FinancialBookingLog:
+          type: object
+          properties:
+            Status:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: InCR Initiate a financial accounting log (account)'
+    RetrieveFinancialBookingLogResponse:
+      type: object
+      properties:
+        FinancialBookingLog:
+          type: object
+          properties:
+            FinancialAccountType:
+              type: string
+              description: "\r\n"
+              format: string
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ChartofAccountBookingRules:
+              type: string
+              description: "\r\n"
+              format: string
+            BaseCurrency:
+              $ref: '#/components/schemas/currencycode'
+            Status:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve information about the log'
+    CaptureLedgerPostingRequest:
+      type: object
+      properties:
+        LedgerPosting:
+          type: object
+          properties:
+            PostingDirection:
+              type: string
+              description: "\r\n"
+              format: string
+            PostingAmount(creditdebitpair):
+              $ref: '#/components/schemas/amount'
+            PostingValueDate:
+              $ref: '#/components/schemas/date'
+      description: 'Input: CaBQ Post to the financial account'
+    CaptureLedgerPostingResponse:
+      type: object
+      properties:
+        LedgerPosting:
+          type: object
+          properties:
+            PostingResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaBQ Post to the financial account'
+    RetrieveLedgerPostingResponse:
+      type: object
+      properties:
+        LedgerPosting:
+          type: object
+          properties:
+            PostingDirection:
+              type: string
+              description: "\r\n"
+              format: string
+            PostingAmount(creditdebitpair):
+              $ref: '#/components/schemas/amount'
+            PostingValueDate:
+              $ref: '#/components/schemas/date'
+            PostingResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details of postings from the account'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InitiateFinancialBookingLogResponse:
+      description: InitiateFinancialBookingLogResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateFinancialBookingLogResponse'
+    FinancialBookingLog:
+      description: FinancialBookingLog
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FinancialBookingLog'
+    RetrieveFinancialBookingLogResponse:
+      description: RetrieveFinancialBookingLogResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveFinancialBookingLogResponse'
+    LedgerPosting:
+      description: LedgerPosting
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LedgerPosting'
+    CaptureLedgerPostingResponse:
+      description: CaptureLedgerPostingResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureLedgerPostingResponse'
+    RetrieveLedgerPostingResponse:
+      description: RetrieveLedgerPostingResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveLedgerPostingResponse'
+  parameters:
+    financialaccountingid:
+      name: financialaccountingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    ledgerpostingid:
+      name: ledgerpostingid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    InitiateFinancialBookingLogRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateFinancialBookingLogRequest'
+      required: true
+    FinancialBookingLog:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FinancialBookingLog'
+      required: true
+    LedgerPosting:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LedgerPosting'
+      required: true
+    CaptureLedgerPostingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureLedgerPostingRequest'
+      required: true

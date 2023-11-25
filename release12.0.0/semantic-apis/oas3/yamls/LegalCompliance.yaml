@@ -1,0 +1,579 @@
+openapi: 3.0.1
+info:
+  title: Legal Compliance
+  description: 'Provide specialist legal advice, assess for legal compliance and resolve legal cases as they occur'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/LegalCompliance/12.0.0
+paths:
+  /LegalCompliance/Evaluate:
+    post:
+      tags:
+        - CR - LegalComplianceAssessment
+      summary: EvCR Start a legal assessment action
+      description: EvCR Start a legal assessment action
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateLegalComplianceAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateLegalComplianceAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/LegalCompliance/{legalcomplianceid}/Update':
+    put:
+      tags:
+        - CR - LegalComplianceAssessment
+      summary: UpCR Update submitted details or content for an on-going legal assessment
+      description: UpCR Update submitted details or content for an on-going legal assessment
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/legalcomplianceid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLegalComplianceAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateLegalComplianceAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/LegalCompliance/{legalcomplianceid}/Request':
+    put:
+      tags:
+        - CR - LegalComplianceAssessment
+      summary: RqCR Request a review or adjudication for an assessment
+      description: RqCR Request a review or adjudication for an assessment
+      operationId: Request
+      parameters:
+        - $ref: '#/components/parameters/legalcomplianceid'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestLegalComplianceAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/RequestLegalComplianceAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/LegalCompliance/{legalcomplianceid}/Retrieve':
+    get:
+      tags:
+        - CR - LegalComplianceAssessment
+      summary: ReCR Retrieve details and content from a legal assessment action
+      description: ReCR Retrieve details and content from a legal assessment action
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/legalcomplianceid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveLegalComplianceAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    LegalComplianceAssessment:
+      type: object
+      properties:
+        LegalAssessmentType:
+          type: string
+          description: The type of law that is applied by the assessment action
+          format: string
+        BusinessUnitReference:
+          type: string
+          description: The business function or unit assessed if appropriate
+          format: object
+        ProductandServiceReference:
+          type: string
+          description: The associated product/service being assessed if appropriate
+          format: object
+        CustomerReference:
+          type: string
+          description: Reference to the customer assessed if appropriate
+          format: object
+        JurisdictionReference:
+          type: string
+          description: Indication of the legal jurisdiction that applies
+          format: object
+        LawReference:
+          type: string
+          description: Reference to the specific law
+          format: object
+        LawDefinition:
+          type: string
+          description: A definition of the required behavior to remain within the law
+          format: string
+        LawComplianceandReportingRequirements:
+          type: string
+          description: Description of the measurements and reporting required to demonstrate legal compliance
+          format: string
+        LawComplianceAccountability:
+          type: string
+          description: 'Explanation of the business context, responsibility and accountability for legal compliance'
+          format: string
+        LegalPenalties:
+          type: string
+          description: Outline of the possible implications of breaking the law
+          format: string
+        LegalGuideline:
+          type: string
+          description: Guidelines and requirements for following the law
+          format: string
+        DocumentReference:
+          type: string
+          description: Reference to any documentation classified/archived as appropriate
+          format: object
+        LegalAssessmentWorkProducts:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the legal assessment action'
+          format: string
+        LegalAssessmentResult:
+          type: string
+          description: 'Outcome/result of the legal assessment, this can include remedial actions'
+          format: string
+      description: 'To test or assess an entity, possibly against some formal qualification or certification requirement within Legal Compliance. '
+    EvaluateLegalComplianceAssessmentRequest:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            JurisdictionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: EvCR Start a legal assessment action'
+    EvaluateLegalComplianceAssessmentResponse:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            LawDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            LawComplianceandReportingRequirements:
+              type: string
+              description: "\r\n"
+              format: string
+            LawComplianceAccountability:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalPenalties:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalGuideline:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalAssessmentResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: EvCR Start a legal assessment action'
+    UpdateLegalComplianceAssessmentRequest:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            JurisdictionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: UpCR Update submitted details or content for an on-going legal assessment'
+    UpdateLegalComplianceAssessmentResponse:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            JurisdictionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: UpCR Update submitted details or content for an on-going legal assessment'
+    RequestLegalComplianceAssessmentRequest:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            JurisdictionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: RqCR Request a review or adjudication for an assessment'
+    RequestLegalComplianceAssessmentResponse:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            JurisdictionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalAssessmentResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: RqCR Request a review or adjudication for an assessment'
+    RetrieveLegalComplianceAssessmentResponse:
+      type: object
+      properties:
+        LegalComplianceAssessment:
+          type: object
+          properties:
+            LegalAssessmentType:
+              type: string
+              description: "\r\n"
+              format: string
+            BusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            ProductandServiceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            JurisdictionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LawDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            LawComplianceandReportingRequirements:
+              type: string
+              description: "\r\n"
+              format: string
+            LawComplianceAccountability:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalPenalties:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalGuideline:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            LegalAssessmentWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            LegalAssessmentResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details and content from a legal assessment action'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateLegalComplianceAssessmentResponse:
+      description: EvaluateLegalComplianceAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateLegalComplianceAssessmentResponse'
+    UpdateLegalComplianceAssessmentResponse:
+      description: UpdateLegalComplianceAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateLegalComplianceAssessmentResponse'
+    RequestLegalComplianceAssessmentResponse:
+      description: RequestLegalComplianceAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestLegalComplianceAssessmentResponse'
+    RetrieveLegalComplianceAssessmentResponse:
+      description: RetrieveLegalComplianceAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveLegalComplianceAssessmentResponse'
+  parameters:
+    legalcomplianceid:
+      name: legalcomplianceid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateLegalComplianceAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateLegalComplianceAssessmentRequest'
+      required: true
+    UpdateLegalComplianceAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateLegalComplianceAssessmentRequest'
+      required: true
+    RequestLegalComplianceAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestLegalComplianceAssessmentRequest'
+      required: true

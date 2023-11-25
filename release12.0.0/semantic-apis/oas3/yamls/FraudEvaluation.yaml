@@ -1,0 +1,455 @@
+openapi: 3.0.1
+info:
+  title: Fraud Evaluation
+  description: The service domain executes fraud behavioral pattern tests to detect possible fraudulent transactions/activity
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/FraudEvaluation/12.0.0
+paths:
+  /FraudEvaluation/Evaluate:
+    post:
+      tags:
+        - CR - FraudEvaluationAssessment
+      summary: EvCR Start a fraud evaluation for a production transaction set
+      description: EvCR Start a fraud evaluation for a production transaction set
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateFraudEvaluationAssessmentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateFraudEvaluationAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FraudEvaluation/{fraudevaluationid}/Retrieve':
+    get:
+      tags:
+        - CR - FraudEvaluationAssessment
+      summary: ReCr Retrieve details about a fraud evaluation assessment
+      description: ReCr Retrieve details about a fraud evaluation assessment
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/fraudevaluationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveFraudEvaluationAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FraudEvaluation/{fraudevaluationid}/RuleSetsandDecisionTrees/{rulesetsanddecisiontreesid}/Retrieve':
+    get:
+      tags:
+        - BQ - RuleSetsandDecisionTrees
+      summary: ReBQ Retrieve details about rule set or decision tree based tests applied
+      description: ReBQ Retrieve details about rule set or decision tree based tests applied
+      operationId: RetrieveRuleSetsandDecisionTrees
+      parameters:
+        - $ref: '#/components/parameters/fraudevaluationid'
+        - $ref: '#/components/parameters/rulesetsanddecisiontreesid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveRuleSetsandDecisionTreesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/FraudEvaluation/{fraudevaluationid}/Models/{modelsid}/Retrieve':
+    get:
+      tags:
+        - BQ - Models
+      summary: ReBQ Retrieve details about model based tests applied
+      description: ReBQ Retrieve details about model based tests applied
+      operationId: RetrieveModels
+      parameters:
+        - $ref: '#/components/parameters/fraudevaluationid'
+        - $ref: '#/components/parameters/modelsid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveModelsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    RuleSetsandDecisionTrees:
+      type: object
+      properties:
+        RuleSetsAndDecisionTreesTestResult:
+          type: string
+          description: 'The production transaction assessment test results, including reference to any potential fraud transactions - note this can be a real-time dataset'
+          format: string
+        RuleSetsAndDecisionTreesTestWorkProduct:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the assessment task'
+          format: string
+      description: "All kind of verifications \n\nExamples: Password verification"
+    Models:
+      type: object
+      properties:
+        ModelsTestResult:
+          type: string
+          description: 'The production transaction assessment test results, including reference to any potential fraud transactions - note this can be a real-time dataset'
+          format: string
+        ModelsTestWorkProduct:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the assessment task'
+          format: string
+      description: "All kind of verifications \n\nExamples: Password verification"
+    FraudEvaluationAssessment:
+      type: object
+      properties:
+        ProductProductionSessionReference:
+          type: string
+          description: Reference to the product fulfillment production session for which on-line fraud evaluation is performed
+          format: object
+        FraudEvaluationTestProfile:
+          type: string
+          description: Details the types of fraud evaluation tests applied
+          format: string
+        FraudEvaluationEnsembleTechniqueType:
+          type: string
+          description: The type of technique use to combine results of the different tests used to detect out of pattern behavior
+          format: string
+        FraudEvaluationEnsembleTechniqueDefinition:
+          type: string
+          description: The definition of how the constituent rule set/decision tree and model test are combined to compete the assessment
+          format: string
+        FraudEvaluationTransactionConsolidationRecord:
+          type: string
+          description: The production transaction details that are submitted for fraud evaluation - note this will typically be a real-time dataset
+          format: string
+        FraudEvaluationProductionAnomalyRecord:
+          type: string
+          description: Details of detected out of pattern production activity that could be fraud
+          format: string
+        FraudEvaluationProductionAnomalyProductionTransactionReference:
+          type: string
+          description: Reference to the one or more production transactions isolated by the fraud evaluation tests
+          format: object
+      description: 'To test or assess an entity, possibly against some formal qualification or certification requirement within Fraud Evaluation. '
+    EvaluateFraudEvaluationAssessmentRequest:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            FraudEvaluationTestProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationTransactionConsolidationRecord:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: EvCR Start a fraud evaluation for a production transaction set'
+    EvaluateFraudEvaluationAssessmentResponse:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            FraudEvaluationTestProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: string
+              description: "\r\n"
+              format: object
+      description: 'Output: EvCR Start a fraud evaluation for a production transaction set'
+    RetrieveFraudEvaluationAssessmentResponse:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            FraudEvaluationTestProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationTransactionConsolidationRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: string
+              description: "\r\n"
+              format: object
+      description: 'Output: ReCr Retrieve details about a fraud evaluation assessment'
+    RetrieveRuleSetsandDecisionTreesResponse:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            FraudEvaluationTestProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationTransactionConsolidationRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: string
+              description: "\r\n"
+              format: object
+        RuleSetsandDecisionTrees:
+          type: object
+          properties:
+            RuleSetsAndDecisionTreesTestResult:
+              type: string
+              description: "\r\n"
+              format: string
+            RuleSetsAndDecisionTreesTestWorkProduct:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about rule set or decision tree based tests applied'
+    RetrieveModelsResponse:
+      type: object
+      properties:
+        FraudEvaluationAssessment:
+          type: object
+          properties:
+            ProductProductionSessionReference:
+              type: string
+              description: "\r\n"
+              format: object
+            FraudEvaluationTestProfile:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueType:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationEnsembleTechniqueDefinition:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationTransactionConsolidationRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            FraudEvaluationProductionAnomalyProductionTransactionReference:
+              type: string
+              description: "\r\n"
+              format: object
+        Models:
+          type: object
+          properties:
+            ModelsTestResult:
+              type: string
+              description: "\r\n"
+              format: string
+            ModelsTestWorkProduct:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about model based tests applied'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateFraudEvaluationAssessmentResponse:
+      description: EvaluateFraudEvaluationAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateFraudEvaluationAssessmentResponse'
+    RetrieveFraudEvaluationAssessmentResponse:
+      description: RetrieveFraudEvaluationAssessmentResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveFraudEvaluationAssessmentResponse'
+    RetrieveRuleSetsandDecisionTreesResponse:
+      description: RetrieveRuleSetsandDecisionTreesResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveRuleSetsandDecisionTreesResponse'
+    RetrieveModelsResponse:
+      description: RetrieveModelsResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveModelsResponse'
+  parameters:
+    fraudevaluationid:
+      name: fraudevaluationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    rulesetsanddecisiontreesid:
+      name: rulesetsanddecisiontreesid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    modelsid:
+      name: modelsid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateFraudEvaluationAssessmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateFraudEvaluationAssessmentRequest'
+      required: true

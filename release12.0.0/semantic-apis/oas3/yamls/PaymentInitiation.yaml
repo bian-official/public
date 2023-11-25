@@ -1,0 +1,975 @@
+openapi: 3.0.1
+info:
+  title: Payment Initiation
+  description: This service domain provides a customer payment service. It captures the payer and payee details and other key properties of the payment and orchestrates the transaction. It provides support for repeating/scheduled payments
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/PaymentInitiation/12.0.0
+paths:
+  /PaymentInitiation/Initiate:
+    post:
+      tags:
+        - CR - PaymentInitiationTransaction
+      summary: InCR Initiate a payment transaction
+      description: InCR Initiate a payment transaction
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/InitiatePaymentInitiationTransactionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiatePaymentInitiationTransactionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/Update':
+    put:
+      tags:
+        - CR - PaymentInitiationTransaction
+      summary: UpCR Update details of a payment transaction instruction
+      description: UpCR Update details of a payment transaction instruction
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/paymentinitiationid'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaymentInitiationTransactionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdatePaymentInitiationTransactionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/Retrieve':
+    get:
+      tags:
+        - CR - PaymentInitiationTransaction
+      summary: ReCR Retrieve details about a payment transaction
+      description: ReCR Retrieve details about a payment transaction
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/paymentinitiationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrievePaymentInitiationTransactionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/Compliance/{complianceid}/Retrieve':
+    get:
+      tags:
+        - BQ - Compliance
+      summary: ReBQ Retrieve details about a payment transaction compliance check
+      description: ReBQ Retrieve details about a payment transaction compliance check
+      operationId: RetrieveCompliance
+      parameters:
+        - $ref: '#/components/parameters/paymentinitiationid'
+        - $ref: '#/components/parameters/complianceid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveComplianceResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/FundingCheck/{fundingcheckid}/Retrieve':
+    get:
+      tags:
+        - BQ - FundingCheck
+      summary: ReBQ Retrieve details about a payment transaction funds available
+      description: ReBQ Retrieve details about a payment transaction funds available
+      operationId: RetrieveFundingCheck
+      parameters:
+        - $ref: '#/components/parameters/paymentinitiationid'
+        - $ref: '#/components/parameters/fundingcheckid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveFundingCheckResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/OrderInitiation/{orderinitiationid}/Retrieve':
+    get:
+      tags:
+        - BQ - OrderInitiation
+      summary: ReBQ Retrieve details about the payment order initiation
+      description: ReBQ Retrieve details about the payment order initiation
+      operationId: RetrieveOrderInitiation
+      parameters:
+        - $ref: '#/components/parameters/paymentinitiationid'
+        - $ref: '#/components/parameters/orderinitiationid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveOrderInitiationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    OrderInitiation:
+      type: object
+      properties:
+        PaymentOrderProcedureInstanceReference:
+          type: string
+          description: The reference to the payment order processing task
+          format: object
+        PaymentOrderProcedureInstanceStatus:
+          type: string
+          description: The returned status of the payment order processing
+          format: string
+        OrderInitiationTaskResult:
+          type: string
+          description: Details of the payment order initiation task
+          format: string
+      description: The sub-tasks involved in the execution of the financial transaction
+    Compliance:
+      type: object
+      properties:
+        PaymentTransactionComplianceCheckType:
+          type: string
+          description: 'The type of compliance check performed (e.g. AML, Watchlists)'
+          format: string
+        PaymentTransactionComplianceCheckResult:
+          type: string
+          description: The outcome of the compliance check
+          format: string
+        PaymentTransactionComplianceTaskResult:
+          type: string
+          description: Details of the overall compliance checking process
+          format: string
+      description: The sub-tasks involved in the execution of the financial transaction
+    FundingCheck:
+      type: object
+      properties:
+        PaymentTransactionFundingCheckResult:
+          type: string
+          description: The outcome of the funds available check
+          format: string
+      description: The sub-tasks involved in the execution of the financial transaction
+    PaymentInitiationTransaction:
+      type: object
+      properties:
+        PaymentTransactionType:
+          type: string
+          description: 'The type of payment transaction (e.g. over the counter-OTC, intra-account, overseas)'
+          format: string
+        RecurringPaymentRecord:
+          type: string
+          description: Details of the recurring payment. Can be used to pre-populate the payment request
+          format: string
+        RecurringPaymentCustomerReference:
+          type: string
+          description: Reference for a customer that uses recurring payments facility
+          format: object
+        RecurringPaymentReference:
+          type: string
+          description: Reference used by the customer to identify a past payment transaction
+          format: object
+        CustomerReference:
+          type: string
+          description: Reference to the customer initiating the payment transaction
+          format: object
+        PaymentTransaction:
+          type: string
+          description: The details of the payment transaction
+          format: string
+        PayerReference:
+          type: string
+          description: Reference to the payer
+          format: object
+        PayerBankReference:
+          type: string
+          description: Reference to the payer's bank
+          format: object
+        PayerProductInstanceReference:
+          type: string
+          description: Reference to the payer's account (the source of funds)
+          format: object
+        PayeeReference:
+          type: string
+          description: The target for the payment
+          format: object
+        PayeeBankReference:
+          type: string
+          description: Reference to the payee's bank
+          format: object
+        PayeeProductInstanceReference:
+          type: string
+          description: Reference to the payee's account (the target for the funds)
+          format: object
+        Amount:
+          type: string
+          description: Key amounts included in the transaction
+          format: string
+        Currency:
+          type: string
+          description: Currency for the amounts
+          format: string
+        DateType:
+          type: string
+          description: 'Key dates associated with the transaction (e.g. order, booking, execution, value date, interest bearing)'
+          format: string
+        Date:
+          type: string
+          description: Value of the specific date
+          format: string
+        PaymentFeesCharges:
+          type: string
+          description: Processing and exchange fees as appropriate
+          format: string
+        PaymentMechanism:
+          type: string
+          description: 'Selection of the preferred mechanism (e.g. SWIFT, ACH, Intra account)'
+          format: string
+        PaymentPurpose:
+          type: string
+          description: Details captured for reference and compliance reporting purposes
+          format: string
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          description: Payer identification document for OTC payment transactions
+          format: object
+        DocumentContent:
+          type: string
+          description: The copy of the identification document used
+          format: string
+      description: 'Execute a well-bounded financial transaction/task, typically involving largely automated/structured fulfillment processing within Payment Initiation. '
+    InitiatePaymentInitiationTransactionRequest:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            RecurringPaymentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentMechanism:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentPurpose:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentContent:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: InCR Initiate a payment transaction'
+    InitiatePaymentInitiationTransactionResponse:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            RecurringPaymentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            RecurringPaymentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentFeesCharges:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+      description: 'Output: InCR Initiate a payment transaction'
+    UpdatePaymentInitiationTransactionRequest:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            RecurringPaymentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentFeesCharges:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentMechanism:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentPurpose:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentContent:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: UpCR Update details of a payment transaction instruction'
+    UpdatePaymentInitiationTransactionResponse:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            RecurringPaymentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentFeesCharges:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentMechanism:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentPurpose:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentContent:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: UpCR Update details of a payment transaction instruction'
+    RetrievePaymentInitiationTransactionResponse:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            RecurringPaymentCustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            RecurringPaymentReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentFeesCharges:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentMechanism:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentPurpose:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentContent:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about a payment transaction'
+    RetrieveComplianceResponse:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentPurpose:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentContent:
+              type: string
+              description: "\r\n"
+              format: string
+        Compliance:
+          type: object
+          properties:
+            PaymentTransactionComplianceCheckType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentTransactionComplianceCheckResult:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentTransactionComplianceTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about a payment transaction compliance check'
+    RetrieveFundingCheckResponse:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentFeesCharges:
+              type: string
+              description: "\r\n"
+              format: string
+        FundingCheck:
+          type: object
+          properties:
+            PaymentTransactionFundingCheckResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about a payment transaction funds available'
+    RetrieveOrderInitiationResponse:
+      type: object
+      properties:
+        PaymentInitiationTransaction:
+          type: object
+          properties:
+            PaymentTransactionType:
+              type: string
+              description: "\r\n"
+              format: string
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayerProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            DateType:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentFeesCharges:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentMechanism:
+              type: string
+              description: "\r\n"
+              format: string
+            PaymentPurpose:
+              type: string
+              description: "\r\n"
+              format: string
+            DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DocumentContent:
+              type: string
+              description: "\r\n"
+              format: string
+        OrderInitiation:
+          type: object
+          properties:
+            PaymentOrderProcedureInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PaymentOrderProcedureInstanceStatus:
+              type: string
+              description: "\r\n"
+              format: string
+            OrderInitiationTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about the payment order initiation'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InitiatePaymentInitiationTransactionResponse:
+      description: InitiatePaymentInitiationTransactionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentInitiationTransactionResponse'
+    UpdatePaymentInitiationTransactionResponse:
+      description: UpdatePaymentInitiationTransactionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentInitiationTransactionResponse'
+    RetrievePaymentInitiationTransactionResponse:
+      description: RetrievePaymentInitiationTransactionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrievePaymentInitiationTransactionResponse'
+    RetrieveComplianceResponse:
+      description: RetrieveComplianceResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveComplianceResponse'
+    RetrieveFundingCheckResponse:
+      description: RetrieveFundingCheckResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveFundingCheckResponse'
+    RetrieveOrderInitiationResponse:
+      description: RetrieveOrderInitiationResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveOrderInitiationResponse'
+  parameters:
+    paymentinitiationid:
+      name: paymentinitiationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    complianceid:
+      name: complianceid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    fundingcheckid:
+      name: fundingcheckid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+    orderinitiationid:
+      name: orderinitiationid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    InitiatePaymentInitiationTransactionRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiatePaymentInitiationTransactionRequest'
+      required: true
+    UpdatePaymentInitiationTransactionRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatePaymentInitiationTransactionRequest'
+      required: true

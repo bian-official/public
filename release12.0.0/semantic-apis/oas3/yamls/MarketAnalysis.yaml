@@ -1,0 +1,539 @@
+openapi: 3.0.1
+info:
+  title: Market Analysis
+  description: This service domain analyzes internal and external market information sources as necessary to develop specific market insights. It may maintain a collection of predefined market analyses and may also offer specific ad-hoc analysis on request
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/MarketAnalysis/12.0.0
+paths:
+  /MarketAnalysis/Evaluate:
+    post:
+      tags:
+        - CR - GeneralMarketResearchAnalysis
+      summary: EvCR Initialize a market research analysis
+      description: EvCR Initialize a market research analysis
+      operationId: Evaluate
+      requestBody:
+        $ref: '#/components/requestBodies/EvaluateGeneralMarketResearchAnalysisRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EvaluateGeneralMarketResearchAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/Execute':
+    put:
+      tags:
+        - CR - GeneralMarketResearchAnalysis
+      summary: ExCR Obtain an automated refresh of market research analysis
+      description: ExCR Obtain an automated refresh of market research analysis
+      operationId: Execute
+      parameters:
+        - $ref: '#/components/parameters/marketanalysisid'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteGeneralMarketResearchAnalysisRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ExecuteGeneralMarketResearchAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/Request':
+    put:
+      tags:
+        - CR - GeneralMarketResearchAnalysis
+      summary: RqCR Request a manual refresh of market research analysis
+      description: RqCR Request a manual refresh of market research analysis
+      operationId: Request
+      parameters:
+        - $ref: '#/components/parameters/marketanalysisid'
+      requestBody:
+        $ref: '#/components/requestBodies/RequestGeneralMarketResearchAnalysisRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/RequestGeneralMarketResearchAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/Retrieve':
+    get:
+      tags:
+        - CR - GeneralMarketResearchAnalysis
+      summary: 'ReCR Retrieve details about market research analysis, including recent results'
+      description: 'ReCR Retrieve details about market research analysis, including recent results'
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/marketanalysisid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveGeneralMarketResearchAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    AnalysisAlgorithm:
+      type: object
+      properties:
+        AnalysisAlgorithmType:
+          type: string
+          description: Defines the type of algorithm (e.g. regression)
+          format: string
+        AnalysisAlgorithmSpecification:
+          type: string
+          description: 'The definition of the algorithm, in particular required inputs, the internal data, calculations and outputs'
+          format: string
+        AnalysisAlgorithmGuidance:
+          type: string
+          description: Guidance on usage of the algorithm
+          format: string
+        AnalysisAlgorithmReferencedMarketResearchRecord:
+          type: string
+          description: The externally sourced general market research and bank maintained research viewpoints used in the analysis
+          format: object
+        MarketResearchReportTypeReference:
+          type: string
+          description: Reference to a specific type of predefined market research report or database
+          format: string
+        MarketResearchReportTypeDefinition:
+          type: string
+          description: Describes the available market research report content (e.g. customer social network usage analysis)
+          format: string
+        MarketResearchReportVersionPeriod:
+          type: string
+          description: Defines the version and period covered by the research
+          format: string
+        MarketResearchReport:
+          type: string
+          description: Is the content of the report or database in any suitable form
+          format: string
+        GeneralMarketResearchDirectoryEntryInstanceReference:
+          type: string
+          description: Reference to an internally maintained market research viewpoint
+          format: object
+        AnalysisAlgorithmRequestRecord:
+          type: string
+          description: Request record of the analysis algorithm execution
+          format: string
+        AnalysisAlgorithmRequest:
+          type: string
+          description: The specific details of the request
+          format: string
+        AnalysisAlgorithmWorkProducts:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the analysis'
+          format: string
+        AnalysisAlgorithmRequestResult:
+          type: string
+          description: The output from executing the algorithm
+          format: string
+        AnalysisAlgorithmUsageRecord:
+          type: string
+          description: The record of the use of general market research analysis algorithm
+          format: string
+        AnalysisAlgorithmUsage:
+          type: string
+          description: A record of the usage of the algorithm
+          format: string
+        AnalysisAlgorithmImpact:
+          type: string
+          description: A record of reported impact/accuracy of the algorithm
+          format: string
+      description: "A collection of models/calculations/algoritms that can be applied to a subject or activity\n\nExamples: Average balance calculation, Propensity to buy"
+    GeneralMarketResearchAnalysis:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysisType:
+          type: string
+          description: The type of research view provided by the research (e.g. competitor analysis)
+          format: string
+        GeneralMarketResearchAnalysisSpecification:
+          type: string
+          description: The definition of the analysis
+          format: string
+        GeneralMarketResearchAnalysisGuidance:
+          type: string
+          description: Guidance on usage and interpretation of the analysis
+          format: string
+        GeneralMarketResearchAnalysisAlgorithmReference:
+          type: string
+          description: Reference to the algorithm used to generate the analysis
+          format: object
+        GeneralMarketResearchAnalysisRequestRecord:
+          type: string
+          description: Request record of the general market analysis
+          format: string
+        GeneralMarketResearchAnalysisRequest:
+          type: string
+          description: The specific details of the request
+          format: string
+        EmployeeBusinessUnitReference:
+          type: string
+          description: The employee/business unit requesting the analysis
+          format: object
+        MarketAnalysisRequestWorkProducts:
+          type: string
+          description: 'Work documentation, forms and schedules produced and referenced during the analysis'
+          format: string
+        GeneralMarketResearchAnalysisRequestResult:
+          type: string
+          description: The output from performing the analysis
+          format: string
+        GeneralMarketResearchAnalysisUsageRecord:
+          type: string
+          description: Usage record of the general market analysis
+          format: string
+        GeneralMarketResearchAnalysisUsage:
+          type: string
+          description: A record of the usage of the analysis
+          format: string
+        GeneralMarketResearchAnalysisImpact:
+          type: string
+          description: A record of reported impact/accuracy of the analysis
+          format: string
+      description: "Analyze the performance or behavior of some on-going activity or entity  within Market Analysis. \nExamples: Provide behavioral insights and analysis into customer behavior and analyze financial market activity in order to identify opportunities, define pricing and evaluate risks.\n\nAnalyze the performance or behavior of some on-going activity or entity. Examples: Provide behavioral insights and analysis into customer behavior and analyze financial market activity in order to identify opportunities, define pricing and evaluate risks."
+    EvaluateGeneralMarketResearchAnalysisRequest:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisType:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisAlgorithmReference:
+              type: string
+              description: "\r\n"
+              format: object
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: EvCR Initialize a market research analysis'
+    EvaluateGeneralMarketResearchAnalysisResponse:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisType:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisSpecification:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisGuidance:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisAlgorithmReference:
+              type: string
+              description: "\r\n"
+              format: object
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            MarketAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: EvCR Initialize a market research analysis'
+    ExecuteGeneralMarketResearchAnalysisRequest:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: ExCR Obtain an automated refresh of market research analysis'
+    ExecuteGeneralMarketResearchAnalysisResponse:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            MarketAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ExCR Obtain an automated refresh of market research analysis'
+    RequestGeneralMarketResearchAnalysisRequest:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: RqCR Request a manual refresh of market research analysis'
+    RequestGeneralMarketResearchAnalysisResponse:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            MarketAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: RqCR Request a manual refresh of market research analysis'
+    RetrieveGeneralMarketResearchAnalysisResponse:
+      type: object
+      properties:
+        GeneralMarketResearchAnalysis:
+          type: object
+          properties:
+            GeneralMarketResearchAnalysisType:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisSpecification:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisGuidance:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisAlgorithmReference:
+              type: string
+              description: "\r\n"
+              format: object
+            GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            MarketAnalysisRequestWorkProducts:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReCR Retrieve details about market research analysis, including recent results'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    EvaluateGeneralMarketResearchAnalysisResponse:
+      description: EvaluateGeneralMarketResearchAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateGeneralMarketResearchAnalysisResponse'
+    ExecuteGeneralMarketResearchAnalysisResponse:
+      description: ExecuteGeneralMarketResearchAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteGeneralMarketResearchAnalysisResponse'
+    RequestGeneralMarketResearchAnalysisResponse:
+      description: RequestGeneralMarketResearchAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestGeneralMarketResearchAnalysisResponse'
+    RetrieveGeneralMarketResearchAnalysisResponse:
+      description: RetrieveGeneralMarketResearchAnalysisResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveGeneralMarketResearchAnalysisResponse'
+  parameters:
+    marketanalysisid:
+      name: marketanalysisid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    EvaluateGeneralMarketResearchAnalysisRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EvaluateGeneralMarketResearchAnalysisRequest'
+      required: true
+    ExecuteGeneralMarketResearchAnalysisRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteGeneralMarketResearchAnalysisRequest'
+      required: true
+    RequestGeneralMarketResearchAnalysisRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestGeneralMarketResearchAnalysisRequest'
+      required: true

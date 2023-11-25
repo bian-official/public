@@ -1,0 +1,311 @@
+openapi: 3.0.1
+info:
+  title: Disbursement
+  description: This service domain handles the disbursement of funds to newly established loans/facilities as necessary
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/Disbursement/12.0.0
+paths:
+  /Disbursement/Initiate:
+    post:
+      tags:
+        - CR - DisbursementTransaction
+      summary: InCR Initiate a disbursement
+      description: InCR Initiate a disbursement
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        '200':
+          $ref: '#/components/responses/DisbursementTransaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Disbursement/{disbursementid}/Update':
+    put:
+      tags:
+        - CR - DisbursementTransaction
+      summary: UpCR Update details of a disbursement
+      description: UpCR Update details of a disbursement
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/disbursementid'
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        '200':
+          $ref: '#/components/responses/DisbursementTransaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Disbursement/{disbursementid}/Execute':
+    put:
+      tags:
+        - CR - DisbursementTransaction
+      summary: ExCR Execute an automated task against an active disbursement
+      description: ExCR Execute an automated task against an active disbursement
+      operationId: Execute
+      parameters:
+        - $ref: '#/components/parameters/disbursementid'
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        '200':
+          $ref: '#/components/responses/DisbursementTransaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Disbursement/{disbursementid}/Request':
+    put:
+      tags:
+        - CR - DisbursementTransaction
+      summary: RqCR Request manual intervention with a disbursement transaction
+      description: RqCR Request manual intervention with a disbursement transaction
+      operationId: Request
+      parameters:
+        - $ref: '#/components/parameters/disbursementid'
+      requestBody:
+        $ref: '#/components/requestBodies/DisbursementTransaction'
+      responses:
+        '200':
+          $ref: '#/components/responses/DisbursementTransaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/Disbursement/{disbursementid}/Retrieve':
+    get:
+      tags:
+        - CR - DisbursementTransaction
+      summary: ReCR Retrieve details about a disbursement transaction
+      description: ReCR Retrieve details about a disbursement transaction
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/disbursementid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveDisbursementTransactionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    date:
+      type: object
+      properties:
+        DateContent:
+          type: string
+          description: ''
+          format: string
+      description: The value date for the disbursement payment ISODate|ISODate (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022 BM ()
+    DisbursementTransaction:
+      type: object
+      properties:
+        ProductInstanceReference:
+          type: string
+          description: Reference to the loan account for which the disbursement is made
+          format: object
+        AuthorizingEmployeeReference:
+          type: string
+          description: Reference to the authorizing employee
+          format: object
+        CustomerReference:
+          type: string
+          description: 'Reference to the customer owning the loan, used to obtain payment arrangements'
+          format: object
+        FundingAccountReference:
+          type: string
+          description: Reference to the internal funding account for the disbursement
+          format: object
+        PayeeReference:
+          type: string
+          description: Reference to the target for the disbursement
+          format: object
+        PayeeProductInstanceReference:
+          type: string
+          description: Reference to the account to where the disbursement payment is made
+          format: object
+        PayeeBankReference:
+          type: string
+          description: Reference to the payee account bank
+          format: object
+        Amount:
+          type: string
+          description: The amount of the disbursement
+          format: string
+        Currency:
+          type: string
+          description: The currency for the payment
+          format: string
+        ValueDate:
+          $ref: '#/components/schemas/date'
+      description: 'Execute a well-bounded financial transaction/task, typically involving largely automated/structured fulfillment processing within Disbursement. '
+    RetrieveDisbursementTransactionResponse:
+      type: object
+      properties:
+        DisbursementTransaction:
+          type: object
+          properties:
+            ProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            AuthorizingEmployeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            CustomerReference:
+              type: string
+              description: "\r\n"
+              format: object
+            FundingAccountReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeProductInstanceReference:
+              type: string
+              description: "\r\n"
+              format: object
+            PayeeBankReference:
+              type: string
+              description: "\r\n"
+              format: object
+            Amount:
+              type: string
+              description: "\r\n"
+              format: string
+            Currency:
+              type: string
+              description: "\r\n"
+              format: string
+            ValueDate:
+              $ref: '#/components/schemas/date'
+      description: 'Output: ReCR Retrieve details about a disbursement transaction'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    DisbursementTransaction:
+      description: DisbursementTransaction
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DisbursementTransaction'
+    RetrieveDisbursementTransactionResponse:
+      description: RetrieveDisbursementTransactionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveDisbursementTransactionResponse'
+  parameters:
+    disbursementid:
+      name: disbursementid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    DisbursementTransaction:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DisbursementTransaction'
+      required: true

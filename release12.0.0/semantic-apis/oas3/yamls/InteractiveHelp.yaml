@@ -1,0 +1,507 @@
+openapi: 3.0.1
+info:
+  title: Interactive Help
+  description: Operate the automated facility that provides interactive context sensitive servicing guidance to employees and self-serve customers
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 12.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/InteractiveHelp/12.0.0
+paths:
+  '/InteractiveHelp/{interactivehelpid}/HelpServiceSelection/Initiate':
+    post:
+      tags:
+        - BQ - HelpServiceSelection
+      summary: InBQ Initiate an interactive help service exchange
+      description: InBQ Initiate an interactive help service exchange
+      operationId: InitiateHelpServiceSelection
+      parameters:
+        - $ref: '#/components/parameters/interactivehelpid'
+      requestBody:
+        $ref: '#/components/requestBodies/InitiateHelpServiceSelectionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/InitiateHelpServiceSelectionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/InteractiveHelp/{interactivehelpid}/HelpServiceSelection/{helpserviceselectionid}/Capture':
+    put:
+      tags:
+        - BQ - HelpServiceSelection
+      summary: CaBQ Capture user feedback relating to the service exchange
+      description: CaBQ Capture user feedback relating to the service exchange
+      operationId: CaptureHelpServiceSelection
+      parameters:
+        - $ref: '#/components/parameters/interactivehelpid'
+        - $ref: '#/components/parameters/helpserviceselectionid'
+      requestBody:
+        $ref: '#/components/requestBodies/CaptureHelpServiceSelectionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CaptureHelpServiceSelectionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/InteractiveHelp/{interactivehelpid}/HelpServiceSelection/{helpserviceselectionid}/Execute':
+    put:
+      tags:
+        - BQ - HelpServiceSelection
+      summary: ExBQ Execute an automated action within the exchange
+      description: ExBQ Execute an automated action within the exchange
+      operationId: ExecuteHelpServiceSelection
+      parameters:
+        - $ref: '#/components/parameters/interactivehelpid'
+        - $ref: '#/components/parameters/helpserviceselectionid'
+      requestBody:
+        $ref: '#/components/requestBodies/ExecuteHelpServiceSelectionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ExecuteHelpServiceSelectionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/InteractiveHelp/{interactivehelpid}/HelpServiceSelection/{helpserviceselectionid}/Retrieve':
+    get:
+      tags:
+        - BQ - HelpServiceSelection
+      summary: ReBQ Retrieve details about an interactive help service exchange
+      description: ReBQ Retrieve details about an interactive help service exchange
+      operationId: RetrieveHelpServiceSelection
+      parameters:
+        - $ref: '#/components/parameters/interactivehelpid'
+        - $ref: '#/components/parameters/helpserviceselectionid'
+      responses:
+        '200':
+          $ref: '#/components/responses/RetrieveHelpServiceSelectionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    HelpServiceSelection:
+      type: object
+      properties:
+        HelpSelectionInteractionType:
+          type: string
+          description: 'The type of session provides context for filtering content (e.g. employee, self-service customer)'
+          format: string
+        HelpSelectionProductandServiceType:
+          type: string
+          description: The type of product or service that is in context for the help request
+          format: string
+        HelpSelectionProductFeatureType:
+          type: string
+          description: The specific product feature being accessed at the time of the help request
+          format: string
+        SessionDialogueRecord:
+          type: string
+          description: The session dialogue log of actions during the contact to this point can be mined for key words that might improve the help selection
+          format: string
+        HelpSelectionKeyWordMenu:
+          type: string
+          description: An interactive exchange can be supported where the service presents a menu of selection options or key words to narrow the search
+          format: string
+        HelpSelectionKeyWordSelection:
+          type: string
+          description: The selected keyword or menu option
+          format: string
+        InteractiveHelp:
+          type: string
+          description: The returned interactive help in any suitable form
+          format: string
+        HelpSelectionTaskResult:
+          type: string
+          description: 'The user provided result of the interactive help service, including interaction statistics such as exchange frequency and duration'
+          format: string
+        HelpSelectionFeedback:
+          type: string
+          description: User provided commentary on the service provided
+          format: string
+        EmployeeBusinessUnitReference:
+          type: string
+          description: 'Reference to the employee, business unit providing service feedback'
+          format: object
+        DateTime:
+          type: string
+          description: 'The date, time (and duration) of the service usage'
+          format: string
+      description: "The collection of operational serivces/functions offered by the operational facility\n\nExamples: messages, capture, routines"
+    interactiveHelpServiceOperatingSession:
+      type: object
+      description: 'Operate equipment and/or a largely automated facility within Interactive Help. '
+    InitiateHelpServiceSelectionRequest:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            HelpSelectionInteractionType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductFeatureType:
+              type: string
+              description: "\r\n"
+              format: string
+            SessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordMenu:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionFeedback:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: InBQ Initiate an interactive help service exchange'
+    InitiateHelpServiceSelectionResponse:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            HelpSelectionInteractionType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductFeatureType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordMenu:
+              type: string
+              description: "\r\n"
+              format: string
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: InBQ Initiate an interactive help service exchange'
+    CaptureHelpServiceSelectionRequest:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            HelpSelectionTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionFeedback:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: CaBQ Capture user feedback relating to the service exchange'
+    CaptureHelpServiceSelectionResponse:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: CaBQ Capture user feedback relating to the service exchange'
+    ExecuteHelpServiceSelectionRequest:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            HelpSelectionInteractionType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductFeatureType:
+              type: string
+              description: "\r\n"
+              format: string
+            SessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordMenu:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionFeedback:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Input: ExBQ Execute an automated action within the exchange'
+    ExecuteHelpServiceSelectionResponse:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            HelpSelectionInteractionType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductFeatureType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordMenu:
+              type: string
+              description: "\r\n"
+              format: string
+            InteractiveHelp:
+              type: string
+              description: "\r\n"
+              format: string
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ExBQ Execute an automated action within the exchange'
+    RetrieveHelpServiceSelectionResponse:
+      type: object
+      properties:
+        HelpServiceSelection:
+          type: object
+          properties:
+            HelpSelectionInteractionType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductandServiceType:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionProductFeatureType:
+              type: string
+              description: "\r\n"
+              format: string
+            SessionDialogueRecord:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordMenu:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionKeyWordSelection:
+              type: string
+              description: "\r\n"
+              format: string
+            InteractiveHelp:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionTaskResult:
+              type: string
+              description: "\r\n"
+              format: string
+            HelpSelectionFeedback:
+              type: string
+              description: "\r\n"
+              format: string
+            EmployeeBusinessUnitReference:
+              type: string
+              description: "\r\n"
+              format: object
+            DateTime:
+              type: string
+              description: "\r\n"
+              format: string
+      description: 'Output: ReBQ Retrieve details about an interactive help service exchange'
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InitiateHelpServiceSelectionResponse:
+      description: InitiateHelpServiceSelectionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateHelpServiceSelectionResponse'
+    CaptureHelpServiceSelectionResponse:
+      description: CaptureHelpServiceSelectionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureHelpServiceSelectionResponse'
+    ExecuteHelpServiceSelectionResponse:
+      description: ExecuteHelpServiceSelectionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteHelpServiceSelectionResponse'
+    RetrieveHelpServiceSelectionResponse:
+      description: RetrieveHelpServiceSelectionResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RetrieveHelpServiceSelectionResponse'
+  parameters:
+    helpserviceselectionid:
+      name: helpserviceselectionid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    InitiateHelpServiceSelectionRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InitiateHelpServiceSelectionRequest'
+      required: true
+    CaptureHelpServiceSelectionRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureHelpServiceSelectionRequest'
+      required: true
+    ExecuteHelpServiceSelectionRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExecuteHelpServiceSelectionRequest'
+      required: true
