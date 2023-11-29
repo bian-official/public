@@ -1,0 +1,1790 @@
+openapi: 3.0.1
+info:
+  title: Underwriting
+  description: >-
+    BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context
+    Underwriting (expanded with ISO200022)
+  version: 12.0.1
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/Underwriting/12.0.1
+paths:
+  '/UnderwritingAssessment/Evaluate':
+      post:
+        tags:
+          - CR (DDD Aggregate)  - UnderwritingAssessment'
+        summary: (DDD Service) EvCR Evaluate an underwriting decision
+        description: (DDD Service) EvCR Evaluate an underwriting decision
+        operationId: UnderwritingAssessment/Evaluate
+        requestBody:
+          $ref: '#/components/requestBodies/EvaluateUnderwritingAssessmentRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/EvaluateUnderwritingAssessmentResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/UnderwritingAssessment/{underwritingassessmentid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate)  - UnderwritingAssessment'
+        summary: (DDD Service) UpCR Update details for an underwriting assessment
+        description: (DDD Service) UpCR Update details for an underwriting assessment
+        operationId: UnderwritingAssessment/Update
+        parameters:
+          - $ref: '#/components/parameters/underwritingassessmentid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateUnderwritingAssessmentRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdateUnderwritingAssessmentResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/UnderwritingAssessment/{underwritingassessmentid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - UnderwritingAssessment'
+        summary: (DDD Service) ReCR Retrieve details about an underwriting assessment
+        description: (DDD Service) ReCR Retrieve details about an underwriting assessment
+        operationId: UnderwritingAssessment/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/underwritingassessmentid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveUnderwritingAssessmentResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    EvaluateUnderwritingAssessmentRequest:
+        type: object
+        properties:
+          UnderwritingGuidelines:
+              $ref: '#/components/schemas/GovernanceRules'
+              description: >-
+                GovernanceRules|GovernanceRules
+                (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+                BM ()
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: '|||'
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: '|||'
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: '|||'
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: '|||'
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: '|||'
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+    Transaction:
+        type: object
+        description: "(DDD Entity) - \r\n"
+        properties:
+          TransactionIdentification:
+              $ref: '#/components/schemas/Identifier'
+              description: ''
+          TransactionDate:
+              $ref: '#/components/schemas/Transactiondate'
+              description: ''
+          TransactionType:
+              enum:
+                  -  FinancialTransaction
+                  -  BusinessTransaction
+                  -  BankingTransaction
+                  -  AccountingTransaction
+                  -  BookingTransaction
+                  -  AllocationTransaction
+                  -  DeliveryTransaction
+                  -  ProductionTransaction
+              type: string
+              description: ">\r\n* `FinancialTransaction` \r\n* `BusinessTransaction` \r\n* `BankingTransaction` \r\n* `AccountingTransaction` \r\n* `BookingTransaction` \r\n* `AllocationTransaction` \r\n* `DeliveryTransaction` \r\n* `ProductionTransaction` \r\n* "
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              description: ''
+          TransactionStatus:
+              $ref: '#/components/schemas/Transactionlifecyclestatus'
+              description: ''
+          TransactionName:
+              $ref: '#/components/schemas/Name'
+              description: ''
+    Identifier:
+        type: object
+        description: >-
+          (DDD Entity) - An identifier that allows to uniquely refer to an instance of a
+          transaction.
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+              description: ''
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+              description: ''
+          Identifier:
+              type: string
+              description: ''
+              format: DataType
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+    Value:
+        type: object
+        properties:
+          Value:
+              type: string
+              description: ''
+              format: DataType
+    Involvedparty:
+        type: object
+        description: (DDD Entity) - Entity that assigns and manages the identification.
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+              description: ''
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+              description: ''
+    Name:
+        type: object
+        description: >
+          (DDD Entity) - Name by which a party is known and which is usually used to
+          identify that party. (ISO20022)
+        properties:
+          Name:
+              type: string
+              description: ''
+              format: DataType
+    Datetime:
+        type: object
+        description: (DDD Entity) - Date and time at which the range starts. (ISO20022)
+        properties:
+          DateTimeContent:
+              type: string
+              description: ''
+              format: String
+          TimeZoneCode:
+              type: string
+              description: ''
+              format: String
+          DaylightSavingIndicator:
+              type: string
+              description: ''
+              format: String
+          Datetime:
+              type: string
+              description: ''
+              format: DataType
+    Partyidentification:
+        type: object
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              type: string
+              description: ">\r\n* `Taxidentificationnumber` \r\n* `Nationalregistrationnumber` \r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` \r\n* `Passportnumber` \r\n* `Corporateidentification` \r\n* `Driverlicensenumber` \r\n* `Socialsecuritynumber` \r\n* `Identitycardnumber` \r\n* `Concat` \r\n* "
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+              description: ''
+          Partyidentification:
+              type: string
+              description: ''
+              format: DataType
+    Partyrole:
+        type: object
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+              description: ''
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+              description: ''
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              description: ''
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              type: string
+              description: ">\r\n* `Agreementinvolvement` \r\n* `Partyinvolvement` \r\n* `Arrangementinvolvement` \r\n* `Relationshipinvolvement` \r\n* `Locationinvolvement` \r\n* `Bankguaranteeinvolvement` \r\n* "
+    Text:
+        type: object
+        description: (DDD Entity) - A detailed explanation or commentary of transaction.
+        properties:
+          Text:
+              type: string
+              description: ''
+              format: DataType
+    Datetimeperiod:
+        type: object
+        description: (DDD Entity) - Period of time during which the status is valid.
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+          Datetimeperiod:
+              type: string
+              description: ''
+              format: DataType
+    Transactiondate:
+        type: object
+        description: >-
+          (DDD Entity) - The Date that the transaction has occurred or is planned to occur.
+
+          A characteristic of transaction which refers to the LifecycleDate of
+          transaction (e.g., initiated date, executed date, fulfillment date). 
+        properties:
+          TransactionDate:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+          TransactionDateType:
+              enum:
+                  -  TransactionExecutedDate
+                  -  TransactionFulfillmentDate
+                  -  TransactionInitiatedDate
+                  -  TransactionCancelledDate
+                  -  TransactionApprovedDate
+              type: string
+              description: ">\r\n* `TransactionExecutedDate` \r\n* `TransactionFulfillmentDate` \r\n* `TransactionInitiatedDate` \r\n* `TransactionCancelledDate` \r\n* `TransactionApprovedDate` \r\n* "
+    Transactionlifecyclestatus:
+        type: object
+        description: >-
+          (DDD Entity) - A characteristic of transaction which refers to the
+          LifecycleStatus of transaction (e.g., initiated, executed, confirmed,
+          cancelled, etc.) 
+        properties:
+          TransactionLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+              description: ''
+          TransactionLifecycleStatusType:
+              enum:
+                  -  Initiated
+                  -  Executed
+                  -  Cancelled
+                  -  Confirmed
+                  -  Suspended
+                  -  Pending
+                  -  Completed
+                  -  Notified
+                  -  Booked
+                  -  Rejected
+              type: string
+              description: ">\r\n* `Initiated` \r\n* `Executed` \r\n* `Cancelled` \r\n* `Confirmed` \r\n* `Suspended` \r\n* `Pending` \r\n* `Completed` \r\n* `Notified` \r\n* `Booked` \r\n* `Rejected` \r\n* "
+    Status:
+        type: object
+        properties:
+          StatusReason:
+              $ref: '#/components/schemas/Text'
+              description: ''
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              description: ''
+          StatusInvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+              description: ''
+    ProductTermAndCondition:
+        type: object
+        description: "(DDD Entity) - \r\n"
+        properties:
+          ProductTermAndConditionType:
+              $ref: '#/components/schemas/Producttermandconditiontype'
+              description: ''
+    Producttermandconditiontype:
+        type: object
+        properties:
+          ProductTermAndConditionTypeValues:
+              enum: []
+              type: string
+              description: ">\r\n*"
+          ProductTermAndConditionTypeName:
+              type: string
+              description: ''
+              format: String
+          ProductTermAndConditionTypeDescription:
+              type: string
+              description: ''
+              format: String
+    CustomerStatement:
+        type: object
+        description: "(DDD Entity) - \r\n"
+        properties:
+          CustomerStatementType:
+              type: string
+              description: ''
+              format: String
+    CollateralAssetValuation:
+        type: object
+        description: "(DDD Entity) - \r\n"
+        properties:
+          CollateralAssetValuationStatus:
+              type: string
+              description: ''
+              format: String
+          CollateralAssetValuationDate:
+              type: string
+              description: ''
+              format: String
+          CollateralAssetValuationAmount:
+              type: string
+              description: ''
+              format: String
+          CollateralAssetValuationCurrency:
+              type: string
+              description: ''
+              format: String
+    EvaluateUnderwritingAssessmentResponse:
+        type: object
+        properties:
+          UnderwritingGuidelines:
+              $ref: '#/components/schemas/GovernanceRules'
+              description: >-
+                GovernanceRules|GovernanceRules
+                (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+                BM ()
+          RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCollateralCoverage:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerDocuments:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: '|||'
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/UnderwritingAssessment'
+              description: '|||'
+          UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+              description: '|||'
+    Requirement:
+        type: object
+        description: "\r\n"
+        properties:
+          RequirementType:
+              type: string
+              description: ''
+              format: String
+    UnderwritingAssessment:
+        type: object
+        description: "\r\n"
+        properties:
+          UnderwritingAssessmentIdentifier:
+              $ref: '#/components/schemas/Identifier'
+              description: ''
+    Workproduct:
+        type: object
+        description: "\r\n"
+        properties:
+          WorkProductType:
+              enum:
+                  -  Document
+                  -  WorkingPaper
+                  -  ActivityLog
+                  -  Form
+                  -  File
+                  -  MeetingSchedule
+                  -  MeetingMinute
+              type: string
+              description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` \r\n* `MeetingSchedule` \r\n* `MeetingMinute` \r\n* "
+          WorkProductIdentifoication:
+              type: string
+              description: ''
+              format: String
+    EvaluateUnderwritingAssessment:
+        type: object
+        properties:
+          UnderwritingGuidelines:
+              $ref: '#/components/schemas/GovernanceRules'
+              description: >-
+                GovernanceRules|GovernanceRules
+                (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+                BM ()
+          RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCollateralCoverage:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerDocuments:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: "||\r\n|"
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: "||\r\n|"
+          CustomerEmploymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: "||\r\n|"
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerCreditAssessment:
+              $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+              description: "||\r\n|"
+          CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: "||\r\n|"
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: "||\r\n|"
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/UnderwritingAssessment'
+              description: "||\r\n|"
+          UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+              description: "||\r\n|"
+    Report:
+        type: object
+        description: The customer's employment record
+        properties:
+          ReportType:
+              enum:
+                  -  FinancialReport
+                  -  BusinessReport
+                  -  ManagementReport
+                  -  Statement
+                  -  MaintenanceReport
+                  -  RegulatoryReport
+                  -  TaxReport
+              type: string
+              description: ">\r\n* `FinancialReport` \r\n* `BusinessReport` \r\n* `ManagementReport` \r\n* `Statement` \r\n* `MaintenanceReport` \r\n* `RegulatoryReport` \r\n* `TaxReport` \r\n* "
+          ReportValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              description: ''
+          ReportVersion:
+              type: string
+              description: ''
+              format: Number
+          ReportDateTime:
+              $ref: '#/components/schemas/Datetime'
+              description: ''
+          ReportFormat:
+              $ref: '#/components/schemas/Text'
+              description: ''
+          Report:
+              type: string
+              description: ''
+              format: Class
+    CustomerCreditRatingAssessment:
+        type: object
+        description: Reference to the bank's credit assessment of the customer
+        properties:
+          CreditRatingAssessmentType:
+              type: string
+              description: ''
+              format: ''
+    UpdateUnderwritingAssessmentRequest:
+        type: object
+        properties:
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: '|||'
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: '|||'
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: '|||'
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: '|||'
+          CustomerEmploymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: '|||'
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerCreditAssessment:
+              $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+              description: '|||'
+          CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: '|||'
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: '|||'
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+    UpdateUnderwritingAssessmentResponse:
+        type: object
+        properties:
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: '|||'
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: '|||'
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: '|||'
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: '|||'
+          CustomerEmploymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: '|||'
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerCreditAssessment:
+              $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+              description: '|||'
+          CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: '|||'
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: '|||'
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+    UpdateUnderwritingAssessment:
+        type: object
+        properties:
+          UnderwritingGuidelines:
+              $ref: '#/components/schemas/GovernanceRules'
+              description: >-
+                GovernanceRules|GovernanceRules
+                (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+                BM ()
+          RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCollateralCoverage:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerDocuments:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: "||\r\n|"
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: "||\r\n|"
+          CustomerEmploymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: "||\r\n|"
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerCreditAssessment:
+              $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+              description: "||\r\n|"
+          CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: "||\r\n|"
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: "||\r\n|"
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/UnderwritingAssessment'
+              description: "||\r\n|"
+          UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+              description: "||\r\n|"
+    RetrieveUnderwritingAssessmentResponse:
+        type: object
+        properties:
+          UnderwritingGuidelines:
+              $ref: '#/components/schemas/GovernanceRules'
+              description: >-
+                GovernanceRules|GovernanceRules
+                (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+                BM ()
+          RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCollateralCoverage:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Requirement'
+              description: '|||'
+          RequiredCustomerDocuments:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: '|||'
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: '|||'
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: '|||'
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: '|||'
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: '|||'
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: '|||'
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/UnderwritingAssessment'
+              description: '|||'
+          UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+              description: '|||'
+    RetrieveUnderwritingAssessment:
+        type: object
+        properties:
+          UnderwritingGuidelines:
+              $ref: '#/components/schemas/GovernanceRules'
+              description: >-
+                GovernanceRules|GovernanceRules
+                (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+                BM ()
+          RequiredCustomerEmploymentHistoryDetails:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerDebtAssetStatement:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerCreditAssessment:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCollateralCoverage:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Requirement'
+              description: "||\r\n|"
+          RequiredCustomerDocuments:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          ProposedTransactionDetails:
+              $ref: '#/components/schemas/Transaction'
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/Product'
+              description: >-
+                Product_x000D_
+
+                |Product
+                (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+                BM ()
+          ProposedLoanTerms:
+              $ref: '#/components/schemas/Loan'
+              description: >-
+                Loan|Loan
+                (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+                BM ()
+          ProposedLoanAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          LoanPurpose:
+              $ref: '#/components/schemas/Text'
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              description: "||\r\n|"
+          CustomerReferenceDetails:
+              $ref: '#/components/schemas/Party'
+              description: >-
+                Party/Persons/PersonProfile_x000D_
+
+                |Party/Persons/PersonProfile
+                (https://www.iso20022.org/standardsrepository/type/PersonProfile)|Standard|ISO20022
+                BM () ()
+          CustomerProductEligibilityTerms:
+              $ref: '#/components/schemas/ProductTermAndCondition'
+              description: "||\r\n|"
+          CustomerEmploymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: "||\r\n|"
+          CustomerIncomeStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerDebtStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerAssetStatement:
+              $ref: '#/components/schemas/CustomerStatement'
+              description: "||\r\n|"
+          CustomerCreditAssessment:
+              $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+              description: "||\r\n|"
+          CustomerProductandServicePaymentHistory:
+              $ref: '#/components/schemas/Report'
+              description: "||\r\n|"
+          CollateralItemReference:
+              $ref: '#/components/schemas/Asset'
+              description: >-
+                Asset|Asset
+                (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+                BM ()
+          CollateralItemType:
+              enum:
+                  -  Letterofcredit
+                  -  Cash
+                  -  Securities
+                  -  Physicalentities
+                  -  Insurance
+                  -  Stockcertificate
+                  -  Bond
+                  -  Bankguarantee
+                  -  Other
+                  -  Commodity
+                  -  Automobile
+                  -  Industrialvehicle
+                  -  Commercialtruck
+                  -  Railvehicle
+                  -  Nauticalcommercialvehicle
+                  -  Nauticalleisurevehicle
+                  -  Aeroplane
+                  -  Machinetool
+                  -  Industrialequipment
+                  -  Officeequipment
+                  -  Itequipment
+                  -  Medicalequipment
+                  -  Energyrelatedequipment
+                  -  Commercialbuilding
+              type: string
+              description: ">\r\n* `Letterofcredit` \r\n* `Cash` \r\n* `Securities` \r\n* `Physicalentities` \r\n* `Insurance` \r\n* `Stockcertificate` \r\n* `Bond` \r\n* `Bankguarantee` \r\n* `Other` \r\n* `Commodity` \r\n* `Automobile` \r\n* `Industrialvehicle` \r\n* `Commercialtruck` \r\n* `Railvehicle` \r\n* `Nauticalcommercialvehicle` \r\n* `Nauticalleisurevehicle` \r\n* `Aeroplane` \r\n* `Machinetool` \r\n* `Industrialequipment` \r\n* `Officeequipment` \r\n* `Itequipment` \r\n* `Medicalequipment` \r\n* `Energyrelatedequipment` \r\n* `Commercialbuilding` \r\n* "
+          CollateralItemValuation:
+              $ref: '#/components/schemas/CollateralAssetValuation'
+              description: "||\r\n|"
+          DocumentReference:
+              $ref: '#/components/schemas/Document'
+              description: "Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+          UnderwritingAssessmentDecision:
+              $ref: '#/components/schemas/UnderwritingAssessment'
+              description: "||\r\n|"
+          UnderwritingAssessmentWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+              description: "||\r\n|"
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    GovernanceRules:
+        type: object
+        description: >-
+          (DDD Entity) - Rules governing an undertaking such as a guarantee or standby
+          letter of credit. 
+        properties:
+          ModelForm:
+              type: string
+              format: ModelForm
+              description: '(DDD Entity) - Model form to which the governance rules apply. '
+          Identification:
+              type: string
+              format: GovernanceIdentificationCode
+              description: '(DDD Entity) - Identification of the governance rules. '
+          ApplicableLaw:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Law under which the undertaking has been issued. '
+          Jurisdiction:
+              type: string
+              format: Jurisdiction
+              description: '(DDD Entity) - Jurisdiction which applies to the governance rules. '
+          PublicationAgency:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Agency that publishes the governance rules. '
+    Product:
+        type: object
+        description: '(DDD Entity) - Item that is offered for sale. Products can be services or goods. '
+        properties:
+          CardPayment:
+              type: string
+              format: CardPayment
+              description: '(DDD Entity) - Card payment for which a product was specified. '
+          UnitPrice:
+              type: string
+              format: Price
+              description: '(DDD Entity) - Price per unit of product. '
+          ProductCategory:
+              type: string
+              format: ProductCategory
+              description: '(DDD Entity) - Category of the product. '
+          LineItem:
+              type: string
+              format: LineItem
+              description: '(DDD Entity) - Specifies the line item in which the product is specified. '
+          ProductIdentification:
+              type: string
+              format: ProductIdentification
+              description: '(DDD Entity) - Identification of the product. '
+          Name:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Name of a product. '
+          Description:
+              type: string
+              format: Max140Text
+              description: >-
+                (DDD Entity) - Information about the goods and/or services of a trade
+                transaction. 
+          Origin:
+              type: string
+              format: Country
+              description: '(DDD Entity) - Country from which the product originates. '
+          Characteristics:
+              type: string
+              format: ProductCharacteristics
+              description: '(DDD Entity) - Characteristics of the product. '
+          NetPrice:
+              type: string
+              format: Price
+              description: '(DDD Entity) - Net price of the goods and/or service. '
+          Quantity:
+              type: string
+              format: ProductQuantity
+              description: '(DDD Entity) - Specifies the quantity of the product. '
+          GrossPrice:
+              type: string
+              format: Price
+              description: '(DDD Entity) - Gross price of the goods and/or service. '
+          Quality:
+              type: string
+              format: Max70Text
+              description: '(DDD Entity) - Quality of the product. '
+          Delivery:
+              type: string
+              format: ProductDelivery
+              description: '(DDD Entity) - Delivery process of a product '
+          PurchaseOrder:
+              type: string
+              format: PurchaseOrder
+              description: >-
+                (DDD Entity) - Specifies the purchase order in which a specific product is
+                ordered. 
+          Tax:
+              type: string
+              format: Tax
+              description: >-
+                (DDD Entity) - Amount of money due to the government or tax authority,
+                according to various pre-defined parameters linked to the value
+                of the goods and services in a trade transaction. 
+    Loan:
+        type: object
+        description: >-
+          (DDD Entity) - Act of provding an amount of money, a property or other material
+          goods to a another party in exchange for future repayment of the
+          principal amount along with interest or other finance charges. 
+        properties:
+          PrincipalAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - Amount of money borrowed, or part of that amount which
+                remains unpaid (excluding interest). 
+          InterestPaymentsSchedule:
+              type: string
+              format: PaymentTerms
+              description: '(DDD Entity) - Schedule for the payment of the interests due on the loan. '
+          IntraCompanyLoanIndicator:
+              type: string
+              format: YesNoIndicator
+              description: '(DDD Entity) - Loan is an intra-company loan. '
+    CurrencyAndAmount:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Number of monetary units specified in a currency, where the unit
+          of currency is explicit and compliant with ISO 4217. The decimal
+          separator is a dot.
+
+          Note: A zero amount is considered a positive amount.
+    Party:
+        type: object
+        description: '(DDD Entity) - Entity involved in an activity. '
+        properties:
+          ContactPoint:
+              type: string
+              format: ContactPoint
+              description: >-
+                (DDD Entity) - Number, physical or virtual address, used for
+                communication. 
+          Identification:
+              type: string
+              format: PartyIdentificationInformation
+              description: '(DDD Entity) - Specific identification assigned to a party. '
+          MoneyLaunderingCheck:
+              type: string
+              format: MoneyLaunderingCheckCode
+              description: >-
+                (DDD Entity) - Status of an identity check to prevent money laundering.
+                This includes the counter-terrorism check. 
+          TaxationConditions:
+              type: string
+              format: Tax
+              description: >-
+                (DDD Entity) - Taxation parameters which apply to an individual person or
+                to an organisation. 
+          Domicile:
+              type: string
+              format: Location
+              description: >-
+                (DDD Entity) - Location in which a person is permanently domiciled (the
+                place of a person's permanent home). 
+          Residence:
+              type: string
+              format: Location
+              description: >-
+                (DDD Entity) - Location from which the affairs of a company are directed or
+                location in which a person resides (the place of a person's
+                home). 
+          PowerOfAttorney:
+              type: string
+              format: PowerOfAttorney
+              description: '(DDD Entity) - Power of attorney which is held by the party. '
+          Location:
+              type: string
+              format: Location
+              description: '(DDD Entity) - Location of the taxable party. '
+          CloseLinkSecurity:
+              type: string
+              format: Security
+              description: '(DDD Entity) - Security for which a close link with a party is identified. '
+          CreditQuality:
+              type: string
+              format: CreditQualityCode
+              description: '(DDD Entity) - Credit quality for the clearing member. '
+          ShareholdingType:
+              type: string
+              format: ShareholdingTypeCode
+              description: '(DDD Entity) - Specifies the type of shareholding. '
+    Asset:
+        type: object
+        description: '(DDD Entity) - Tangible items of value to a business. '
+        properties:
+          ExpiryDate:
+              type: string
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - Date on which an order, a privilege, an entitlement or an
+                offer terminates. For an interest bearing asset, it is the
+                date/time at which it becomes due and has to be repaid. 
+          MaturityDate:
+              type: string
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - Planned date, at the time of issuance, on which an interest
+                bearing financial instrument becomes due and principal is repaid
+                by the issuer to the investor. 
+          Derivative:
+              type: string
+              format: Derivative
+              description: >-
+                (DDD Entity) - Specifies the parameters of a derivative instrument based on
+                a specific asset. 
+          AssetValue:
+              type: string
+              format: AssetHolding
+              description: '(DDD Entity) - Specifies the different values of an asset. '
+          AssetClassification:
+              type: string
+              format: AssetClassification
+              description: '(DDD Entity) - Classification of the asset. '
+          FinancialAssetCategory:
+              type: string
+              format: FinancialAssetTypeCategoryCode
+              description: '(DDD Entity) - Categorization of financial asset type. '
+          AssetPartyRole:
+              type: string
+              format: AssetPartyRole
+              description: '(DDD Entity) - Party which plays a role for a specific asset. '
+          Issuance:
+              type: string
+              format: Issuance
+              description: '(DDD Entity) - Details regarding the issuance of an asset. '
+          Portfolio:
+              type: string
+              format: Portfolio
+              description: '(DDD Entity) - Asset which is part of a portfolio. '
+          InvestmentAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Invested amount of the portfolio asset. '
+          InvestmentRate:
+              type: string
+              format: PercentageRate
+              description: '(DDD Entity) - Invested percentage of the portfolio asset. '
+          EffectiveDate:
+              type: string
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - Cut off date/time for the information of the specified
+                portfolio asset. 
+          FinancialInstrumentSubStructure:
+              type: string
+              format: InstrumentSubStructureTypeCode
+              description: '(DDD Entity) - Indicates the type of deal for structured finance. '
+          InvestmentPlan:
+              type: string
+              format: InvestmentPlan
+              description: '(DDD Entity) - Investment plan that invests in a specific asset. '
+          Trade:
+              type: string
+              format: Trade
+              description: '(DDD Entity) - Trade which which involves a specific asset. '
+          Tranche:
+              type: string
+              format: Tranche
+              description: >-
+                (DDD Entity) - One of a number of related assets offered as part of the
+                same transaction. 
+          LegAdditionalInformation:
+              type: string
+              format: Leg
+              description: '(DDD Entity) - Provides details about the leg. '
+          StandingSettlementInstruction:
+              type: string
+              format: StandingSettlementInstruction
+              description: >-
+                (DDD Entity) - Standing settlement instruction for which an asset is
+                specified. 
+          GenericAssetIdentification:
+              type: string
+              format: ''
+              description: '(DDD Entity) - Identifies the asset. '
+    Document:
+        type: object
+        description: >-
+          (DDD Entity) - General information that unambiguously identifies a document, such
+          as identification number and issue date time. 
+        properties:
+          IssueDate:
+              type: string
+              format: ISODateTime
+              description: '(DDD Entity) - Issue date of the document. '
+          CopyDuplicate:
+              type: string
+              format: CopyDuplicateCode
+              description: >-
+                (DDD Entity) - Specifies if this document is a copy, a duplicate, or a
+                duplicate of a copy. 
+          PlaceOfStorage:
+              type: string
+              format: ContactPoint
+              description: '(DDD Entity) - Specifies where the document is stored. '
+          PaymentObligation:
+              type: string
+              format: PaymentObligation
+              description: '(DDD Entity) - Document which is referred to in a payment obligation. '
+          Type:
+              type: string
+              format: DocumentTypeCode
+              description: >-
+                (DDD Entity) - Specifies the type of the document, for example commercial
+                invoice. 
+          Amount:
+              type: string
+              format: ActiveCurrencyAndAmount
+              description: "(DDD Entity) - Amount of money and currency of a document. \r\nThe amount can be either the original amount due and payable for instance the ordered amount, or the amount actually remitted for the referred document. "
+          Agreement:
+              type: string
+              format: Agreement
+              description: '(DDD Entity) - Agreement which is materialised by a document '
+          PlaceOfIssue:
+              type: string
+              format: Location
+              description: '(DDD Entity) - Place where the document was issued. '
+          DocumentVersion:
+              type: string
+              format: Number
+              description: '(DDD Entity) - Unambiguous identification of the version of a document. '
+          Status:
+              type: string
+              format: Max140Text
+              description: '(DDD Entity) - Status of the document (eg delivered, paid, etc.) '
+          Reconciliation:
+              type: string
+              format: Reconciliation
+              description: '(DDD Entity) - Reconciliation process for which a document is specified. '
+          LetterOfCredit:
+              type: string
+              format: LetterOfCredit
+              description: >-
+                (DDD Entity) - Written undertaking by a bank to honour a demand for
+                payment. 
+          PartyRole:
+              type: string
+              format: DocumentPartyRole
+              description: >-
+                (DDD Entity) - Role played by a party in the context of a document or in
+                the context of the business linked to the document. 
+          DataSetType:
+              type: string
+              format: DataSetTypeCode
+              description: >-
+                (DDD Entity) - Specifies the type of data set in which the document is
+                included. 
+          Transport:
+              type: string
+              format: Transport
+              description: >-
+                (DDD Entity) - Transport process for which related documents are
+                specified. 
+          SignedIndicator:
+              type: string
+              format: YesNoIndicator
+              description: '(DDD Entity) - Indication whether the document must be signed or not. '
+          RemittedAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Amount of money remitted for the referred document. '
+          Guarantee:
+              type: string
+              format: Guarantee
+              description: '(DDD Entity) - Guarantee that is described in a document. '
+          Language:
+              type: string
+              format: LanguageCode
+              description: '(DDD Entity) - Language used for textual information in the document. '
+          Purpose:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Specifies the function of the document. '
+          DocumentIdentification:
+              type: string
+              format: GenericIdentification
+              description: >-
+                (DDD Entity) - Identification of a document for instance unique
+                identification of the purchase order, assigned by the buyer. 
+          Evidence:
+              type: string
+              format: Evidence
+              description: '(DDD Entity) - Proof of evidence which uses a document. '
+          CommercialTrade:
+              type: string
+              format: CommercialTrade
+              description: '(DDD Entity) - Trade for which a certificare is issued. '
+          Presentation:
+              type: string
+              format: Presentation
+              description: '(DDD Entity) - Presentation of documents and statements. '
+          RelatedContract:
+              type: string
+              format: RegisteredContract
+              description: '(DDD Entity) - Related document which materialises the agreement. '
+  responses:
+    EvaluateUnderwritingAssessmentResponse:
+        description: UnderwritingAssessmentEvaluate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateUnderwritingAssessmentResponse'
+    UpdateUnderwritingAssessmentResponse:
+        description: UnderwritingAssessmentUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateUnderwritingAssessmentResponse'
+    RetrieveUnderwritingAssessmentResponse:
+        description: UnderwritingAssessmentRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveUnderwritingAssessmentResponse'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    underwritingassessmentid:
+        name: underwritingassessmentid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    EvaluateUnderwritingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateUnderwritingAssessmentRequest'
+        required: true
+    UpdateUnderwritingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateUnderwritingAssessmentRequest'
+        required: true
+    RetrieveUnderwritingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
