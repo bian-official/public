@@ -1,0 +1,714 @@
+openapi: 3.0.1
+info:
+  title: Financial Accounting
+  description: >-
+    BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context
+    Financial Accounting (expanded with ISO200022)
+  version: 12.0.1
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/FinancialAccounting/12.0.1
+paths:
+  '/FinancialBookingLog/Initiate':
+      post:
+        tags:
+          - CR (DDD Aggregate)  - FinancialBookingLog'
+        summary: (DDD Service) InCR Initiate a financial accounting log (account)
+        description: (DDD Service) InCR Initiate a financial accounting log (account)
+        operationId: FinancialBookingLog/Initiate
+        requestBody:
+          $ref: '#/components/requestBodies/InitiateFinancialBookingLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/InitiateFinancialBookingLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/FinancialBookingLog/{financialbookinglogid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate)  - FinancialBookingLog'
+        summary: (DDD Service) UpCR Update details for an active financial account
+        description: (DDD Service) UpCR Update details for an active financial account
+        operationId: FinancialBookingLog/Update
+        parameters:
+          - $ref: '#/components/parameters/financialbookinglogid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateFinancialBookingLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdateFinancialBookingLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/FinancialBookingLog/{financialbookinglogid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - FinancialBookingLog'
+        summary: (DDD Service) ReCR Retrieve information about the log
+        description: (DDD Service) ReCR Retrieve information about the log
+        operationId: FinancialBookingLog/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/financialbookinglogid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveFinancialBookingLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{ledgerpostingid}/LedgerPosting/Update':
+      put:
+        tags:
+          - BQ (DDD Aggregate)  - LedgerPosting'
+        summary: (DDD Service) UpBQ Update details of a posting (repair)
+        description: (DDD Service) UpBQ Update details of a posting (repair)
+        operationId: LedgerPosting/Update
+        parameters:
+          - $ref: '#/components/parameters/ledgerpostingid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateLedgerPostingRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdateLedgerPostingResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{ledgerpostingid}/LedgerPosting/Capture':
+      put:
+        tags:
+          - BQ (DDD Aggregate)  - LedgerPosting'
+        summary: (DDD Service) CaBQ Post to the financial account
+        description: (DDD Service) CaBQ Post to the financial account
+        operationId: LedgerPosting/Capture
+        parameters:
+          - $ref: '#/components/parameters/ledgerpostingid'
+        requestBody:
+          $ref: '#/components/requestBodies/CaptureLedgerPostingRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/CaptureLedgerPostingResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/FinancialAccounting/{ledgerpostingid}/LedgerPosting/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - LedgerPosting'
+        summary: (DDD Service) ReBQ Retrieve details of postings from the account
+        description: (DDD Service) ReBQ Retrieve details of postings from the account
+        operationId: LedgerPosting/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/ledgerpostingid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveLedgerPostingResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    InitiateFinancialBookingLogRequest:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: '|||'
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: '|||'
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: '|||'
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+    InitiateFinancialBookingLogResponse:
+        type: object
+        properties:
+          Status:
+              type: string
+              description: '|||'
+              format: String
+    InitiateFinancialBookingLog:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: "||\r\n|"
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: "||\r\n|"
+              format: String
+    UpdateFinancialBookingLogRequest:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: '|||'
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: '|||'
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: '|||'
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: '|||'
+              format: String
+    UpdateFinancialBookingLogResponse:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: '|||'
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: '|||'
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: '|||'
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: '|||'
+              format: String
+    UpdateFinancialBookingLog:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: "||\r\n|"
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrieveFinancialBookingLogResponse:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: '|||'
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: '|||'
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: '|||'
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveFinancialBookingLog:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: "||\r\n|"
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: "||\r\n|"
+              format: String
+    UpdateLedgerPostingRequest:
+        type: object
+        properties:
+          PostingDirection:
+              type: string
+              description: '|||'
+              format: String
+          PostingAmount(creditdebitpair):
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          PostingResult:
+              type: string
+              description: '|||'
+              format: String
+    UpdateLedgerPostingResponse:
+        type: object
+        properties:
+          PostingDirection:
+              type: string
+              description: '|||'
+              format: String
+          PostingAmount(creditdebitpair):
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          PostingResult:
+              type: string
+              description: '|||'
+              format: String
+    UpdateLedgerPosting:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: "||\r\n|"
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: "||\r\n|"
+              format: String
+    CaptureLedgerPostingRequest:
+        type: object
+        properties:
+          PostingDirection:
+              type: string
+              description: '|||'
+              format: String
+          PostingAmount(creditdebitpair):
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    CaptureLedgerPostingResponse:
+        type: object
+        properties:
+          PostingResult:
+              type: string
+              description: '|||'
+              format: String
+    CaptureLedgerPosting:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: "||\r\n|"
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrieveLedgerPostingResponse:
+        type: object
+        properties:
+          PostingDirection:
+              type: string
+              description: '|||'
+              format: String
+          PostingAmount(creditdebitpair):
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          PostingResult:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveLedgerPosting:
+        type: object
+        properties:
+          FinancialAccountType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          ProductandServiceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          BusinessUnitReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          ChartofAccountBookingRules:
+              type: string
+              description: "||\r\n|"
+              format: String
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          Status:
+              type: string
+              description: "||\r\n|"
+              format: String
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    CurrencyCode:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Code allocated to a currency, by a maintenance agency, under an
+          international identification scheme as described in the latest edition
+          of the international standard ISO 4217 "Codes for the representation
+          of currencies and funds". Valid currency codes are registered with the
+          ISO 4217 Maintenance Agency, and consist of three contiguous letters.
+    CurrencyAndAmount:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Number of monetary units specified in a currency, where the unit
+          of currency is explicit and compliant with ISO 4217. The decimal
+          separator is a dot.
+
+          Note: A zero amount is considered a positive amount.
+    ISODate:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - A particular point in the progression of time in a calendar year
+          expressed in the YYYY-MM-DD format. This representation is defined in
+          "XML Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+          October 2004" which is aligned with ISO 8601.
+  responses:
+    InitiateFinancialBookingLogResponse:
+        description: FinancialBookingLogInitiate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiateFinancialBookingLogResponse'
+    UpdateFinancialBookingLogResponse:
+        description: FinancialBookingLogUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateFinancialBookingLogResponse'
+    RetrieveFinancialBookingLogResponse:
+        description: FinancialBookingLogRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFinancialBookingLogResponse'
+    UpdateLedgerPostingResponse:
+        description: LedgerPostingUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateLedgerPostingResponse'
+    CaptureLedgerPostingResponse:
+        description: LedgerPostingCapture
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/CaptureLedgerPostingResponse'
+    RetrieveLedgerPostingResponse:
+        description: LedgerPostingRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveLedgerPostingResponse'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    financialbookinglogid:
+        name: financialbookinglogid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    ledgerpostingid:
+        name: ledgerpostingid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    InitiateFinancialBookingLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiateFinancialBookingLogRequest'
+        required: true
+    UpdateFinancialBookingLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateFinancialBookingLogRequest'
+        required: true
+    RetrieveFinancialBookingLogRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
+    UpdateLedgerPostingRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateLedgerPostingRequest'
+        required: true
+    CaptureLedgerPostingRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/CaptureLedgerPostingRequest'
+        required: true
+    RetrieveLedgerPostingRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true

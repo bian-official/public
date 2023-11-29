@@ -1,0 +1,1361 @@
+openapi: 3.0.1
+info:
+  title: Payment Initiation
+  description: >-
+    BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context
+    Payment Initiation (expanded with ISO200022)
+  version: 12.0.1
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/PaymentInitiation/12.0.1
+paths:
+  '/PaymentInitiationTransaction/Initiate':
+      post:
+        tags:
+          - CR (DDD Aggregate)  - PaymentInitiationTransaction'
+        summary: (DDD Service) InCR Initiate a payment transaction
+        description: (DDD Service) InCR Initiate a payment transaction
+        operationId: PaymentInitiationTransaction/Initiate
+        requestBody:
+          $ref: >-
+            #/components/requestBodies/InitiatePaymentInitiationTransactionRequest
+        responses:
+          '200':
+            $ref: >-
+              #/components/responses/InitiatePaymentInitiationTransactionResponse
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiationTransaction/{paymentinitiationtransactionid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate)  - PaymentInitiationTransaction'
+        summary: (DDD Service) UpCR Update details of a payment transaction instruction
+        description: (DDD Service) UpCR Update details of a payment transaction instruction
+        operationId: PaymentInitiationTransaction/Update
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationtransactionid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdatePaymentInitiationTransactionRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdatePaymentInitiationTransactionResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiationTransaction/{paymentinitiationtransactionid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - PaymentInitiationTransaction'
+        summary: (DDD Service) ReCR Retrieve details about a payment transaction
+        description: (DDD Service) ReCR Retrieve details about a payment transaction
+        operationId: PaymentInitiationTransaction/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationtransactionid'
+        responses:
+          '200':
+            $ref: >-
+              #/components/responses/RetrievePaymentInitiationTransactionResponse
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{complianceid}/Compliance/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - Compliance'
+        summary: >-
+          (DDD Service) ReBQ Retrieve details about a payment transaction
+          compliance check
+        description: >-
+          (DDD Service) ReBQ Retrieve details about a payment transaction
+          compliance check
+        operationId: Compliance/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/complianceid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveComplianceResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{fundingcheckid}/FundingCheck/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - FundingCheck'
+        summary: >-
+          (DDD Service) ReBQ Retrieve details about a payment transaction funds
+          available
+        description: >-
+          (DDD Service) ReBQ Retrieve details about a payment transaction funds
+          available
+        operationId: FundingCheck/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/fundingcheckid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveFundingCheckResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{orderinitiationid}/OrderInitiation/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - OrderInitiation'
+        summary: (DDD Service) ReBQ Retrieve details about the payment order initiation
+        description: (DDD Service) ReBQ Retrieve details about the payment order initiation
+        operationId: OrderInitiation/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/orderinitiationid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveOrderInitiationResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    InitiatePaymentInitiationTransactionRequest:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentMechanism:
+              type: string
+              description: '|||'
+              format: String
+          PaymentPurpose:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          DocumentContent:
+              type: string
+              description: '|||'
+              format: String
+    InitiatePaymentInitiationTransactionResponse:
+        type: object
+        properties:
+          RecurringPaymentRecord:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: '|||'
+              format: Object
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+    InitiatePaymentInitiationTransaction:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PaymentTransaction:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PayerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Amount:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Currency:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DateType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentMechanism:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentPurpose:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          DocumentContent:
+              type: string
+              description: "||\r\n|"
+              format: String
+    UpdatePaymentInitiationTransactionRequest:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: '|||'
+              format: String
+          PaymentMechanism:
+              type: string
+              description: '|||'
+              format: String
+          PaymentPurpose:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          DocumentContent:
+              type: string
+              description: '|||'
+              format: String
+    UpdatePaymentInitiationTransactionResponse:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: '|||'
+              format: String
+          PaymentMechanism:
+              type: string
+              description: '|||'
+              format: String
+          PaymentPurpose:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          DocumentContent:
+              type: string
+              description: '|||'
+              format: String
+    UpdatePaymentInitiationTransaction:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PaymentTransaction:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PayerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Amount:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Currency:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DateType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentMechanism:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentPurpose:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          DocumentContent:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrievePaymentInitiationTransactionResponse:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: '|||'
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: '|||'
+              format: String
+          PaymentMechanism:
+              type: string
+              description: '|||'
+              format: String
+          PaymentPurpose:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          DocumentContent:
+              type: string
+              description: '|||'
+              format: String
+    RetrievePaymentInitiationTransaction:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PaymentTransaction:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PayerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Amount:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Currency:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DateType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentMechanism:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentPurpose:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          DocumentContent:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrieveComplianceResponse:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentPurpose:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          DocumentContent:
+              type: string
+              description: '|||'
+              format: String
+          PaymentTransactionComplianceCheckType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentTransactionComplianceCheckResult:
+              type: string
+              description: '|||'
+              format: String
+          PaymentTransactionComplianceTaskResult:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveCompliance:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PaymentTransaction:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PayerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Amount:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Currency:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DateType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentMechanism:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentPurpose:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          DocumentContent:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrieveFundingCheckResponse:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: '|||'
+              format: String
+          PaymentTransactionFundingCheckResult:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveFundingCheck:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PaymentTransaction:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PayerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Amount:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Currency:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DateType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentMechanism:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentPurpose:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          DocumentContent:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrieveOrderInitiationResponse:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: '|||'
+              format: String
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: '|||'
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          Amount:
+              type: string
+              description: '|||'
+              format: String
+          Currency:
+              type: string
+              description: '|||'
+              format: String
+          DateType:
+              type: string
+              description: '|||'
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: '|||'
+              format: String
+          PaymentMechanism:
+              type: string
+              description: '|||'
+              format: String
+          PaymentPurpose:
+              type: string
+              description: '|||'
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          DocumentContent:
+              type: string
+              description: '|||'
+              format: String
+          PaymentOrderProcedureInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          PaymentOrderProcedureInstanceStatus:
+              type: string
+              description: '|||'
+              format: String
+          OrderInitiationTaskResult:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveOrderInitiation:
+        type: object
+        properties:
+          PaymentTransactionType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentRecord:
+              type: string
+              description: "||\r\n|"
+              format: String
+          RecurringPaymentCustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          RecurringPaymentReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PaymentTransaction:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PayerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayerProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeBankReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          PayeeProductInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Amount:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Currency:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DateType:
+              type: string
+              description: "||\r\n|"
+              format: String
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentFeesCharges:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentMechanism:
+              type: string
+              description: "||\r\n|"
+              format: String
+          PaymentPurpose:
+              type: string
+              description: "||\r\n|"
+              format: String
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          DocumentContent:
+              type: string
+              description: "||\r\n|"
+              format: String
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+  responses:
+    InitiatePaymentInitiationTransactionResponse:
+        description: PaymentInitiationTransactionInitiate
+        content:
+          'application/json:':
+            schema:
+              $ref: >-
+                #/components/schemas/InitiatePaymentInitiationTransactionResponse
+    UpdatePaymentInitiationTransactionResponse:
+        description: PaymentInitiationTransactionUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentInitiationTransactionResponse'
+    RetrievePaymentInitiationTransactionResponse:
+        description: PaymentInitiationTransactionRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: >-
+                #/components/schemas/RetrievePaymentInitiationTransactionResponse
+    RetrieveComplianceResponse:
+        description: ComplianceRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveComplianceResponse'
+    RetrieveFundingCheckResponse:
+        description: FundingCheckRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFundingCheckResponse'
+    RetrieveOrderInitiationResponse:
+        description: OrderInitiationRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveOrderInitiationResponse'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    paymentinitiationtransactionid:
+        name: paymentinitiationtransactionid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    complianceid:
+        name: complianceid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    fundingcheckid:
+        name: fundingcheckid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    orderinitiationid:
+        name: orderinitiationid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    InitiatePaymentInitiationTransactionRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiatePaymentInitiationTransactionRequest'
+        required: true
+    UpdatePaymentInitiationTransactionRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentInitiationTransactionRequest'
+        required: true
+    RetrievePaymentInitiationTransactionRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
+    RetrieveComplianceRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
+    RetrieveFundingCheckRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
+    RetrieveOrderInitiationRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
