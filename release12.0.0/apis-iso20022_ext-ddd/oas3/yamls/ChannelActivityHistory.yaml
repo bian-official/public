@@ -1,0 +1,790 @@
+openapi: 3.0.1
+info:
+  title: Channel Activity History
+  description: >-
+    BIAN Service Domain Packaged Business Capability (PCB) | DDD Bounded Context
+    Channel Activity History (expanded with ISO200022)
+  version: 12.0.1
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/ChannelActivityHistory/12.0.1
+paths:
+  '/ChannelActivityLog/Initiate':
+      post:
+        tags:
+          - CR (DDD Aggregate)  - ChannelActivityLog'
+        summary: (DDD Service) InCR Initiate channel activity logging for a customer
+        description: (DDD Service) InCR Initiate channel activity logging for a customer
+        operationId: ChannelActivityLog/Initiate
+        requestBody:
+          $ref: '#/components/requestBodies/InitiateChannelActivityLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/InitiateChannelActivityLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityLog/{channelactivitylogid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate)  - ChannelActivityLog'
+        summary: >-
+          (DDD Service) UpCR Update channel activity logging details for a
+          customer
+        description: >-
+          (DDD Service) UpCR Update channel activity logging details for a
+          customer
+        operationId: ChannelActivityLog/Update
+        parameters:
+          - $ref: '#/components/parameters/channelactivitylogid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateChannelActivityLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdateChannelActivityLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityLog/{channelactivitylogid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - ChannelActivityLog'
+        summary: >-
+          (DDD Service) ReCR Retrieve details about customer channel activity
+          logging
+        description: >-
+          (DDD Service) ReCR Retrieve details about customer channel activity
+          logging
+        operationId: ChannelActivityLog/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/channelactivitylogid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveChannelActivityLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{eventid}/Event/Update':
+      put:
+        tags:
+          - BQ (DDD Aggregate)  - Event'
+        summary: (DDD Service) UpBQ Update a logged event for a customer
+        description: (DDD Service) UpBQ Update a logged event for a customer
+        operationId: Event/Update
+        parameters:
+          - $ref: '#/components/parameters/eventid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateEventRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdateEventResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{eventid}/Event/Capture':
+      put:
+        tags:
+          - BQ (DDD Aggregate)  - Event'
+        summary: (DDD Service) CaBQ Capture a channel access event in the log
+        description: (DDD Service) CaBQ Capture a channel access event in the log
+        operationId: Event/Capture
+        parameters:
+          - $ref: '#/components/parameters/eventid'
+        requestBody:
+          $ref: '#/components/requestBodies/CaptureEventRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/CaptureEventResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/ChannelActivityHistory/{eventid}/Event/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - Event'
+        summary: >-
+          (DDD Service) ReBQ Retrieve details about a logged channel activity
+          event
+        description: >-
+          (DDD Service) ReBQ Retrieve details about a logged channel activity
+          event
+        operationId: Event/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/eventid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveEventResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    InitiateChannelActivityLogRequest:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          Date:
+              type: string
+              description: '|||'
+              format: String
+    InitiateChannelActivityLogResponse:
+        type: object
+        properties:
+          Date:
+              type: string
+              description: '|||'
+              format: String
+    InitiateChannelActivityLog:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+    UpdateChannelActivityLogRequest:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          Date:
+              type: string
+              description: '|||'
+              format: String
+    UpdateChannelActivityLogResponse:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          Date:
+              type: string
+              description: '|||'
+              format: String
+    UpdateChannelActivityLog:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+    RetrieveChannelActivityLogResponse:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          Date:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveChannelActivityLog:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+    UpdateEventRequest:
+        type: object
+        properties:
+          EmployeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordContactDevice:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordMenuSelection:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingRequest:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingEventHistory:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingPositionReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordServicingResourceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerSessionDialogueReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerSessionDialogueRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordDuration:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactResult:
+              type: string
+              description: '|||'
+              format: String
+          ChannelActivityHistoryReportReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChannelActivityHistoryReportFromto:
+              type: string
+              description: '|||'
+              format: String
+          TransactionAuthorizationResult:
+              type: string
+              description: '|||'
+              format: String
+    UpdateEventResponse:
+        type: object
+        properties:
+          EmployeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordContactDevice:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordMenuSelection:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingRequest:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingEventHistory:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingPositionReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordServicingResourceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerSessionDialogueReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerSessionDialogueRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordDuration:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactResult:
+              type: string
+              description: '|||'
+              format: String
+          ChannelActivityHistoryReportReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChannelActivityHistoryReportFromto:
+              type: string
+              description: '|||'
+              format: String
+          TransactionAuthorizationResult:
+              type: string
+              description: '|||'
+              format: String
+    UpdateEvent:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+    CaptureEventRequest:
+        type: object
+        properties:
+          EmployeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordContactDevice:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordMenuSelection:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingRequest:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingEventHistory:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingPositionReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordServicingResourceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerSessionDialogueReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerSessionDialogueRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordDuration:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactResult:
+              type: string
+              description: '|||'
+              format: String
+          ChannelActivityHistoryReportReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChannelActivityHistoryReportFromto:
+              type: string
+              description: '|||'
+              format: String
+          TransactionAuthorizationResult:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveEventResponse:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          Date:
+              type: string
+              description: '|||'
+              format: String
+          EmployeeReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductReference:
+              type: string
+              description: '|||'
+              format: Object
+          ProductInstanceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordCustomerReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordContactDevice:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordAuthenticationStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordMenuSelection:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingRequest:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingEventHistory:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordServicingPositionReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordServicingResourceReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerContactRecordActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerSessionDialogueReference:
+              type: string
+              description: '|||'
+              format: Object
+          CustomerSessionDialogueRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactRecordDuration:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactActivityRecord:
+              type: string
+              description: '|||'
+              format: String
+          CustomerContactResult:
+              type: string
+              description: '|||'
+              format: String
+          ChannelActivityHistoryReportReference:
+              type: string
+              description: '|||'
+              format: Object
+          ChannelActivityHistoryReportFromto:
+              type: string
+              description: '|||'
+              format: String
+          TransactionAuthorizationResult:
+              type: string
+              description: '|||'
+              format: String
+    RetrieveEvent:
+        type: object
+        properties:
+          CustomerReference:
+              type: string
+              description: "||\r\n|"
+              format: Object
+          Date:
+              type: string
+              description: "||\r\n|"
+              format: String
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+  responses:
+    InitiateChannelActivityLogResponse:
+        description: ChannelActivityLogInitiate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiateChannelActivityLogResponse'
+    UpdateChannelActivityLogResponse:
+        description: ChannelActivityLogUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateChannelActivityLogResponse'
+    RetrieveChannelActivityLogResponse:
+        description: ChannelActivityLogRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveChannelActivityLogResponse'
+    UpdateEventResponse:
+        description: EventUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateEventResponse'
+    CaptureEventResponse:
+        description: EventCapture
+        content:
+          'application/json:':
+            schema:
+              type: string
+    RetrieveEventResponse:
+        description: EventRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveEventResponse'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    channelactivitylogid:
+        name: channelactivitylogid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    eventid:
+        name: eventid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    InitiateChannelActivityLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiateChannelActivityLogRequest'
+        required: true
+    UpdateChannelActivityLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateChannelActivityLogRequest'
+        required: true
+    RetrieveChannelActivityLogRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
+    UpdateEventRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateEventRequest'
+        required: true
+    CaptureEventRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/CaptureEventRequest'
+        required: true
+    RetrieveEventRequest:
+        content:
+          'application/json:':
+            schema:
+              type: string
+        required: true
