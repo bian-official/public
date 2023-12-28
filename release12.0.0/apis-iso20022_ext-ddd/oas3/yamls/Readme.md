@@ -1,10 +1,10 @@
 These are BIAN Service Domain APIs annoted for Domain Driven Design and extended with ISO20022, where such mappings have been done at BIAN.
 
 The list of ISO20022 extended Service Domain APIs is as follows:
-Account Reconciliation
-Archive Services
-Bank Drafts
-Bank Guarantee
+Account Reconciliation,
+Archive Services,
+Bank Drafts,
+Bank Guarantee,
 Brokered Product
 Cash Concentration
 Cheque Lock Box
