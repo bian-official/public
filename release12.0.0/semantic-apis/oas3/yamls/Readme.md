@@ -94,4 +94,6 @@ Service Provider Operations
 Servicing Mandate
 Syndicated Loan
 Term Deposit
-Virtual Account![image](https://github.com/bian-official/public/assets/42481490/9f9adda7-acc3-4a02-a84c-410b7d55f335)
+Virtual Account
+
+
