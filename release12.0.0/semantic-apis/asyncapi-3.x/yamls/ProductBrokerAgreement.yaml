@@ -1,0 +1,264 @@
+asyncapi: 3.0.0
+info:
+  title: Product Broker Agreement
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains product broker contractual and service level agreements and tracks
+    and confirms compliance and service related activity/volume goals when
+    necessary
+channels:
+  BrokerAgreement/Created:
+    address: BrokerAgreement/Created
+    messages:
+      BrokerAgreement-created.message:
+        $ref: '#/components/messages/BrokerAgreement'
+    description: ''
+  BrokerAgreement/Updated:
+    address: BrokerAgreement/Updated
+    messages:
+      BrokerAgreement-updated.message:
+        $ref: '#/components/messages/BrokerAgreement'
+    description: ''
+  LegalTerms/Created:
+    address: LegalTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LegalTerms'
+    description: ''
+  LegalTerms/Updated:
+    address: LegalTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LegalTerms'
+    description: ''
+  PolicyTerms/Created:
+    address: PolicyTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PolicyTerms'
+    description: ''
+  PolicyTerms/Updated:
+    address: PolicyTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PolicyTerms'
+    description: ''
+  RegulatoryTerms/Created:
+    address: RegulatoryTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RegulatoryTerms'
+    description: ''
+  RegulatoryTerms/Updated:
+    address: RegulatoryTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RegulatoryTerms'
+    description: ''
+operations:
+  BrokerAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BrokerAgreement~1Created'
+    summary: BrokerAgreement
+    messages:
+      - $ref: >-
+          #/channels/BrokerAgreement~1Created/messages/BrokerAgreement-created.message
+  BrokerAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BrokerAgreement~1Updated'
+    summary: BrokerAgreement
+    messages:
+      - $ref: >-
+          #/channels/BrokerAgreement~1Updated/messages/BrokerAgreement-updated.message
+  LegalTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LegalTerms~1Created'
+    summary: LegalTerms
+    messages:
+      - $ref: '#/channels/LegalTerms~1Created/messages/publish.message'
+  LegalTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LegalTerms~1Updated'
+    summary: LegalTerms
+    messages:
+      - $ref: '#/channels/LegalTerms~1Updated/messages/publish.message'
+  PolicyTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PolicyTerms~1Created'
+    summary: PolicyTerms
+    messages:
+      - $ref: '#/channels/PolicyTerms~1Created/messages/publish.message'
+  PolicyTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PolicyTerms~1Updated'
+    summary: PolicyTerms
+    messages:
+      - $ref: '#/channels/PolicyTerms~1Updated/messages/publish.message'
+  RegulatoryTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryTerms~1Created'
+    summary: RegulatoryTerms
+    messages:
+      - $ref: '#/channels/RegulatoryTerms~1Created/messages/publish.message'
+  RegulatoryTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryTerms~1Updated'
+    summary: RegulatoryTerms
+    messages:
+      - $ref: '#/channels/RegulatoryTerms~1Updated/messages/publish.message'
+components:
+  messages:
+    BrokerAgreement:
+      name: BrokerAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Product Broker Agreement.
+
+
+      payload:
+        $ref: '#/components/schemas/BrokerAgreement'
+    LegalTerms:
+      name: LegalTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/LegalTerms'
+    PolicyTerms:
+      name: PolicyTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/PolicyTerms'
+    RegulatoryTerms:
+      name: RegulatoryTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/RegulatoryTerms'
+  schemas:
+    LegalTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        Jurisdiction:
+          type: string
+          format: String
+          description: "The legal jurisdiction \r\n"
+        ApplicableLawReference:
+          type: string
+          format: Object
+          description: "Reference to any legal requirements \r\n"
+        ApplicableLawInterpretation:
+          type: string
+          format: String
+          description: "Explanation or interpretation of the law as applied \r\n"
+    PolicyTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        BankPolicy-RuleType:
+          type: string
+          format: String
+          description: "The type of bank policy referenced (e.g. staff certification) \r\n"
+        ApplicableBankPolicy-RuleReference:
+          type: string
+          format: Object
+          description: "Reference to the bank's policies or rules \r\n"
+        ApplicableBankPolicy-RuleInterpretation:
+          type: string
+          format: String
+          description: "Explanation or interpretation of the policy or rule as applied \r\n"
+    RegulatoryTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        RegulatoryAuthority:
+          type: string
+          format: String
+          description: "The applicable regulatory authority \r\n"
+        ApplicableRegulationReference:
+          type: string
+          format: Object
+          description: "Reference to any regulatory requirements \r\n"
+        ApplicableRegulationInterpretation:
+          type: string
+          format: String
+          description: "Explanation or interpretation of the regulation as applied \r\n"
+    BrokerAgreement:
+      type: object
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Product Broker Agreement.
+
+
+      properties:
+        PartyReference:
+          type: string
+          format: Object
+          description: "Reference to the broker organization \r\n"
+        AgreementType:
+          type: string
+          format: String
+          description: "The type of agreement (e.g. service provider, product alliance) \r\n"
+        AgreementJurisdiction:
+          type: string
+          format: String
+          description: "The contractual jurisdiction or coverage of the agreement (e.g. \"governed by State\") \r\n"
+        AgreementValidFromToDate:
+          $ref: '#/components/schemas/Date'
+        AgreementSignaturesResponsibleParties:
+          type: string
+          format: String
+          description: "Reference to signatories \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to any associated documents \r\n"
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The term of the agreement ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''

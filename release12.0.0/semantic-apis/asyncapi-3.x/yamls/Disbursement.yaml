@@ -1,0 +1,106 @@
+asyncapi: 3.0.0
+info:
+  title: Disbursement
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles the disbursement of funds to newly established loans/facilities as
+    necessary
+channels:
+  DisbursementTransaction/Created:
+    address: DisbursementTransaction/Created
+    messages:
+      DisbursementTransaction-created.message:
+        $ref: '#/components/messages/DisbursementTransaction'
+    description: ''
+  DisbursementTransaction/Updated:
+    address: DisbursementTransaction/Updated
+    messages:
+      DisbursementTransaction-updated.message:
+        $ref: '#/components/messages/DisbursementTransaction'
+    description: ''
+operations:
+  DisbursementTransaction-created:
+    action: receive
+    channel:
+      $ref: '#/channels/DisbursementTransaction~1Created'
+    summary: DisbursementTransaction
+    messages:
+      - $ref: >-
+          #/channels/DisbursementTransaction~1Created/messages/DisbursementTransaction-created.message
+  DisbursementTransaction-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/DisbursementTransaction~1Updated'
+    summary: DisbursementTransaction
+    messages:
+      - $ref: >-
+          #/channels/DisbursementTransaction~1Updated/messages/DisbursementTransaction-updated.message
+components:
+  messages:
+    DisbursementTransaction:
+      name: DisbursementTransaction
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within
+        Disbursement. 
+      payload:
+        $ref: '#/components/schemas/DisbursementTransaction'
+  schemas:
+    DisbursementTransaction:
+      type: object
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within
+        Disbursement. 
+      properties:
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the loan account for which the disbursement is made \r\n"
+        AuthorizingEmployeeReference:
+          type: string
+          format: Object
+          description: "Reference to the authorizing employee \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer owning the loan, used to obtain payment arrangements \r\n"
+        FundingAccountReference:
+          type: string
+          format: Object
+          description: "Reference to the internal funding account for the disbursement \r\n"
+        PayeeReference:
+          type: string
+          format: Object
+          description: "Reference to the target for the disbursement \r\n"
+        PayeeProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the account to where the disbursement payment is made \r\n"
+        PayeeBankReference:
+          type: string
+          format: Object
+          description: "Reference to the payee account bank \r\n"
+        Amount:
+          type: string
+          format: String
+          description: "The amount of the disbursement \r\n"
+        Currency:
+          type: string
+          format: String
+          description: "The currency for the payment \r\n"
+        ValueDate:
+          $ref: '#/components/schemas/Date'
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The value date for the disbursement payment ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''

@@ -1,0 +1,169 @@
+asyncapi: 3.0.0
+info:
+  title: Investment Portfolio Planning
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Agree the policies and
+    required make-up of an investment portfolio and ensure all required bank and
+    regulatory terms and conditions are addressed
+channels:
+  ManagedInvestmentPortfolioAgreement/Created:
+    address: ManagedInvestmentPortfolioAgreement/Created
+    messages:
+      ManagedInvestmentPortfolioAgreement-created.message:
+        $ref: '#/components/messages/ManagedInvestmentPortfolioAgreement'
+    description: ''
+  ManagedInvestmentPortfolioAgreement/Updated:
+    address: ManagedInvestmentPortfolioAgreement/Updated
+    messages:
+      ManagedInvestmentPortfolioAgreement-updated.message:
+        $ref: '#/components/messages/ManagedInvestmentPortfolioAgreement'
+    description: ''
+  InvestmentTerms/Created:
+    address: InvestmentTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InvestmentTerms'
+    description: ''
+  InvestmentTerms/Updated:
+    address: InvestmentTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InvestmentTerms'
+    description: ''
+operations:
+  ManagedInvestmentPortfolioAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ManagedInvestmentPortfolioAgreement~1Created'
+    summary: ManagedInvestmentPortfolioAgreement
+    messages:
+      - $ref: >-
+          #/channels/ManagedInvestmentPortfolioAgreement~1Created/messages/ManagedInvestmentPortfolioAgreement-created.message
+  ManagedInvestmentPortfolioAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ManagedInvestmentPortfolioAgreement~1Updated'
+    summary: ManagedInvestmentPortfolioAgreement
+    messages:
+      - $ref: >-
+          #/channels/ManagedInvestmentPortfolioAgreement~1Updated/messages/ManagedInvestmentPortfolioAgreement-updated.message
+  InvestmentTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InvestmentTerms~1Created'
+    summary: InvestmentTerms
+    messages:
+      - $ref: '#/channels/InvestmentTerms~1Created/messages/publish.message'
+  InvestmentTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InvestmentTerms~1Updated'
+    summary: InvestmentTerms
+    messages:
+      - $ref: '#/channels/InvestmentTerms~1Updated/messages/publish.message'
+components:
+  messages:
+    ManagedInvestmentPortfolioAgreement:
+      name: ManagedInvestmentPortfolioAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Investment Portfolio Planning.
+
+
+      payload:
+        $ref: '#/components/schemas/ManagedInvestmentPortfolioAgreement'
+    InvestmentTerms:
+      name: InvestmentTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/InvestmentTerms'
+  schemas:
+    InvestmentTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        InvestmentPortfolioAgreementTermType:
+          type: string
+          format: String
+          description: "The type of term (e.g. risk appetite, forbidden securities/sectors) \r\n"
+        InvestmentPortfolioAgreementTermDescription:
+          type: string
+          format: String
+          description: "Description of the term defining how it is to be interpreted, applicable for behavioral controls (e.g. limit of exposure to a segment property or level of risk) \r\n"
+        InvestmentPortfolioAgreementTermConstraints:
+          type: string
+          format: String
+          description: "One or more specific constraint parameters that calibrate the term, applicable for position constraints (e.g. the specific percentage limit of holdings by value that can be applied to a type of security) \r\n"
+    ManagedInvestmentPortfolioAgreement:
+      type: object
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Investment Portfolio Planning.
+
+
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the associated customer for the investment portfolio \r\n"
+        LegalEntityReference:
+          type: string
+          format: Object
+          description: "Reference to the legal entity that is the subject of the agreement \r\n"
+        InvestmentPortfolioInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the investment portfolio record of all holdings governed by this agreement \r\n"
+        InvestmentPortfolioAgreementType:
+          type: string
+          format: String
+          description: "The type of investment portfolio agreement (e.g. discretionary, trust ) \r\n"
+        InvestmentPortfolioAgreementJurisdiction:
+          type: string
+          format: String
+          description: "The contractual jurisdiction or coverage of the investment portfolio agreement (e.g. \"governed by State\") \r\n"
+        InvestmentPortfolioAgreementValidFromToDate:
+          $ref: '#/components/schemas/Date'
+        InvestmentPortfolioAgreementSignatoriesResponsibleParties:
+          type: string
+          format: String
+          description: "Reference to signatories \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to any associated documents, (e.g. signed agreement document, disclosures) \r\n"
+        CustomerAgreementInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the customer master agreement that governs the product agreement \r\n"
+        PartyRelationshipProcedureInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to KYC/Regulatory assessments maintained by the Party Life-Cycle Management Service Domain \r\n"
+        ManagedInvestmentPortfolioAgreement:
+          type: string
+          format: String
+          description: "The consolidated view of all of the constituent investment policy terms and conditions in any suitable format \r\n"
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The term of the agreement ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''

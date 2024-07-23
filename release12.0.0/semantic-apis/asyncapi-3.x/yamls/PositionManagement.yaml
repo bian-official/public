@@ -1,0 +1,320 @@
+asyncapi: 3.0.0
+info:
+  title: Position Management
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Service Domain tracks
+    the bank's consolidated financial positions for major customers and complex
+    market conditions
+channels:
+  FinancialPositionState/Created:
+    address: FinancialPositionState/Created
+    messages:
+      FinancialPositionState-created.message:
+        $ref: '#/components/messages/FinancialPositionState'
+    description: ''
+  FinancialPositionState/Updated:
+    address: FinancialPositionState/Updated
+    messages:
+      FinancialPositionState-updated.message:
+        $ref: '#/components/messages/FinancialPositionState'
+    description: ''
+  TrialTransaction/Created:
+    address: TrialTransaction/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrialTransaction'
+    description: ''
+  TrialTransaction/Updated:
+    address: TrialTransaction/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrialTransaction'
+    description: ''
+  TransactionApplication/Created:
+    address: TransactionApplication/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TransactionApplication'
+    description: ''
+  TransactionApplication/Updated:
+    address: TransactionApplication/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TransactionApplication'
+    description: ''
+operations:
+  FinancialPositionState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialPositionState~1Created'
+    summary: FinancialPositionState
+    messages:
+      - $ref: >-
+          #/channels/FinancialPositionState~1Created/messages/FinancialPositionState-created.message
+  FinancialPositionState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialPositionState~1Updated'
+    summary: FinancialPositionState
+    messages:
+      - $ref: >-
+          #/channels/FinancialPositionState~1Updated/messages/FinancialPositionState-updated.message
+  TrialTransaction/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrialTransaction~1Created'
+    summary: TrialTransaction
+    messages:
+      - $ref: '#/channels/TrialTransaction~1Created/messages/publish.message'
+  TrialTransaction/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrialTransaction~1Updated'
+    summary: TrialTransaction
+    messages:
+      - $ref: '#/channels/TrialTransaction~1Updated/messages/publish.message'
+  TransactionApplication/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TransactionApplication~1Created'
+    summary: TransactionApplication
+    messages:
+      - $ref: '#/channels/TransactionApplication~1Created/messages/publish.message'
+  TransactionApplication/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TransactionApplication~1Updated'
+    summary: TransactionApplication
+    messages:
+      - $ref: '#/channels/TransactionApplication~1Updated/messages/publish.message'
+components:
+  messages:
+    FinancialPositionState:
+      name: FinancialPositionState
+      description: >-
+        Monitor and define the status/rating of some entity within Position
+        Management. 
+      payload:
+        $ref: '#/components/schemas/FinancialPositionState'
+    TrialTransaction:
+      name: TrialTransaction
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/TrialTransaction'
+    TransactionApplication:
+      name: TransactionApplication
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/TransactionApplication'
+  schemas:
+    TrialTransaction:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        TrialTransactionReference:
+          type: string
+          format: Object
+          description: "A trial transaction that will impacts a managed position) \r\n"
+        TrialTransactionType:
+          type: string
+          format: String
+          description: "The type of transaction that would be applied to the managed position \r\n"
+        TrialTransactionRecord:
+          type: string
+          format: String
+          description: "Key details of the trial transaction \r\n"
+        TrialTransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        TrialTransactionDate:
+          $ref: '#/components/schemas/Date'
+        TrialTransactionBookingEntity:
+          type: string
+          format: String
+          description: "The booking entity where the trial transaction would be made \r\n"
+        TrailTransactionPositionImpactAssessment:
+          type: string
+          format: String
+          description: "The projected impact the trial transaction will have on the managed position \r\n"
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The make up of the values of the transaction
+        CurrencyAndAmountCurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Date:
+      type: object
+      format: Date
+      description: >-
+        Key dates and times associated with the trial transaction ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    TransactionApplication:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        TransactionReference:
+          type: string
+          format: Object
+          description: "A trial transaction that will impacts a managed position) \r\n"
+        TransactionType:
+          type: string
+          format: String
+          description: "The type of transaction that would be applied to the managed position \r\n"
+        TransactionRecord:
+          type: string
+          format: String
+          description: "Key details of the trial transaction \r\n"
+        TransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        TransactionDate:
+          $ref: '#/components/schemas/Date'
+        TransactionBookingEntity:
+          type: string
+          format: String
+          description: "The booking entity where the trial transaction would be made \r\n"
+        TransactionPositionImpactAssessment:
+          type: string
+          format: String
+          description: "The projected impact the trial transaction will have on the managed position \r\n"
+    FinancialPositionState:
+      type: object
+      description: >-
+        Monitor and define the status/rating of some entity within Position
+        Management. 
+      properties:
+        PositionType:
+          type: string
+          format: String
+          description: "The type of position being monitored (e.g. consolidated customer exposure, geographic/sector exposure) \r\n"
+        PositionCustomerReference:
+          type: string
+          format: Object
+          description: "The customer or customer type associated with the position if applicable \r\n"
+        PositionSector:
+          type: string
+          format: String
+          description: "The sector or segment associated with the position if applicable \r\n"
+        PositionProductType:
+          type: string
+          format: String
+          description: "The product type or specific product associated with the position if applicable \r\n"
+        PositionDefinition:
+          type: string
+          format: String
+          description: "Description of the specification and purpose position monitoring (e.g. real-time limit, trend) \r\n"
+        PositionThresholdsLimits:
+          type: string
+          format: String
+          description: "Thresholds limits associated with the position \r\n"
+        PositionValue:
+          type: string
+          format: String
+          description: "The current, historical and if applicable projected values of the monitored position \r\n"
+        PositionNotificationArrangementReference:
+          type: string
+          format: Object
+          description: "Reference to a notification source requesting updates on position changes \r\n"
+        PositionNotificationArrangementRecord:
+          type: string
+          format: String
+          description: "The details maintained for the notification service \r\n"
+        PositionNotificationBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Reference to the notified party \r\n"
+        PositionNotificationDetails:
+          type: string
+          format: String
+          description: "Details of the requirements/schedule for position notification \r\n"
+        PositionNotificationRecord:
+          type: string
+          format: String
+          description: "The position notification record generated as required \r\n"

@@ -1,0 +1,289 @@
+asyncapi: 3.0.0
+info:
+  title: Market Order
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Market Order records an
+    instruction from a customer or his or her representative to buy or sell
+    securities. It follows the order during its lifetime and reports back to the
+    requestor on the execution.
+channels:
+  MarketOrderTransaction/Created:
+    address: MarketOrderTransaction/Created
+    messages:
+      MarketOrderTransaction-created.message:
+        $ref: '#/components/messages/MarketOrderTransaction'
+    description: ''
+  MarketOrderTransaction/Updated:
+    address: MarketOrderTransaction/Updated
+    messages:
+      MarketOrderTransaction-updated.message:
+        $ref: '#/components/messages/MarketOrderTransaction'
+    description: ''
+  FundingCheck/Created:
+    address: FundingCheck/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FundingCheck'
+    description: ''
+  FundingCheck/Updated:
+    address: FundingCheck/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FundingCheck'
+    description: ''
+  CustomerProcessing/Created:
+    address: CustomerProcessing/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CustomerProcessing'
+    description: ''
+  CustomerProcessing/Updated:
+    address: CustomerProcessing/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CustomerProcessing'
+    description: ''
+  Compliance/Created:
+    address: Compliance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Compliance'
+    description: ''
+  Compliance/Updated:
+    address: Compliance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Compliance'
+    description: ''
+  TradeInitiation/Created:
+    address: TradeInitiation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeInitiation'
+    description: ''
+  TradeInitiation/Updated:
+    address: TradeInitiation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeInitiation'
+    description: ''
+operations:
+  MarketOrderTransaction-created:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketOrderTransaction~1Created'
+    summary: MarketOrderTransaction
+    messages:
+      - $ref: >-
+          #/channels/MarketOrderTransaction~1Created/messages/MarketOrderTransaction-created.message
+  MarketOrderTransaction-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketOrderTransaction~1Updated'
+    summary: MarketOrderTransaction
+    messages:
+      - $ref: >-
+          #/channels/MarketOrderTransaction~1Updated/messages/MarketOrderTransaction-updated.message
+  FundingCheck/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FundingCheck~1Created'
+    summary: FundingCheck
+    messages:
+      - $ref: '#/channels/FundingCheck~1Created/messages/publish.message'
+  FundingCheck/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FundingCheck~1Updated'
+    summary: FundingCheck
+    messages:
+      - $ref: '#/channels/FundingCheck~1Updated/messages/publish.message'
+  CustomerProcessing/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerProcessing~1Created'
+    summary: CustomerProcessing
+    messages:
+      - $ref: '#/channels/CustomerProcessing~1Created/messages/publish.message'
+  CustomerProcessing/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerProcessing~1Updated'
+    summary: CustomerProcessing
+    messages:
+      - $ref: '#/channels/CustomerProcessing~1Updated/messages/publish.message'
+  Compliance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Compliance~1Created'
+    summary: Compliance
+    messages:
+      - $ref: '#/channels/Compliance~1Created/messages/publish.message'
+  Compliance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Compliance~1Updated'
+    summary: Compliance
+    messages:
+      - $ref: '#/channels/Compliance~1Updated/messages/publish.message'
+  TradeInitiation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeInitiation~1Created'
+    summary: TradeInitiation
+    messages:
+      - $ref: '#/channels/TradeInitiation~1Created/messages/publish.message'
+  TradeInitiation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeInitiation~1Updated'
+    summary: TradeInitiation
+    messages:
+      - $ref: '#/channels/TradeInitiation~1Updated/messages/publish.message'
+components:
+  messages:
+    MarketOrderTransaction:
+      name: MarketOrderTransaction
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Market
+        Order. 
+      payload:
+        $ref: '#/components/schemas/MarketOrderTransaction'
+    FundingCheck:
+      name: FundingCheck
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/FundingCheck'
+    CustomerProcessing:
+      name: CustomerProcessing
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/CustomerProcessing'
+    Compliance:
+      name: Compliance
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Compliance'
+    TradeInitiation:
+      name: TradeInitiation
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/TradeInitiation'
+  schemas:
+    FundingCheck:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        MarketOrderTransactionFundingCheckResult:
+          type: string
+          format: String
+          description: "The outcome of the funds available check \r\n"
+    CustomerProcessing:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        MarketOrderCustomerProcessingCheckResult:
+          type: string
+          format: String
+          description: "Details of any customer specific processing requirements applied to the market order \r\n"
+    Compliance:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        MarketOrderTransactionComplianceCheckType:
+          type: string
+          format: String
+          description: "The type of compliance check performed (e.g. AML, Watch lists) \r\n"
+        MarketOrderTransactionComplianceCheckResult:
+          type: string
+          format: String
+          description: "The outcome of the compliance check \r\n"
+        MarketOrderTransactionComplianceTaskResult:
+          type: string
+          format: String
+          description: "Details of the overall compliance checking process \r\n"
+    TradeInitiation:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        MarketTradeTransactionInstanceReference:
+          type: string
+          format: Object
+          description: "The reference to the market trade. Note this can be the internal bank 'trade' against the bank's managed position and may not result in a matched trade in the wholesale markets \r\n"
+        MarketTradeTransactionInstanceStatus:
+          type: string
+          format: String
+          description: "The returned status of the market trade \r\n"
+        MarketTradeInitiationTaskResult:
+          type: string
+          format: String
+          description: "Details of the market trade initiation task \r\n"
+    MarketOrderTransaction:
+      type: object
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Market
+        Order. 
+      properties:
+        MarketOrderInstructionType:
+          type: string
+          format: String
+          description: "The type of market order request (e.g. Managed Investment, Corporate Finance) \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the account primary party/owner for the market order \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "The employee/business unit placing the market order \r\n"
+        InvestmentPortfolioInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the associated investment portfolio record of all holdings (referenced to check securities availability if necessary) \r\n"
+        CustomerMarketOrderProcessingInstruction:
+          type: string
+          format: String
+          description: "Any customer specific processing preferences or requirements \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "The document reference for the order confirmation notice \r\n"
+        CorrespondenceInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the correspondence generated for the order confirmation \r\n"
+        MarketOrderTransaction:
+          type: string
+          format: String
+          description: "The details of the market order transaction \r\n"
+        InvestmentAccountArrangementInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the underlying investment account supporting the transaction \r\n"
+        CurrentAccountArrangementInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the underlying cash account supporting the transaction \r\n"
+        MarketOrderType:
+          type: string
+          format: String
+          description: "The type of market order (e.g. Day Order. Order on Open/Close, Fill or Kill, Limit Order) \r\n"
+        SecurityType:
+          type: string
+          format: String
+          description: "The security to be traded \r\n"
+        Amount:
+          type: string
+          format: String
+          description: "The volume of shares to be bought or sold \r\n"
+        DateType:
+          type: string
+          format: String
+          description: "Key dates associated with the transaction (e.g. order capture, trade execution, order completion) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Value of the specific date type \r\n"

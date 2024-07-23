@@ -1,0 +1,218 @@
+asyncapi: 3.0.0
+info:
+  title: Issued Device Tracking
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles operational access to issued device tracking services. Services
+    report on the status of devices such as cards, fobs, etc. that have been
+    issued to customers. Service notifications include fraud warnings/alerts and
+    device cancellation.
+channels:
+  IssuedDeviceState/Created:
+    address: IssuedDeviceState/Created
+    messages:
+      IssuedDeviceState-created.message:
+        $ref: '#/components/messages/IssuedDeviceState'
+    description: ''
+  IssuedDeviceState/Updated:
+    address: IssuedDeviceState/Updated
+    messages:
+      IssuedDeviceState-updated.message:
+        $ref: '#/components/messages/IssuedDeviceState'
+    description: ''
+  InternalNotification/Created:
+    address: InternalNotification/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalNotification'
+    description: ''
+  InternalNotification/Updated:
+    address: InternalNotification/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalNotification'
+    description: ''
+  ExternalReport/Created:
+    address: ExternalReport/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ExternalReport'
+    description: ''
+  ExternalReport/Updated:
+    address: ExternalReport/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ExternalReport'
+    description: ''
+operations:
+  IssuedDeviceState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/IssuedDeviceState~1Created'
+    summary: IssuedDeviceState
+    messages:
+      - $ref: >-
+          #/channels/IssuedDeviceState~1Created/messages/IssuedDeviceState-created.message
+  IssuedDeviceState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/IssuedDeviceState~1Updated'
+    summary: IssuedDeviceState
+    messages:
+      - $ref: >-
+          #/channels/IssuedDeviceState~1Updated/messages/IssuedDeviceState-updated.message
+  InternalNotification/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalNotification~1Created'
+    summary: InternalNotification
+    messages:
+      - $ref: '#/channels/InternalNotification~1Created/messages/publish.message'
+  InternalNotification/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalNotification~1Updated'
+    summary: InternalNotification
+    messages:
+      - $ref: '#/channels/InternalNotification~1Updated/messages/publish.message'
+  ExternalReport/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ExternalReport~1Created'
+    summary: ExternalReport
+    messages:
+      - $ref: '#/channels/ExternalReport~1Created/messages/publish.message'
+  ExternalReport/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ExternalReport~1Updated'
+    summary: ExternalReport
+    messages:
+      - $ref: '#/channels/ExternalReport~1Updated/messages/publish.message'
+components:
+  messages:
+    IssuedDeviceState:
+      name: IssuedDeviceState
+      description: >-
+        Monitor and define the status/rating of some entity within Issued Device
+        Tracking. 
+      payload:
+        $ref: '#/components/schemas/IssuedDeviceState'
+    InternalNotification:
+      name: InternalNotification
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/InternalNotification'
+    ExternalReport:
+      name: ExternalReport
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/ExternalReport'
+  schemas:
+    InternalNotification:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        IssuedDeviceReference:
+          type: string
+          format: Object
+          description: "Provided reference to the target issued device \r\n"
+        IssuedDeviceType:
+          type: string
+          format: String
+          description: "Type of issued device being notified \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the associated customer if applicable \r\n"
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the associated product instance if appropriate \r\n"
+        StatusUpdateDetails:
+          type: string
+          format: String
+          description: "The details of the status update (e.g. reported lost or stolen device, device broken) \r\n"
+        StatusUpdateResult:
+          type: string
+          format: String
+          description: "The response to the status update request (e.g. update processed) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Key dates and times associated with the notification \r\n"
+    ExternalReport:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        InformationFeedServiceContentRecord:
+          type: string
+          format: String
+          description: "Is the record of the information notified by the IP that can reference a single device notification or a batch file covering multiple devices \r\n"
+        IssuedDeviceReference:
+          type: string
+          format: Object
+          description: "Provided reference to the target issued device in the form defined by the IP \r\n"
+        IssuedDeviceType:
+          type: string
+          format: String
+          description: "Type of issued device being notified in the form defined by the IP \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the associated customer in the form defined by the IP \r\n"
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the associated product instance in the form defined by the IP \r\n"
+        StatusUpdateDetails:
+          type: string
+          format: String
+          description: "The details of the status update (e.g. reported lost or stolen device, device broken) \r\n"
+        StatusUpdateResult:
+          type: string
+          format: String
+          description: "The response to the status update request (e.g. update processed) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Key dates and times associated with the external notification \r\n"
+    IssuedDeviceState:
+      type: object
+      description: >-
+        Monitor and define the status/rating of some entity within Issued Device
+        Tracking. 
+      properties:
+        InformationFeedProviderReference:
+          type: string
+          format: Object
+          description: "Reference to the external information feed service supplier (IP) providing device status reports \r\n"
+        IssuedDeviceAllocationInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the issued device, include its status as maintained by administration \r\n"
+        IssuedDeviceAllocationStatus:
+          type: string
+          format: String
+          description: "Is the status of the issued device that is updated \r\n"

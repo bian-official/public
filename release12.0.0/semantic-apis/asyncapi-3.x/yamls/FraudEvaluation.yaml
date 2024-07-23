@@ -1,0 +1,176 @@
+asyncapi: 3.0.0
+info:
+  title: Fraud Evaluation
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The service domain
+    executes fraud behavioral pattern tests to detect possible fraudulent
+    transactions/activity
+channels:
+  FraudEvaluationAssessment/Created:
+    address: FraudEvaluationAssessment/Created
+    messages:
+      FraudEvaluationAssessment-created.message:
+        $ref: '#/components/messages/FraudEvaluationAssessment'
+    description: ''
+  FraudEvaluationAssessment/Updated:
+    address: FraudEvaluationAssessment/Updated
+    messages:
+      FraudEvaluationAssessment-updated.message:
+        $ref: '#/components/messages/FraudEvaluationAssessment'
+    description: ''
+  RuleSetsandDecisionTrees/Created:
+    address: RuleSetsandDecisionTrees/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RuleSetsandDecisionTrees'
+    description: ''
+  RuleSetsandDecisionTrees/Updated:
+    address: RuleSetsandDecisionTrees/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RuleSetsandDecisionTrees'
+    description: ''
+  Models/Created:
+    address: Models/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Models'
+    description: ''
+  Models/Updated:
+    address: Models/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Models'
+    description: ''
+operations:
+  FraudEvaluationAssessment-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudEvaluationAssessment~1Created'
+    summary: FraudEvaluationAssessment
+    messages:
+      - $ref: >-
+          #/channels/FraudEvaluationAssessment~1Created/messages/FraudEvaluationAssessment-created.message
+  FraudEvaluationAssessment-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudEvaluationAssessment~1Updated'
+    summary: FraudEvaluationAssessment
+    messages:
+      - $ref: >-
+          #/channels/FraudEvaluationAssessment~1Updated/messages/FraudEvaluationAssessment-updated.message
+  RuleSetsandDecisionTrees/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RuleSetsandDecisionTrees~1Created'
+    summary: RuleSetsandDecisionTrees
+    messages:
+      - $ref: '#/channels/RuleSetsandDecisionTrees~1Created/messages/publish.message'
+  RuleSetsandDecisionTrees/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RuleSetsandDecisionTrees~1Updated'
+    summary: RuleSetsandDecisionTrees
+    messages:
+      - $ref: '#/channels/RuleSetsandDecisionTrees~1Updated/messages/publish.message'
+  Models/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Models~1Created'
+    summary: Models
+    messages:
+      - $ref: '#/channels/Models~1Created/messages/publish.message'
+  Models/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Models~1Updated'
+    summary: Models
+    messages:
+      - $ref: '#/channels/Models~1Updated/messages/publish.message'
+components:
+  messages:
+    FraudEvaluationAssessment:
+      name: FraudEvaluationAssessment
+      description: >-
+        To test or assess an entity, possibly against some formal qualification
+        or certification requirement within Fraud Evaluation. 
+      payload:
+        $ref: '#/components/schemas/FraudEvaluationAssessment'
+    RuleSetsandDecisionTrees:
+      name: RuleSetsandDecisionTrees
+      description: |-
+        All kind of verifications
+        Examples:- Password verification
+      payload:
+        $ref: '#/components/schemas/RuleSetsandDecisionTrees'
+    Models:
+      name: Models
+      description: |-
+        All kind of verifications
+        Examples:- Password verification
+      payload:
+        $ref: '#/components/schemas/Models'
+  schemas:
+    RuleSetsandDecisionTrees:
+      type: object
+      description: |-
+        All kind of verifications
+        Examples:- Password verification
+      properties:
+        RuleSetsAndDecisionTreesTestResult:
+          type: string
+          format: String
+          description: "The production transaction assessment test results, including reference to any potential fraud transactions note this can be a real-time dataset \r\n"
+        RuleSetsAndDecisionTreesTestWorkProduct:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the assessment task \r\n"
+    Models:
+      type: object
+      description: |-
+        All kind of verifications
+        Examples:- Password verification
+      properties:
+        ModelsTestResult:
+          type: string
+          format: String
+          description: "The production transaction assessment test results, including reference to any potential fraud transactions note this can be a real-time dataset \r\n"
+        ModelsTestWorkProduct:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the assessment task \r\n"
+    FraudEvaluationAssessment:
+      type: object
+      description: >-
+        To test or assess an entity, possibly against some formal qualification
+        or certification requirement within Fraud Evaluation. 
+      properties:
+        ProductProductionSessionReference:
+          type: string
+          format: Object
+          description: "Reference to the product fulfillment production session for which on-line fraud evaluation is performed \r\n"
+        FraudEvaluationTestProfile:
+          type: string
+          format: String
+          description: "Details the types of fraud evaluation tests applied \r\n"
+        FraudEvaluationEnsembleTechniqueType:
+          type: string
+          format: String
+          description: "The type of technique use to combine results of the different tests used to detect out of pattern behavior \r\n"
+        FraudEvaluationEnsembleTechniqueDefinition:
+          type: string
+          format: String
+          description: "The definition of how the constituent rule set/decision tree and model test are combined to compete the assessment \r\n"
+        FraudEvaluationTransactionConsolidationRecord:
+          type: string
+          format: String
+          description: "The production transaction details that are submitted for fraud evaluation note this will typically be a real-time dataset \r\n"
+        FraudEvaluationProductionAnomalyRecord:
+          type: string
+          format: String
+          description: "Details of detected out of pattern production activity that could be fraud \r\n"
+        FraudEvaluationProductionAnomalyProductionTransactionReference:
+          type: string
+          format: Object
+          description: "Reference to the one or more production transactions isolated by the fraud evaluation tests \r\n"

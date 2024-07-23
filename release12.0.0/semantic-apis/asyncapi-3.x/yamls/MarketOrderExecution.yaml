@@ -1,0 +1,283 @@
+asyncapi: 3.0.0
+info:
+  title: Market Order Execution
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Market Order
+    Execution Service Domain is responsible for the booking of securities
+    transactions (e.g. resulting from market orders or some types of corporate
+    actions) on investment accounts, so in terms of security name plus quantity.
+channels:
+  MarketTradeTransaction/Created:
+    address: MarketTradeTransaction/Created
+    messages:
+      MarketTradeTransaction-created.message:
+        $ref: '#/components/messages/MarketTradeTransaction'
+    description: ''
+  MarketTradeTransaction/Updated:
+    address: MarketTradeTransaction/Updated
+    messages:
+      MarketTradeTransaction-updated.message:
+        $ref: '#/components/messages/MarketTradeTransaction'
+    description: ''
+  Quote/Created:
+    address: Quote/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Quote'
+    description: ''
+  Quote/Updated:
+    address: Quote/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Quote'
+    description: ''
+  Position/Created:
+    address: Position/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Position'
+    description: ''
+  Position/Updated:
+    address: Position/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Position'
+    description: ''
+  TradeInitiation/Created:
+    address: TradeInitiation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeInitiation'
+    description: ''
+  TradeInitiation/Updated:
+    address: TradeInitiation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeInitiation'
+    description: ''
+operations:
+  MarketTradeTransaction-created:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketTradeTransaction~1Created'
+    summary: MarketTradeTransaction
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeTransaction~1Created/messages/MarketTradeTransaction-created.message
+  MarketTradeTransaction-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketTradeTransaction~1Updated'
+    summary: MarketTradeTransaction
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeTransaction~1Updated/messages/MarketTradeTransaction-updated.message
+  Quote/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Quote~1Created'
+    summary: Quote
+    messages:
+      - $ref: '#/channels/Quote~1Created/messages/publish.message'
+  Quote/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Quote~1Updated'
+    summary: Quote
+    messages:
+      - $ref: '#/channels/Quote~1Updated/messages/publish.message'
+  Position/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Position~1Created'
+    summary: Position
+    messages:
+      - $ref: '#/channels/Position~1Created/messages/publish.message'
+  Position/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Position~1Updated'
+    summary: Position
+    messages:
+      - $ref: '#/channels/Position~1Updated/messages/publish.message'
+  TradeInitiation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeInitiation~1Created'
+    summary: TradeInitiation
+    messages:
+      - $ref: '#/channels/TradeInitiation~1Created/messages/publish.message'
+  TradeInitiation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeInitiation~1Updated'
+    summary: TradeInitiation
+    messages:
+      - $ref: '#/channels/TradeInitiation~1Updated/messages/publish.message'
+components:
+  messages:
+    MarketTradeTransaction:
+      name: MarketTradeTransaction
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Market Order
+        Execution. 
+      payload:
+        $ref: '#/components/schemas/MarketTradeTransaction'
+    Quote:
+      name: Quote
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Quote'
+    Position:
+      name: Position
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Position'
+    TradeInitiation:
+      name: TradeInitiation
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/TradeInitiation'
+  schemas:
+    Quote:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        QuoteSecurityType:
+          type: string
+          format: String
+          description: "The security for which the quote is provided \r\n"
+        QuoteType:
+          type: string
+          format: String
+          description: "The type of quote being provided (e.g. current market, bank committed) \r\n"
+        Quote:
+          type: string
+          format: String
+          description: "The buy/sell quote by trade type and volume as appropriate \r\n"
+    Position:
+      type: object
+      format: Position
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        BankSecurityPositionSecurityType:
+          type: string
+          format: String
+          description: "The security that the bank position is traded for \r\n"
+        PositionMarketOrderTradeInitiationInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to market trades impacting the position during the current trading period \r\n"
+        BankSecurityPositionSecurityPAndLRecord:
+          type: string
+          format: String
+          description: "The consolidated record of trading activity against the position during the trading period, including the derived position P&L \r\n"
+        WholesaleTrade:
+          type: string
+          format: String
+          description: "The record of trades made in the wholesale markets by the bank to manage its net security position. Note for larger market orders/trades there may be a corresponding wholesale transaction as appropriate) \r\n"
+        WholesaleTradeSecurityType:
+          type: string
+          format: String
+          description: "The traded security \r\n"
+        WholesaleTradeVolume:
+          type: string
+          format: String
+          description: "The volume of share bought/sold \r\n"
+        WholesaleTradePrice:
+          type: string
+          format: String
+          description: "The security and cash flow details of the trade \r\n"
+        WholesaleTradeClearingandSettlementTerms:
+          type: string
+          format: String
+          description: "The terms covering the clearing and settlement of the trade \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "The document reference for the trade confirmation notice \r\n"
+        CorrespondenceInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the correspondence generated for the trade confirmation \r\n"
+        WholesaleTradeStatus:
+          type: string
+          format: String
+          description: "Status tracking for the wholesale trade \r\n"
+    TradeInitiation:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        WholesaleTradeReference:
+          type: string
+          format: Object
+          description: "If the market trade is not executed against the bank position, but directly in the wholesale market, this refers to the actual wholesale trading record \r\n"
+        MarketTradeTransactionInstanceProcessingStatus:
+          type: string
+          format: String
+          description: "The tracked and returned processing status of the market trade (e.g. pending, partially complete, complete) \r\n"
+        MarketTradeInitiationTaskResult:
+          type: string
+          format: String
+          description: "Details of the market trade initiation task \r\n"
+    MarketTradeTransaction:
+      type: object
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Market Order
+        Execution. 
+      properties:
+        MarketOrderTransactionInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the market order that is to be executed in the markets \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the account primary party/owner for the market order \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "The employee/business unit placing the market order \r\n"
+        CustomerMarketOrderProcessingInstruction:
+          type: string
+          format: String
+          description: "Any customer specific processing preferences or requirements \r\n"
+        MarketOrderTransaction:
+          type: string
+          format: String
+          description: "The details of the market order transaction \r\n"
+        InvestmentAccountArrangementInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the underlying investment account supporting the transaction \r\n"
+        CurrentAccountArrangementInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the underlying cash account supporting the transaction \r\n"
+        MarketOrderType:
+          type: string
+          format: String
+          description: "The type of market order (e.g. Day Order. Order on Open/Close, Fill or Kill, Limit Order) \r\n"
+        SecurityType:
+          type: string
+          format: String
+          description: "The security to be traded \r\n"
+        Amount:
+          type: string
+          format: String
+          description: "The volume of shares to be bought or sold. This can include different amount types quoted/committed, traded etc.) \r\n"
+        DateType:
+          type: string
+          format: String
+          description: "Key dates associated with the transaction (e.g. order capture, trade execution, order completion) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Value of the specific date type \r\n"
+        MarketOrderTradeInitiationInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the associated market trade if the order is executed in the market directly \r\n"

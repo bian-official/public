@@ -1,0 +1,167 @@
+asyncapi: 3.0.0
+info:
+  title: Product Inventory Item Management
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Maintain and distribute
+    product inventory
+channels:
+  ProductInventoryAllocation/Created:
+    address: ProductInventoryAllocation/Created
+    messages:
+      ProductInventoryAllocation-created.message:
+        $ref: '#/components/messages/ProductInventoryAllocation'
+    description: ''
+  ProductInventoryAllocation/Updated:
+    address: ProductInventoryAllocation/Updated
+    messages:
+      ProductInventoryAllocation-updated.message:
+        $ref: '#/components/messages/ProductInventoryAllocation'
+    description: ''
+  Assignment/Created:
+    address: Assignment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+  Assignment/Updated:
+    address: Assignment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+operations:
+  ProductInventoryAllocation-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ProductInventoryAllocation~1Created'
+    summary: ProductInventoryAllocation
+    messages:
+      - $ref: >-
+          #/channels/ProductInventoryAllocation~1Created/messages/ProductInventoryAllocation-created.message
+  ProductInventoryAllocation-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ProductInventoryAllocation~1Updated'
+    summary: ProductInventoryAllocation
+    messages:
+      - $ref: >-
+          #/channels/ProductInventoryAllocation~1Updated/messages/ProductInventoryAllocation-updated.message
+  Assignment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Created'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Created/messages/publish.message'
+  Assignment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Updated'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Updated/messages/publish.message'
+components:
+  messages:
+    ProductInventoryAllocation:
+      name: ProductInventoryAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Product Inventory Item
+        Management. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/ProductInventoryAllocation'
+    Assignment:
+      name: Assignment
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      payload:
+        $ref: '#/components/schemas/Assignment'
+  schemas:
+    Assignment:
+      type: object
+      format: Assignment
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      properties:
+        ProductInventoryAssignmentRequestType:
+          type: string
+          format: String
+          description: "Defines the type of assignment (e.g. to schedule, ad-hoc inventory request) \r\n"
+        ProductInventoryAssignmentRequestRecord:
+          type: string
+          format: String
+          description: "Contains details of the product inventory request, in particular the item type, amount and delivery arrangements \r\n"
+        ProductInventoryAssignmentDeliveryRecord:
+          type: string
+          format: String
+          description: "Details of the distribution of product inventory to a location \r\n"
+        ProductInventoryAssignmentCosts:
+          type: string
+          format: String
+          description: "Details of inventory and delivery related costs \r\n"
+        DateType:
+          type: string
+          format: String
+          description: "Key dates associated with the assignment (e.g. order date, confirmation date, delivery date) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Value of the specific date type \r\n"
+    ProductInventoryAllocation:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Product Inventory Item
+        Management. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        ProductInventoryAllocationServiceSchedule:
+          type: string
+          format: String
+          description: "Maintains the distribution schedule for all managed product inventory items. This includes all past distribution records and future scheduled deliveries \r\n"
+        ProductInventoryHoldings:
+          type: string
+          format: String
+          description: "The collection of product inventory items \r\n"
+        ProductandServiceType:
+          type: string
+          format: String
+          description: "The type or category of product or service for which inventory items are held (e.g. specialized consumer loan, relocation services) \r\n"
+        ProductInventoryItemType:
+          type: string
+          format: String
+          description: "Reference to a specific type of product inventory item \r\n"
+        ProductInventoryItemRecord:
+          type: string
+          format: String
+          description: "Details about a product inventory type holding \r\n"
+        ProductInventoryItemDescription:
+          type: string
+          format: String
+          description: "Description of the inventory item used for selection/reference purposes \r\n"
+        ProductInventoryItemSupplierDetails:
+          type: string
+          format: String
+          description: "Details as to the supplier details for obtaining additional items when required (includes ordering details, volumes and frequency, pricing, delivery timelines etc.) \r\n"
+        ProductInventoryUsedLocations:
+          type: string
+          format: String
+          description: "Details the locations where the inventory item is distributed to and the minimum and maximum holding amounts and inventory renewal cycles (used to trigger/schedule renewal deliveries) \r\n"
+        ProductInventoryHolding:
+          type: string
+          format: String
+          description: "The current and projected holding and holding targets/limits by location taking into account scheduled distribution plans \r\n"

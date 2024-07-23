@@ -1,0 +1,237 @@
+asyncapi: 3.0.0
+info:
+  title: Market Data Switch Operation
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    operates the internal information distribution facility/switch in compliance
+    with administered external subscription information feed service access
+    rights. Note the content is retrieved by the Market Feed Operation service
+    domain from the various external feed services. Internal information can
+    also be published over the switch from various bank sources (such as bank
+    rates provided by treasury).
+channels:
+  InformationFeedSwitchOperatingSession/Created:
+    address: InformationFeedSwitchOperatingSession/Created
+    messages:
+      InformationFeedSwitchOperatingSession-created.message:
+        $ref: '#/components/messages/InformationFeedSwitchOperatingSession'
+    description: ''
+  InformationFeedSwitchOperatingSession/Updated:
+    address: InformationFeedSwitchOperatingSession/Updated
+    messages:
+      InformationFeedSwitchOperatingSession-updated.message:
+        $ref: '#/components/messages/InformationFeedSwitchOperatingSession'
+    description: ''
+  InternalPublication/Created:
+    address: InternalPublication/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalPublication'
+    description: ''
+  InternalPublication/Updated:
+    address: InternalPublication/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalPublication'
+    description: ''
+  FeedUpload/Created:
+    address: FeedUpload/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FeedUpload'
+    description: ''
+  FeedUpload/Updated:
+    address: FeedUpload/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FeedUpload'
+    description: ''
+  Distribution/Created:
+    address: Distribution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Distribution'
+    description: ''
+  Distribution/Updated:
+    address: Distribution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Distribution'
+    description: ''
+operations:
+  InformationFeedSwitchOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/InformationFeedSwitchOperatingSession~1Created'
+    summary: InformationFeedSwitchOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/InformationFeedSwitchOperatingSession~1Created/messages/InformationFeedSwitchOperatingSession-created.message
+  InformationFeedSwitchOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/InformationFeedSwitchOperatingSession~1Updated'
+    summary: InformationFeedSwitchOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/InformationFeedSwitchOperatingSession~1Updated/messages/InformationFeedSwitchOperatingSession-updated.message
+  InternalPublication/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalPublication~1Created'
+    summary: InternalPublication
+    messages:
+      - $ref: '#/channels/InternalPublication~1Created/messages/publish.message'
+  InternalPublication/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalPublication~1Updated'
+    summary: InternalPublication
+    messages:
+      - $ref: '#/channels/InternalPublication~1Updated/messages/publish.message'
+  FeedUpload/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FeedUpload~1Created'
+    summary: FeedUpload
+    messages:
+      - $ref: '#/channels/FeedUpload~1Created/messages/publish.message'
+  FeedUpload/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FeedUpload~1Updated'
+    summary: FeedUpload
+    messages:
+      - $ref: '#/channels/FeedUpload~1Updated/messages/publish.message'
+  Distribution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Distribution~1Created'
+    summary: Distribution
+    messages:
+      - $ref: '#/channels/Distribution~1Created/messages/publish.message'
+  Distribution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Distribution~1Updated'
+    summary: Distribution
+    messages:
+      - $ref: '#/channels/Distribution~1Updated/messages/publish.message'
+components:
+  messages:
+    InformationFeedSwitchOperatingSession:
+      name: InformationFeedSwitchOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Market Data
+        Switch Operation. 
+      payload:
+        $ref: '#/components/schemas/InformationFeedSwitchOperatingSession'
+    InternalPublication:
+      name: InternalPublication
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/InternalPublication'
+    FeedUpload:
+      name: FeedUpload
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/FeedUpload'
+    Distribution:
+      name: Distribution
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Distribution'
+  schemas:
+    InternalPublication:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        InternalInformationFeedServiceReference:
+          type: string
+          format: Object
+          description: "Reference to internal sources of published information (e.g. bank rates) \r\n"
+        InternalInformationFeedServiceProfile:
+          type: string
+          format: String
+          description: "Defines the range of internally published information services/pages \r\n"
+        InternalInformationFeedServiceRecordReference:
+          type: string
+          format: Object
+          description: "Reference to 'live' internal pages of information that is published \r\n"
+        InternalInformationFeedServiceRecord:
+          type: string
+          format: String
+          description: "This is the internally generated information that is distributed over the switch \r\n"
+    FeedUpload:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        MarketInformationFeedServiceRecordReference:
+          type: string
+          format: Object
+          description: "Reference to packets of information/records provided, perhaps with real-time updates \r\n"
+        MarketInformationFeedServiceRecord:
+          type: string
+          format: String
+          description: "This is the uploaded market information that is distributed over the switch its content is updated dynamically during the operating session \r\n"
+    Distribution:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        MarketDataSwitchUserAccessRightsRecordReference:
+          type: string
+          format: Object
+          description: "Reference to a user's switch service access rights \r\n"
+        MarketDataSwitchUserAccessRightsRecord:
+          type: string
+          format: String
+          description: "The users are registered to access different services/information made available through the switch it is used to control information distribution \r\n"
+        MarketDataSwitchServiceUserSessionRecord:
+          type: string
+          format: String
+          description: "This tracks the switch service content that the user will receive for this session reflecting their user access rights \r\n"
+    InformationFeedSwitchOperatingSession:
+      type: object
+      description: >-
+        Operate equipment and/or a largely automated facility within Market Data
+        Switch Operation. 
+      properties:
+        MarketInformationFeedServiceReference:
+          type: string
+          format: Object
+          description: "Refers to the market feed service Note:- the service operated by SD Information Provider Operation actually extracts the feed content \r\n"
+        MarketInformationFeedServiceProfile:
+          type: string
+          format: String
+          description: "Sets out the range of information services/pages available possibly with some form of selection menu \r\n"

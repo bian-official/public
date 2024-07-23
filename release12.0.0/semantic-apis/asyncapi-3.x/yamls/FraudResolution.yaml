@@ -1,0 +1,289 @@
+asyncapi: 3.0.0
+info:
+  title: Fraud Resolution
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain sets
+    up and processes a fraud case resulting from fraud behavior that has been
+    detected during production processing
+channels:
+  FraudResolutionProcedure/Created:
+    address: FraudResolutionProcedure/Created
+    messages:
+      FraudResolutionProcedure-created.message:
+        $ref: '#/components/messages/FraudResolutionProcedure'
+    description: ''
+  FraudResolutionProcedure/Updated:
+    address: FraudResolutionProcedure/Updated
+    messages:
+      FraudResolutionProcedure-updated.message:
+        $ref: '#/components/messages/FraudResolutionProcedure'
+    description: ''
+  CaseDetermination/Created:
+    address: CaseDetermination/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseDetermination'
+    description: ''
+  CaseDetermination/Updated:
+    address: CaseDetermination/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseDetermination'
+    description: ''
+  CaseResolution/Created:
+    address: CaseResolution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseResolution'
+    description: ''
+  CaseResolution/Updated:
+    address: CaseResolution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseResolution'
+    description: ''
+  CaseAnalysis/Created:
+    address: CaseAnalysis/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseAnalysis'
+    description: ''
+  CaseAnalysis/Updated:
+    address: CaseAnalysis/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseAnalysis'
+    description: ''
+operations:
+  FraudResolutionProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudResolutionProcedure~1Created'
+    summary: FraudResolutionProcedure
+    messages:
+      - $ref: >-
+          #/channels/FraudResolutionProcedure~1Created/messages/FraudResolutionProcedure-created.message
+  FraudResolutionProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudResolutionProcedure~1Updated'
+    summary: FraudResolutionProcedure
+    messages:
+      - $ref: >-
+          #/channels/FraudResolutionProcedure~1Updated/messages/FraudResolutionProcedure-updated.message
+  CaseDetermination/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseDetermination~1Created'
+    summary: CaseDetermination
+    messages:
+      - $ref: '#/channels/CaseDetermination~1Created/messages/publish.message'
+  CaseDetermination/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseDetermination~1Updated'
+    summary: CaseDetermination
+    messages:
+      - $ref: '#/channels/CaseDetermination~1Updated/messages/publish.message'
+  CaseResolution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseResolution~1Created'
+    summary: CaseResolution
+    messages:
+      - $ref: '#/channels/CaseResolution~1Created/messages/publish.message'
+  CaseResolution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseResolution~1Updated'
+    summary: CaseResolution
+    messages:
+      - $ref: '#/channels/CaseResolution~1Updated/messages/publish.message'
+  CaseAnalysis/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseAnalysis~1Created'
+    summary: CaseAnalysis
+    messages:
+      - $ref: '#/channels/CaseAnalysis~1Created/messages/publish.message'
+  CaseAnalysis/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseAnalysis~1Updated'
+    summary: CaseAnalysis
+    messages:
+      - $ref: '#/channels/CaseAnalysis~1Updated/messages/publish.message'
+components:
+  messages:
+    FraudResolutionProcedure:
+      name: FraudResolutionProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Fraud
+        Resolution. 
+      payload:
+        $ref: '#/components/schemas/FraudResolutionProcedure'
+    CaseDetermination:
+      name: CaseDetermination
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CaseDetermination'
+    CaseResolution:
+      name: CaseResolution
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CaseResolution'
+    CaseAnalysis:
+      name: CaseAnalysis
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CaseAnalysis'
+  schemas:
+    CaseDetermination:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        CustomerAgreementReference:
+          type: string
+          format: Object
+          description: "Reference to the involved customer's agreement \r\n"
+        CustomerAgreement:
+          type: string
+          format: String
+          description: "Customer agreement accessed to determine constraints on resolution approach \r\n"
+        MerchantAgreementReference:
+          type: string
+          format: Object
+          description: "Reference to the involved merchant's agreement \r\n"
+        MerchantAgreement:
+          type: string
+          format: String
+          description: "Merchant agreement accessed to determine constraints on resolution approach \r\n"
+        InterestedPartyAgreementReference:
+          type: string
+          format: Object
+          description: "Reference to the interested party's agreement \r\n"
+        InterestedPartyAgreement:
+          type: string
+          format: String
+          description: "Interested party agreement accessed to determine constraints on resolution approach \r\n"
+        FraudCaseDeterminationRecord:
+          type: string
+          format: String
+          description: "Record of rules and guidelines applied to determine fraud case resolution \r\n"
+    CaseResolution:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        FraudCaseResolutionRecord:
+          type: string
+          format: String
+          description: "Record sets out, defines and assigns resolution tasks \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Employee and or business unit responsible for the resolution \r\n"
+        CorrespondenceReference:
+          type: string
+          format: Object
+          description: "Reference to all correspondence (e.g. confirmation messages sent to involved parties, includes internal and external legal/law enforcement authorities) \r\n"
+        AdjustmentChargebackReference:
+          type: string
+          format: Object
+          description: "Reference to any associated adjustment or chargeback transaction initiated by the resolution \r\n"
+        ConsortiaReportingInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the consortia notification transaction for fraud resultion activity \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "The document reference for associated documents \r\n"
+        PaymentOrderReference:
+          type: string
+          format: Object
+          description: "Reference to any financial adjustments that are made during the case \r\n"
+    CaseAnalysis:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        FraudCaseRootCause:
+          type: string
+          format: String
+          description: "The result of the case analysis \r\n"
+    FraudResolutionProcedure:
+      type: object
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Fraud
+        Resolution. 
+      properties:
+        FraudCaseType:
+          type: string
+          format: String
+          description: "Type of case (e.g.  disputed charge, merchant fraud, stolen/fake device) \r\n"
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the product/service associated with case \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer associated with case if applicable \r\n"
+        MerchantReference:
+          type: string
+          format: Object
+          description: "Reference to the merchant associated with case if applicable \r\n"
+        InterstedPartyReference:
+          type: string
+          format: Object
+          description: "Reference to any other interested parties (such as intermediaries) \r\n"
+        ContactReference:
+          type: string
+          format: Object
+          description: "Customer contact reference if the case was raised during a customer contact \r\n"
+        TransactionReference:
+          type: string
+          format: Object
+          description: "Reference to one or more product transactions associated with the case \r\n"
+        TransactionRecord:
+          type: string
+          format: String
+          description: "Record contains all details of the transaction (not itemized) \r\n"
+        CaseLocation:
+          type: string
+          format: String
+          description: "Record of a physical address or electronic venue the fraud was detected \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Specific dates and ties of significance to the case \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Business unit and or employee reference where the case was raised \r\n"
+        FraudCaseWorkProducts:
+          type: string
+          format: String
+          description: "File of consolidated notes, forms and documents for the case \r\n"
+        FraudCaseResolutionSchedule:
+          type: string
+          format: String
+          description: "Target and actual dates for case processing/resolution \r\n"
+        FraudCaseStatus:
+          type: string
+          format: String
+          description: "The processing status for the case \r\n"

@@ -1,0 +1,250 @@
+asyncapi: 3.0.0
+info:
+  title: Party Routing Profile
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains a small profile of key indicators for a customer that is
+    referenced during customer interactions to facilitate routing, servicing and
+    product/service fulfillment decisions. This can include status (such as
+    account in arrears), ratings (such as high value customer) and alerts (such
+    possible fraud activity detected)
+channels:
+  PartyState/Created:
+    address: PartyState/Created
+    messages:
+      PartyState-created.message:
+        $ref: '#/components/messages/PartyState'
+    description: ''
+  PartyState/Updated:
+    address: PartyState/Updated
+    messages:
+      PartyState-updated.message:
+        $ref: '#/components/messages/PartyState'
+    description: ''
+  Status/Created:
+    address: Status/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Status'
+    description: ''
+  Status/Updated:
+    address: Status/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Status'
+    description: ''
+  Rating/Created:
+    address: Rating/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Rating'
+    description: ''
+  Rating/Updated:
+    address: Rating/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Rating'
+    description: ''
+  Alert/Created:
+    address: Alert/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Alert'
+    description: ''
+  Alert/Updated:
+    address: Alert/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Alert'
+    description: ''
+operations:
+  PartyState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/PartyState~1Created'
+    summary: PartyState
+    messages:
+      - $ref: '#/channels/PartyState~1Created/messages/PartyState-created.message'
+  PartyState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/PartyState~1Updated'
+    summary: PartyState
+    messages:
+      - $ref: '#/channels/PartyState~1Updated/messages/PartyState-updated.message'
+  Status/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Status~1Created'
+    summary: Status
+    messages:
+      - $ref: '#/channels/Status~1Created/messages/publish.message'
+  Status/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Status~1Updated'
+    summary: Status
+    messages:
+      - $ref: '#/channels/Status~1Updated/messages/publish.message'
+  Rating/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Rating~1Created'
+    summary: Rating
+    messages:
+      - $ref: '#/channels/Rating~1Created/messages/publish.message'
+  Rating/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Rating~1Updated'
+    summary: Rating
+    messages:
+      - $ref: '#/channels/Rating~1Updated/messages/publish.message'
+  Alert/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Alert~1Created'
+    summary: Alert
+    messages:
+      - $ref: '#/channels/Alert~1Created/messages/publish.message'
+  Alert/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Alert~1Updated'
+    summary: Alert
+    messages:
+      - $ref: '#/channels/Alert~1Updated/messages/publish.message'
+components:
+  messages:
+    PartyState:
+      name: PartyState
+      description: >-
+        Monitor and define the status/rating of some entity within Customer
+        Profile. 
+      payload:
+        $ref: '#/components/schemas/PartyState'
+    Status:
+      name: Status
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Status'
+    Rating:
+      name: Rating
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Rating'
+    Alert:
+      name: Alert
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Alert'
+  schemas:
+    Status:
+      type: object
+      format: Status
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        CustomerRelationshipStatusType:
+          type: string
+          format: String
+          description: "Defines the type of status (e.g. account in distress) \r\n"
+        CustomerRelationshipStatus:
+          type: string
+          format: String
+          description: "The maintained state value (historical values may be retained as appropriate) \r\n"
+        CustomerRelationshipStatusNarrative:
+          type: string
+          format: String
+          description: "Explanation/description for given status value if necessary \r\n"
+        CustomerRelationshipStatusValidFromToDate:
+          $ref: '#/components/schemas/Date'
+    Date:
+      type: object
+      format: Date
+      description: >-
+        Indication when the status value is updated and time until given value
+        applies/is relevant as appropriate ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    Rating:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        CustomerRelationshipRatingType:
+          type: string
+          format: String
+          description: "Defines the type of rating (e.g. credit rating) \r\n"
+        CustomerRelationshipRating:
+          type: string
+          format: String
+          description: "The maintained rating value (historical values may be retained as appropriate) \r\n"
+        CustomerRelationshipRatingNarrative:
+          type: string
+          format: String
+          description: "Explanation/description for given rating value if necessary \r\n"
+        CustomerRelationshipRatingValidFromToDate:
+          $ref: '#/components/schemas/Date'
+    Alert:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        CustomerRelationshipAlertType:
+          type: string
+          format: String
+          description: "Defines the type of alert (e.g. detected potential fraud) \r\n"
+        CustomerRelationshipAlert:
+          type: string
+          format: String
+          description: "The maintained alert value (historical values may be retained as appropriate) \r\n"
+        CustomerRelationshipAlertNarrative:
+          type: string
+          format: String
+          description: "Explanation/description for given alert value if necessary \r\n"
+        CustomerRelationshipAlertValidFromToDate:
+          $ref: '#/components/schemas/Date'
+    PartyState:
+      type: object
+      description: >-
+        Monitor and define the status/rating of some entity within Customer
+        Profile. 
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer for the profile \r\n"
