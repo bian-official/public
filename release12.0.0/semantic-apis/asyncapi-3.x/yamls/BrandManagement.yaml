@@ -1,0 +1,208 @@
+asyncapi: 3.0.0
+info:
+  title: Brand Management
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Respond to events that
+    potentially damage the brand or provide an opportunity to
+    strengthen/leverage brand awareness
+channels:
+  BrandManagementPlan/Created:
+    address: BrandManagementPlan/Created
+    messages:
+      BrandManagementPlan-created.message:
+        $ref: '#/components/messages/BrandManagementPlan'
+    description: ''
+  BrandManagementPlan/Updated:
+    address: BrandManagementPlan/Updated
+    messages:
+      BrandManagementPlan-updated.message:
+        $ref: '#/components/messages/BrandManagementPlan'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  BrandAdvice/Created:
+    address: BrandAdvice/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BrandAdvice'
+    description: ''
+  BrandAdvice/Updated:
+    address: BrandAdvice/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BrandAdvice'
+    description: ''
+operations:
+  BrandManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandManagementPlan~1Created'
+    summary: BrandManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BrandManagementPlan~1Created/messages/BrandManagementPlan-created.message
+  BrandManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandManagementPlan~1Updated'
+    summary: BrandManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BrandManagementPlan~1Updated/messages/BrandManagementPlan-updated.message
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+  BrandAdvice/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandAdvice~1Created'
+    summary: BrandAdvice
+    messages:
+      - $ref: '#/channels/BrandAdvice~1Created/messages/publish.message'
+  BrandAdvice/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandAdvice~1Updated'
+    summary: BrandAdvice
+    messages:
+      - $ref: '#/channels/BrandAdvice~1Updated/messages/publish.message'
+components:
+  messages:
+    BrandManagementPlan:
+      name: BrandManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brand Management.
+      payload:
+        $ref: '#/components/schemas/BrandManagementPlan'
+    Troubleshooting:
+      name: Troubleshooting
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+    BrandAdvice:
+      name: BrandAdvice
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/BrandAdvice'
+  schemas:
+    Troubleshooting:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      properties:
+        BrandImpactEventType:
+          type: string
+          format: String
+          description: "The type of event that threatens the brand (e.g. production issue, legal issue, employee action, marketing conflict) \r\n"
+        BrandImpactTroubleshootingTask:
+          type: string
+          format: String
+          description: "The structured task/work plan followed to address the issue \r\n"
+        BrandImpactEventDescription:
+          type: string
+          format: String
+          description: "Detailed description of the event and situation leading to the brand exposure \r\n"
+        BrandImpactEventResponseSchedule:
+          type: string
+          format: String
+          description: "Schedule of actions taken to mitigate the event (plan and actual) \r\n"
+        BrandImpactEventResponseAction:
+          type: string
+          format: String
+          description: "Actions taken to mitigate the event (e.g. press release, other communications, corrective/compensatory actions \r\n"
+        BrandImpactEventWorkProducts:
+          type: string
+          format: String
+          description: "File of consolidated notes, assessments, interview notes etc. and recommendations arising from the work \r\n"
+        BrandImpactEventWorkTaskResult:
+          type: string
+          format: String
+          description: "Details of the outcome or result of the work task assessing any lasting impact and evaluating the effectiveness of any mitigating actions \r\n"
+        BrandImpactEventWorkTaskDate-Time:
+          $ref: '#/components/schemas/Date'
+    Date:
+      type: object
+      format: Date
+      description: >-
+        Key dates associated with the troubleshooting activity ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    BrandAdvice:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      properties:
+        BrandAdviceWorkTaskType:
+          type: string
+          format: String
+          description: "The type of work task (e.g. assess brand exposure, incorporate brand in design) \r\n"
+        BrandAdviceWorkTask:
+          type: string
+          format: String
+          description: "The make-up of the advice task performed, includes schedule of meetings/working sessions and provision of guidance materials \r\n"
+        BrandAdviceWorkTaskWorkProducts:
+          type: string
+          format: String
+          description: "File of consolidated notes, evaluations and recommendations for the work task \r\n"
+        BrandAdviceWorkTaskResult:
+          type: string
+          format: String
+          description: "Details of the outcome or result of the work task capturing any use of brand that might requires tracking \r\n"
+        BrandAdviceWorkTaskDate-Time:
+          $ref: '#/components/schemas/Date'
+    BrandManagementPlan:
+      type: object
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brand Management.
+      properties:
+        BrandDefinition:
+          type: string
+          format: String
+          description: "Definition of the brand, including how it is to be represented in different media and contexts \r\n"
+        BrandValueAssessment:
+          type: string
+          format: String
+          description: "An analysis of the brand value based on comparative market research \r\n"
+        BrandUsage:
+          type: string
+          format: String
+          description: "An inventory of situations where the brand is incorporated or exposed in business development activity these situations may require on-going exposure monitoring or assessment \r\n"
+        BrandDevelopmentSchedule:
+          type: string
+          format: String
+          description: "Schedule of any brand development related activities, includes usage and exposure tracking and impact analysis activities \r\n"

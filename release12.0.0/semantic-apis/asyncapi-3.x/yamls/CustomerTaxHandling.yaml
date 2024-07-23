@@ -1,0 +1,242 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Tax Handling
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles consumer tax reporting obligations including the consolidation and
+    reporting of customer tax related financial activity
+channels:
+  CustomerTaxObligationFacility/Created:
+    address: CustomerTaxObligationFacility/Created
+    messages:
+      CustomerTaxObligationFacility-created.message:
+        $ref: '#/components/messages/CustomerTaxObligationFacility'
+    description: ''
+  CustomerTaxObligationFacility/Updated:
+    address: CustomerTaxObligationFacility/Updated
+    messages:
+      CustomerTaxObligationFacility-updated.message:
+        $ref: '#/components/messages/CustomerTaxObligationFacility'
+    description: ''
+  Reporting/Created:
+    address: Reporting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Reporting'
+    description: ''
+  Reporting/Updated:
+    address: Reporting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Reporting'
+    description: ''
+  Consolidation/Created:
+    address: Consolidation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Consolidation'
+    description: ''
+  Consolidation/Updated:
+    address: Consolidation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Consolidation'
+    description: ''
+  Analysis/Created:
+    address: Analysis/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Analysis'
+    description: ''
+  Analysis/Updated:
+    address: Analysis/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Analysis'
+    description: ''
+operations:
+  CustomerTaxObligationFacility-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerTaxObligationFacility~1Created'
+    summary: CustomerTaxObligationFacility
+    messages:
+      - $ref: >-
+          #/channels/CustomerTaxObligationFacility~1Created/messages/CustomerTaxObligationFacility-created.message
+  CustomerTaxObligationFacility-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerTaxObligationFacility~1Updated'
+    summary: CustomerTaxObligationFacility
+    messages:
+      - $ref: >-
+          #/channels/CustomerTaxObligationFacility~1Updated/messages/CustomerTaxObligationFacility-updated.message
+  Reporting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Reporting~1Created'
+    summary: Reporting
+    messages:
+      - $ref: '#/channels/Reporting~1Created/messages/publish.message'
+  Reporting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Reporting~1Updated'
+    summary: Reporting
+    messages:
+      - $ref: '#/channels/Reporting~1Updated/messages/publish.message'
+  Consolidation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Consolidation~1Created'
+    summary: Consolidation
+    messages:
+      - $ref: '#/channels/Consolidation~1Created/messages/publish.message'
+  Consolidation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Consolidation~1Updated'
+    summary: Consolidation
+    messages:
+      - $ref: '#/channels/Consolidation~1Updated/messages/publish.message'
+  Analysis/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Analysis~1Created'
+    summary: Analysis
+    messages:
+      - $ref: '#/channels/Analysis~1Created/messages/publish.message'
+  Analysis/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Analysis~1Updated'
+    summary: Analysis
+    messages:
+      - $ref: '#/channels/Analysis~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerTaxObligationFacility:
+      name: CustomerTaxObligationFacility
+      description: >-
+        Fulfill any scheduled and ad-hoc obligations under a service
+        arrangement, most typically for a financial product or facility within
+        Customer Tax Handling. 
+      payload:
+        $ref: '#/components/schemas/CustomerTaxObligationFacility'
+    Reporting:
+      name: Reporting
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/Reporting'
+    Consolidation:
+      name: Consolidation
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/Consolidation'
+    Analysis:
+      name: Analysis
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/Analysis'
+  schemas:
+    Reporting:
+      type: object
+      description: The product features/services available with a financical facility
+      properties:
+        CustomerTaxReportInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the customer tax report sent to the customer or tax authority directly \r\n"
+        CustomerTaxReportType:
+          type: string
+          format: String
+          description: "The type of tax report, includes products/services covered and the tax jurisdiction/authority reference as necessary \r\n"
+        CustomerTaxReportPeriod:
+          type: string
+          format: String
+          description: "The reporting period, detailing from-to dates covered by the tax report \r\n"
+        CustomerTaxReportReport:
+          type: string
+          format: String
+          description: "The customer's consolidated product/service tax report \r\n"
+        CustomerTaxHandlingReportingWorkProducts:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the reporting task \r\n"
+    Consolidation:
+      type: object
+      description: The product features/services available with a financical facility
+      properties:
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the one of more products and services in use for which tax related activity is to be obtained \r\n"
+        ProductArrangementInstanceReportType:
+          type: string
+          format: String
+          description: "The types of product fulfillment reports available in this case transaction details used for tax obligations and reporting \r\n"
+        ProductArrangementInstanceReport:
+          type: string
+          format: String
+          description: "The product/service activity report transactional activity used for taxation and reporting \r\n"
+        ReportOptionsSelectionCriteria:
+          type: string
+          format: String
+          description: "Defines content/transaction types to be included in the report extract \r\n"
+        ReportPeriod:
+          type: string
+          format: String
+          description: "The from-to dates covered by the report for tax reporting \r\n"
+        ReportFormatTemplate:
+          type: string
+          format: String
+          description: "Defines presentation format \r\n"
+        Report:
+          type: string
+          format: String
+          description: "The requested product/service activity report used in the taxation consolidation task \r\n"
+        CustomerTaxHandlingConsolidationWorkProducts:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the consolidation \r\n"
+    Analysis:
+      type: object
+      format: Analysis
+      description: The product features/services available with a financical facility
+      properties:
+        CustomerTaxHandlingAnalysisWorkProducts:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced to develop the customer tax position/statement that is used for reporting \r\n"
+    CustomerTaxObligationFacility:
+      type: object
+      description: >-
+        Fulfill any scheduled and ad-hoc obligations under a service
+        arrangement, most typically for a financial product or facility within
+        Customer Tax Handling. 
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer for whom the consolidated tax position is maintained \r\n"
+        CustomerTaxHandlingArrangementRecord:
+          type: string
+          format: String
+          description: "The consolidated record of the customer tax reporting position basis for generating tax reports \r\n"
+        TaxationJurisdictionReference:
+          type: string
+          format: Object
+          description: "Reference to the applicable tax authority/jurisdiction that applies for the customer can be multiple for the customer \r\n"
+        ApplicableTaxationRuleReference:
+          type: string
+          format: Object
+          description: "Tax handling and reporting regulation that is applied to this customer \r\n"
+        ApplicableTaxationRuleDefinition:
+          type: string
+          format: String
+          description: "Covers all tax reporting guidelines, schedule and position reporting requirements for the customer \r\n"
+        CustomerTaxReportingSchedule:
+          type: string
+          format: String
+          description: "Defines the customer tax reporting obligations, recording target and actual dates \r\n"

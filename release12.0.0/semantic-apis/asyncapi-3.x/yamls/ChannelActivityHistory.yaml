@@ -1,0 +1,201 @@
+asyncapi: 3.0.0
+info:
+  title: Channel Activity History
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domains
+    consolidates and captures customer channel usage activity to support channel
+    activity analysis and also can be referenced for customer access
+    authorization and routing decisions
+channels:
+  ChannelActivityLog/Created:
+    address: ChannelActivityLog/Created
+    messages:
+      ChannelActivityLog-created.message:
+        $ref: '#/components/messages/ChannelActivityLog'
+    description: ''
+  ChannelActivityLog/Updated:
+    address: ChannelActivityLog/Updated
+    messages:
+      ChannelActivityLog-updated.message:
+        $ref: '#/components/messages/ChannelActivityLog'
+    description: ''
+  Event/Created:
+    address: Event/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Event'
+    description: ''
+  Event/Updated:
+    address: Event/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Event'
+    description: ''
+operations:
+  ChannelActivityLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ChannelActivityLog~1Created'
+    summary: ChannelActivityLog
+    messages:
+      - $ref: >-
+          #/channels/ChannelActivityLog~1Created/messages/ChannelActivityLog-created.message
+  ChannelActivityLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ChannelActivityLog~1Updated'
+    summary: ChannelActivityLog
+    messages:
+      - $ref: >-
+          #/channels/ChannelActivityLog~1Updated/messages/ChannelActivityLog-updated.message
+  Event/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Event~1Created'
+    summary: Event
+    messages:
+      - $ref: '#/channels/Event~1Created/messages/publish.message'
+  Event/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Event~1Updated'
+    summary: Event
+    messages:
+      - $ref: '#/channels/Event~1Updated/messages/publish.message'
+components:
+  messages:
+    ChannelActivityLog:
+      name: ChannelActivityLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Channel Activity History. 
+      payload:
+        $ref: '#/components/schemas/ChannelActivityLog'
+    Event:
+      name: Event
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/Event'
+  schemas:
+    Event:
+      type: object
+      format: Event
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      properties:
+        EmployeeReference:
+          type: string
+          format: Object
+          description: "The servicing resource for assisted customer exchanges \r\n"
+        ProductReference:
+          type: string
+          format: Object
+          description: "The type of product involved \r\n"
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the specific product accessed by the proposed transaction \r\n"
+        CustomerContactRecordReference:
+          type: string
+          format: Object
+          description: "Reference to the contact record for the active contact where the transaction is sourced \r\n"
+        CustomerContactRecord:
+          type: string
+          format: String
+          description: "The contact record consolidates all aspects of the contact that is cross-referenced by all  contact functions and called servicing sessions that make up the contact \r\n"
+        CustomerContactRecordCustomerReference:
+          type: string
+          format: Object
+          description: "The customer reference as provided by the contacting party and verified by the authentication function \r\n"
+        CustomerContactRecordContactDevice:
+          type: string
+          format: String
+          description: "The contact device can be determined by the channel operations facilities (e.g. URL/ANI-phone number) \r\n"
+        CustomerContactRecordAuthenticationStatus:
+          type: string
+          format: String
+          description: "The contact authentication level is determined by the authentication function and can be updated during the contact \r\n"
+        CustomerContactRecordRoutingSelectionStatus:
+          type: string
+          format: String
+          description: "The routing selections made through the contact \r\n"
+        CustomerContactRecordMenuSelection:
+          type: string
+          format: String
+          description: "The requested service from a menu option can be indicated by the customer when initiating or during contact \r\n"
+        CustomerContactRecordServicingRequest:
+          type: string
+          format: String
+          description: "The customer may provide details of servicing resource request when initiating or during contact \r\n"
+        CustomerContactRecordServicingEventHistory:
+          type: string
+          format: String
+          description: "Contact Handler can reference recent servicing activity for routing, security and servicing purposes (obtained from Service Domain Channel Activity History) \r\n"
+        CustomerContactRecordServicingPositionReference:
+          type: string
+          format: Object
+          description: "Reference to the servicing position can be where an inbound contact is routed, or the source of an outbound contact request \r\n"
+        CustomerContactRecordServicingResourceReference:
+          type: string
+          format: Object
+          description: "Reference to the servicing resource can be to handle an inbound contact or the source of an outbound contact request \r\n"
+        CustomerContactRecordActivityRecord:
+          type: string
+          format: String
+          description: "Records the actions performed during contact, including all dialogue sessions \r\n"
+        CustomerSessionDialogueReference:
+          type: string
+          format: Object
+          description: "Reference to any contact session dialogue records created during the contact there can be several \r\n"
+        CustomerSessionDialogueRecord:
+          type: string
+          format: String
+          description: "The session dialogue log of actions is returned to SD-Contact Handler and added to the contact record \r\n"
+        CustomerContactRecordDuration:
+          type: string
+          format: String
+          description: "Records the start and end date times for the contact \r\n"
+        CustomerContactActivityRecord:
+          type: string
+          format: String
+          description: "Description of all actions performed during the contact, including all sessions \r\n"
+        CustomerContactResult:
+          type: string
+          format: String
+          description: "The interim result of the contact (subject to transaction approval) \r\n"
+        ChannelActivityHistoryReportReference:
+          type: string
+          format: Object
+          description: "Reference to a channel activity report extracted for the customer \r\n"
+        ChannelActivityHistoryReportFromto:
+          type: string
+          format: String
+          description: "The period for the channel activity report \r\n"
+        ChannelActivityHistoryReport:
+          type: string
+          format: String
+          description: "The content of the report extracting recent channel activity records to support the transaction authorization decision \r\n"
+        TransactionAuthorizationResult:
+          type: string
+          format: String
+          description: "Indicates success or failure or required increased authentication level to be acquired for authorization \r\n"
+    ChannelActivityLog:
+      type: object
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Channel Activity History. 
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer being logged \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Key dates associated with the log (e.g. start time) \r\n"

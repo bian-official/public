@@ -1,0 +1,278 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Agreement
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains the master customer agreement/legal contract. Note that a customer
+    can be a complex corporate entity with many subsidiaries operating in
+    different geopolitical areas. The customer agreement is linked to as many
+    Sales Product Agreements as needed for all in-force products
+channels:
+  CustomerAgreement/Created:
+    address: CustomerAgreement/Created
+    messages:
+      CustomerAgreement-created.message:
+        $ref: '#/components/messages/CustomerAgreement'
+    description: ''
+  CustomerAgreement/Updated:
+    address: CustomerAgreement/Updated
+    messages:
+      CustomerAgreement-updated.message:
+        $ref: '#/components/messages/CustomerAgreement'
+    description: ''
+  LegalTerms/Created:
+    address: LegalTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LegalTerms'
+    description: ''
+  LegalTerms/Updated:
+    address: LegalTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LegalTerms'
+    description: ''
+  PolicyTerms/Created:
+    address: PolicyTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PolicyTerms'
+    description: ''
+  PolicyTerms/Updated:
+    address: PolicyTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PolicyTerms'
+    description: ''
+  RegulatoryTerms/Created:
+    address: RegulatoryTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RegulatoryTerms'
+    description: ''
+  RegulatoryTerms/Updated:
+    address: RegulatoryTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RegulatoryTerms'
+    description: ''
+operations:
+  CustomerAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerAgreement~1Created'
+    summary: CustomerAgreement
+    messages:
+      - $ref: >-
+          #/channels/CustomerAgreement~1Created/messages/CustomerAgreement-created.message
+  CustomerAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerAgreement~1Updated'
+    summary: CustomerAgreement
+    messages:
+      - $ref: >-
+          #/channels/CustomerAgreement~1Updated/messages/CustomerAgreement-updated.message
+  LegalTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LegalTerms~1Created'
+    summary: LegalTerms
+    messages:
+      - $ref: '#/channels/LegalTerms~1Created/messages/publish.message'
+  LegalTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LegalTerms~1Updated'
+    summary: LegalTerms
+    messages:
+      - $ref: '#/channels/LegalTerms~1Updated/messages/publish.message'
+  PolicyTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PolicyTerms~1Created'
+    summary: PolicyTerms
+    messages:
+      - $ref: '#/channels/PolicyTerms~1Created/messages/publish.message'
+  PolicyTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PolicyTerms~1Updated'
+    summary: PolicyTerms
+    messages:
+      - $ref: '#/channels/PolicyTerms~1Updated/messages/publish.message'
+  RegulatoryTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryTerms~1Created'
+    summary: RegulatoryTerms
+    messages:
+      - $ref: '#/channels/RegulatoryTerms~1Created/messages/publish.message'
+  RegulatoryTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryTerms~1Updated'
+    summary: RegulatoryTerms
+    messages:
+      - $ref: '#/channels/RegulatoryTerms~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerAgreement:
+      name: CustomerAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Customer Agreement.
+
+
+      payload:
+        $ref: '#/components/schemas/CustomerAgreement'
+    LegalTerms:
+      name: LegalTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/LegalTerms'
+    PolicyTerms:
+      name: PolicyTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/PolicyTerms'
+    RegulatoryTerms:
+      name: RegulatoryTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/RegulatoryTerms'
+  schemas:
+    LegalTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        Jurisdiction:
+          type: string
+          format: String
+          description: "The legal jurisdiction \r\n"
+        ApplicableLawReference:
+          type: string
+          format: Object
+          description: "Reference to any legal requirements \r\n"
+        ApplicableLawInterpretation:
+          type: string
+          format: String
+          description: "Explanation or interpretation of the law as applied \r\n"
+    PolicyTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        BankPolicy-RuleType:
+          type: string
+          format: String
+          description: "The type of bank policy referenced (e.g. staff certification) \r\n"
+        ApplicableBankPolicy-RuleReference:
+          type: string
+          format: Object
+          description: "Reference to the bank's policies or rules \r\n"
+        ApplicableBankPolicy-RuleInterpretation:
+          type: string
+          format: String
+          description: "Explanation or interpretation of the policy or rule as applied \r\n"
+    RegulatoryTerms:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        RegulatoryAuthority:
+          type: string
+          format: String
+          description: "The applicable regulatory authority \r\n"
+        ApplicableRegulationReference:
+          type: string
+          format: Object
+          description: "Reference to any regulatory requirements \r\n"
+        ApplicableRegulationInterpretation:
+          type: string
+          format: String
+          description: "Explanation or interpretation of the regulation as applied \r\n"
+    CustomerAgreement:
+      type: object
+      format: CustomerAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Customer Agreement.
+
+
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the associated customer (can currently be a person or a company) \r\n"
+        LegalEntityReference:
+          type: string
+          format: Object
+          description: "Reference to the legal entity that is the subject of the agreement \r\n"
+        AgreementType:
+          type: string
+          format: String
+          description: "The type of customer agreement (e.g. individual, corporate) \r\n"
+        AgreementJurisdiction:
+          type: string
+          format: String
+          description: "The contractual jurisdiction or coverage of the agreement (e.g. \"governed by State\") \r\n"
+        AgreementValidFromToDate:
+          $ref: '#/components/schemas/Date'
+        AgreementSignatoriesResponsibleParties:
+          type: string
+          format: String
+          description: "Reference to signatories \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to any associated documents \r\n"
+        SalesProductAgreementReference:
+          type: string
+          format: Object
+          description: "Reference to product specific T&Cs maintained elsewhere but subordinate to this agreement \r\n"
+        PartyLife-cycleManagementReference:
+          type: string
+          format: Object
+          description: "Reference to KYC/Regulatory assessments maintained elsewhere for the customer \r\n"
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The term of the agreement ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''

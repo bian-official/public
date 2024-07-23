@@ -1,0 +1,238 @@
+asyncapi: 3.0.0
+info:
+  title: Advanced Voice Services Operations
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    operates the telephone channel infrastructure, including the IVR and any
+    other automated devices as appropriate. This includes handling default
+    routing rules and intra-day/session adjustments to deal with peak load or
+    other operational variations
+channels:
+  VoiceChannelOperatingSession/Created:
+    address: VoiceChannelOperatingSession/Created
+    messages:
+      VoiceChannelOperatingSession-created.message:
+        $ref: '#/components/messages/VoiceChannelOperatingSession'
+    description: ''
+  VoiceChannelOperatingSession/Updated:
+    address: VoiceChannelOperatingSession/Updated
+    messages:
+      VoiceChannelOperatingSession-updated.message:
+        $ref: '#/components/messages/VoiceChannelOperatingSession'
+    description: ''
+  Inbound/Created:
+    address: Inbound/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Inbound'
+    description: ''
+  Inbound/Updated:
+    address: Inbound/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Inbound'
+    description: ''
+  Outbound/Created:
+    address: Outbound/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Outbound'
+    description: ''
+  Outbound/Updated:
+    address: Outbound/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Outbound'
+    description: ''
+operations:
+  VoiceChannelOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/VoiceChannelOperatingSession~1Created'
+    summary: VoiceChannelOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/VoiceChannelOperatingSession~1Created/messages/VoiceChannelOperatingSession-created.message
+  VoiceChannelOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/VoiceChannelOperatingSession~1Updated'
+    summary: VoiceChannelOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/VoiceChannelOperatingSession~1Updated/messages/VoiceChannelOperatingSession-updated.message
+  Inbound/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Inbound~1Created'
+    summary: Inbound
+    messages:
+      - $ref: '#/channels/Inbound~1Created/messages/publish.message'
+  Inbound/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Inbound~1Updated'
+    summary: Inbound
+    messages:
+      - $ref: '#/channels/Inbound~1Updated/messages/publish.message'
+  Outbound/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Outbound~1Created'
+    summary: Outbound
+    messages:
+      - $ref: '#/channels/Outbound~1Created/messages/publish.message'
+  Outbound/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Outbound~1Updated'
+    summary: Outbound
+    messages:
+      - $ref: '#/channels/Outbound~1Updated/messages/publish.message'
+components:
+  messages:
+    VoiceChannelOperatingSession:
+      name: VoiceChannelOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Advanced
+        Voice Services Operations. 
+      payload:
+        $ref: '#/components/schemas/VoiceChannelOperatingSession'
+    Inbound:
+      name: Inbound
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Inbound'
+    Outbound:
+      name: Outbound
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Outbound'
+  schemas:
+    Inbound:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        VChannelDeviceReference:
+          type: string
+          format: Object
+          description: "Details of the device being used for access \r\n"
+        VChannelDevicePropertyValue:
+          type: string
+          format: String
+          description: "Property of the device that can be used in identification ( e.g. ANI phone number) \r\n"
+        VChannelInboundConnectionStartTime:
+          type: string
+          format: String
+          description: "Detail used for statistics \r\n"
+        VChannelInboundConnectionDuration:
+          type: string
+          format: String
+          description: "Detain used for statistics \r\n"
+        VChannelInboundConnectionContactReference:
+          type: string
+          format: Object
+          description: "Internal reference retuned by Service Domain-Contact Handler for routing \r\n"
+    Outbound:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "The source of the outbound connection request \r\n"
+        CustomerContactRecordReference:
+          type: string
+          format: Object
+          description: "Reference to the customer contact record used accessing outbound channel \r\n"
+        CustomerSessionDialogueRecord:
+          type: string
+          format: String
+          description: "The record used to handle the contact (see Service Domain-Contact Handler for complete definition) \r\n"
+        VChannelCustomerDeviceReference:
+          type: string
+          format: Object
+          description: "The target device being accessed \r\n"
+        VChannelOutboundConnectionStartTime:
+          type: string
+          format: String
+          description: "Detail used for statistics \r\n"
+        VChannelOutboundConnectionDuration:
+          type: string
+          format: String
+          description: "Detail used for statistics \r\n"
+    VoiceChannelOperatingSession:
+      type: object
+      description: >-
+        Operate equipment and/or a largely automated facility within Advanced
+        Voice Services Operations. 
+      properties:
+        AdvancedVoiceServicesOperationsServiceMenu:
+          type: string
+          format: String
+          description: "Service Domain attribute referenced during the session covering the menu options \r\n"
+        VChannelServiceSessionStatistics:
+          type: string
+          format: String
+          description: "Service activity statistics that are maintained during the session \r\n"
+        VChannelServiceSessionReportType:
+          type: string
+          format: String
+          description: "Session reports that can be accessed during the session (e.g. real-time status, session statistics) \r\n"
+        VChannelServiceSessionReport:
+          type: string
+          format: String
+          description: "The session activity report \r\n"
+        VChannelProductionIssueRecord:
+          type: string
+          format: String
+          description: "A record of any production issues arising during the session \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "The source of the issue report if appropriate \r\n"
+        CustomerContactRecordReference:
+          type: string
+          format: Object
+          description: "Reference to the specific customer contact where the issue occurred if appropriate \r\n"
+        ProductionIssueType:
+          type: string
+          format: String
+          description: "The type of network event or error being recorded (e.g. device failure) \r\n"
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: "The description of the event error \r\n"
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: "Evaluation of the event cause and impact assessment \r\n"
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: "Description of corrective action proposed and taken \r\n"
+        ProductionIssueStatus:
+          type: string
+          format: String
+          description: "Tracking the state of resolution of a reported issue during the session \r\n"

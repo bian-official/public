@@ -1,0 +1,195 @@
+asyncapi: 3.0.0
+info:
+  title: Business Unit Management
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Track and report on
+    business unit activity and financial performance
+channels:
+  BusinessUnitManagementPlan/Created:
+    address: BusinessUnitManagementPlan/Created
+    messages:
+      BusinessUnitManagementPlan-created.message:
+        $ref: '#/components/messages/BusinessUnitManagementPlan'
+    description: ''
+  BusinessUnitManagementPlan/Updated:
+    address: BusinessUnitManagementPlan/Updated
+    messages:
+      BusinessUnitManagementPlan-updated.message:
+        $ref: '#/components/messages/BusinessUnitManagementPlan'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Performance/Created:
+    address: Performance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+  Performance/Updated:
+    address: Performance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+operations:
+  BusinessUnitManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BusinessUnitManagementPlan~1Created'
+    summary: BusinessUnitManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BusinessUnitManagementPlan~1Created/messages/BusinessUnitManagementPlan-created.message
+  BusinessUnitManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BusinessUnitManagementPlan~1Updated'
+    summary: BusinessUnitManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BusinessUnitManagementPlan~1Updated/messages/BusinessUnitManagementPlan-updated.message
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+  Performance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Created'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Created/messages/publish.message'
+  Performance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Updated'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Updated/messages/publish.message'
+components:
+  messages:
+    BusinessUnitManagementPlan:
+      name: BusinessUnitManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Business Unit Management.
+      payload:
+        $ref: '#/components/schemas/BusinessUnitManagementPlan'
+    Troubleshooting:
+      name: Troubleshooting
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+    Performance:
+      name: Performance
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Performance'
+  schemas:
+    Troubleshooting:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      properties:
+        BusinessUnitProductionIssueRecord:
+          type: string
+          format: String
+          description: "A record of any production issues arising during the session (see Advanced Voice Channel Operations for detailed content) \r\n"
+        BusinessUnitIssueAnalysisAndRecommendedResponse:
+          type: string
+          format: String
+          description: "A record of the root cause analysis for recurring issues and suggested remedial action that can be internal to the unit or recommended to service providers and subscribers as appropriate \r\n"
+    Performance:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      properties:
+        BusinessUnitResourceUtilization:
+          type: string
+          format: String
+          description: "Record of the business unit employee target and actual utilization/productivity \r\n"
+        BusinessUnitOutputWorkProjections:
+          type: string
+          format: String
+          description: "Estimated projected business unit product/service delivery and work volume targets as appropriate for the type of unit \r\n"
+        BusinessUnitPerformanceStatistics:
+          type: string
+          format: String
+          description: "Tracked business unit activity and performance statistics used to manage the business unit \r\n"
+        BusinessUnitPerformanceStatisticType:
+          type: string
+          format: String
+          description: "The type of activity that is tracked and analyzed (e.g. delivery rate, utilization) \r\n"
+        BusinessUnitPerformanceStatisticValue:
+          type: string
+          format: String
+          description: "The statistical analysis that can include historical and trended views of the activity \r\n"
+        BusinessUnitPerformanceStatisticInterpretation:
+          type: string
+          format: String
+          description: "Narrative that might explain any divergence from expected performance/delivery \r\n"
+        BusinessUnitPerformanceStatisticRecommendation:
+          type: string
+          format: String
+          description: "Proposed operational changes/recommendations arising from the performance tracking and analysis \r\n"
+    BusinessUnitManagementPlan:
+      type: object
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Business Unit Management.
+      properties:
+        BusinessUnitManagementPlanPeriod:
+          type: string
+          format: String
+          description: "The time period addressed by the management plan (typically this will include setting the default daily operating goals and arrangements for the business unit that is periodically updated) \r\n"
+        BusinessUnitUsagePoliciesAndGuidelines:
+          type: string
+          format: String
+          description: "The policies and guidelines for business unit employees and service users \r\n"
+        BusinessUnitPerformanceGoals:
+          type: string
+          format: String
+          description: "The target and actual business unit performance goals that are tracked by business unit management \r\n"
+        BusinessUnitOperatingSchedule:
+          type: string
+          format: String
+          description: "The target and actual business unit operating schedule recording planned and actual business activity \r\n"
+        BusinessUnitOperatingOrganization:
+          type: string
+          format: String
+          description: "The assigned roles and responsibilities and associated work/delivery responsibilities for the staff making up the business unit \r\n"
+        BusinessUnitResourcePlan:
+          type: string
+          format: String
+          description: "Details the number and skill profile of the business unit staff (target and actual) \r\n"
+        BusinessUnitTrainingPlan:
+          type: string
+          format: String
+          description: "Details of staff training and certification as appropriate \r\n"

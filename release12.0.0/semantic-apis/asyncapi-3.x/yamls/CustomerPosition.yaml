@@ -1,0 +1,1070 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Position
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains a consolidated financial position for a customer, combining
+    details from all products and services in use. The position can cover
+    available funds, credit, collateral, tax exposure and other financial
+    measures as necessary
+channels:
+  CustomerPositionState/Created:
+    address: CustomerPositionState/Created
+    messages:
+      CustomerPositionState-created.message:
+        $ref: '#/components/messages/CustomerPositionState'
+    description: ''
+  CustomerPositionState/Updated:
+    address: CustomerPositionState/Updated
+    messages:
+      CustomerPositionState-updated.message:
+        $ref: '#/components/messages/CustomerPositionState'
+    description: ''
+  Collateral/Created:
+    address: Collateral/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Collateral'
+    description: ''
+  Collateral/Updated:
+    address: Collateral/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Collateral'
+    description: ''
+  Cashflow/Created:
+    address: Cashflow/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Cashflow'
+    description: ''
+  Cashflow/Updated:
+    address: Cashflow/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Cashflow'
+    description: ''
+  Credit/Created:
+    address: Credit/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Credit'
+    description: ''
+  Credit/Updated:
+    address: Credit/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Credit'
+    description: ''
+  Cashflow/Notify:
+    address: Cashflow/Notify
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/CashflowNotify'
+  Credit/Notify:
+    address: Credit/Notify
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/CreditNotify'
+operations:
+  CustomerPositionState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerPositionState~1Created'
+    summary: CustomerPositionState
+    messages:
+      - $ref: >-
+          #/channels/CustomerPositionState~1Created/messages/CustomerPositionState-created.message
+  CustomerPositionState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerPositionState~1Updated'
+    summary: CustomerPositionState
+    messages:
+      - $ref: >-
+          #/channels/CustomerPositionState~1Updated/messages/CustomerPositionState-updated.message
+  Collateral/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Collateral~1Created'
+    summary: Collateral
+    messages:
+      - $ref: '#/channels/Collateral~1Created/messages/publish.message'
+  Collateral/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Collateral~1Updated'
+    summary: Collateral
+    messages:
+      - $ref: '#/channels/Collateral~1Updated/messages/publish.message'
+  Cashflow/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Cashflow~1Created'
+    summary: Cashflow
+    messages:
+      - $ref: '#/channels/Cashflow~1Created/messages/publish.message'
+  Cashflow/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Cashflow~1Updated'
+    summary: Cashflow
+    messages:
+      - $ref: '#/channels/Cashflow~1Updated/messages/publish.message'
+  Credit/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Credit~1Created'
+    summary: Credit
+    messages:
+      - $ref: '#/channels/Credit~1Created/messages/publish.message'
+  Credit/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Credit~1Updated'
+    summary: Credit
+    messages:
+      - $ref: '#/channels/Credit~1Updated/messages/publish.message'
+  Cashflow/Notify.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/Cashflow~1Notify'
+    messages:
+      - $ref: '#/channels/Cashflow~1Notify/messages/subscribe.message'
+  Credit/Notify.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/Credit~1Notify'
+    messages:
+      - $ref: '#/channels/Credit~1Notify/messages/subscribe.message'
+components:
+  messages:
+    CustomerPositionState:
+      name: CustomerPositionState
+      description: >-
+        Monitor and define the status/rating of some entity within Customer
+        Position. 
+      payload:
+        $ref: '#/components/schemas/CustomerPositionState'
+    Collateral:
+      name: Collateral
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Collateral'
+    Cashflow:
+      name: Cashflow
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Cashflow'
+    Credit:
+      name: Credit
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Credit'
+    CashflowNotify:
+      name: CashflowNotify
+      payload:
+        $ref: '#/components/schemas/CashflowNotify'
+    CreditNotify:
+      name: CreditNotify
+      payload:
+        $ref: '#/components/schemas/CreditNotify'
+  schemas:
+    Collateral:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        Assettypevalues:
+          enum:
+            - Assettypevalues
+        CollateralAssetReference:
+          $ref: '#/components/schemas/CollateralAsset'
+        CollateralAssetDescription:
+          $ref: '#/components/schemas/Text'
+        CollateralAssetAdministrationInstanceReference:
+          $ref: '#/components/schemas/CollateralAssetAdministrativePlan'
+        Collateralassetstatusvalues:
+          enum:
+            - Offered
+            - UnderAssessment
+            - Transferred
+            - Allocated
+            - FreeForAllocation
+            - AllocatedToAnotherLoan
+            - IssuedForExecution
+        CollateralAssetValuation:
+          $ref: '#/components/schemas/AssetValuation'
+        CollateralAssetAllocationProfile:
+          $ref: '#/components/schemas/CollateralAssetAllocation'
+        CollateralAssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+        CollateralAssetLoantoValueRatio:
+          $ref: '#/components/schemas/Text'
+        CustomerCollateralPositionAnalysisRecord:
+          $ref: '#/components/schemas/Analysis'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: ''
+        TimeZoneCode:
+          type: string
+          format: String
+          description: ''
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ''
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Partyidentification:
+          type: string
+          format: DataType
+          description: ''
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        An identifier that allows to uniquely refer to an instance of a
+        Document. 
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    CollateralAsset:
+      type: object
+      format: CollateralAsset
+      description: >-
+        Reference to the collateral item (e.g. address, account reference)
+        AssetAsset
+        (https://www.iso20022.org/standardsrepository/type/Asset)StandardISO20022
+        BM ()
+      properties:
+        CollateralAssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Collateraltypevalues:
+          enum:
+            - Letterofcredit
+            - Cash
+            - Securities
+            - Physicalentities
+            - Insurance
+            - Stockcertificate
+            - Bond
+            - Bankguarantee
+            - Other
+            - Commodity
+            - Automobile
+            - Industrialvehicle
+            - Commercialtruck
+            - Railvehicle
+            - Nauticalcommercialvehicle
+            - Nauticalleisurevehicle
+            - Aeroplane
+            - Machinetool
+            - Industrialequipment
+            - Officeequipment
+            - Itequipment
+            - Medicalequipment
+            - Energyrelatedequipment
+            - Commercialbuilding
+          format: CollateralAsset
+        CollateralAssetValuation:
+          $ref: '#/components/schemas/Assetvaluation'
+        Collateralassetstatusvalues:
+          enum:
+            - Offered
+            - UnderAssessment
+            - Transferred
+            - Allocated
+            - FreeForAllocation
+            - AllocatedToAnotherLoan
+            - IssuedForExecution
+          format: CollateralAsset
+    Assetvaluation:
+      type: object
+      format: Assetvaluation
+      description: ' '
+      properties:
+        AssetValue:
+          $ref: '#/components/schemas/Value'
+        AssetValueType:
+          $ref: '#/components/schemas/Text'
+        AssetValuationType:
+          $ref: '#/components/schemas/Text'
+        AssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+        AssetValuationServiceReference:
+          $ref: '#/components/schemas/Service'
+        AssetValuationRate:
+          $ref: '#/components/schemas/Rate'
+        AssetValuationStatus:
+          $ref: '#/components/schemas/Status'
+        AssetValuationValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+    Service:
+      type: object
+      format: Service
+      description: >-
+        External identifier assigned by an asset valuation service provider to
+        refer to an instance of Asset Valuation  
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+        ServiceDescription:
+          $ref: '#/components/schemas/Text'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Service
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+    Status:
+      type: object
+      format: Status
+      description: 'Status of the document (e.g. delivered, paid, etc.). ISO20022 '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Feature:
+      type: object
+      format: Feature
+      description: >-
+        A characteristic of service which refers 1) mainly to the function or
+        condition of service. 2) to non-functional features like quality and
+        security 
+      properties:
+        FeatureType:
+          $ref: '#/components/schemas/Text'
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    Rate:
+      type: object
+      format: Rate
+      description: ' '
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    CollateralAssetAdministrativePlan:
+      type: object
+      format: CollateralAssetAdministrativePlan
+      description: "Reference to the administration record of the asset item \r\n"
+      properties:
+        CollateralAssetAdministrativePlan:
+          type: string
+          format: Class
+          description: >-
+            An administrative plan derived from the arrangements in one or more
+            collateral agreements. 
+    AssetValuation:
+      type: object
+      format: AssetValuation
+      description: "The current and historical valuation of the asset \r\n"
+      properties:
+        AssetValue:
+          $ref: '#/components/schemas/Value'
+        AssetValueType:
+          $ref: '#/components/schemas/Text'
+        AssetValuationType:
+          $ref: '#/components/schemas/Text'
+        AssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+        AssetValuationServiceReference:
+          $ref: '#/components/schemas/Service'
+        AssetValuationRate:
+          $ref: '#/components/schemas/Rate'
+        AssetValuationStatus:
+          $ref: '#/components/schemas/Status'
+        AssetValuationValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+    CollateralAssetAllocation:
+      type: object
+      format: CollateralAssetAllocation
+      description: "A record of past and current allocations of the collateral asset \r\n"
+      properties:
+        Allocationstatusvalues:
+          enum:
+            - Fullyallocated
+            - Partiallyallocated
+            - Earmarked
+          format: CollateralAssetAllocation
+    Analysis:
+      type: object
+      format: Analysis
+      description: "The customer collateral position analysis combines collateral valuation, allocation and associated product utilization) \r\n"
+      properties:
+        Analysistypevalues:
+          enum:
+            - PerformanceAnalysis
+            - ActivityAnalysis
+          format: Analysis
+        AnalysisResult:
+          $ref: '#/components/schemas/Text'
+        AnalysisPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AnalysisDocument:
+          $ref: '#/components/schemas/Document'
+        AnalysisDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AnalysisSpecification:
+          $ref: '#/components/schemas/Text'
+    Document:
+      type: object
+      format: Document
+      description: ' '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+    Cashflow:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+        ProductArrangementInstanceReport:
+          $ref: '#/components/schemas/Report'
+        ReportOptionsSelectionCriteria:
+          $ref: '#/components/schemas/ReportingArrangement'
+        ReportPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportFormatTemplate:
+          $ref: '#/components/schemas/Text'
+        Report:
+          $ref: '#/components/schemas/Report'
+        CustomerCashflowPositionAnalysisRecord:
+          $ref: '#/components/schemas/Analysis'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the one of more products and services in use for which transaction activity is to be obtained \r\n"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+          format: ProductAgreement
+        ProductReference:
+          $ref: '#/components/schemas/Bankingproduct'
+        AgreementReference:
+          $ref: '#/components/schemas/Agreement'
+    Bankingproduct:
+      type: object
+      format: Bankingproduct
+      description: ' '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: Bankingproduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productlifecyclestatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Productlifecyclestatus:
+      type: object
+      format: Productlifecyclestatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        Productlifecyclestatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productlifecyclestatus
+    Agreement:
+      type: object
+      format: Agreement
+      description: ' '
+      properties:
+        AgreementSignedDate:
+          $ref: '#/components/schemas/Date'
+        Agreementtypevalues:
+          enum:
+            - CustomerAgreement
+            - SupplierAgreement
+            - BrokerAgreement
+            - SalesAgreement
+            - PurchaseAgreement
+            - MaintenanceAgreement
+            - ProductAgreement
+            - ProductSalesAgreement
+            - ResourceAgreement
+          format: Agreement
+        AgreementValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AgreementVersion:
+          $ref: '#/components/schemas/Text'
+        AgreementStatus:
+          $ref: '#/components/schemas/Agreementlifecyclestatus'
+        AgreementSubjectMatter:
+          $ref: '#/components/schemas/Text'
+        AgreementIdentification:
+          $ref: '#/components/schemas/Identifier'
+        AgreementDate:
+          $ref: '#/components/schemas/Datetime'
+        AgreementDescription:
+          $ref: '#/components/schemas/Text'
+    Date:
+      type: object
+      format: Date
+      description: 'Date on which the agreement was signed by all parties. (ISO20022) '
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    Agreementlifecyclestatus:
+      type: object
+      format: Agreementlifecyclestatus
+      description: >-
+        A characteristic of agreement which refers to the LifecycleStatus of
+        agreement (e.g., potential, offered, confirmed, completed, signed,
+        terminated). 
+      properties:
+        AgreementLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        Agreementlifecyclestatustypevalues:
+          enum:
+            - Offered
+            - Confirmed
+            - Completed
+            - Signed
+            - Terminated
+            - Rejected
+          format: Agreementlifecyclestatus
+    Report:
+      type: object
+      format: Report
+      description: "The requested product/service activity report used in the position measurements \r\n"
+      properties:
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+          format: Report
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/Text'
+    ReportingArrangement:
+      type: object
+      format: ReportingArrangement
+      description: >-
+        Defines content/transaction types to be included in the report extract
+        ReportingServiceReportingService
+        (https://www.iso20022.org/standardsrepository/type/ReportingService)StandardISO20022
+        BM ()
+      properties:
+        ReportingChannel:
+          $ref: '#/components/schemas/Channel'
+        Frequencytypevalues:
+          enum:
+            - Annual
+            - Monthly
+            - Quarterly
+            - Semiannual
+            - Weekly
+            - Daily
+            - Adhoc
+            - Intraday
+            - Overnight
+            - Tendays
+            - Fortnightly
+            - Triggeredbymovement
+            - Never
+            - Rate
+            - Oncreditevent
+            - Upfront
+            - Onexpiry
+            - Hourly
+          format: ReportingArrangement
+    Channel:
+      type: object
+      format: Channel
+      description: >-
+        Specifies the channel through which the report must be made available to
+        the  information recipient. 
+      properties:
+        Channeltypevalues:
+          enum:
+            - CommunicationChannel
+            - AuthenticationChannel
+          format: Channel
+    Credit:
+      type: object
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      properties:
+        CustomerCreditRatingAssessment:
+          $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+        Creditratingassessmenttype:
+          enum:
+            - Creditratingassessmenttype
+        CustomerCreditRatingNarrative:
+          $ref: '#/components/schemas/Text'
+        CustomerCreditPositionAnalysisRecord:
+          $ref: '#/components/schemas/Analysis'
+    CustomerCreditRatingAssessment:
+      type: object
+      format: CustomerCreditRatingAssessment
+      description: "The internal bank credit rating/assessment \r\n"
+      properties:
+        CreditRatingAssessmentType:
+          type: string
+          format: ''
+          description: ''
+    CustomerPositionState:
+      type: object
+      description: >-
+        Monitor and define the status/rating of some entity within Customer
+        Position. 
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerPositioReference:
+          $ref: '#/components/schemas/CustomerPosition'
+        AccountReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        CustomerPositionStateReference:
+          $ref: '#/components/schemas/Identifier'
+    CustomerPosition:
+      type: object
+      format: CustomerPosition
+      description: "The consolidated position state that is tracked for the customer combines analysis from all  measures \r\n"
+      properties:
+        Positiontypevalues:
+          enum:
+            - Balance/Cashflow
+            - CreditPosition
+            - CollateralPosition
+            - SecurityPosition
+          format: CustomerPosition
+        EventReference:
+          $ref: '#/components/schemas/Customerevent'
+    Customerevent:
+      type: object
+      format: Customerevent
+      description: ' '
+      properties:
+        Customereventtypevalues:
+          enum:
+            - Customerrelationshipevent
+            - Customersaleevent
+            - Customerproductevent
+            - Customerfraudevent
+            - Customerlifeevent
+          format: Customerevent
+        CustomerReference:
+          $ref: '#/components/schemas/Customerrelationship'
+    Customerrelationship:
+      type: object
+      format: Customerrelationship
+      description: ' '
+      properties:
+        CustomerRelationship:
+          type: string
+          format: Class
+          description: >-
+            A specific relationship between a specific Bank ( -  party acting as
+            a supplier of banking services) and one or more other involved
+            parties acting as (potential) consumers of banking services as
+            agreed in one or more banking product or service offerings and/or
+            agreements. 
+    CashflowNotify:
+      type: object
+      description: ''
+      properties:
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+        ProductArrangementInstanceReport:
+          $ref: '#/components/schemas/Report'
+        ReportOptionsSelectionCriteria:
+          $ref: '#/components/schemas/ReportingArrangement'
+        ReportPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportFormatTemplate:
+          $ref: '#/components/schemas/Text'
+        Report:
+          $ref: '#/components/schemas/Report'
+        CustomerCashflowPositionAnalysisRecord:
+          $ref: '#/components/schemas/Analysis'
+    CreditNotify:
+      type: object
+      description: ''
+      properties:
+        CustomerCreditRatingAssessment:
+          $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+        Creditratingassessmenttype:
+          enum:
+            - Creditratingassessmenttype
+        CustomerCreditRatingNarrative:
+          $ref: '#/components/schemas/Text'
+        CustomerCreditPositionAnalysisRecord:
+          $ref: '#/components/schemas/Analysis'

@@ -1,0 +1,340 @@
+asyncapi: 3.0.0
+info:
+  title: Card Terminal Operation
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handle POS operations including processing, capture and tracking of the
+    transactions originating at the Point of Sale devices.
+channels:
+  CardPOSNetworkOperatingSession/Created:
+    address: CardPOSNetworkOperatingSession/Created
+    messages:
+      CardPOSNetworkOperatingSession-created.message:
+        $ref: '#/components/messages/CardPOSNetworkOperatingSession'
+    description: ''
+  CardPOSNetworkOperatingSession/Updated:
+    address: CardPOSNetworkOperatingSession/Updated
+    messages:
+      CardPOSNetworkOperatingSession-updated.message:
+        $ref: '#/components/messages/CardPOSNetworkOperatingSession'
+    description: ''
+  Authorization/Created:
+    address: Authorization/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Authorization'
+    description: ''
+  Authorization/Updated:
+    address: Authorization/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Authorization'
+    description: ''
+  Batch/Created:
+    address: Batch/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Batch'
+    description: ''
+  Batch/Updated:
+    address: Batch/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Batch'
+    description: ''
+  Capture/Created:
+    address: Capture/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Capture'
+    description: ''
+  Capture/Updated:
+    address: Capture/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Capture'
+    description: ''
+operations:
+  CardPOSNetworkOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CardPOSNetworkOperatingSession~1Created'
+    summary: CardPOSNetworkOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/CardPOSNetworkOperatingSession~1Created/messages/CardPOSNetworkOperatingSession-created.message
+  CardPOSNetworkOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CardPOSNetworkOperatingSession~1Updated'
+    summary: CardPOSNetworkOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/CardPOSNetworkOperatingSession~1Updated/messages/CardPOSNetworkOperatingSession-updated.message
+  Authorization/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Authorization~1Created'
+    summary: Authorization
+    messages:
+      - $ref: '#/channels/Authorization~1Created/messages/publish.message'
+  Authorization/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Authorization~1Updated'
+    summary: Authorization
+    messages:
+      - $ref: '#/channels/Authorization~1Updated/messages/publish.message'
+  Batch/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Batch~1Created'
+    summary: Batch
+    messages:
+      - $ref: '#/channels/Batch~1Created/messages/publish.message'
+  Batch/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Batch~1Updated'
+    summary: Batch
+    messages:
+      - $ref: '#/channels/Batch~1Updated/messages/publish.message'
+  Capture/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Capture~1Created'
+    summary: Capture
+    messages:
+      - $ref: '#/channels/Capture~1Created/messages/publish.message'
+  Capture/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Capture~1Updated'
+    summary: Capture
+    messages:
+      - $ref: '#/channels/Capture~1Updated/messages/publish.message'
+components:
+  messages:
+    CardPOSNetworkOperatingSession:
+      name: CardPOSNetworkOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Card
+        Terminal Operation. 
+      payload:
+        $ref: '#/components/schemas/CardPOSNetworkOperatingSession'
+    Authorization:
+      name: Authorization
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Authorization'
+    Batch:
+      name: Batch
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Batch'
+    Capture:
+      name: Capture
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Capture'
+  schemas:
+    Authorization:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        AuthorizationTransactionDateTime:
+          $ref: '#/components/schemas/Date'
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The date time the authorization is obtained ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    Batch:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        CardTransactionBatchReference:
+          type: string
+          format: Object
+          description: "Reference to the batch of transactions \r\n"
+    Capture:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        CardTransactionProductInstanceReference:
+          type: string
+          format: Object
+          description: "The account number associated with the card transaction \r\n"
+        CardHolderReference:
+          type: string
+          format: Object
+          description: "The identity of the account holder submitting the transaction \r\n"
+        CardTransactionIssuedDeviceReference:
+          type: string
+          format: Object
+          description: "Reference to the issued device submitted to authorize the transaction (e.g. card number) \r\n"
+        CardTransactionNetworkReference:
+          type: string
+          format: Object
+          description: "Reference to the network the card transaction is handled by as recorded with the transaction \r\n"
+        CardTransactionIssuingBankReference:
+          type: string
+          format: Object
+          description: "Refers to the card holder's issuing bank as recorded with the transaction \r\n"
+        CardTransactionMerchantAcquiringBankReference:
+          type: string
+          format: Object
+          description: "Refers to the merchant's acquiring bank as recorded with the transaction \r\n"
+        CardTransactionType:
+          type: string
+          format: String
+          description: "The type of transaction (purchase, cash advance, etc.) \r\n"
+        CardTransactionCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        CardTransactionAmountType:
+          type: string
+          format: String
+          description: "Type of amount (e.g. original amount, billing currency amount, conversion rate, FX Mark-up) \r\n"
+        CardTransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        CardTransactionMerchantReference:
+          type: string
+          format: Object
+          description: "Refers to the merchant initiating settlement \r\n"
+        CardTransactionLocationReference:
+          type: string
+          format: Object
+          description: "Refers to the point of sale location \r\n"
+        CardTransactionProductandServiceReference:
+          type: string
+          format: Object
+          description: "Details of the transaction (e.g. purchased service/product, purpose) \r\n"
+        CardTransactionDateTime:
+          $ref: '#/components/schemas/Date'
+        CardTransactionFXConversionCharge:
+          type: string
+          format: String
+          description: "The applied currency conversion charge \r\n"
+        CardTransactionInterchargeFee:
+          type: string
+          format: String
+          description: "The applied intercharge fee \r\n"
+        CardTransactionAuthorizationRecord:
+          type: string
+          format: String
+          description: "Details the reference, amount, timestamp of the transaction authorization \r\n"
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The amount corresponding to the type CurrencyAndAmountCurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    CardPOSNetworkOperatingSession:
+      type: object
+      description: >-
+        Operate equipment and/or a largely automated facility within Card
+        Terminal Operation. 
+      properties:
+        CardPOSTerminalOperatingSchedule:
+          type: string
+          format: String
+          description: "Defines the service availability through the session \r\n"

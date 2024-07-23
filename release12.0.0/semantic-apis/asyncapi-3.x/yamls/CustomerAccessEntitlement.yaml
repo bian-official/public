@@ -1,0 +1,485 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Access Entitlement
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains the details of the allowed channel/device based access to products
+    and services that the customer has in place.  This profile is referenced in
+    servicing and fulfillment activity and may include customer preferences and
+    access limits/constraints that span multiple products.
+channels:
+  CustomerAccessProfileAgreement/Created:
+    address: CustomerAccessProfileAgreement/Created
+    messages:
+      CustomerAccessProfileAgreement-created.message:
+        $ref: '#/components/messages/CustomerAccessProfileAgreement'
+    description: ''
+  CustomerAccessProfileAgreement/Updated:
+    address: CustomerAccessProfileAgreement/Updated
+    messages:
+      CustomerAccessProfileAgreement-updated.message:
+        $ref: '#/components/messages/CustomerAccessProfileAgreement'
+    description: ''
+  Restrictions/Created:
+    address: Restrictions/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Restrictions'
+    description: ''
+  Restrictions/Updated:
+    address: Restrictions/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Restrictions'
+    description: ''
+  Preferences/Created:
+    address: Preferences/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Preferences'
+    description: ''
+  Preferences/Updated:
+    address: Preferences/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Preferences'
+    description: ''
+operations:
+  CustomerAccessProfileAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerAccessProfileAgreement~1Created'
+    summary: CustomerAccessProfileAgreement
+    messages:
+      - $ref: >-
+          #/channels/CustomerAccessProfileAgreement~1Created/messages/CustomerAccessProfileAgreement-created.message
+  CustomerAccessProfileAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerAccessProfileAgreement~1Updated'
+    summary: CustomerAccessProfileAgreement
+    messages:
+      - $ref: >-
+          #/channels/CustomerAccessProfileAgreement~1Updated/messages/CustomerAccessProfileAgreement-updated.message
+  Restrictions/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Restrictions~1Created'
+    summary: Restrictions
+    messages:
+      - $ref: '#/channels/Restrictions~1Created/messages/publish.message'
+  Restrictions/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Restrictions~1Updated'
+    summary: Restrictions
+    messages:
+      - $ref: '#/channels/Restrictions~1Updated/messages/publish.message'
+  Preferences/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Preferences~1Created'
+    summary: Preferences
+    messages:
+      - $ref: '#/channels/Preferences~1Created/messages/publish.message'
+  Preferences/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Preferences~1Updated'
+    summary: Preferences
+    messages:
+      - $ref: '#/channels/Preferences~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerAccessProfileAgreement:
+      name: CustomerAccessProfileAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Customer Access Entitlement.
+
+
+      payload:
+        $ref: '#/components/schemas/CustomerAccessProfileAgreement'
+    Restrictions:
+      name: Restrictions
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples: Required disclosures
+      payload:
+        $ref: '#/components/schemas/Restrictions'
+    Preferences:
+      name: Preferences
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples: Required disclosures
+      payload:
+        $ref: '#/components/schemas/Preferences'
+  schemas:
+    Restrictions:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples: Required disclosures
+      properties:
+        ChannelAccessRestrictionsRecord:
+          $ref: '#/components/schemas/ChannelAccessArrangement'
+        ChannelAccessProductandServiceTypeUsage:
+          $ref: '#/components/schemas/ChannelUsage'
+        ChannelAccessProductandServiceChannelDeviceRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+        ChannelAccessProductandServiceLocationRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+        ChannelAccessProductandServiceFrequencyLimitRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+        ChannelAccessProductandServiceTimeDurationRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+    ChannelAccessArrangement:
+      type: object
+      format: ChannelAccessArrangement
+      description: "Assembles the array of channel access constraints ||\r\n|"
+      properties:
+        ChannelAccessArrangement:
+          type: string
+          format: Class
+          description: >-
+            An arrangement that allows or restricts the access to a channel
+            through a specific access point 
+    ChannelUsage:
+      type: object
+      format: ChannelUsage
+      description: "Details allowed products/services and associated features ||\r\n|"
+      properties:
+        ChannelUsage:
+          type: string
+          format: Class
+          description: >-
+            The use of a channel by a customer (in a specific customer
+            relationship) over a specified time period.
+             
+    AccessRestrictionArrangement:
+      type: object
+      format: AccessRestrictionArrangement
+      description: "Details restrictions on allowed product/service by schedule and cumulative access duration ||\r\n|"
+      properties:
+        Accessrestrictiontypevalues:
+          enum:
+            - Accessrestrictionbychanneldevice
+            - Accessrestrictionbylocation
+            - Accessrestrictionbyfrequency/Limit
+            - Accessrestrictionbytime/Duration
+          format: AccessRestrictionArrangement
+        AccessRestrictionDescription:
+          $ref: '#/components/schemas/Text'
+        AllowedProductService:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      format: Text
+      description: 'Details allowed products/services and associated features '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Preferences:
+      type: object
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples: Required disclosures
+      properties:
+        ChannelAccessPreferencesRecord:
+          $ref: '#/components/schemas/AccessPreferenceArrangement'
+        ChannelAccessPreferenceReference:
+          $ref: '#/components/schemas/AccessPreferenceArrangement'
+        ChannelAccessPreferenceType:
+          $ref: '#/components/schemas/Text'
+        ChannelAccessPreferenceProfile:
+          $ref: '#/components/schemas/Text'
+        Channeltypevalues:
+          enum:
+            - CommunicationChannel
+            - AuthenticationChannel
+        ChannelAccessChannelDeviceTypePreference:
+          $ref: '#/components/schemas/AccessPreferenceArrangement'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+    AccessPreferenceArrangement:
+      type: object
+      format: AccessPreferenceArrangement
+      description: "Details the preference (e.g. no paper correspondence, no solicitations) ||\r\n|"
+      properties:
+        AccessPreferenceType:
+          $ref: '#/components/schemas/Text'
+        PreferencedChannelDevice:
+          $ref: '#/components/schemas/Text'
+        ProductServiceType:
+          $ref: '#/components/schemas/Text'
+        AccessPreferenceDescription:
+          $ref: '#/components/schemas/Text'
+    CustomerAccessProfileAgreement:
+      type: object
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Customer Access Entitlement.
+
+
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerChannelAccessProfileRecord:
+          $ref: '#/components/schemas/ChannelAccessArrangement'
+        CustomerAccessAgreementValidFromToDate:
+          $ref: '#/components/schemas/Datetimeperiod'
+        CustomerAccessAgreementSignaturesResponsibleParties:
+          $ref: '#/components/schemas/AccessArrangementInvolvement'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the range ends. (ISO20022) '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: ''
+        TimeZoneCode:
+          type: string
+          format: String
+          description: ''
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ''
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Partyidentification:
+          type: string
+          format: DataType
+          description: ''
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: >-
+        The duration that the agreement is in force
+        DateTimePeriod|DateTimePeriod
+        (https://www.iso20022.org/standardsrepository/type/DateTimePeriod)|Standard|ISO20022
+        BM ()
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    AccessArrangementInvolvement:
+      type: object
+      format: AccessArrangementInvolvement
+      description: "Reference to signatories as appropriate ||\r\n|"
+      properties:
+        AccessAgreementInvolvementIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Accessarrangementinvolvementtypevalues:
+          enum:
+            - PartyWhoGivesTheAccessToParty
+            - PartyWhoTakesTheAccessFromParty
+            - PartyWhoAuthoriseTheAccessForParty
+          format: AccessArrangementInvolvement
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "Reference to any associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 

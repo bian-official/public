@@ -1,0 +1,156 @@
+asyncapi: 3.0.0
+info:
+  title: Contact Routing
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Contact Routing
+    service domain tracks servicing resource availability and uses any known
+    details about the customer contact (e.g. identity, indicated purpose of
+    call, status of the relationship) to make an optimal routing decision. The
+    routing selection may include matching the required product knowledge/skills
+    to the available servicing resources.
+channels:
+  CustomerServicingResourceAllocation/Created:
+    address: CustomerServicingResourceAllocation/Created
+    messages:
+      CustomerServicingResourceAllocation-created.message:
+        $ref: '#/components/messages/CustomerServicingResourceAllocation'
+    description: ''
+  CustomerServicingResourceAllocation/Updated:
+    address: CustomerServicingResourceAllocation/Updated
+    messages:
+      CustomerServicingResourceAllocation-updated.message:
+        $ref: '#/components/messages/CustomerServicingResourceAllocation'
+    description: ''
+  Allocation/Created:
+    address: Allocation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Allocation'
+    description: ''
+  Allocation/Updated:
+    address: Allocation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Allocation'
+    description: ''
+operations:
+  CustomerServicingResourceAllocation-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerServicingResourceAllocation~1Created'
+    summary: CustomerServicingResourceAllocation
+    messages:
+      - $ref: >-
+          #/channels/CustomerServicingResourceAllocation~1Created/messages/CustomerServicingResourceAllocation-created.message
+  CustomerServicingResourceAllocation-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerServicingResourceAllocation~1Updated'
+    summary: CustomerServicingResourceAllocation
+    messages:
+      - $ref: >-
+          #/channels/CustomerServicingResourceAllocation~1Updated/messages/CustomerServicingResourceAllocation-updated.message
+  Allocation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Allocation~1Created'
+    summary: Allocation
+    messages:
+      - $ref: '#/channels/Allocation~1Created/messages/publish.message'
+  Allocation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Allocation~1Updated'
+    summary: Allocation
+    messages:
+      - $ref: '#/channels/Allocation~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerServicingResourceAllocation:
+      name: CustomerServicingResourceAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Contact Routing. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/CustomerServicingResourceAllocation'
+    Allocation:
+      name: Allocation
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      payload:
+        $ref: '#/components/schemas/Allocation'
+  schemas:
+    Allocation:
+      type: object
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      properties:
+        AllocationRequestType:
+          type: string
+          format: String
+          description: "Defines the type of allocation (e.g. next available, qualification based, future reservation) \r\n"
+        CustomerServicingRequestRecord:
+          type: string
+          format: String
+          description: "Contains details of servicing resource request. This can be simple for next available agent, or detail specific required qualifications and expertise \r\n"
+        CustomerContactRecord:
+          type: string
+          format: String
+          description: "Extracts from the active contact can be used to support more advance selection logic to identify the best available servicing specialist resource \r\n"
+        AllocationTaskResult:
+          type: string
+          format: String
+          description: "The result of the allocation task \r\n"
+    CustomerServicingResourceAllocation:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Contact Routing. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        ServicingResourceAllocationServiceSchedule:
+          type: string
+          format: String
+          description: "Maintains the allocation status of available service resources. Can include future booking commitments \r\n"
+        ServicingResourceReference:
+          type: string
+          format: Object
+          description: "Reference to a servicing resource \r\n"
+        ServicingResourceRecord:
+          type: string
+          format: String
+          description: "Details about a registered servicing resource/specialist \r\n"
+        ServicingResourceQualificationProfile:
+          type: string
+          format: String
+          description: "Details the qualification, expertise and level of experience of a servicing specialist \r\n"
+        ServicingPositionReference:
+          type: string
+          format: Object
+          description: "Reference to the assigned servicing position for the resource for the current session \r\n"
+        ServicingResourceAvailabilitySchedule:
+          type: string
+          format: String
+          description: "Details the time the resource plans to be and is actually available for allocations \r\n"
+        ServicingResourceStatus:
+          type: string
+          format: String
+          description: "Tracks the current status indicating availability for assignment \r\n"
+        ServicingSessionReference:
+          type: string
+          format: Object
+          description: "Reference to a servicing session assignments made \r\n"

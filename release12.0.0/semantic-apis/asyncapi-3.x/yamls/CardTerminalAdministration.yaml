@@ -1,0 +1,184 @@
+asyncapi: 3.0.0
+info:
+  title: Card Terminal Administration
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    administers the POS Network including the inventory, terminal
+    characteristics, deployment and status of the POS devices.
+channels:
+  CardPOSDeviceAllocation/Created:
+    address: CardPOSDeviceAllocation/Created
+    messages:
+      CardPOSDeviceAllocation-created.message:
+        $ref: '#/components/messages/CardPOSDeviceAllocation'
+    description: ''
+  CardPOSDeviceAllocation/Updated:
+    address: CardPOSDeviceAllocation/Updated
+    messages:
+      CardPOSDeviceAllocation-updated.message:
+        $ref: '#/components/messages/CardPOSDeviceAllocation'
+    description: ''
+  Allocation/Created:
+    address: Allocation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Allocation'
+    description: ''
+  Allocation/Updated:
+    address: Allocation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Allocation'
+    description: ''
+operations:
+  CardPOSDeviceAllocation-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CardPOSDeviceAllocation~1Created'
+    summary: CardPOSDeviceAllocation
+    messages:
+      - $ref: >-
+          #/channels/CardPOSDeviceAllocation~1Created/messages/CardPOSDeviceAllocation-created.message
+  CardPOSDeviceAllocation-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CardPOSDeviceAllocation~1Updated'
+    summary: CardPOSDeviceAllocation
+    messages:
+      - $ref: >-
+          #/channels/CardPOSDeviceAllocation~1Updated/messages/CardPOSDeviceAllocation-updated.message
+  Allocation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Allocation~1Created'
+    summary: Allocation
+    messages:
+      - $ref: '#/channels/Allocation~1Created/messages/publish.message'
+  Allocation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Allocation~1Updated'
+    summary: Allocation
+    messages:
+      - $ref: '#/channels/Allocation~1Updated/messages/publish.message'
+components:
+  messages:
+    CardPOSDeviceAllocation:
+      name: CardPOSDeviceAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Card Terminal
+        Administration. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/CardPOSDeviceAllocation'
+    Allocation:
+      name: Allocation
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      payload:
+        $ref: '#/components/schemas/Allocation'
+  schemas:
+    Allocation:
+      type: object
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      properties:
+        MerchantReference:
+          type: string
+          format: Object
+          description: "Reference to the Card merchant registered with the device \r\n"
+        MerchantType:
+          type: string
+          format: String
+          description: "The type of merchant (e.g. retailer, hotel) \r\n"
+        MerchantLocation:
+          type: string
+          format: String
+          description: "The physical location/address of the retailer and the device \r\n"
+        CardPOSDeviceConfiguration:
+          type: string
+          format: String
+          description: "The configuration defines its operational characteristics/capabilities e.g. (PIN pad, transaction capture, tip handling, transaction descriptive, manual entry, security keys, balancing, receipt options/text, communication options, card types, currencies, etc.) \r\n"
+    CardPOSDeviceAllocation:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Card Terminal
+        Administration. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        CardPOSDeviceReference:
+          type: string
+          format: Object
+          description: "Reference identification for the POS device \r\n"
+        CardPOSDeviceIdentifier:
+          type: string
+          format: String
+          description: "Any unique identification properties (e.g. serial number) \r\n"
+        CardPOSDeviceType:
+          type: string
+          format: String
+          description: "The specific make and type of device \r\n"
+        CardPOSDeviceSoftwareType:
+          type: string
+          format: String
+          description: "The type of software running on the device \r\n"
+        CardPOSDeviceSoftwareVersion:
+          type: string
+          format: String
+          description: "The version of the software on the device \r\n"
+        CardPOSDeviceAcquiredDate:
+          $ref: '#/components/schemas/Date'
+        CardPOSRepairRecord:
+          type: string
+          format: String
+          description: "Record of the maintenance/repair history of the device \r\n"
+        CardPOSRepairDetails:
+          type: string
+          format: String
+          description: "Description of the repair or maintenance work done (includes costs as appropriate) \r\n"
+        CardPOSRepairDates:
+          $ref: '#/components/schemas/Date'
+        CardPOSDeviceStatus:
+          type: string
+          format: String
+          description: "The status of the POS device (e.g. testing, in production, help inventory, under repair, replaced/terminated) \r\n"
+    Date:
+      type: object
+      format: Date
+      description: >-
+        Key dates and times relating to the repair (e.g. reported, scheduled,
+        effort, returned to service) ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+        Date:
+          type: string
+          format: DataType
+          description: >-
+            A date is a Gregorian calendar representation in various common
+            resolutions: year, month, week, day. (UN/CEFACT)
+
+
+            A particular point in the progression of time in a calendar year
+            expressed in the YYYY-MM-DD format. This representation is defined
+            in "XML Schema Part 2: Datatypes Second Edition W3C Recommendation
+            28 October 2004" which is aligned with ISO 8601. (ISO20022) 

@@ -1,0 +1,356 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Billing
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domains
+    provides a central service to compose, issue and track customer billing and
+    invoices
+channels:
+  CustomerBillingProcedure/Created:
+    address: CustomerBillingProcedure/Created
+    messages:
+      CustomerBillingProcedure-created.message:
+        $ref: '#/components/messages/CustomerBillingProcedure'
+    description: ''
+  CustomerBillingProcedure/Updated:
+    address: CustomerBillingProcedure/Updated
+    messages:
+      CustomerBillingProcedure-updated.message:
+        $ref: '#/components/messages/CustomerBillingProcedure'
+    description: ''
+  Invoicing/Created:
+    address: Invoicing/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Invoicing'
+    description: ''
+  Invoicing/Updated:
+    address: Invoicing/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Invoicing'
+    description: ''
+  TrackingandReminders/Created:
+    address: TrackingandReminders/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrackingandReminders'
+    description: ''
+  TrackingandReminders/Updated:
+    address: TrackingandReminders/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrackingandReminders'
+    description: ''
+  Payments/Created:
+    address: Payments/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Payments'
+    description: ''
+  Payments/Updated:
+    address: Payments/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Payments'
+    description: ''
+operations:
+  CustomerBillingProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerBillingProcedure~1Created'
+    summary: CustomerBillingProcedure
+    messages:
+      - $ref: >-
+          #/channels/CustomerBillingProcedure~1Created/messages/CustomerBillingProcedure-created.message
+  CustomerBillingProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerBillingProcedure~1Updated'
+    summary: CustomerBillingProcedure
+    messages:
+      - $ref: >-
+          #/channels/CustomerBillingProcedure~1Updated/messages/CustomerBillingProcedure-updated.message
+  Invoicing/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Invoicing~1Created'
+    summary: Invoicing
+    messages:
+      - $ref: '#/channels/Invoicing~1Created/messages/publish.message'
+  Invoicing/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Invoicing~1Updated'
+    summary: Invoicing
+    messages:
+      - $ref: '#/channels/Invoicing~1Updated/messages/publish.message'
+  TrackingandReminders/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrackingandReminders~1Created'
+    summary: TrackingandReminders
+    messages:
+      - $ref: '#/channels/TrackingandReminders~1Created/messages/publish.message'
+  TrackingandReminders/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrackingandReminders~1Updated'
+    summary: TrackingandReminders
+    messages:
+      - $ref: '#/channels/TrackingandReminders~1Updated/messages/publish.message'
+  Payments/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Payments~1Created'
+    summary: Payments
+    messages:
+      - $ref: '#/channels/Payments~1Created/messages/publish.message'
+  Payments/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Payments~1Updated'
+    summary: Payments
+    messages:
+      - $ref: '#/channels/Payments~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerBillingProcedure:
+      name: CustomerBillingProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Customer
+        Billing. 
+      payload:
+        $ref: '#/components/schemas/CustomerBillingProcedure'
+    Invoicing:
+      name: Invoicing
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Invoicing'
+    TrackingandReminders:
+      name: TrackingandReminders
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/TrackingandReminders'
+    Payments:
+      name: Payments
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Payments'
+  schemas:
+    Invoicing:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        CustomerInvoiceRecord:
+          type: string
+          format: String
+          description: "The customer invoice record \r\n"
+        InvoiceDate:
+          $ref: '#/components/schemas/Date'
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "The document reference for the sent invoice \r\n"
+        CorrespondenceInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the correspondence that generated the dispatch \r\n"
+        Invoice:
+          type: string
+          format: String
+          description: "The content of the invoice (in any suitable media of format) \r\n"
+        InvoicingWorkProduct:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the analysis (for future reference) \r\n"
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The date the invoice is issued ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    TrackingandReminders:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        CustomerReminderContactRecord:
+          type: string
+          format: String
+          description: "Reference to an outbound contact established with the customer \r\n"
+        ContactMessage:
+          type: string
+          format: String
+          description: "Content of the reminder message \r\n"
+        ContactDate:
+          $ref: '#/components/schemas/Date'
+        ContactResult:
+          type: string
+          format: String
+          description: "Any response arising from the contact \r\n"
+        TrackingandRemindersResult:
+          type: string
+          format: String
+          description: "The result of the tracking and reminder activity \r\n"
+        TrackingandRemindersWorkProduct:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the task \r\n"
+    Payments:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        PaymentTransactionReference:
+          type: string
+          format: Object
+          description: "Reference to the received payment transaction \r\n"
+        PaymentTransaction:
+          type: string
+          format: String
+          description: "The payment transaction details \r\n"
+    CustomerBillingProcedure:
+      type: object
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Customer
+        Billing. 
+      properties:
+        CustomerBillingTransactionType:
+          type: string
+          format: String
+          description: "The type of customer billing (e.g. product fees, penalties) \r\n"
+        CustomerBillingTransactionDescription:
+          type: string
+          format: String
+          description: "Description that annotates the bill as appropriate \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer for the billing \r\n"
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "The product instance associated with the charge \r\n"
+        CustomerAgreementReference:
+          type: string
+          format: Object
+          description: "The agreement covering the product arrangement (referenced for any specific billing terms and conditions) \r\n"
+        CustomerBillingProductandServiceActionDescription:
+          type: string
+          format: String
+          description: "Breakdown and description of the billed service or activities \r\n"
+        CustomerBillingParty:
+          type: string
+          format: String
+          description: "The legal entity being charged (will usually be the customer) \r\n"
+        CustomerBillingAddress:
+          type: string
+          format: String
+          description: "The billing address (can be an electronic location \r\n"
+        CustomerBillingPeriod:
+          type: string
+          format: String
+          description: "The billing period is appropriate (e.g. for an on-going service) \r\n"
+        CustomerBillingStatement:
+          type: string
+          format: String
+          description: "The itemized breakdown of the charges with references \r\n"
+        CustomerBillingAmount:
+          $ref: '#/components/schemas/Amount'
+        CustomerBillingPaymentDueDate:
+          $ref: '#/components/schemas/Date'
+        CustomerBillingPaymentDetails:
+          type: string
+          format: String
+          description: "The payment details (e.g. payment account) \r\n"
+        CustomerBillingPaymentSchedule:
+          type: string
+          format: String
+          description: "The target and actual billing activities and dates \r\n"
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The total amount due CurrencyAndAmountCurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             

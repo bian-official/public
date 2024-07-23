@@ -1,0 +1,366 @@
+asyncapi: 3.0.0
+info:
+  title: Central Cash Handling
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Track cash inventory,
+    project demand and allocate inventory across the branch/ATM network
+channels:
+  CentralCashAllocation/Created:
+    address: CentralCashAllocation/Created
+    messages:
+      CentralCashAllocation-created.message:
+        $ref: '#/components/messages/CentralCashAllocation'
+    description: ''
+  CentralCashAllocation/Updated:
+    address: CentralCashAllocation/Updated
+    messages:
+      CentralCashAllocation-updated.message:
+        $ref: '#/components/messages/CentralCashAllocation'
+    description: ''
+  ProjectionandAllocation/Created:
+    address: ProjectionandAllocation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ProjectionandAllocation'
+    description: ''
+  ProjectionandAllocation/Updated:
+    address: ProjectionandAllocation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ProjectionandAllocation'
+    description: ''
+  CentralCashHandlingOutcome/Created:
+    address: CentralCashHandlingOutcome/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CentralCashHandlingOutcome'
+    description: ''
+  CentralCashHandlingOutcome/Updated:
+    address: CentralCashHandlingOutcome/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CentralCashHandlingOutcome'
+    description: ''
+  TrackingandAllocation/Created:
+    address: TrackingandAllocation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrackingandAllocation'
+    description: ''
+  TrackingandAllocation/Updated:
+    address: TrackingandAllocation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrackingandAllocation'
+    description: ''
+operations:
+  CentralCashAllocation-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CentralCashAllocation~1Created'
+    summary: CentralCashAllocation
+    messages:
+      - $ref: >-
+          #/channels/CentralCashAllocation~1Created/messages/CentralCashAllocation-created.message
+  CentralCashAllocation-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CentralCashAllocation~1Updated'
+    summary: CentralCashAllocation
+    messages:
+      - $ref: >-
+          #/channels/CentralCashAllocation~1Updated/messages/CentralCashAllocation-updated.message
+  ProjectionandAllocation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ProjectionandAllocation~1Created'
+    summary: ProjectionandAllocation
+    messages:
+      - $ref: '#/channels/ProjectionandAllocation~1Created/messages/publish.message'
+  ProjectionandAllocation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ProjectionandAllocation~1Updated'
+    summary: ProjectionandAllocation
+    messages:
+      - $ref: '#/channels/ProjectionandAllocation~1Updated/messages/publish.message'
+  CentralCashHandlingOutcome/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CentralCashHandlingOutcome~1Created'
+    summary: CentralCashHandlingOutcome
+    messages:
+      - $ref: >-
+          #/channels/CentralCashHandlingOutcome~1Created/messages/publish.message
+  CentralCashHandlingOutcome/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CentralCashHandlingOutcome~1Updated'
+    summary: CentralCashHandlingOutcome
+    messages:
+      - $ref: >-
+          #/channels/CentralCashHandlingOutcome~1Updated/messages/publish.message
+  TrackingandAllocation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrackingandAllocation~1Created'
+    summary: TrackingandAllocation
+    messages:
+      - $ref: '#/channels/TrackingandAllocation~1Created/messages/publish.message'
+  TrackingandAllocation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrackingandAllocation~1Updated'
+    summary: TrackingandAllocation
+    messages:
+      - $ref: '#/channels/TrackingandAllocation~1Updated/messages/publish.message'
+components:
+  messages:
+    CentralCashAllocation:
+      name: CentralCashAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/CentralCashAllocation'
+    ProjectionandAllocation:
+      name: ProjectionandAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/ProjectionandAllocation'
+    CentralCashHandlingOutcome:
+      name: CentralCashHandlingOutcome
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/CentralCashHandlingOutcome'
+    TrackingandAllocation:
+      name: TrackingandAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/TrackingandAllocation'
+  schemas:
+    ProjectionandAllocation:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        ProjectionandAllocationPreconditions:
+          type: string
+          format: String
+          description: "The required status/situation before the allocation can be made \r\n"
+        ProjectionandAllocationAllocationSchedule:
+          type: string
+          format: String
+          description: "The schedule and timing of allocation decisions \r\n"
+        CashInventoryProjection:
+          $ref: '#/components/schemas/BusinessService'
+        CashInventoryProjectionServiceType:
+          type: string
+          format: String
+          description: "Reference to the specific business service type \r\n"
+        CashInventoryProjectionServiceDescription:
+          type: string
+          format: String
+          description: "Description of the performed business service \r\n"
+        CashInventoryProjectionServiceInputsandOuputs:
+          type: string
+          format: String
+          description: "Mandatory and optional inputs and output information for the business service \r\n"
+        CashInventoryProjectionServiceWorkProduct:
+          type: string
+          format: String
+          description: "Documentation, meeting schedules, notes, reasearch. calculations and any other work products produced by the business service \r\n"
+        CashInventoryProjectionServiceName:
+          type: string
+          format: String
+          description: ''
+    BusinessService:
+      type: object
+      format: BusinessService
+      description: "The Central Cash Allocation specific  Business Service \r\n"
+      properties:
+        Businessservicetypevalues:
+          enum:
+            - Businessservicetypevalues
+          format: BusinessService
+    CentralCashHandlingOutcome:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        CentralCashHandlingAllocation:
+          type: string
+          format: String
+          description: ''
+        CentralCashHandlingWorkProduct:
+          type: string
+          format: String
+          description: ''
+    TrackingandAllocation:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        TrackingandAllocationPreconditions:
+          type: string
+          format: String
+          description: "The required status/situation before the allocation can be made \r\n"
+        TrackingandAllocationAllocationSchedule:
+          type: string
+          format: String
+          description: "The schedule and timing of allocation decisions \r\n"
+        BusinessService:
+          $ref: '#/components/schemas/BusinessService'
+        ServiceType:
+          type: string
+          format: String
+          description: "Reference to the specific business service type \r\n"
+        ServiceDescription:
+          type: string
+          format: String
+          description: "Description of the performed business service \r\n"
+        ServiceInputsandOuputs:
+          type: string
+          format: String
+          description: "Mandatory and optional inputs and output information for the business service \r\n"
+        ServiceWorkProduct:
+          type: string
+          format: String
+          description: "Documentation, meeting schedules, notes, reasearch. calculations and any other work products produced by the business service \r\n"
+        ServiceName:
+          type: string
+          format: String
+          description: ''
+    CentralCashAllocation:
+      type: object
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Central Cash Handling. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      properties:
+        CentralCashAllocationParameterType:
+          type: string
+          format: String
+          description: "A Classification value that distinguishes between allocation Options according to the optional business services defined within Central Cash Allocation \r\n"
+        CentralCashAllocationSelectedOption:
+          type: string
+          format: String
+          description: "A selected optional business service for which resources are allocated \r\n"
+        CentralCashAllocation<SubjectArea>Type:
+          type: string
+          format: String
+          description: "A Classification value, that distinguishes between the the type of resource allocated withing the Central Cash Allocation \r\n"
+        CentralCashAllocationDescription:
+          type: string
+          format: String
+          description: "Documentation of Central Cash Allocation \r\n"
+        CentralCashAllocationRequest:
+          type: string
+          format: String
+          description: "Request to allocate CentralCash \r\n"
+        CentralCashAllocationSchedule:
+          type: string
+          format: String
+          description: "Timetable to allocate CentralCash \r\n"
+        CentralCashAllocationStatus:
+          type: string
+          format: String
+          description: "The status of Central Cash Allocation \r\n"
+        CentralCashAllocationReference:
+          type: string
+          format: Object
+          description: "Reference to the party who is involved in Central Cash Allocation \r\n"
+        CentralCashAllocationCustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the customer who is involved in Central Cash Allocation \r\n"
+        CentralCashAllocationCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        CentralCashAllocationRegulationReference:
+          type: string
+          format: Object
+          description: "Reference to the regulation which is defined for Central Cash Allocation \r\n"
+        CentralCashAllocationRegulationType:
+          type: string
+          format: String
+          description: "A Classification that distinguishes between the regularity domains of Central Cash Allocation \r\n"
+        CentralCashAllocationJurisdiction:
+          type: string
+          format: String
+          description: "Reference to the jurisdiction that is assigned to Central Cash Allocation in case of legal dispute. \r\n"
+        CentralCashAllocationBookingLocation:
+          type: string
+          format: String
+          description: "The financial accounting unit into which the financial events, with regard to the origination and fulfillment of the agreement, are entered. \r\n"
+        CentralCashAllocationAccountType:
+          type: string
+          format: String
+          description: "The type of account which is linked to Central Cash Allocation \r\n"
+        CentralCashAllocationAccountReference:
+          type: string
+          format: Object
+          description: "Reference to the account which is linked to Central Cash Allocation \r\n"
+        CentralCashAllocationInstance:
+          type: string
+          format: String
+          description: "Reference to Central Cash Allocation Instance \r\n"
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: >-
+        The curreny which is arranged/used for Central Cash Allocation
+        CurrencyCodeCurrencyCode
+        (https://www.iso20022.org/standardsrepository/type/CurrencyCode)StandardISO20022
+        BM ()
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
