@@ -1,0 +1,106 @@
+asyncapi: 3.0.0
+info:
+  title: Servicing Order
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles the processing of a customer servicing request as a predefined
+    procedure. A range of standard servicing requests can be supported. The
+    process can include a check of permissions when the request is made by a
+    third party/service provider
+channels:
+  ServicingOrderProcedure/Created:
+    address: ServicingOrderProcedure/Created
+    messages:
+      ServicingOrderProcedure-created.message:
+        $ref: '#/components/messages/ServicingOrderProcedure'
+    description: ''
+  ServicingOrderProcedure/Updated:
+    address: ServicingOrderProcedure/Updated
+    messages:
+      ServicingOrderProcedure-updated.message:
+        $ref: '#/components/messages/ServicingOrderProcedure'
+    description: ''
+operations:
+  ServicingOrderProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingOrderProcedure~1Created'
+    summary: ServicingOrderProcedure
+    messages:
+      - $ref: >-
+          #/channels/ServicingOrderProcedure~1Created/messages/ServicingOrderProcedure-created.message
+  ServicingOrderProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingOrderProcedure~1Updated'
+    summary: ServicingOrderProcedure
+    messages:
+      - $ref: >-
+          #/channels/ServicingOrderProcedure~1Updated/messages/ServicingOrderProcedure-updated.message
+components:
+  messages:
+    ServicingOrderProcedure:
+      name: ServicingOrderProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Servicing
+        Order. 
+      payload:
+        $ref: '#/components/schemas/ServicingOrderProcedure'
+  schemas:
+    ServicingOrderProcedure:
+      type: object
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Servicing
+        Order. 
+      properties:
+        ThirdPartyReference:
+          type: string
+          format: Object
+          description: "Reference to a third party service provider that handles some aspect of customer servicing access with the bank \r\n"
+        ThirdPartyServicingMandateReference:
+          type: string
+          format: Object
+          description: "Reference to a third party servicing mandate used when a third party is requesting the service order \r\n"
+        ThirdPartyServicingMandate:
+          type: string
+          format: String
+          description: "The servicing mandate for a third party defines the customers and service access allowed \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "The customer requesting the servicing order directly or the customer that is being serviced indirectly by the third party \r\n"
+        CustomerEligibilityAssessmentInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the customer's active services and products record \r\n"
+        ServicingOrderType:
+          type: string
+          format: String
+          description: "The type of servicing order being processed (e.g. change of address, change of employment…) \r\n"
+        ServicingOrderTaskRecord:
+          type: string
+          format: String
+          description: "The record for the servicing task \r\n"
+        ServicingOrderDescription:
+          type: string
+          format: String
+          description: "Defines the processing tasks and their sequencing followed by the servicing order \r\n"
+        Date:
+          type: string
+          format: String
+          description: "The date and time that the servicing order is processed \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Employees involved in the servicing order \r\n"
+        ServicingOrderWorkProduct:
+          type: string
+          format: String
+          description: "Work documentation, forms and schedules produced and referenced during the analysis \r\n"
+        ServicingOrderWorkTaskResult:
+          type: string
+          format: String
+          description: "The outcome of the servicing order \r\n"

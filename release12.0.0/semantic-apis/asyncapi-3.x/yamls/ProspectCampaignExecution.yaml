@@ -1,0 +1,283 @@
+asyncapi: 3.0.0
+info:
+  title: Prospect Campaign Execution
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Execute a prospect
+    campaign (version) and track and respond to impact
+channels:
+  ProspectCampaignProcedure/Created:
+    address: ProspectCampaignProcedure/Created
+    messages:
+      ProspectCampaignProcedure-created.message:
+        $ref: '#/components/messages/ProspectCampaignProcedure'
+    description: ''
+  ProspectCampaignProcedure/Updated:
+    address: ProspectCampaignProcedure/Updated
+    messages:
+      ProspectCampaignProcedure-updated.message:
+        $ref: '#/components/messages/ProspectCampaignProcedure'
+    description: ''
+  Execution/Created:
+    address: Execution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Execution'
+    description: ''
+  Execution/Updated:
+    address: Execution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Execution'
+    description: ''
+  AnalysisFeedback/Created:
+    address: AnalysisFeedback/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/AnalysisFeedback'
+    description: ''
+  AnalysisFeedback/Updated:
+    address: AnalysisFeedback/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/AnalysisFeedback'
+    description: ''
+  CandidateSelection/Created:
+    address: CandidateSelection/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CandidateSelection'
+    description: ''
+  CandidateSelection/Updated:
+    address: CandidateSelection/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CandidateSelection'
+    description: ''
+operations:
+  ProspectCampaignProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ProspectCampaignProcedure~1Created'
+    summary: ProspectCampaignProcedure
+    messages:
+      - $ref: >-
+          #/channels/ProspectCampaignProcedure~1Created/messages/ProspectCampaignProcedure-created.message
+  ProspectCampaignProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ProspectCampaignProcedure~1Updated'
+    summary: ProspectCampaignProcedure
+    messages:
+      - $ref: >-
+          #/channels/ProspectCampaignProcedure~1Updated/messages/ProspectCampaignProcedure-updated.message
+  Execution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Execution~1Created'
+    summary: Execution
+    messages:
+      - $ref: '#/channels/Execution~1Created/messages/publish.message'
+  Execution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Execution~1Updated'
+    summary: Execution
+    messages:
+      - $ref: '#/channels/Execution~1Updated/messages/publish.message'
+  AnalysisFeedback/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/AnalysisFeedback~1Created'
+    summary: AnalysisFeedback
+    messages:
+      - $ref: '#/channels/AnalysisFeedback~1Created/messages/publish.message'
+  AnalysisFeedback/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/AnalysisFeedback~1Updated'
+    summary: AnalysisFeedback
+    messages:
+      - $ref: '#/channels/AnalysisFeedback~1Updated/messages/publish.message'
+  CandidateSelection/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CandidateSelection~1Created'
+    summary: CandidateSelection
+    messages:
+      - $ref: '#/channels/CandidateSelection~1Created/messages/publish.message'
+  CandidateSelection/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CandidateSelection~1Updated'
+    summary: CandidateSelection
+    messages:
+      - $ref: '#/channels/CandidateSelection~1Updated/messages/publish.message'
+components:
+  messages:
+    ProspectCampaignProcedure:
+      name: ProspectCampaignProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Prospect
+        Campaign Execution. 
+      payload:
+        $ref: '#/components/schemas/ProspectCampaignProcedure'
+    Execution:
+      name: Execution
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Execution'
+    AnalysisFeedback:
+      name: AnalysisFeedback
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/AnalysisFeedback'
+    CandidateSelection:
+      name: CandidateSelection
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CandidateSelection'
+  schemas:
+    Execution:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        ProspectCampaignProcedureWorkTaskType:
+          type: string
+          format: String
+          description: "The type of work task (e.g. execute campaign through mailshot) \r\n"
+        ProspectCampaignProcedureWorkTaskDescription:
+          type: string
+          format: String
+          description: "Description of the task performed, includes summary of activities as necessary for reference \r\n"
+        ProspectCampaignProcedureWorkTaskWorkProducts:
+          type: string
+          format: String
+          description: "File of consolidated notes, forms and documents for the work task \r\n"
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to associated documents \r\n"
+        ProspectCampaignProcedureWorkTaskResult:
+          type: string
+          format: String
+          description: "Details of the outcome or result of the work task can be the identification of prospects that have expressed an interest in becoming a customer \r\n"
+        ProspectCampaignProcedureWorkTaskDate-Time:
+          $ref: '#/components/schemas/Date'
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The date-time the prospect campaign execution task is processed
+        ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    AnalysisFeedback:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        ProspectCampaignProcedureAnalysisResult:
+          type: string
+          format: String
+          description: "The result of the analysis of the performance of the campaign for the current cycle \r\n"
+        ProspectCampaignProcedureAnalysisFeedbackResult:
+          type: string
+          format: String
+          description: "Description of the feedback provided to the campaign design team \r\n"
+    CandidateSelection:
+      type: object
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      properties:
+        ProspectCampaignSelectionCriteria:
+          type: string
+          format: String
+          description: "Details the selection criteria used to identify candidate prospects \r\n"
+        ProspectCampaignCandidateEmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Reference to the employee or business unit that confirms eligibility of the prospect list (e.g. confirming not current customer checks) \r\n"
+        ProspectCampaignCandidateReference:
+          type: string
+          format: Object
+          description: "Reference to the prospects selected as a candidate \r\n"
+    ProspectCampaignProcedure:
+      type: object
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Prospect
+        Campaign Execution. 
+      properties:
+        ProspectCampaignType:
+          type: string
+          format: String
+          description: "The type or category of prospect campaign (e.g. acquisition, product discount incentive) \r\n"
+        ProspectCampaignDescription:
+          type: string
+          format: String
+          description: "A description of the campaign that clarifies the intended context/use of the campaign, the mechanisms employed and the intended/anticipated response/impact \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Reference to the business unit responsible for the campaign execution \r\n"
+        ProspectCampaignProcedureSet-up:
+          type: string
+          format: String
+          description: "Details of the deployment set-up/configuration of the campaign for reference \r\n"
+        ProspectCampaignProcedureVersionNumber:
+          type: string
+          format: String
+          description: "The prospect campaign version number used in the event \r\n"
+        ProspectCampaignSchedule:
+          type: string
+          format: String
+          description: "The campaign processing schedule, covering prospect list selection/verification, execution, follow-up and analysis activities. Note this can be an ongoing campaign where worksteps continue in parallel \r\n"
+        ProspectCampaignConsumablesInventory:
+          type: string
+          format: String
+          description: "Inventory record of any consumables that are to be used in the execution of the campaign (e.g. brochures) \r\n"
+        ProspectCampaignConsumableType:
+          type: string
+          format: String
+          description: "The type of consumable item associated with the campaign (e.g. gift, brochure) \r\n"
+        ProspectCampaignConsumableHolding:
+          type: string
+          format: String
+          description: "The tracked inventory of the consumable item \r\n"
+        DateType:
+          type: string
+          format: String
+          description: "Key dates associated with the campaign process (e.g. initiation date, version revision date, completion date) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Value of the date type \r\n"
+        ProspectCampaignProcedureResult:
+          type: string
+          format: String
+          description: "The result/impact of the overall prospect campaign event (that can include multiple identified prospects for on-boarding) \r\n"
+        ProspectCampaignProcedureProspectIdentification:
+          type: string
+          format: String
+          description: "A reference to prospects generated by the prospect campaign \r\n"
+        PartyLifecycleManagementProcedureInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to the prospect on-boarding task as handled by the Party Lifecycle Management Service Domain \r\n"

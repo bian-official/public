@@ -1,0 +1,310 @@
+asyncapi: 3.0.0
+info:
+  title: Servicing Event History
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    captures, classifies and stores servicing activity and events to support
+    root cause analysis
+channels:
+  ServicingEventLog/Created:
+    address: ServicingEventLog/Created
+    messages:
+      ServicingEventLog-created.message:
+        $ref: '#/components/messages/ServicingEventLog'
+    description: ''
+  ServicingEventLog/Updated:
+    address: ServicingEventLog/Updated
+    messages:
+      ServicingEventLog-updated.message:
+        $ref: '#/components/messages/ServicingEventLog'
+    description: ''
+  Session/Created:
+    address: Session/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Session'
+    description: ''
+  Session/Updated:
+    address: Session/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Session'
+    description: ''
+  ServicingFacility/Created:
+    address: ServicingFacility/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ServicingFacility'
+    description: ''
+  ServicingFacility/Updated:
+    address: ServicingFacility/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ServicingFacility'
+    description: ''
+  Issue/Created:
+    address: Issue/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Issue'
+    description: ''
+  Issue/Updated:
+    address: Issue/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Issue'
+    description: ''
+  Assignment/Created:
+    address: Assignment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+  Assignment/Updated:
+    address: Assignment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+operations:
+  ServicingEventLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingEventLog~1Created'
+    summary: ServicingEventLog
+    messages:
+      - $ref: >-
+          #/channels/ServicingEventLog~1Created/messages/ServicingEventLog-created.message
+  ServicingEventLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingEventLog~1Updated'
+    summary: ServicingEventLog
+    messages:
+      - $ref: >-
+          #/channels/ServicingEventLog~1Updated/messages/ServicingEventLog-updated.message
+  Session/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Session~1Created'
+    summary: Session
+    messages:
+      - $ref: '#/channels/Session~1Created/messages/publish.message'
+  Session/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Session~1Updated'
+    summary: Session
+    messages:
+      - $ref: '#/channels/Session~1Updated/messages/publish.message'
+  ServicingFacility/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingFacility~1Created'
+    summary: ServicingFacility
+    messages:
+      - $ref: '#/channels/ServicingFacility~1Created/messages/publish.message'
+  ServicingFacility/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingFacility~1Updated'
+    summary: ServicingFacility
+    messages:
+      - $ref: '#/channels/ServicingFacility~1Updated/messages/publish.message'
+  Issue/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Issue~1Created'
+    summary: Issue
+    messages:
+      - $ref: '#/channels/Issue~1Created/messages/publish.message'
+  Issue/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Issue~1Updated'
+    summary: Issue
+    messages:
+      - $ref: '#/channels/Issue~1Updated/messages/publish.message'
+  Assignment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Created'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Created/messages/publish.message'
+  Assignment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Updated'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Updated/messages/publish.message'
+components:
+  messages:
+    ServicingEventLog:
+      name: ServicingEventLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Servicing Event History. 
+      payload:
+        $ref: '#/components/schemas/ServicingEventLog'
+    Session:
+      name: Session
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/Session'
+    ServicingFacility:
+      name: ServicingFacility
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/ServicingFacility'
+    Issue:
+      name: Issue
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/Issue'
+    Assignment:
+      name: Assignment
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/Assignment'
+  schemas:
+    Session:
+      type: object
+      format: Session
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      properties:
+        SessionStartEndTime:
+          type: string
+          format: String
+          description: "The start and duration of the dialogue \r\n"
+        CustomerContactReference:
+          type: string
+          format: Object
+          description: "Reference to the complete contact record for the customer contact \r\n"
+        SessionMechanism:
+          type: string
+          format: String
+          description: "The type of channel device involved in the session exchange (e.g. web, phone, chat, video, VOIP, face to face at a branch note there can be concurrent sessions within a single customer contact) \r\n"
+        ServicingFacilityType:
+          type: string
+          format: String
+          description: "Lists if a specific servicing facility is used during the session) \r\n"
+        SessionDialogueRecord:
+          type: string
+          format: String
+          description: "The session dialogue log of actions is returned to SD-Contact Handler and added to the contact record \r\n"
+        SessionDialogueType:
+          type: string
+          format: String
+          description: "The general type of customer exchange (e.g. verified customer, anonymous contact, topic used to structure/script dialogue) \r\n"
+        SessionDialogueScript:
+          type: string
+          format: String
+          description: "In cases a prompt or script can provided to structure the interaction for self-service and assisted interactions \r\n"
+        SessionDialogueLogReference:
+          type: string
+          format: Object
+          description: "Reference to a dialogue log that is built up \r\n"
+        SessionDialogueLog:
+          type: string
+          format: String
+          description: "The dialogue log, used for training and root cause analysis etc.  (e.g. click-stream, video/audio recording) \r\n"
+        SessionDialogueResult:
+          type: string
+          format: String
+          description: "The outcome of the dialogue (e.g. customer satisfied, on-ward routing, hang-up) \r\n"
+    ServicingFacility:
+      type: object
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      properties:
+        ServicingFacilityType:
+          type: string
+          format: String
+          description: "The type of service support facility engaged (e.g. commission tracking, on-line help, action logging) \r\n"
+        ServicingFacilityInstanceReference:
+          type: string
+          format: Object
+          description: "Reference to any record generated from he use of the facility \r\n"
+    Issue:
+      type: object
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      properties:
+        ServicingPositionReference:
+          type: string
+          format: Object
+          description: "Reference to the service position where issue arises \r\n"
+        ServicingPositionSessionReference:
+          type: string
+          format: Object
+          description: "Reference to the servicing session \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Reference to the employee or unit raising the issue \r\n"
+        ProductionIssueType:
+          type: string
+          format: String
+          description: "Defines the type of event/error being recorded (e.g. support facility failure) \r\n"
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: "Description of the issue and involved functions, parties \r\n"
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: "An evaluation of the event cause and impact \r\n"
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: "Description of corrective actions and assigned parties \r\n"
+    Assignment:
+      type: object
+      format: Assignment
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      properties:
+        DateTimeLocation:
+          type: string
+          format: String
+          description: "Key dates and times associated with the assignment (e.g. start, end, break duration, available/idle time) \r\n"
+        ServicingPositionActivityReport:
+          type: string
+          format: String
+          description: "Log of servicing activity at that position during the session (e.g. contacts, sales, issues, breaks) \r\n"
+        ServicingPositionActivityStatistics:
+          type: string
+          format: String
+          description: "Accumulated statistics during the session (e.g. average contact time, wait time, service utilization, facility usage) \r\n"
+    ServicingEventLog:
+      type: object
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Servicing Event History. 
+      properties:
+        ServicingPositionReference:
+          type: string
+          format: Object
+          description: "The servicing position for the log (if the log is organized to track specific positions) \r\n"
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: "Employee/unit assigned to the servicing position (if the log is organized to track specific servicing reps that might work at different positions) \r\n"

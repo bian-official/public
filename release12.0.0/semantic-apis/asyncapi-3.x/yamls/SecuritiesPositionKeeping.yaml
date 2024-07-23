@@ -1,0 +1,264 @@
+asyncapi: 3.0.0
+info:
+  title: Securities Position Keeping
+  version: 12.0.3
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains a securities transaction log to support securities investment
+    activity
+channels:
+  SecuritiesPositionLog/Created:
+    address: SecuritiesPositionLog/Created
+    messages:
+      SecuritiesPositionLog-created.message:
+        $ref: '#/components/messages/SecuritiesPositionLog'
+    description: ''
+  SecuritiesPositionLog/Updated:
+    address: SecuritiesPositionLog/Updated
+    messages:
+      SecuritiesPositionLog-updated.message:
+        $ref: '#/components/messages/SecuritiesPositionLog'
+    description: ''
+  SecuritiesTransactionCapture/Created:
+    address: SecuritiesTransactionCapture/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/SecuritiesTransactionCapture'
+    description: ''
+  SecuritiesTransactionCapture/Updated:
+    address: SecuritiesTransactionCapture/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/SecuritiesTransactionCapture'
+    description: ''
+operations:
+  SecuritiesPositionLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesPositionLog~1Created'
+    summary: SecuritiesPositionLog
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesPositionLog~1Created/messages/SecuritiesPositionLog-created.message
+  SecuritiesPositionLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesPositionLog~1Updated'
+    summary: SecuritiesPositionLog
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesPositionLog~1Updated/messages/SecuritiesPositionLog-updated.message
+  SecuritiesTransactionCapture/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesTransactionCapture~1Created'
+    summary: SecuritiesTransactionCapture
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesTransactionCapture~1Created/messages/publish.message
+  SecuritiesTransactionCapture/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesTransactionCapture~1Updated'
+    summary: SecuritiesTransactionCapture
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesTransactionCapture~1Updated/messages/publish.message
+components:
+  messages:
+    SecuritiesPositionLog:
+      name: SecuritiesPositionLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Securities Position Keeping. 
+      payload:
+        $ref: '#/components/schemas/SecuritiesPositionLog'
+    SecuritiesTransactionCapture:
+      name: SecuritiesTransactionCapture
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/SecuritiesTransactionCapture'
+  schemas:
+    SecuritiesTransactionCapture:
+      type: object
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      properties:
+        SecuritiesPostingType:
+          type: string
+          format: String
+          description: "The type of securities transaction (e.g. bought amount, sold amount, dividend payment) \r\n"
+        SecuritiesPostingTransaction:
+          type: string
+          format: String
+          description: "The logged securities transaction. Note the log can handle a range of transactions covering bought and sold amounts and securities instrument related transactions such as dividend payments \r\n"
+        SecuritiesPostingValueDate:
+          $ref: '#/components/schemas/Date'
+    Date:
+      type: object
+      format: Date
+      description: >-
+        The date of the securities transaction ISODateISODate
+        (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+        BM ()
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ''
+    SecuritiesPositionLog:
+      type: object
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Securities Position Keeping. 
+      properties:
+        SecuritiesTransactionLogType:
+          type: string
+          format: String
+          description: "The type of securities transaction log (e.g. equities, derivatives, all) \r\n"
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: "The product/service investment account for which this is the securities transaction log \r\n"
+        CustomerReference:
+          type: string
+          format: Object
+          description: "Reference to the product or service account holder/customer for the log if appropriate \r\n"
+        CounterpartyReference:
+          type: string
+          format: Object
+          description: "Reference to a counterparty for the log if appropriate (e.g. merchant reference, corporate reference) \r\n"
+        SecuritiesPositionLogInstrumentProfile:
+          type: string
+          format: String
+          description: "Details the range of instruments that are tracked by the log (each instrument has its own transaction record/holding position \r\n"
+        SecuritiesPositionLogInstrumentRecord:
+          type: string
+          format: String
+          description: "Details for an individual tracked instrument type (the log track transactions for multiple securities/instruments) \r\n"
+        SecuritiesInstrumentType:
+          type: string
+          format: String
+          description: "Reference to the type of investment instrument being tracked (e.g. equity, commodity, FX/MM, derivative) \r\n"
+        SecuritiesInstrumentReference:
+          type: string
+          format: Object
+          description: "The specific instrument trading identifier (e.g. NASDAQ Id) \r\n"
+        SecuritiesPositionLimits:
+          type: string
+          format: String
+          description: "Basic position limits that are maintained as an aspect of the log (these can include securities holdings and related instrument properties such as associated dividends entitlements) \r\n"
+        SecuritiesPositionLimitType:
+          type: string
+          format: String
+          description: "The type of position maintained for the log (e.g. cumulative balance) \r\n"
+        SecuritiesPositionLimitSettings:
+          type: string
+          format: String
+          description: "The position definition, associated limit settings and rules \r\n"
+        SecuritiesPositionLimitValue:
+          type: string
+          format: String
+          description: "The current calculated position \r\n"
+        SecuritiesAmountBlock:
+          $ref: '#/components/schemas/Amount'
+        SecuritiesAmountBlockType:
+          type: string
+          format: String
+          description: "The type of block applied to the tracked securities position (e.g. pending, final) \r\n"
+        Priority:
+          type: string
+          format: String
+          description: "Priority classification for the block \r\n"
+        Amount:
+          type: string
+          format: String
+          description: "The amount of the block \r\n"
+        DateType:
+          type: string
+          format: String
+          description: "The type of key dates associated with the block  (e.g. start, expiry) \r\n"
+        Date:
+          type: string
+          format: String
+          description: "Value of the specific date type \r\n"
+        InitiationDate:
+          $ref: '#/components/schemas/Date'
+        Status:
+          type: string
+          format: String
+          description: "The status of the log entry (e.g. active, in-suspense etc.) \r\n"
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        Support for recording blocks on the log position (handling is by the
+        associated investment account fulfillment service domain)
+        CurrencyAndAmountCurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
