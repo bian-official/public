@@ -1,0 +1,849 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Access Entitlement
+  version: 12.0.2
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain maintains the details of
+    the allowed channel/device based access to products and services that the
+    customer has in place.  This profile is referenced in servicing and
+    fulfillment activity and may include customer preferences and access
+    limits/constraints that span multiple products.
+channels:
+  CustomerAccessProfileAgreement/Created:
+    address: CustomerAccessProfileAgreement/Created
+    messages:
+      CustomerAccessProfileAgreement-created.message:
+        $ref: '#/components/messages/CustomerAccessProfileAgreement'
+    description: ''
+  CustomerAccessProfileAgreement/Updated:
+    address: CustomerAccessProfileAgreement/Updated
+    messages:
+      CustomerAccessProfileAgreement-updated.message:
+        $ref: '#/components/messages/CustomerAccessProfileAgreement'
+    description: ''
+  Restrictions/Created:
+    address: Restrictions/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Restrictions'
+    description: ''
+  Restrictions/Updated:
+    address: Restrictions/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Restrictions'
+    description: ''
+  Preferences/Created:
+    address: Preferences/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Preferences'
+    description: ''
+  Preferences/Updated:
+    address: Preferences/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Preferences'
+    description: ''
+operations:
+  CustomerAccessProfileAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerAccessProfileAgreement~1Created'
+    summary: (DDD Domain Event) CustomerAccessProfileAgreement
+    messages:
+      - $ref: >-
+          #/channels/CustomerAccessProfileAgreement~1Created/messages/CustomerAccessProfileAgreement-created.message
+  CustomerAccessProfileAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerAccessProfileAgreement~1Updated'
+    summary: (DDD Domain Event) CustomerAccessProfileAgreement
+    messages:
+      - $ref: >-
+          #/channels/CustomerAccessProfileAgreement~1Updated/messages/CustomerAccessProfileAgreement-updated.message
+  Restrictions/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Restrictions~1Created'
+    summary: (DDD Domain Event) Restrictions
+    messages:
+      - $ref: '#/channels/Restrictions~1Created/messages/publish.message'
+  Restrictions/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Restrictions~1Updated'
+    summary: (DDD Domain Event) Restrictions
+    messages:
+      - $ref: '#/channels/Restrictions~1Updated/messages/publish.message'
+  Preferences/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Preferences~1Created'
+    summary: (DDD Domain Event) Preferences
+    messages:
+      - $ref: '#/channels/Preferences~1Created/messages/publish.message'
+  Preferences/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Preferences~1Updated'
+    summary: (DDD Domain Event) Preferences
+    messages:
+      - $ref: '#/channels/Preferences~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerAccessProfileAgreement:
+      name: CustomerAccessProfileAgreement
+      description: >+
+        (DDD Entity) - Maintain the terms and conditions that apply to a
+        commercial relationship within Customer Access Entitlement.
+
+
+      payload:
+        $ref: '#/components/schemas/CustomerAccessProfileAgreement'
+    Restrictions:
+      name: Restrictions
+      description: >-
+        (DDD Entity) - A collection of terms (within some jurisdiction) that can
+        be selected and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/Restrictions'
+    Preferences:
+      name: Preferences
+      description: >-
+        (DDD Entity) - A collection of terms (within some jurisdiction) that can
+        be selected and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/Preferences'
+  schemas:
+    Restrictions:
+      type: object
+      description: >-
+        (DDD Entity) - A collection of terms (within some jurisdiction) that can
+        be selected and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        ChannelAccessRestrictionsRecord:
+          $ref: '#/components/schemas/ChannelAccessArrangement'
+        ChannelAccessProductandServiceTypeUsage:
+          $ref: '#/components/schemas/ChannelUsage'
+        ChannelAccessProductandServiceChannelDeviceRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+        ChannelAccessProductandServiceLocationRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+        ChannelAccessProductandServiceFrequencyLimitRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+        ChannelAccessProductandServiceTimeDurationRestrictions:
+          $ref: '#/components/schemas/AccessRestrictionArrangement'
+    ChannelAccessArrangement:
+      type: object
+      description: '(DDD Entity) - Assembles the array of channel access constraints '
+      properties:
+        ChannelAccessArrangement:
+          type: string
+          format: Class
+          description: >-
+            (DDD Entity) - An arrangement that allows or restricts the access to
+            a channel through a specific access point
+    ChannelUsage:
+      type: object
+      description: >-
+        (DDD Entity) - Details allowed products/services and associated
+        features 
+      properties:
+        ChannelUsage:
+          type: string
+          format: Class
+          description: >
+            (DDD Entity) - The use of a channel by a customer (in a specific
+            customer relationship) over a specified time period.
+    AccessRestrictionArrangement:
+      type: object
+      description: >-
+        (DDD Entity) - Details restrictions on allowed product/services by
+        channel/device 
+      properties:
+        AccessRestrictionType:
+          enum:
+            - Accessrestrictionbylocation
+        AccessRestrictionDescription:
+          $ref: '#/components/schemas/Text'
+        AllowedProductService:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      description: (DDD Entity) - Details restrictions on allowed product/services
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            (DDD Entity) - Text is a character string such as a finite set of
+            characters generally in the form of words of a language. (UN/CEFACT)
+    Preferences:
+      type: object
+      description: >-
+        (DDD Entity) - A collection of terms (within some jurisdiction) that can
+        be selected and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      properties:
+        ChannelAccessPreferencesRecord:
+          $ref: '#/components/schemas/AccessPreferenceArrangement'
+        ChannelAccessPreferenceReference:
+          $ref: '#/components/schemas/AccessPreferenceArrangement'
+        ChannelAccessPreferenceType:
+          $ref: '#/components/schemas/Text'
+        ChannelAccessPreferenceProfile:
+          $ref: '#/components/schemas/Text'
+        ChannelAccessChannelDeviceType:
+          enum:
+            - CommunicationChannel
+            - AuthenticationChannel
+        ChannelAccessChannelDeviceTypePreference:
+          $ref: '#/components/schemas/AccessPreferenceArrangement'
+        ProductandServiceType:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+    AccessPreferenceArrangement:
+      type: object
+      description: '(DDD Entity) - Assembles a number of channel access preferences '
+      properties:
+        AccessPreferenceType:
+          $ref: '#/components/schemas/Text'
+        PreferencedChannelDevice:
+          $ref: '#/components/schemas/Text'
+        ProductServiceType:
+          $ref: '#/components/schemas/Text'
+        AccessPreferenceDescription:
+          $ref: '#/components/schemas/Text'
+    CustomerAccessProfileAgreement:
+      type: object
+      description: >+
+        (DDD Entity) - Maintain the terms and conditions that apply to a
+        commercial relationship within Customer Access Entitlement.
+
+
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerChannelAccessProfileRecord:
+          $ref: '#/components/schemas/ChannelAccessArrangement'
+        CustomerAccessAgreementValidFromToDate:
+          $ref: '#/components/schemas/DateTimePeriod'
+        CustomerAccessAgreementSignaturesResponsibleParties:
+          $ref: '#/components/schemas/AccessArrangementInvolvement'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+    Involvedparty:
+      type: object
+      description: '(DDD Entity) - Reference to the customer '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: '(DDD Entity) - Party who plays a specific role '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        PartyType:
+          enum:
+            - Person
+            - Organisation
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        PartyLegalStructureType:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+    Name:
+      type: object
+      description: >-
+        (DDD Entity) - Name by which a party is known and which is usually used
+        to identify that party. (ISO20022)
+         
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            (DDD Entity) - A name is a word or phrase that constitutes the
+            distinctive designation of a person, place, thing or concept.
+            (UN/CEFAT)
+    Datetime:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: ''
+        TimeZoneCode:
+          type: string
+          format: String
+          description: ''
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ''
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            (DDD Entity) - A date time identifies a date and time of day to
+            various common resolutions: year, month, week, day, hour, minute,
+            second, and fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed.
+    Partyidentification:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        PartyIdentificationType:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Partyidentification:
+          type: string
+          format: DataType
+          description: ''
+    Identifier:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            (DDD Entity) - An identifier is a character string used to uniquely
+            identify one instance of an object within an identification scheme
+            that is managed by an agency. (UN/CEFAT)
+    Value:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            (DDD Entity) - Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT)
+    Partyrole:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        PartyInvolvementType:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+    Datetimeperiod:
+      type: object
+      description: (DDD Entity) -
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            (DDD Entity) - Time span defined by a start date and time, and an
+            end date and time. (ISO20022)
+    AccessArrangementInvolvement:
+      type: object
+      description: '(DDD Entity) - Reference to signatories as appropriate '
+      properties:
+        AccessAgreementInvolvementIdentification:
+          $ref: '#/components/schemas/Identifier'
+        InvolvementType:
+          $ref: '#/components/schemas/Accessarrangementinvolvementtypevalues'
+    DocumentDirectoryEntry:
+      type: object
+      description: '(DDD Entity) - Reference to any associated documents '
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Identification allowing the retrieval of a document
+            from a Document Directory
+    CurrencyCode:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - Code allocated to a currency, by a maintenance agency,
+        under an international identification scheme as described in the latest
+        edition of the international standard ISO 4217 "Codes for the
+        representation of currencies and funds". Valid currency codes are
+        registered with the ISO 4217 Maintenance Agency, and consist of three
+        contiguous letters.
+    DateTimePeriod:
+      type: object
+      description: >-
+        (DDD Entity) - The duration that the agreement is in force
+        DateTimePeriod|DateTimePeriod
+        (https://www.iso20022.org/standardsrepository/type/DateTimePeriod)|Standard|ISO20022
+        BM ()
+      properties:
+        FromDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the range starts.
+        ToDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the range ends.
+        RelatedStandingOrder:
+          type: string
+          format: StandingOrder
+          description: >-
+            (DDD Entity) - Standing order for which a validity period is
+            specified.
+        PaymentInstruction:
+          type: string
+          format: PaymentInstruction
+          description: >-
+            (DDD Entity) - Payment instruction for which a processing validity
+            time is specified.
+        NumberOfDays:
+          type: string
+          format: Number
+          description: (DDD Entity) - Period specified as a number of days.
+        ValuationStatistics:
+          type: string
+          format: ValuationStatistics
+          description: >-
+            (DDD Entity) - Valuation statistics for which a reference period is
+            specified.
+        PerformanceFactors:
+          type: string
+          format: PerformanceFactors
+          description: >-
+            (DDD Entity) - Performance factors for which an accumulation period
+            is specified.
+        Status:
+          type: string
+          format: Status
+          description: (DDD Entity) - Status for which a validity time is specified.
+        PriceCalculationRelatedPricing:
+          type: string
+          format: SecuritiesPricing
+          description: >-
+            (DDD Entity) - Securities pricing for which a price calculation
+            period is specified.
+        CorporateActionOption:
+          type: string
+          format: CorporateActionOption
+          description: >-
+            (DDD Entity) - Corporate action option for which an action period is
+            defined.
+        ParallelTradingProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which a parallel trading
+            period is specified.
+        PrivilegeSuspensionCorporateAction:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a privilege suspension
+            period has been defined.
+        WithdrawalSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals is specified.
+        RelatedInterestCalculation:
+          type: string
+          format: InterestCalculation
+          description: >-
+            (DDD Entity) - Interest calculation process for which an interest
+            period is specified.
+        BiddingConditions:
+          type: string
+          format: BiddingConditions
+          description: >-
+            (DDD Entity) - Bidding conditions for which a compulsory purchase
+            period is specified.
+        ClassAction:
+          type: string
+          format: ClassAction
+          description: (DDD Entity) - Class action for which a claim period is specified.
+        BookEntryTransferSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            book entry transfers is specified.
+        DepositAtAgentSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            deposits at agent is specified.
+        DepositSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            deposits is specified.
+        PledgeSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            pledges is specified.
+        SegregationPeriodRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            segregation is specified.
+        WithdrawalAtAgentSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals at agent is specified.
+        WithdrawalInNomineeNameSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals in nominee name is specified.
+        WithdrawalInStreetNameSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals in street name is specified.
+        BookClosureCorporateAction:
+          type: string
+          format: CorporateActionEvent
+          description: >-
+            (DDD Entity) - Corporate action for which a book closure period has
+            been specified.
+        CoDepositoriesSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            co-depositories is specified.
+        ExtendiblePeriodDebt:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which an extendible period is specified.
+        SecuritiesConversion:
+          type: string
+          format: SecuritiesConversion
+          description: >-
+            (DDD Entity) - Securities conversion process for which a conversion
+            period is specified.
+        YieldCalculation:
+          type: string
+          format: YieldCalculation
+          description: >-
+            (DDD Entity) - Yield calculation for which a value period is
+            specified.
+        CustomDateDebt:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which a custom date is specified.
+        TaxPeriod:
+          type: string
+          format: TaxPeriod
+          description: (DDD Entity) - Tax period for which a from/to date is specified.
+        Account:
+          type: string
+          format: Account
+          description: (DDD Entity) - Account for which a reported period is specified.
+        RelatedAgreement:
+          type: string
+          format: Agreement
+          description: (DDD Entity) - Agreement for which a validity period is specified.
+        AssentedLinePeriodProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which an assented line period
+            is specified.
+        SellThruIssuerProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which a sell thru issuer
+            period is specified.
+        RelatedProductDelivery:
+          type: string
+          format: ProductDelivery
+          description: >-
+            (DDD Entity) - Trade delivery process for which a delivery period is
+            specified.
+        RelatedInvoice:
+          type: string
+          format: Invoice
+          description: (DDD Entity) - Invoice for which a period is specified.
+        TradeCertificate:
+          type: string
+          format: TradeCertificate
+          description: >-
+            (DDD Entity) - Trade certificate for which an inspection date is
+            specified.
+        RelatedPortfolioValuation:
+          type: string
+          format: PortfolioValuation
+          description: >-
+            (DDD Entity) - Portfolio valuation process for which a valuation
+            period is specified.
+        System:
+          type: string
+          format: System
+          description: (DDD Entity) - System for which a validity period is specified.
+        AccountRestriction:
+          type: string
+          format: AccountRestriction
+          description: >-
+            (DDD Entity) - Account restriction for which a validity period is
+            specified.
+        BankOperation:
+          type: string
+          format: BankOperation
+          description: >-
+            (DDD Entity) - Bank operation for which an applicable period is
+            specified.
+        RelatedCorporateAction:
+          type: string
+          format: CorporateActionEvent
+          description: >-
+            (DDD Entity) - Corporate action event for which a trading period is
+            specified.
+        RelatedLimit:
+          type: string
+          format: Limit
+          description: (DDD Entity) - Limit for which a validity period is specified.
+        RelatedIdentification:
+          type: string
+          format: PartyIdentificationInformation
+          description: >-
+            (DDD Entity) - Party identification for which a validity period is
+            specified.
+        AssessmentValidityScheme:
+          type: string
+          format: Scheme
+          description: (DDD Entity) - Scheme for which a validity period is specified.
+        ExercisePeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which an exercise period is specified.
+        OfferPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which an offer period is specified.
+        TradingPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which a trading period is specified.
+        BlockingPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which a blocking period is specified.
+        Guarantee:
+          type: string
+          format: Guarantee
+          description: (DDD Entity) - Guarantee for which an effective period is specified.
+        PriceFactRelatedPricing:
+          type: string
+          format: SecuritiesPricing
+          description: >-
+            (DDD Entity) - Securities pricing for which a price fact period is
+            specified.
+        CashDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash distribution for which an interest period is
+            specified.
+        ComponentSecurity:
+          type: string
+          format: ComponentSecurity
+          description: >-
+            (DDD Entity) - Security component for which a separation period is
+            specified.
+        TradingSession:
+          type: string
+          format: TradingSession
+          description: >-
+            (DDD Entity) - Trading session for which a time bracket is
+            specified.
+        FinancialInstrumentSwap:
+          type: string
+          format: FinancialInstrumentSwap
+          description: (DDD Entity) - Swap for which a maturity period is specified.
+        RelatedPostalAddress:
+          type: string
+          format: PostalAddress
+          description: >-
+            (DDD Entity) - Postal address for which a validity period is
+            specified.
+        RedemptionSchedule:
+          type: string
+          format: RedemptionSchedule
+          description: >-
+            (DDD Entity) - Redemption schedule for which a notice period is
+            provided.
+        RelatedAccountLink:
+          type: string
+          format: AccountLink
+          description: >-
+            (DDD Entity) - Link between two accounts for which a validity period
+            is specified.
+        RelatedAdjustment:
+          type: string
+          format: Adjustment
+          description: (DDD Entity) - Adjustment for which a validity period is provided.
+        RelatedSecuritiesIdentification:
+          type: string
+          format: SecuritiesIdentification
+          description: >-
+            (DDD Entity) - Securities identification for which a validity period
+            is specified.
+        RelatedStandingSettlementInstruction:
+          type: string
+          format: StandingSettlementInstruction
+          description: (DDD Entity) - SSI for which a validity period is specified.
+        RelatedSecuritiesRegistration:
+          type: string
+          format: BasicSecuritiesRegistration
+          description: >-
+            (DDD Entity) - Securities registration process for which a split
+            period is specified.
+        Amount:
+          type: string
+          format: AmountAndPeriod
+          description: (DDD Entity) - Relationship with an amount.
+        RelatedInvestmentPlan:
+          type: string
+          format: InvestmentPlan
+          description: >-
+            (DDD Entity) - InvestmentPlan for which an investment period is
+            specified.
+        Issuance:
+          type: string
+          format: Issuance
+          description: >-
+            (DDD Entity) - Issuance for which subscription information is
+            provided.
+        RelatedPaymentTerms:
+          type: string
+          format: PaymentTerms
+          description: (DDD Entity) - Payment terms for which a period is specified.
+        Percentage:
+          type: string
+          format: PercentageAndPeriod
+          description: (DDD Entity) - Relationship with a percentage.
+        RelatedRolePlayer:
+          type: string
+          format: RolePlayer
+          description: (DDD Entity) - Role player for which a validity period is specified.
+        RelatedSystemAvailability:
+          type: string
+          format: SystemAvailability
+          description: >-
+            (DDD Entity) - System availability for which the closure period is
+            provided.

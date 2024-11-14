@@ -1,0 +1,615 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Behavior Insights
+  version: 12.0.2
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain applies behavioral
+    analysis to customer event history to maintain a range of customer
+    ratings/scores (such as 'propensity to buy') and to detect life events or
+    trends
+channels:
+  CustomerBehaviorAnalysis/Created:
+    address: CustomerBehaviorAnalysis/Created
+    messages:
+      CustomerBehaviorAnalysis-created.message:
+        $ref: '#/components/messages/CustomerBehaviorAnalysis'
+    description: ''
+  CustomerBehaviorAnalysis/Updated:
+    address: CustomerBehaviorAnalysis/Updated
+    messages:
+      CustomerBehaviorAnalysis-updated.message:
+        $ref: '#/components/messages/CustomerBehaviorAnalysis'
+    description: ''
+  Insight/Created:
+    address: Insight/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Insight'
+    description: ''
+  Insight/Updated:
+    address: Insight/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Insight'
+    description: ''
+operations:
+  CustomerBehaviorAnalysis-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerBehaviorAnalysis~1Created'
+    summary: (DDD Domain Event) CustomerBehaviorAnalysis
+    messages:
+      - $ref: >-
+          #/channels/CustomerBehaviorAnalysis~1Created/messages/CustomerBehaviorAnalysis-created.message
+  CustomerBehaviorAnalysis-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerBehaviorAnalysis~1Updated'
+    summary: (DDD Domain Event) CustomerBehaviorAnalysis
+    messages:
+      - $ref: >-
+          #/channels/CustomerBehaviorAnalysis~1Updated/messages/CustomerBehaviorAnalysis-updated.message
+  Insight/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Insight~1Created'
+    summary: (DDD Domain Event) Insight
+    messages:
+      - $ref: '#/channels/Insight~1Created/messages/publish.message'
+  Insight/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Insight~1Updated'
+    summary: (DDD Domain Event) Insight
+    messages:
+      - $ref: '#/channels/Insight~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerBehaviorAnalysis:
+      name: CustomerBehaviorAnalysis
+      description: >-
+        (DDD Entity) - Analyze the performance or behavior of some on-going
+        activity or entity  within Customer Behavior Insights. 
+
+        Examples:- Provide behavioral insights and analysis into customer
+        behavior and analyze financial market activity in order to identify
+        opportunities, define pricing and evaluate risks.
+
+
+        Analyze the performance or behavior of some on-going activity or entity.
+        Examples:- Provide behavioral insights and analysis into customer
+        behavior and analyze financial market activity in order to identify
+        opportunities, define pricing and evaluate risks.
+      payload:
+        $ref: '#/components/schemas/CustomerBehaviorAnalysis'
+    Insight:
+      name: Insight
+      description: >-
+        (DDD Entity) - A collection of models/calculations/algoritms that can be
+        applied to a subject or activity
+
+
+        Examples:- Average balance calculation, Propensity to buy
+      payload:
+        $ref: '#/components/schemas/Insight'
+  schemas:
+    Insight:
+      type: object
+      description: >-
+        (DDD Entity) - A collection of models/calculations/algoritms that can be
+        applied to a subject or activity
+
+
+        Examples:- Average balance calculation, Propensity to buy
+      properties:
+        InsightEvaluationCustomerInsightType:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The type of customer insight developed in this
+            evaluation (e.g. retention candidate, cross-sell candidate)
+        InsightEvaluationTask:
+          type: string
+          format: String
+          description: (DDD Entity) - Record of a task to develop the customer insight
+        InsightEvaluationRequestSpecification:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The specific details of the analysis (can be a
+            default/standard and scheduled refresh)
+        insightEvaluationCustomerBehaviorModelReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to the behavior model used to develop the
+            insight
+        InsightEvaluationProductandServiceActivityReport:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The data file, report of production activity used in
+            the analysis
+        InsightEvaluationCustomerEventLogReport:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The Record containing the selected event records from
+            the log
+        InsightEvaluationServicingEventLogReport:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The Record containing the selected event records from
+            the log
+        InsightEvaluationChannelEventLogReport:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The Record containing the selected event records from
+            the log
+        InsightEvaluationMarketResearchReport:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The content of a specific market research report or
+            database in any suitable form
+        InsightEvaluationWorkProducts:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Work documentation, forms and schedules produced and
+            referenced during the analysis
+        InsightEvaluationRequestResult:
+          type: string
+          format: String
+          description: (DDD Entity) - The output from executing the assessment
+    CustomerBehaviorAnalysis:
+      type: object
+      description: >-
+        (DDD Entity) - Analyze the performance or behavior of some on-going
+        activity or entity  within Customer Behavior Insights. 
+
+        Examples:- Provide behavioral insights and analysis into customer
+        behavior and analyze financial market activity in order to identify
+        opportunities, define pricing and evaluate risks.
+
+
+        Analyze the performance or behavior of some on-going activity or entity.
+        Examples:- Provide behavioral insights and analysis into customer
+        behavior and analyze financial market activity in order to identify
+        opportunities, define pricing and evaluate risks.
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to the associated customer (can currently
+            be a person or a company)
+        CustomerInsightAnalysisSchedule:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The schedule for refreshing the analyses for a
+            customer
+        CustomerBehaviorAnalysisInsightsRecord:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - A record of the collection of behavioral insight
+            analyses maintained for the customer
+        CustomerInsightType:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Defines a type of maintained customer insight (e.g.
+            retention candidate, cross-sell candidate)
+        CustomerInsight:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The derived value of the specific insight for the
+            customer and past values if appropriate
+        CustomerInsightCalculationDate:
+          $ref: '#/components/schemas/ISODate'
+    CurrencyCode:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - Code allocated to a currency, by a maintenance agency,
+        under an international identification scheme as described in the latest
+        edition of the international standard ISO 4217 "Codes for the
+        representation of currencies and funds". Valid currency codes are
+        registered with the ISO 4217 Maintenance Agency, and consist of three
+        contiguous letters.
+    DateTimePeriod:
+      type: object
+      description: >-
+        (DDD Entity) - Time span defined by a start date and time, and an end
+        date and time.
+      properties:
+        FromDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the range starts.
+        ToDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the range ends.
+        RelatedStandingOrder:
+          type: string
+          format: StandingOrder
+          description: >-
+            (DDD Entity) - Standing order for which a validity period is
+            specified.
+        PaymentInstruction:
+          type: string
+          format: PaymentInstruction
+          description: >-
+            (DDD Entity) - Payment instruction for which a processing validity
+            time is specified.
+        NumberOfDays:
+          type: string
+          format: Number
+          description: (DDD Entity) - Period specified as a number of days.
+        ValuationStatistics:
+          type: string
+          format: ValuationStatistics
+          description: >-
+            (DDD Entity) - Valuation statistics for which a reference period is
+            specified.
+        PerformanceFactors:
+          type: string
+          format: PerformanceFactors
+          description: >-
+            (DDD Entity) - Performance factors for which an accumulation period
+            is specified.
+        Status:
+          type: string
+          format: Status
+          description: (DDD Entity) - Status for which a validity time is specified.
+        PriceCalculationRelatedPricing:
+          type: string
+          format: SecuritiesPricing
+          description: >-
+            (DDD Entity) - Securities pricing for which a price calculation
+            period is specified.
+        CorporateActionOption:
+          type: string
+          format: CorporateActionOption
+          description: >-
+            (DDD Entity) - Corporate action option for which an action period is
+            defined.
+        ParallelTradingProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which a parallel trading
+            period is specified.
+        PrivilegeSuspensionCorporateAction:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a privilege suspension
+            period has been defined.
+        WithdrawalSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals is specified.
+        RelatedInterestCalculation:
+          type: string
+          format: InterestCalculation
+          description: >-
+            (DDD Entity) - Interest calculation process for which an interest
+            period is specified.
+        BiddingConditions:
+          type: string
+          format: BiddingConditions
+          description: >-
+            (DDD Entity) - Bidding conditions for which a compulsory purchase
+            period is specified.
+        ClassAction:
+          type: string
+          format: ClassAction
+          description: (DDD Entity) - Class action for which a claim period is specified.
+        BookEntryTransferSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            book entry transfers is specified.
+        DepositAtAgentSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            deposits at agent is specified.
+        DepositSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            deposits is specified.
+        PledgeSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            pledges is specified.
+        SegregationPeriodRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            segregation is specified.
+        WithdrawalAtAgentSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals at agent is specified.
+        WithdrawalInNomineeNameSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals in nominee name is specified.
+        WithdrawalInStreetNameSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals in street name is specified.
+        BookClosureCorporateAction:
+          type: string
+          format: CorporateActionEvent
+          description: >-
+            (DDD Entity) - Corporate action for which a book closure period has
+            been specified.
+        CoDepositoriesSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            co-depositories is specified.
+        ExtendiblePeriodDebt:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which an extendible period is specified.
+        SecuritiesConversion:
+          type: string
+          format: SecuritiesConversion
+          description: >-
+            (DDD Entity) - Securities conversion process for which a conversion
+            period is specified.
+        YieldCalculation:
+          type: string
+          format: YieldCalculation
+          description: >-
+            (DDD Entity) - Yield calculation for which a value period is
+            specified.
+        CustomDateDebt:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which a custom date is specified.
+        TaxPeriod:
+          type: string
+          format: TaxPeriod
+          description: (DDD Entity) - Tax period for which a from/to date is specified.
+        Account:
+          type: string
+          format: Account
+          description: (DDD Entity) - Account for which a reported period is specified.
+        RelatedAgreement:
+          type: string
+          format: Agreement
+          description: (DDD Entity) - Agreement for which a validity period is specified.
+        AssentedLinePeriodProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which an assented line period
+            is specified.
+        SellThruIssuerProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which a sell thru issuer
+            period is specified.
+        RelatedProductDelivery:
+          type: string
+          format: ProductDelivery
+          description: >-
+            (DDD Entity) - Trade delivery process for which a delivery period is
+            specified.
+        RelatedInvoice:
+          type: string
+          format: Invoice
+          description: (DDD Entity) - Invoice for which a period is specified.
+        TradeCertificate:
+          type: string
+          format: TradeCertificate
+          description: >-
+            (DDD Entity) - Trade certificate for which an inspection date is
+            specified.
+        RelatedPortfolioValuation:
+          type: string
+          format: PortfolioValuation
+          description: >-
+            (DDD Entity) - Portfolio valuation process for which a valuation
+            period is specified.
+        System:
+          type: string
+          format: System
+          description: (DDD Entity) - System for which a validity period is specified.
+        AccountRestriction:
+          type: string
+          format: AccountRestriction
+          description: >-
+            (DDD Entity) - Account restriction for which a validity period is
+            specified.
+        BankOperation:
+          type: string
+          format: BankOperation
+          description: >-
+            (DDD Entity) - Bank operation for which an applicable period is
+            specified.
+        RelatedCorporateAction:
+          type: string
+          format: CorporateActionEvent
+          description: >-
+            (DDD Entity) - Corporate action event for which a trading period is
+            specified.
+        RelatedLimit:
+          type: string
+          format: Limit
+          description: (DDD Entity) - Limit for which a validity period is specified.
+        RelatedIdentification:
+          type: string
+          format: PartyIdentificationInformation
+          description: >-
+            (DDD Entity) - Party identification for which a validity period is
+            specified.
+        AssessmentValidityScheme:
+          type: string
+          format: Scheme
+          description: (DDD Entity) - Scheme for which a validity period is specified.
+        ExercisePeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which an exercise period is specified.
+        OfferPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which an offer period is specified.
+        TradingPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which a trading period is specified.
+        BlockingPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which a blocking period is specified.
+        Guarantee:
+          type: string
+          format: Guarantee
+          description: (DDD Entity) - Guarantee for which an effective period is specified.
+        PriceFactRelatedPricing:
+          type: string
+          format: SecuritiesPricing
+          description: >-
+            (DDD Entity) - Securities pricing for which a price fact period is
+            specified.
+        CashDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash distribution for which an interest period is
+            specified.
+        ComponentSecurity:
+          type: string
+          format: ComponentSecurity
+          description: >-
+            (DDD Entity) - Security component for which a separation period is
+            specified.
+        TradingSession:
+          type: string
+          format: TradingSession
+          description: >-
+            (DDD Entity) - Trading session for which a time bracket is
+            specified.
+        FinancialInstrumentSwap:
+          type: string
+          format: FinancialInstrumentSwap
+          description: (DDD Entity) - Swap for which a maturity period is specified.
+        RelatedPostalAddress:
+          type: string
+          format: PostalAddress
+          description: >-
+            (DDD Entity) - Postal address for which a validity period is
+            specified.
+        RedemptionSchedule:
+          type: string
+          format: RedemptionSchedule
+          description: >-
+            (DDD Entity) - Redemption schedule for which a notice period is
+            provided.
+        RelatedAccountLink:
+          type: string
+          format: AccountLink
+          description: >-
+            (DDD Entity) - Link between two accounts for which a validity period
+            is specified.
+        RelatedAdjustment:
+          type: string
+          format: Adjustment
+          description: (DDD Entity) - Adjustment for which a validity period is provided.
+        RelatedSecuritiesIdentification:
+          type: string
+          format: SecuritiesIdentification
+          description: >-
+            (DDD Entity) - Securities identification for which a validity period
+            is specified.
+        RelatedStandingSettlementInstruction:
+          type: string
+          format: StandingSettlementInstruction
+          description: (DDD Entity) - SSI for which a validity period is specified.
+        RelatedSecuritiesRegistration:
+          type: string
+          format: BasicSecuritiesRegistration
+          description: >-
+            (DDD Entity) - Securities registration process for which a split
+            period is specified.
+        Amount:
+          type: string
+          format: AmountAndPeriod
+          description: (DDD Entity) - Relationship with an amount.
+        RelatedInvestmentPlan:
+          type: string
+          format: InvestmentPlan
+          description: >-
+            (DDD Entity) - InvestmentPlan for which an investment period is
+            specified.
+        Issuance:
+          type: string
+          format: Issuance
+          description: >-
+            (DDD Entity) - Issuance for which subscription information is
+            provided.
+        RelatedPaymentTerms:
+          type: string
+          format: PaymentTerms
+          description: (DDD Entity) - Payment terms for which a period is specified.
+        Percentage:
+          type: string
+          format: PercentageAndPeriod
+          description: (DDD Entity) - Relationship with a percentage.
+        RelatedRolePlayer:
+          type: string
+          format: RolePlayer
+          description: (DDD Entity) - Role player for which a validity period is specified.
+        RelatedSystemAvailability:
+          type: string
+          format: SystemAvailability
+          description: >-
+            (DDD Entity) - System availability for which the closure period is
+            provided.
+    ISODate:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - A particular point in the progression of time in a
+        calendar year expressed in the YYYY-MM-DD format. This representation is
+        defined in "XML Schema Part 2: Datatypes Second Edition W3C
+        Recommendation 28 October 2004" which is aligned with ISO 8601.
