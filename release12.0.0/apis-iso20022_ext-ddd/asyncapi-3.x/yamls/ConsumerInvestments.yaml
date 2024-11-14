@@ -1,0 +1,214 @@
+asyncapi: 2.6.0
+info:
+  title: Consumer Investments
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Handle the consumer
+    front-end trading requests. These will typically be blocked/netted for
+    market execution
+  version: 12.0.3
+channels:
+  ConsumerSecuritiesOrderTransaction/Created:
+      description: ''
+      publish:
+        operationId: ConsumerSecuritiesOrderTransaction-created
+        summary: ConsumerSecuritiesOrderTransaction
+        message:
+          $ref: '#/components/messages/ConsumerSecuritiesOrderTransaction'
+  ConsumerSecuritiesOrderTransaction/Updated:
+      description: ''
+      publish:
+        operationId: ConsumerSecuritiesOrderTransaction-updated
+        summary: ConsumerSecuritiesOrderTransaction
+        message:
+          $ref: '#/components/messages/ConsumerSecuritiesOrderTransaction'
+  Compliance/Created:
+      description: ''
+      publish:
+        summary: Compliance
+        message:
+          $ref: '#/components/messages/Compliance'
+  Compliance/Updated:
+      description: ''
+      publish:
+        summary: Compliance
+        message:
+          $ref: '#/components/messages/Compliance'
+  FundingCheck/Created:
+      description: ''
+      publish:
+        summary: FundingCheck
+        message:
+          $ref: '#/components/messages/FundingCheck'
+  FundingCheck/Updated:
+      description: ''
+      publish:
+        summary: FundingCheck
+        message:
+          $ref: '#/components/messages/FundingCheck'
+  Quote/Created:
+      description: ''
+      publish:
+        summary: Quote
+        message:
+          $ref: '#/components/messages/Quote'
+  Quote/Updated:
+      description: ''
+      publish:
+        summary: Quote
+        message:
+          $ref: '#/components/messages/Quote'
+  OrderInitiation/Created:
+      description: ''
+      publish:
+        summary: OrderInitiation
+        message:
+          $ref: '#/components/messages/OrderInitiation'
+  OrderInitiation/Updated:
+      description: ''
+      publish:
+        summary: OrderInitiation
+        message:
+          $ref: '#/components/messages/OrderInitiation'
+components:
+  messages:
+    ConsumerSecuritiesOrderTransaction:
+        name: ConsumerSecuritiesOrderTransaction
+        description: >-
+          Execute a well-bounded financial transaction/task, typically involving
+          largely automated/structured fulfillment processing within Consumer
+          Investments. 
+        payload:
+          $ref: '#/components/schemas/ConsumerSecuritiesOrderTransaction'
+    Compliance:
+        name: Compliance
+        description: The sub-tasks involved in the execution of the financial transaction
+        payload:
+          $ref: '#/components/schemas/Compliance'
+    FundingCheck:
+        name: FundingCheck
+        description: The sub-tasks involved in the execution of the financial transaction
+        payload:
+          $ref: '#/components/schemas/FundingCheck'
+    Quote:
+        name: Quote
+        description: The sub-tasks involved in the execution of the financial transaction
+        payload:
+          $ref: '#/components/schemas/Quote'
+    OrderInitiation:
+        name: OrderInitiation
+        description: The sub-tasks involved in the execution of the financial transaction
+        payload:
+          $ref: '#/components/schemas/OrderInitiation'
+  schemas:
+    Compliance:
+        type: object
+        description: ''
+        properties:
+          ConsumerSecuritiesOrderTransactionComplianceCheckType:
+              type: string
+              format: String
+              description: "The type of compliance check performed (e.g. AML, Watch lists) \r\n"
+          ConsumerSecuritiesOrderTransactionComplianceCheckResult:
+              type: string
+              format: String
+              description: "The outcome of the compliance check \r\n"
+          ConsumerSecuritiesOrderTransactionComplianceTaskResult:
+              type: string
+              format: String
+              description: "Details of the overall compliance checking process \r\n"
+    FundingCheck:
+        type: object
+        description: ''
+        properties:
+          ConsumerSecuritiesOrderTransactionFundingCheckResult:
+              type: string
+              format: String
+              description: "The outcome of the funds available check \r\n"
+    Quote:
+        type: object
+        description: ''
+        properties:
+          SecuritiesPrice:
+              type: string
+              format: String
+              description: "The prevailing bank buy/sell quote for the security \r\n"
+    OrderInitiation:
+        type: object
+        description: ''
+        properties:
+          ConsumerSecuritiesOrderTransactionInstanceReference:
+              type: string
+              format: Object
+              description: "The reference to the market order. Note this can be the internal bank 'order' made against the bank's managed position and may not result in a matched trade in the wholesale markets \r\n"
+          ConsumerSecuritiesOrderTransactionInstanceStatus:
+              type: string
+              format: String
+              description: "The returned status of the customer securities order \r\n"
+          ConsumerSecuritiesOrderInitiationTaskResult:
+              type: string
+              format: String
+              description: "Details of the market order initiation task \r\n"
+    ConsumerSecuritiesOrderTransaction:
+        type: object
+        description: ''
+        properties:
+          ConsumerSecuritiesOrderInstructionType:
+              type: string
+              format: String
+              description: "The type of market order request (e.g. Customer discretion) \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the account primary party/owner for the market order \r\n"
+          EmployeeBusinessUnitReference:
+              type: string
+              format: Object
+              description: "The employee/business unit placing the market order \r\n"
+          InvestmentPortfolioInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the associated customer investment portfolio record of all holdings (referenced to check securities availability if necessary) \r\n"
+          ConsumerSecuritiesOrderProcessingInstruction:
+              type: string
+              format: String
+              description: "Any customer specific processing preferences or requirements \r\n"
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              format: Object
+              description: "The document reference for the order confirmation notice \r\n"
+          CorrespondenceInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the correspondence generated for the order confirmation \r\n"
+          ConsumerSecuritiesOrderTransaction:
+              type: string
+              format: String
+              description: "The details of the market order transaction captured for the consumer securities trade \r\n"
+          InvestmentAccountArrangementInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the underlying investment account supporting the transaction \r\n"
+          CurrentAccountArrangementInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the underlying cash account supporting the transaction \r\n"
+          MarketOrderType:
+              type: string
+              format: String
+              description: "The type of market order underlying the consumer securities order request (e.g. Day Order. Order on Open/Close, Fill or Kill, Limit Order if allowed for consumer trading) \r\n"
+          SecurityType:
+              type: string
+              format: String
+              description: "The security to be traded \r\n"
+          Amount:
+              type: string
+              format: String
+              description: "The volume of shares to be bought or sold \r\n"
+          DateType:
+              type: string
+              format: String
+              description: "Key dates associated with the transaction (e.g. order capture, order execution, order completion) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "Value of the specific date type \r\n"

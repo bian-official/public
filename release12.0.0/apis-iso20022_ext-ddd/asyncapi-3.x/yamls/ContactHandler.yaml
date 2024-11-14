@@ -1,0 +1,238 @@
+asyncapi: 2.6.0
+info:
+  title: Contact Handler
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    handles a customer's interactive contact with the bank. This will typically
+    involve launching of one or more channel/device specific dialogue sessions
+    as necessary within the customer contact
+  version: 12.0.3
+channels:
+  CustomerContactOperatingSession/Created:
+      description: ''
+      publish:
+        operationId: CustomerContactOperatingSession-created
+        summary: CustomerContactOperatingSession
+        message:
+          $ref: '#/components/messages/CustomerContactOperatingSession'
+  CustomerContactOperatingSession/Updated:
+      description: ''
+      publish:
+        operationId: CustomerContactOperatingSession-updated
+        summary: CustomerContactOperatingSession
+        message:
+          $ref: '#/components/messages/CustomerContactOperatingSession'
+  Routing/Created:
+      description: ''
+      publish:
+        summary: Routing
+        message:
+          $ref: '#/components/messages/Routing'
+  Routing/Updated:
+      description: ''
+      publish:
+        summary: Routing
+        message:
+          $ref: '#/components/messages/Routing'
+  History/Created:
+      description: ''
+      publish:
+        summary: History
+        message:
+          $ref: '#/components/messages/History'
+  History/Updated:
+      description: ''
+      publish:
+        summary: History
+        message:
+          $ref: '#/components/messages/History'
+  Authentication/Created:
+      description: ''
+      publish:
+        summary: Authentication
+        message:
+          $ref: '#/components/messages/Authentication'
+  Authentication/Updated:
+      description: ''
+      publish:
+        summary: Authentication
+        message:
+          $ref: '#/components/messages/Authentication'
+  Session/Created:
+      description: ''
+      publish:
+        summary: Session
+        message:
+          $ref: '#/components/messages/Session'
+  Session/Updated:
+      description: ''
+      publish:
+        summary: Session
+        message:
+          $ref: '#/components/messages/Session'
+components:
+  messages:
+    CustomerContactOperatingSession:
+        name: CustomerContactOperatingSession
+        description: >-
+          Operate equipment and/or a largely automated facility within Contact
+          Handler. 
+        payload:
+          $ref: '#/components/schemas/CustomerContactOperatingSession'
+    Routing:
+        name: Routing
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Routing'
+    History:
+        name: History
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/History'
+    Authentication:
+        name: Authentication
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Authentication'
+    Session:
+        name: Session
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Session'
+  schemas:
+    Routing:
+        type: object
+        description: ''
+        properties:
+          RoutingTaskRecord:
+              type: string
+              format: String
+              description: "The task updates the contact record routing selection field and handles the interaction with the Contact Routing service domain to identify the servicing position/resource \r\n"
+    History:
+        type: object
+        description: ''
+        properties:
+          HistoryTaskRecord:
+              type: string
+              format: String
+              description: "The task updates the channel activity history to reflect the contact \r\n"
+    Authentication:
+        type: object
+        description: ''
+        properties:
+          AuthenticationTaskRecord:
+              type: string
+              format: String
+              description: "The task updates the contact record authentication status field and handles the interaction with the Party Authentication service domain to get the required level of authentication for the contact \r\n"
+    Session:
+        type: object
+        description: ''
+        properties:
+          SessionTaskRecord:
+              type: string
+              format: String
+              description: "The task updates the contact record activity record fields and handles the interaction with the Contact Dialogue service domain to initiate the servicing session \r\n"
+          SessionResult:
+              type: string
+              format: String
+              description: "An indicator of how the session was concluded (e.g. customer completed, hang-up, further servicing required) \r\n"
+    CustomerContactOperatingSession:
+        type: object
+        description: ''
+        properties:
+          CustomerContactInboundorOutboundIndicator:
+              type: string
+              format: Boolean
+              description: "Indicates whether this is an inbound or outbound contact (inbound is customer initiated, outbound is servicing resource initiated) \r\n"
+          eBranchOperatingSessionReference:
+              type: string
+              format: Object
+              description: "Reference to the active network operating session used to access customer \r\n"
+          AdvancedVoiceServiceOperatingSessionReference:
+              type: string
+              format: Object
+              description: "Reference to the active voice network used to access customer \r\n"
+          CustomerContactRecordReference:
+              type: string
+              format: Object
+              description: "Reference to the contact record assembled during the customer contact \r\n"
+          CustomerContactRecord:
+              type: string
+              format: String
+              description: "The contact record consolidates all aspects of the contact that is cross-referenced by all  contact functions and called servicing sessions that make up the contact \r\n"
+          CustomerContactRecordCustomerReference:
+              type: string
+              format: Object
+              description: "The customer reference as provided by the contacting party and verified by the authentication function \r\n"
+          CustomerContactRecordContactDevice:
+              type: string
+              format: String
+              description: "The contact device can be determined by the channel operations facilities (e.g. URL/ANI-phone number) \r\n"
+          CustomerContactRecordAuthenticationStatus:
+              type: string
+              format: String
+              description: "The contact authentication level is determined by the authentication function and can be updated during the contact \r\n"
+          CustomerContactRecordRoutingSelectionStatus:
+              type: string
+              format: String
+              description: "The routing selections made through the contact \r\n"
+          CustomerContactRecordMenuSelection:
+              type: string
+              format: String
+              description: "The requested service from a menu option can be indicated by the customer when initiating or during contact \r\n"
+          CustomerContactRecordServicingRequest:
+              type: string
+              format: String
+              description: "The customer may provide details of servicing resource request when initiating or during contact \r\n"
+          CustomerContactRecordServicingEventHistory:
+              type: string
+              format: String
+              description: "Contact Handler can reference recent servicing activity for routing, security and servicing purposes (obtained from Service Domain Channel Activity History) \r\n"
+          CustomerContactRecordServicingPositionReference:
+              type: string
+              format: Object
+              description: "Reference to the servicing position can be where an inbound contact is routed, or the source of an outbound contact request \r\n"
+          CustomerContactRecordServicingResourceReference:
+              type: string
+              format: Object
+              description: "Reference to the servicing resource can be to handle an inbound contact or the source of an outbound contact request \r\n"
+          CustomerContactRecordActivityRecord:
+              type: string
+              format: String
+              description: "Records the actions performed during contact, including all dialogue sessions \r\n"
+          CustomerSessionDialogueReference:
+              type: string
+              format: Object
+              description: "Reference to any contact session dialogue records created during the contact there can be several \r\n"
+          CustomerSessionDialogueRecord:
+              type: string
+              format: String
+              description: "The customer session dialogue details and log \r\n"
+          CustomerContactRecordDuration:
+              type: string
+              format: String
+              description: "Records the start and end date times for the contact \r\n"
+          CustomerContactRecordResult:
+              type: string
+              format: String
+              description: "Describes the interpreted result of the contact (e.g. completed, customer terminated, timed-out) \r\n"

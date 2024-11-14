@@ -1,0 +1,1033 @@
+asyncapi: 2.6.0
+info:
+  title: Customer Relationship Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    develops and executes a customer plan to maintain and build a customer
+    relationship. Activities include ongoing customer contact, tracking internal
+    and external events and activity of interest and relevance, product and
+    service matching and sales, processing ad-hoc queries, trouble shooting and
+    issue resolution including the initial phases of troubled account recovery
+  version: 12.0.3
+channels:
+  CustomerRelationshipManagementPlan/Created:
+      description: ''
+      publish:
+        operationId: CustomerRelationshipManagementPlan-created
+        summary: CustomerRelationshipManagementPlan
+        message:
+          $ref: '#/components/messages/CustomerRelationshipManagementPlan'
+  CustomerRelationshipManagementPlan/Updated:
+      description: ''
+      publish:
+        operationId: CustomerRelationshipManagementPlan-updated
+        summary: CustomerRelationshipManagementPlan
+        message:
+          $ref: '#/components/messages/CustomerRelationshipManagementPlan'
+  Contact/Created:
+      description: ''
+      publish:
+        summary: Contact
+        message:
+          $ref: '#/components/messages/Contact'
+  Contact/Updated:
+      description: ''
+      publish:
+        summary: Contact
+        message:
+          $ref: '#/components/messages/Contact'
+  Development/Created:
+      description: ''
+      publish:
+        summary: Development
+        message:
+          $ref: '#/components/messages/Development'
+  Development/Updated:
+      description: ''
+      publish:
+        summary: Development
+        message:
+          $ref: '#/components/messages/Development'
+  Incident/Created:
+      description: ''
+      publish:
+        summary: Incident
+        message:
+          $ref: '#/components/messages/Incident'
+  Incident/Updated:
+      description: ''
+      publish:
+        summary: Incident
+        message:
+          $ref: '#/components/messages/Incident'
+components:
+  messages:
+    CustomerRelationshipManagementPlan:
+        name: CustomerRelationshipManagementPlan
+        description: >-
+          Oversee the working of a business unit, assign work, manage against a
+          plan and troubleshoot issues within Customer Relationship Management.
+        payload:
+          $ref: '#/components/schemas/CustomerRelationshipManagementPlan'
+    Contact:
+        name: Contact
+        description: 
+          A collection of one or more responsibilities or tasks under management
+
+          Examples:- Relationship development, Troubleshooting
+        payload:
+          $ref: '#/components/schemas/Contact'
+    Development:
+        name: Development
+        description: 
+          A collection of one or more responsibilities or tasks under management
+
+          Examples:- Relationship development, Troubleshooting
+        payload:
+          $ref: '#/components/schemas/Development'
+    Incident:
+        name: Incident
+        description: 
+          A collection of one or more responsibilities or tasks under management
+
+          Examples:- Relationship development, Troubleshooting
+        payload:
+          $ref: '#/components/schemas/Incident'
+  schemas:
+    Contact:
+        type: object
+        description: ''
+        properties:
+          CustomerRelationshipContactHistory:
+              $ref: '#/components/schemas/CustomerContact'
+          CustomerRelationshipContactSchedule:
+              $ref: '#/components/schemas/Schedule'
+          CustomerRelationshipContactRecord:
+              $ref: '#/components/schemas/CustomerContact'
+          CustomerRelationshipContactDate:
+              $ref: '#/components/schemas/Date'
+          EmployeeReference:
+              $ref: '#/components/schemas/Involvedparty'
+          CustomerRelationshipContactType:
+              $ref: '#/components/schemas/Text'
+          CustomerRelationshipContactResult:
+              $ref: '#/components/schemas/Text'
+    CustomerContact:
+        type: object
+        format: CustomerContact
+        description: "The record of a customer contact \r\n"
+        properties:
+          ContactType:
+              $ref: '#/components/schemas/Text'
+          ContactDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ContactLocation:
+              $ref: '#/components/schemas/Location'
+          ContactSchedule:
+              $ref: '#/components/schemas/Schedule'
+          ContactResult:
+              $ref: '#/components/schemas/Text'
+          ContactPurpose:
+              $ref: '#/components/schemas/Text'
+          ContactDevice:
+              $ref: '#/components/schemas/Device'
+          ContactIndicator:
+              $ref: '#/components/schemas/Text'
+          ContactContent:
+              $ref: '#/components/schemas/Text'
+    Text:
+        type: object
+        format: Text
+        description: "The result of the contact, including follow up tasks \r\n"
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+        type: object
+        format: Datetime
+        description: 'Date and time at which the range ends. (ISO20022) '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    Location:
+        type: object
+        format: Location
+        description: 'Geographical location of the device. '
+        properties:
+          LocationDescription:
+              $ref: '#/components/schemas/Text'
+          LocationDateTime:
+              $ref: '#/components/schemas/Datetime'
+          LocationStatus:
+              $ref: '#/components/schemas/Status'
+          LocationType:
+              enum:
+                  -  Continent
+                  -  Country
+                  -  State
+                  -  District
+                  -  Province
+                  -  Town
+                  -  City
+                  -  Region
+              format: Location
+          LocationZoningType:
+              $ref: '#/components/schemas/Text'
+          LocationNeighborhoodType:
+              $ref: '#/components/schemas/Text'
+          LocationConstructionType:
+              $ref: '#/components/schemas/Text'
+          LocationOccupancyType:
+              $ref: '#/components/schemas/Text'
+          LocationValue:
+              $ref: '#/components/schemas/Value'
+          LocationCapacity:
+              $ref: '#/components/schemas/Text'
+          LocationIdentification:
+              $ref: '#/components/schemas/Identifier'
+          LocationAddress:
+              $ref: '#/components/schemas/Address'
+          Location:
+              type: string
+              format: Class
+              description: >-
+                The definition of an addressable space/position both in real and
+                virtual environments with associated uses and entitlements 
+          LocationName:
+              $ref: '#/components/schemas/Name'
+          LocationTimeZone:
+              $ref: '#/components/schemas/Text'
+    Status:
+        type: object
+        format: Status
+        description: 
+          The life cycle stage of a device
+
+          e.g. active, defect 
+        properties:
+          StatusReason:
+              $ref: '#/components/schemas/Text'
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          StatusInvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+          Status:
+              type: string
+              format: DataType
+              description: >-
+                A characteristic that describe the object by referring to a
+                state transition in its lifecycle. 
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: ' '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+          Datetimeperiod:
+              type: string
+              format: DataType
+              description: >-
+                Time span defined by a start date and time, and an end date and
+                time. (ISO20022) 
+    Involvedparty:
+        type: object
+        format: Involvedparty
+        description: 'Entity that assigns and manages the identification. '
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          Involvedparty:
+              type: string
+              format: DataType
+              description: 'Party who plays a specific role  '
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+    Party:
+        type: object
+        format: Party
+        description: ' '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+          PartyType:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Party
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+          PartyLegalStructureType:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Party
+    Name:
+        type: object
+        format: Name
+        description: ' '
+        properties:
+          Name:
+              type: string
+              format: DataType
+              description: >-
+                A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+        type: object
+        format: Partyidentification
+        description: ' '
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentification
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+          Partyidentification:
+              type: string
+              format: DataType
+              description: ''
+    Identifier:
+        type: object
+        format: Identifier
+        description: ' '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+          Identifier:
+              type: string
+              format: DataType
+              description: >-
+                An identifier is a character string used to uniquely identify
+                one instance of an object within an identification scheme that
+                is managed by an agency. (UN/CEFAT) 
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Partyrole:
+        type: object
+        format: Partyrole
+        description: ' '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyrole
+    Address:
+        type: object
+        format: Address
+        description: >-
+          The address associated with the device like Internet Protocol address,
+          email Address 
+        properties:
+          AddressType:
+              enum:
+                  -  PostalAddress
+                  -  GeolocationAddress
+                  -  LatitudeAddress
+                  -  LongitudeAddress
+                  -  ElectronicAddress
+              format: Address
+          LocationReference:
+              $ref: '#/components/schemas/Location'
+          Address:
+              type: string
+              format: Class
+              description: >-
+                A specific designation or description of a location, typically
+                used for specifying the location or destination of something or
+                someone 
+    Schedule:
+        type: object
+        format: Schedule
+        description: 'The schedule of past and planned customer contacts '
+        properties:
+          ScheduleType:
+              type: string
+              format: String
+              description: ''
+    Device:
+        type: object
+        format: Device
+        description: ' '
+        properties:
+          DeviceIdentification:
+              $ref: '#/components/schemas/Identifier'
+          DeviceType:
+              enum:
+                  -  Securecardreader
+                  -  Nonsecurecardreader
+                  -  Mobile
+                  -  Tablet
+                  -  Personalcomputer
+                  -  Othernational
+                  -  Otherprivate
+                  -  Wearable
+                  -  Vehicle
+                  -  Embedded
+                  -  Keyfob
+                  -  Jewellery
+                  -  Sticker
+                  -  Gamingdevice
+                  -  Watch
+                  -  Unknown
+                  -  BiometricDevice
+              format: Device
+          DeviceProperty:
+              $ref: '#/components/schemas/Text'
+          DeviceElement:
+              $ref: '#/components/schemas/Text'
+          DeviceStatus:
+              $ref: '#/components/schemas/Status'
+          DeviceVersion:
+              type: string
+              format: Number
+              description: ''
+          DeviceDateTime:
+              $ref: '#/components/schemas/Datetime'
+          DeviceDescription:
+              $ref: '#/components/schemas/Text'
+          DeviceName:
+              $ref: '#/components/schemas/Name'
+          DeviceLanguage:
+              $ref: '#/components/schemas/Text'
+          DevicePhoneNumber:
+              $ref: '#/components/schemas/Text'
+          DeviceLocation:
+              $ref: '#/components/schemas/Location'
+          DeviceManufacturer:
+              $ref: '#/components/schemas/Text'
+          DeviceCountry:
+              $ref: '#/components/schemas/Country'
+          DeviceAddress:
+              $ref: '#/components/schemas/Address'
+          DeviceAddressType:
+              enum:
+                  -  PostalAddress
+                  -  GeolocationAddress
+                  -  LatitudeAddress
+                  -  LongitudeAddress
+                  -  ElectronicAddress
+              format: Device
+          DeviceOperatingSystem:
+              enum:
+                  -  Android
+                  -  Ios
+                  -  Windows
+                  -  Blackberry
+                  -  Tizen
+                  -  Othernational
+                  -  Otherprivate
+              format: Device
+          DeviceIdentificationType:
+              enum:
+                  -  IMEI
+                  -  Serialnumber
+                  -  Secureelementidentification
+                  -  Othernational
+                  -  Otherprivate
+              format: Device
+    Country:
+        type: object
+        format: Country
+        description: 'Country of the location. '
+        properties:
+          NationalRegulatoryAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+    Date:
+        type: object
+        format: Date
+        description: >-
+          The date time and location of the contact ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    Development:
+        type: object
+        description: ''
+        properties:
+          RelationshipDevelopmentTask:
+              $ref: '#/components/schemas/CustomerRelationshipDevelopment'
+          CustomerDevelopmentTaskType:
+              $ref: '#/components/schemas/Text'
+          CustomerDevelopmentTaskDescription:
+              $ref: '#/components/schemas/Text'
+          CustomerRelationshipDevelopmentPlan:
+              $ref: '#/components/schemas/CustomerRelationshipDevelopment'
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+          CustomerDevelopmentWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+          CustomerDevelopmentTaskResult:
+              $ref: '#/components/schemas/Task'
+    CustomerRelationshipDevelopment:
+        type: object
+        format: CustomerRelationshipDevelopment
+        description: "A plan outlining longer term relationship goals and performance/profitability both target and actual \r\n"
+        properties:
+          CustomerRelationshipDevelopmentTaskType:
+              $ref: '#/components/schemas/Text'
+          CustomerRelationshipDevelopmentTaskDescription:
+              $ref: '#/components/schemas/Text'
+          CustomerRelationshipDevelopmentTaskResult:
+              $ref: '#/components/schemas/Text'
+    Workproduct:
+        type: object
+        format: Workproduct
+        description: "Work documentation, forms and schedules produced and referenced during the task \r\n"
+        properties:
+          WorkProductType:
+              enum:
+                  -  Document
+                  -  WorkingPaper
+                  -  ActivityLog
+                  -  Form
+                  -  File
+                  -  MeetingSchedule
+                  -  MeetingMinute
+              format: Workproduct
+          WorkProductIdentifoication:
+              type: string
+              format: String
+              description: ''
+    Task:
+        type: object
+        format: Task
+        description: "The outcomes of customer development activity \r\n"
+        properties:
+          Task:
+              type: string
+              format: DataType
+              description: ''
+    Incident:
+        type: object
+        description: ''
+        properties:
+          RelationshipIncidentRecord:
+              $ref: '#/components/schemas/CustomerIncident'
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+          ProductandServiceActivityReference:
+              $ref: '#/components/schemas/Transaction'
+          CustomerIncidentType:
+              $ref: '#/components/schemas/Text'
+          CustomerIncidentDescription:
+              $ref: '#/components/schemas/Text'
+          CustomerIncidentResolution:
+              $ref: '#/components/schemas/CustomerCaseResolution'
+    CustomerIncident:
+        type: object
+        format: CustomerIncident
+        description: "Record of an incident \r\n"
+        properties:
+          CustomerIncidentType:
+              $ref: '#/components/schemas/Text'
+          CustomerIncidentSource:
+              type: string
+              format: String
+              description: ''
+          CustomerIncidentDescription:
+              type: string
+              format: String
+              description: ''
+          CustomerIncidentResolution:
+              type: string
+              format: String
+              description: ''
+    Transaction:
+        type: object
+        format: Transaction
+        description: "Production activity and transaction records relating to the incident \r\n"
+        properties:
+          TransactionIdentification:
+              $ref: '#/components/schemas/Identifier'
+          TransactionDate:
+              $ref: '#/components/schemas/Transactiondate'
+          TransactionType:
+              enum:
+                  -  FinancialTransaction
+                  -  BusinessTransaction
+                  -  BankingTransaction
+                  -  AccountingTransaction
+                  -  BookingTransaction
+                  -  AllocationTransaction
+                  -  DeliveryTransaction
+                  -  ProductionTransaction
+              format: Transaction
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+          TransactionStatus:
+              $ref: '#/components/schemas/Transactionlifecyclestatus'
+          TransactionName:
+              $ref: '#/components/schemas/Name'
+    Transactiondate:
+        type: object
+        format: Transactiondate
+        description: >-
+          The Date that the transaction has occurred or is planned to occur.
+
+          A characteristic of transaction which refers to the LifecycleDate of
+          transaction (e.g., initiated date, executed date, fulfillment date).  
+        properties:
+          TransactionDate:
+              $ref: '#/components/schemas/Datetime'
+          TransactionDateType:
+              enum:
+                  -  TransactionExecutedDate
+                  -  TransactionFulfillmentDate
+                  -  TransactionInitiatedDate
+                  -  TransactionCancelledDate
+                  -  TransactionApprovedDate
+              format: Transactiondate
+    Transactionlifecyclestatus:
+        type: object
+        format: Transactionlifecyclestatus
+        description: >-
+          A characteristic of transaction which refers to the LifecycleStatus of
+          transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+        properties:
+          TransactionLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          TransactionLifecycleStatusType:
+              enum:
+                  -  Initiated
+                  -  Executed
+                  -  Cancelled
+                  -  Confirmed
+                  -  Suspended
+                  -  Pending
+                  -  Completed
+                  -  Notified
+                  -  Booked
+                  -  Rejected
+              format: Transactionlifecyclestatus
+    CustomerCaseResolution:
+        type: object
+        format: CustomerCaseResolution
+        description: "Narrative of the resolution actions made or committed \r\n"
+        properties:
+          CustomerCaseResolution:
+              type: string
+              format: Class
+              description: ''
+    CustomerRelationshipManagementPlan:
+        type: object
+        description: ''
+        properties:
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+          CustomerRelationshipRatingType:
+              enum:
+                  -  Customerprofitability
+                  -  Customercreditrating
+          CustomerRelationshipRating:
+              $ref: '#/components/schemas/CustomerRating'
+          CustomerInsightType:
+              $ref: '#/components/schemas/Text'
+          CustomerInsightDescription:
+              $ref: '#/components/schemas/Text'
+          CustomerBudget:
+              $ref: '#/components/schemas/CustomerRelationshipBudget'
+          CustomerProductCoverage:
+              $ref: '#/components/schemas/CustomerProductCoverage'
+          CustomerProductUsage:
+              $ref: '#/components/schemas/ProductUsage'
+          CustomerProductEligibilityProfile:
+              $ref: '#/components/schemas/CustomerProductEligibilityProfileClass'
+          CustomerSalesPlan:
+              $ref: '#/components/schemas/Plan'
+          CustomerProfitability:
+              $ref: '#/components/schemas/CustomerProfitability'
+    CustomerRating:
+        type: object
+        format: CustomerRating
+        description: "The rating value (and explanation) \r\n"
+        properties:
+          CustomerRatingType:
+              enum:
+                  -  Customerprofitability
+                  -  Customercreditrating
+              format: CustomerRating
+          CustomerRatingValue:
+              $ref: '#/components/schemas/Value'
+          CustomerRatingDescription:
+              $ref: '#/components/schemas/Text'
+          CustomerRatingValueDate:
+              $ref: '#/components/schemas/Datetime'
+          CustomerRatingValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+    CustomerRelationshipBudget:
+        type: object
+        format: CustomerRelationshipBudget
+        description: "The target and actual budget covering income and allowed expenses/discounts \r\n"
+        properties:
+          CustomerRelationshipBudget:
+              type: string
+              format: Class
+              description: >-
+                The budget which is planned to spend for a specific customer
+                relationship.  
+    CustomerProductCoverage:
+        type: object
+        format: CustomerProductCoverage
+        description: "Covers current and near term target product/service coverage as per the judgment of the Relationship Manager \r\n"
+        properties:
+          CustomerProductCoverage:
+              type: string
+              format: Class
+              description: ''
+    ProductUsage:
+        type: object
+        format: ProductUsage
+        description: "Extracted analysis from production activity used to detect trends and key events (product activity/turnover summaries) \r\n"
+        properties:
+          ProductUsageDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ProductUsageVolume:
+              $ref: '#/components/schemas/Text'
+          ProductUsageIndicator:
+              $ref: '#/components/schemas/Yesnoindicator'
+    Yesnoindicator:
+        type: object
+        format: Yesnoindicator
+        description: >-
+          An indicator specifying if the whether the customer has bought  the
+          banking product or not.  
+        properties:
+          Yesnoindicator:
+              type: string
+              format: DataType
+              description: >-
+                Indicates a "Yes" or "No" type of answer for an element.
+                (ISO20022)
+
+                true: Yes
+
+                false: No 
+    CustomerProductEligibilityProfileClass:
+        type: object
+        format: CustomerProductEligibilityProfileClass
+        description: "Obtained from the appropriate Service Domain, this provides an automated/rules based analysis of unsold/eligible products and associated terms that can be refined by the manager \r\n"
+        properties:
+          CustomerProductEligibilityProfileClass:
+              type: string
+              format: Class
+              description: >-
+                A value of Customer Product Profile Type whereby customer
+                product eligibility will be defined. 
+    Plan:
+        type: object
+        format: Plan
+        description: "The sales plan details specific actions taken and planned to address sales opportunities (i.e. target product sales and associated contact schedule) \r\n"
+        properties:
+          PlanGoal:
+              $ref: '#/components/schemas/Goal'
+          PlanBudget:
+              $ref: '#/components/schemas/Budgetarrangement'
+          PlannedAction:
+              $ref: '#/components/schemas/Plannedaction'
+          PlanType:
+              $ref: '#/components/schemas/Plantype'
+          PlanOrganisation:
+              type: string
+              format: String
+              description: ''
+          PlanValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PlanDescription:
+              $ref: '#/components/schemas/Text'
+    Goal:
+        type: object
+        format: Goal
+        description: ' '
+        properties:
+          GoalType:
+              type: string
+              format: String
+              description: 'The type of goal '
+          GoalDefinition:
+              type: string
+              format: String
+              description: >-
+                A definition of the goal, including the intended actions
+                required to achieve the goal 
+          GoalOrganisation:
+              type: string
+              format: ''
+              description: >-
+                Identifies the interested parties and their roles and
+                responsibilities for the specific actions supporting the
+                achievement of the goal 
+          GoalResult:
+              type: string
+              format: String
+              description: >-
+                Assessment of how the work is progressing towards achieving the
+                goal, including projections of likely outcomes 
+          Goal:
+              type: string
+              format: Class
+              description: >-
+                A goal represents a high-level statement of intent, direction,
+                or desired end state for an organization and its stakeholders.
+                (ArchiMate 3.1)
+
+
+                An observable and measurable end result having one or more
+                objectives to be achieved within a more or less fixed timeframe.
+
+
+                Read more:
+                http://www.businessdictionary.com/definition/goal.html 
+    Budgetarrangement:
+        type: object
+        format: Budgetarrangement
+        description: >-
+          An arrangement which is specifying an estimate of costs, revenues, and
+          resources over a specified period, reflecting a reading of future
+          financial conditions and goals. (adapted from Business Dictionary) 
+        properties:
+          BudgetType:
+              $ref: '#/components/schemas/Budgettype'
+          BudgetAmount:
+              $ref: '#/components/schemas/Amount'
+          BudgetArrangement:
+              type: string
+              format: Class
+              description: >-
+                An arrangement which is specifying an estimate of costs,
+                revenues, and resources over a specified period, reflecting a
+                reading of future financial conditions and goals. (adapted from
+                Business Dictionary)
+
+
+                Read more:
+                http://www.businessdictionary.com/definition/budget.html
+
+
+
+                A budget is an estimation of revenue and expenses over a
+                specified future period of time and is utilized by governments,
+                businesses, and individuals.
+
+                A budget is basically a financial plan for a defined period,
+                normally a year that is known to greatly enhance the success of
+                any financial undertaking. (Investopedia)
+
+
+                https://www.investopedia.com/terms/b/budget.asp 
+    Budgettype:
+        type: object
+        format: Budgettype
+        description: 'A Classification value that specifies the type of Budget '
+        properties:
+          BudgetTypeName:
+              $ref: '#/components/schemas/Name'
+          BudgetType:
+              enum:
+                  -  OperatingBudget
+                  -  FinancialBudget
+                  -  ResourceBudget
+              format: Budgettype
+    Amount:
+        type: object
+        format: Amount
+        description: ' '
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    Plannedaction:
+        type: object
+        format: Plannedaction
+        description: >-
+          An action that is arranged in a plan for doing or achieving
+          something  
+        properties:
+          PlannedAction:
+              type: string
+              format: Class
+              description: >-
+                An action that is arranged in a plan for doing or achieving
+                something  
+    Plantype:
+        type: object
+        format: Plantype
+        description: 'A Classification value that specifies the type of Plan '
+        properties:
+          PlanTypeName:
+              $ref: '#/components/schemas/Name'
+          PlanType:
+              enum:
+                  -  AdministrativePlan
+                  -  ManagementPlan
+                  -  StratgyPlan
+                  -  FinancialPlan
+              format: Plantype
+          Plantype:
+              type: string
+              format: DataType
+              description: 'Data type specifies the classification of a Plan  '
+    CustomerProfitability:
+        type: object
+        format: CustomerProfitability
+        description: "A maintained perspective of the profitability of the relationship to date and projected \r\n"
+        properties:
+          CustomerProfitability:
+              type: string
+              format: Class
+              description: >-
+                The profitability for a specific customer relationship. 
+
+
+                Profitability: The state or condition of yielding a financial
+                profit or gain. (Business Dictionary) 

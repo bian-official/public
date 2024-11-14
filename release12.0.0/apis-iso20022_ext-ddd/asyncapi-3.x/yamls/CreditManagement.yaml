@@ -1,0 +1,161 @@
+asyncapi: 2.6.0
+info:
+  title: Credit Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    provides a bank-wide/oversight function to qualify credit pricing for
+    offered products and services to reflect the bank's appetite to write the
+    business. This decision can override the standard product pricing procedure
+  version: 12.0.3
+channels:
+  CreditPricingAssessment/Created:
+      description: ''
+      publish:
+        operationId: CreditPricingAssessment-created
+        summary: CreditPricingAssessment
+        message:
+          $ref: '#/components/messages/CreditPricingAssessment'
+  CreditPricingAssessment/Updated:
+      description: ''
+      publish:
+        operationId: CreditPricingAssessment-updated
+        summary: CreditPricingAssessment
+        message:
+          $ref: '#/components/messages/CreditPricingAssessment'
+components:
+  messages:
+    CreditPricingAssessment:
+        name: CreditPricingAssessment
+        description: >-
+          To test or assess an entity, possibly against some formal
+          qualification or certification requirement within Credit Management. 
+        payload:
+          $ref: '#/components/schemas/CreditPricingAssessment'
+  schemas:
+    CreditPricingAssessment:
+        type: object
+        description: ''
+        properties:
+          BusinessUnitReference:
+              type: string
+              format: Object
+              description: "Business unit submitting the proposed transaction for review \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the customer related to the proposed transaction \r\n"
+          SectorReference:
+              type: string
+              format: Object
+              description: "The sector where the proposed transaction would be booked \r\n"
+          ProductType:
+              type: string
+              format: String
+              description: "The product type/category of the proposed transaction for the credit pricing assessment \r\n"
+          ProposedTransactionReference:
+              type: string
+              format: Object
+              description: "Reference to proposed transaction submitted for assessment \r\n"
+          ProposedTransactionRecord:
+              type: string
+              format: String
+              description: "Key details of the proposed transaction \r\n"
+          ProposedTransactionType:
+              type: string
+              format: String
+              description: "The type of credit instrument being considered \r\n"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          ProposedTransactionRecordDate:
+              $ref: '#/components/schemas/Date'
+          ProposedTransactionBookingEntity:
+              type: string
+              format: String
+              description: "The booking entity within the bank that the proposed transaction would impact \r\n"
+          ProposedTransactionCreditPricingAssessment:
+              type: string
+              format: String
+              description: "Details of the credit pricing assessment, permitting or adjusting terms as necessary \r\n"
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          The financial structure of the proposed transaction
+          CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    Date:
+        type: object
+        format: Date
+        description: >-
+          One or more key dates associated with the transaction ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''

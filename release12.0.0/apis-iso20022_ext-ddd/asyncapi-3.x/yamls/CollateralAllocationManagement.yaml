@@ -1,0 +1,231 @@
+asyncapi: 2.6.0
+info:
+  title: Collateral Allocation Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Service Domain
+    manages the allocation of party owned assets to bank issued lending and
+    other asset products.
+  version: 12.0.3
+channels:
+  CollateralAssetAllocation/Created:
+      description: ''
+      publish:
+        operationId: CollateralAssetAllocation-created
+        summary: CollateralAssetAllocation
+        message:
+          $ref: '#/components/messages/CollateralAssetAllocation'
+  CollateralAssetAllocation/Updated:
+      description: ''
+      publish:
+        operationId: CollateralAssetAllocation-updated
+        summary: CollateralAssetAllocation
+        message:
+          $ref: '#/components/messages/CollateralAssetAllocation'
+  Allocation/Created:
+      description: ''
+      publish:
+        summary: Allocation
+        message:
+          $ref: '#/components/messages/Allocation'
+  Allocation/Updated:
+      description: ''
+      publish:
+        summary: Allocation
+        message:
+          $ref: '#/components/messages/Allocation'
+components:
+  messages:
+    CollateralAssetAllocation:
+        name: CollateralAssetAllocation
+        description: >-
+          Maintain an inventory or holding of some resource and make
+          assignments/allocations as requested  within Collateral Allocation
+          Management. 
+
+          Example: Track the inventory and administer the distribution of
+          central cash holdings throughout the branch & ATM network.
+        payload:
+          $ref: '#/components/schemas/CollateralAssetAllocation'
+    Allocation:
+        name: Allocation
+        description: >-
+          Set of rules for the purpose of deciding if or if not something is
+          applicable
+
+
+          Examples:- Staff assignment, Facility allocation.
+        payload:
+          $ref: '#/components/schemas/Allocation'
+  schemas:
+    Allocation:
+        type: object
+        description: ''
+        properties:
+          RequestedAllocationRequestType:
+              type: string
+              format: String
+              description: "Defines  the requested action (e.g. earmark for future allocation, allocate or recall an allocation of a collateral asset) \r\n"
+          ProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the product to which the collateral is allocated \r\n"
+          CustomerOfferReference:
+              type: string
+              format: Object
+              description: "Reference to a offer process during which the collateral allocation is defined and agreed \r\n"
+          CollateralEarmarkAmount:
+              $ref: '#/components/schemas/Amount'
+          CollateralEarmarkDuration:
+              type: string
+              format: String
+              description: "Time for which the earmarking is enforced \r\n"
+          CollateralAllocationAmount:
+              $ref: '#/components/schemas/Amount'
+          CollateralAllocationDuration:
+              type: string
+              format: String
+              description: "The intended duration of the allocation (can be finite or open ended) \r\n"
+          CollateralAllocationRecallAmount:
+              $ref: '#/components/schemas/Amount'
+          CollateralAllocationRecallTimetable:
+              type: string
+              format: String
+              description: "The schedule for processing allocation recall \r\n"
+          CollateralAllocationRecallResult:
+              type: string
+              format: String
+              description: "The result of the allocation recall \r\n"
+          CollateralAssetAllocationState:
+              type: string
+              format: String
+              description: "State of the allocation as there can be different states for the allocation of a single asset to several products \r\n"
+          CollateralAllocationRequestResult:
+              type: string
+              format: String
+              description: "Record of the workstep and result of the allocation process \r\n"
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          Applies when part or all of the allocation is recalled (e.g. due to
+          revaluation of the asset) CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    CollateralAssetAllocation:
+        type: object
+        description: ''
+        properties:
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the title owner of the collateral asset \r\n"
+          CollateralAssetType:
+              type: string
+              format: String
+              description: "The type of asset (e.g. building, machinery, inventory, financial instrument, art) \r\n"
+          CollateralAssetReference:
+              type: string
+              format: Object
+              description: "Reference to the collateral item (e.g. address, account reference) \r\n"
+          CollateralAssetDescription:
+              type: string
+              format: String
+              description: "Description of significant details and properties of the asset \r\n"
+          CollateralAssetAdministrationInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the administration record of the asset item \r\n"
+          CollateralAssetStatus:
+              type: string
+              format: String
+              description: "A general status indicator for the asset (can cover multiple properties as needed) \r\n"
+          CollateralAssetValuation:
+              type: string
+              format: String
+              description: "The current and historical valuation of the asset \r\n"
+          CollateralAssetAllocationProfile:
+              type: string
+              format: String
+              description: "A record of past and current allocations of the collateral asset \r\n"
+          CollateralAssetValuationDate:
+              $ref: '#/components/schemas/Date'
+          CollateralAssetLoantoValueRatio:
+              type: string
+              format: String
+              description: "The ratio of the valuation that can be used as collateral (depends on liquidity, title, etc.) \r\n"
+    Date:
+        type: object
+        format: Date
+        description: >-
+          The date of the last valuation (and next planned valuation)
+          ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''

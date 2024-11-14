@@ -1,0 +1,242 @@
+asyncapi: 2.6.0
+info:
+  title: Card Network Participant Facility
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    orchestrates the activities related to the inclusion of new Acquirers and
+    Issuers in the Card Network, their terms and conditions and their status.
+  version: 12.0.3
+channels:
+  CardNetworkParticipantFacility/Created:
+      description: ''
+      publish:
+        operationId: CardNetworkParticipantFacility-created
+        summary: CardNetworkParticipantFacility
+        message:
+          $ref: '#/components/messages/CardNetworkParticipantFacility'
+  CardNetworkParticipantFacility/Updated:
+      description: ''
+      publish:
+        operationId: CardNetworkParticipantFacility-updated
+        summary: CardNetworkParticipantFacility
+        message:
+          $ref: '#/components/messages/CardNetworkParticipantFacility'
+  ParticipantService/Created:
+      description: ''
+      publish:
+        summary: ParticipantService
+        message:
+          $ref: '#/components/messages/ParticipantService'
+  ParticipantService/Updated:
+      description: ''
+      publish:
+        summary: ParticipantService
+        message:
+          $ref: '#/components/messages/ParticipantService'
+  ParticipantAccount/Created:
+      description: ''
+      publish:
+        summary: ParticipantAccount
+        message:
+          $ref: '#/components/messages/ParticipantAccount'
+  ParticipantAccount/Updated:
+      description: ''
+      publish:
+        summary: ParticipantAccount
+        message:
+          $ref: '#/components/messages/ParticipantAccount'
+components:
+  messages:
+    CardNetworkParticipantFacility:
+        name: CardNetworkParticipantFacility
+        description: >-
+          Fulfill any scheduled and ad-hoc obligations under a service
+          arrangement, most typically for a financial product or facility within
+          Card Network Participant Facility. 
+        payload:
+          $ref: '#/components/schemas/CardNetworkParticipantFacility'
+    ParticipantService:
+        name: ParticipantService
+        description: The product features/services available with a financical facility
+        payload:
+          $ref: '#/components/schemas/ParticipantService'
+    ParticipantAccount:
+        name: ParticipantAccount
+        description: The product features/services available with a financical facility
+        payload:
+          $ref: '#/components/schemas/ParticipantAccount'
+  schemas:
+    ParticipantService:
+        type: object
+        description: ''
+        properties:
+          ParticipantServiceRecord:
+              type: string
+              format: String
+              description: "Reference to the service request made by the network participant \r\n"
+          NetworkParticipantServiceType:
+              type: string
+              format: String
+              description: "The type of request  (e.g. merchant alert, chargeback arbitration, chargeback reduction) \r\n"
+          NetworkParticipantServiceCharge:
+              type: string
+              format: String
+              description: "Details of service charge levied against the Network Participant Facility \r\n"
+          NetworkParticipantServiceDateTime:
+              $ref: '#/components/schemas/Date'
+          NetworkParticipantNetworkServiceRequestWorkProduct:
+              type: string
+              format: String
+              description: "Work documentation, forms and schedules produced and referenced during the network service delivery (includes charges, service activity log and results etc.) \r\n"
+          NetworkParticipantNetworkServiceRequestResult:
+              type: string
+              format: String
+              description: "The result of the request in whatever form appropriate \r\n"
+    Date:
+        type: object
+        format: Date
+        description: >-
+          Key dates and times associated with the provision of the service (e.g.
+          initiation of service fulfillment) ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    ParticipantAccount:
+        type: object
+        description: ''
+        properties:
+          ParticipantAccountPostingTransaction:
+              type: string
+              format: String
+              description: "Reference to the posting transaction against the network participant account \r\n"
+          NetworkParticipantFacilityAccountPostingPurpose:
+              type: string
+              format: String
+              description: "Annotation of the reason for the positing (e.g. posting for fees, chargebacks, settlement) \r\n"
+          NetworkParticipantFacilityAccountPostingAmount:
+              $ref: '#/components/schemas/Amount'
+          NetworkParticipantFacilityAccountPostingValueDate:
+              $ref: '#/components/schemas/Date'
+          NetworkParticipantFacilityAccountPostingResult:
+              type: string
+              format: String
+              description: "Confirmation of the posting action \r\n"
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          Posted amount  (probably captured as a credit/debit pair)
+          CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    CardNetworkParticipantFacility:
+        type: object
+        description: ''
+        properties:
+          ProductandServiceReference:
+              type: string
+              format: Object
+              description: "Reference to the participant facility product instance \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the participant primary party/owner \r\n"
+          PartyReference:
+              type: string
+              format: Object
+              description: "Reference to the legal entity (typically the customer) \r\n"
+          FacilityTerms:
+              type: string
+              format: String
+              description: "The operational configuration terms/options that govern the participant facility arrangement \r\n"
+          ParticipantAcquirerBankReference:
+              type: string
+              format: Object
+              description: "Reference to the Acquiring bank for which the Network orchestrates clearing and settlement processing \r\n"
+          ParticipantAcquirerBankClearingandSettlementTerms:
+              type: string
+              format: String
+              description: "Defines the card clearing fees/terms in force \r\n"
+          ParticipantAcquirerBankServiceSchedule:
+              type: string
+              format: String
+              description: "Defines the tasks and processing schedule for the participant \r\n"
+          ParticipantIssuerBankReference:
+              type: string
+              format: Object
+              description: "Reference to the Issuing bank for which the Network orchestrates clearing and settlement processing \r\n"
+          ParticipantIssuerBankClearingandSettlementTerms:
+              type: string
+              format: String
+              description: "Defines the card clearing fees/terms in force \r\n"
+          ParticipantIssuerBankServiceSchedule:
+              type: string
+              format: String
+              description: "Defines the tasks and processing schedule for the participant) \r\n"

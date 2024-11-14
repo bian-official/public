@@ -1,0 +1,830 @@
+asyncapi: 2.6.0
+info:
+  title: Customer Product And Service Eligibility
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service Domain
+    maintains a list of products and services for which a customer is eligible.
+  version: 12.0.3
+channels:
+  CustomerEligibilityAssessment/Created:
+      description: ''
+      publish:
+        operationId: CustomerEligibilityAssessment-created
+        summary: CustomerEligibilityAssessment
+        message:
+          $ref: '#/components/messages/CustomerEligibilityAssessment'
+  CustomerEligibilityAssessment/Updated:
+      description: ''
+      publish:
+        operationId: CustomerEligibilityAssessment-updated
+        summary: CustomerEligibilityAssessment
+        message:
+          $ref: '#/components/messages/CustomerEligibilityAssessment'
+  EligibilityCheck/Created:
+      description: ''
+      publish:
+        summary: EligibilityCheck
+        message:
+          $ref: '#/components/messages/EligibilityCheck'
+  EligibilityCheck/Updated:
+      description: ''
+      publish:
+        summary: EligibilityCheck
+        message:
+          $ref: '#/components/messages/EligibilityCheck'
+  NextBest/Created:
+      description: ''
+      publish:
+        summary: NextBest
+        message:
+          $ref: '#/components/messages/NextBest'
+  NextBest/Updated:
+      description: ''
+      publish:
+        summary: NextBest
+        message:
+          $ref: '#/components/messages/NextBest'
+components:
+  messages:
+    CustomerEligibilityAssessment:
+        name: CustomerEligibilityAssessment
+        description: ''
+        payload:
+          $ref: '#/components/schemas/CustomerEligibilityAssessment'
+    EligibilityCheck:
+        name: EligibilityCheck
+        description: ''
+        payload:
+          $ref: '#/components/schemas/EligibilityCheck'
+    NextBest:
+        name: NextBest
+        description: ''
+        payload:
+          $ref: '#/components/schemas/NextBest'
+  schemas:
+    EligibilityCheck:
+        type: object
+        description: ''
+        properties:
+          CustomerProductandServiceEligibilityAssessmentResult:
+              $ref: '#/components/schemas/CustomerProductProfileAssessment'
+    CustomerProductProfileAssessment:
+        type: object
+        format: CustomerProductProfileAssessment
+        description: "The result of the eligibility assessment for the requested product/service details any eligibility considerations or requirements and the applicable terms \r\n"
+        properties:
+          CustomerProductProfileAssessment:
+              type: string
+              format: Class
+              description: >-
+                Evaluation of the product eligibility profile for a specific
+                customer or customer relationship.  
+    NextBest:
+        type: object
+        description: ''
+        properties:
+          RequestedProductandServiceProperties:
+              $ref: '#/components/schemas/ProductFeature'
+          ProductServiceType:
+              $ref: '#/components/schemas/Bankingproducttype'
+          CustomerProductandServiceNextBestAssessmentResult:
+              $ref: '#/components/schemas/Assessment'
+    ProductFeature:
+        type: object
+        format: ProductFeature
+        description: "Product/service features used to focus the selection \r\n"
+        properties:
+          ProductFeatureType:
+              $ref: '#/components/schemas/Productfeaturetype'
+          ProductFeatureSpecification:
+              $ref: '#/components/schemas/Text'
+    Productfeaturetype:
+        type: object
+        format: Productfeaturetype
+        description: 'The type or category of product/service features '
+        properties:
+          ProductFeatureTypeValues:
+              enum:
+                  -  Bankingservice
+                  -  Administrationservice
+                  -  Accessservice
+                  -  Pricefeature
+              format: Productfeaturetype
+    Text:
+        type: object
+        format: Text
+        description: 'Change that the assessment reveals is needed. '
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    Bankingproducttype:
+        type: object
+        format: Bankingproducttype
+        description: "The general type of product/service for which the best eligible product match is requested (e.g. term deposit, loan) \r\n"
+        properties:
+          ProductTypeDefinition:
+              type: string
+              format: String
+              description: ''
+          ProductType:
+              enum:
+                  -  LoanProduct
+                  -  CurrentAccountProduct
+                  -  SavingAccountProduct
+                  -  BrokeredProduct
+                  -  TermDepositProduct
+              format: Bankingproducttype
+          ProductClassificationIssuingAuthority:
+              type: string
+              format: String
+              description: ''
+    Assessment:
+        type: object
+        format: Assessment
+        description: >-
+          The result is a descending list of matched products with the
+          associated eligibility that are available to the customer
+          AssessmentAssessment
+          (https://www.iso20022.org/standardsrepository/type/Assessment)StandardISO20022
+          BM ()
+        properties:
+          AssessmentType:
+              enum:
+                  -  AssetValuation
+                  -  ProductMatching
+                  -  Authorization
+                  -  Authentication
+                  -  QualityAssurance
+                  -  Audit
+                  -  ComplianceCheck
+                  -  FundingCheck
+                  -  SuitabilityCheck
+                  -  PerformanceCheck
+                  -  ImpactAssessment
+                  -  RiskAssessment
+                  -  Rating
+                  -  UnderwritingAssessment
+                  -  Qualification
+                  -  Verification
+                  -  KYCAssessment
+                  -  PEPAssessment
+                  -  AMLAssessment
+              format: Assessment
+          AssessmentMethod:
+              $ref: '#/components/schemas/Text'
+          AssessmentSchedule:
+              $ref: '#/components/schemas/Schedule'
+          AssessmentDescription:
+              $ref: '#/components/schemas/Text'
+          AssessmentModel:
+              $ref: '#/components/schemas/Model'
+          AssessmentDateTime:
+              $ref: '#/components/schemas/Datetime'
+          AssessmentResult:
+              $ref: '#/components/schemas/Text'
+          AssessmentSupportingDocument:
+              $ref: '#/components/schemas/Document'
+          AssessmentRepresentingDocument:
+              $ref: '#/components/schemas/Document'
+          AssessmentRequiredAdjustment:
+              $ref: '#/components/schemas/Text'
+          AssessmentRequirement:
+              $ref: '#/components/schemas/Requirement'
+          AssessmentExpiryDate:
+              $ref: '#/components/schemas/Date'
+          AssessmentStatus:
+              $ref: '#/components/schemas/Status'
+    Schedule:
+        type: object
+        format: Schedule
+        description: ' '
+        properties:
+          ScheduleType:
+              type: string
+              format: String
+              description: ''
+    Model:
+        type: object
+        format: Model
+        description: ' '
+        properties:
+          ModelType:
+              type: string
+              format: String
+              description: 'The type or category of model   '
+          ModelPurpose:
+              type: string
+              format: String
+              description: >-
+                A description of the model that clarifies the intended
+                analysis/insights provided 
+          ModelVersion:
+              type: string
+              format: String
+              description: ''
+    Datetime:
+        type: object
+        format: Datetime
+        description: ' '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    Document:
+        type: object
+        format: Document
+        description: 'Document that represents the result of an assessment(s). '
+        properties:
+          DocumentIdentification:
+              $ref: '#/components/schemas/Identifier'
+          DocumentVersion:
+              type: string
+              format: Number
+              description: ''
+          DocumentType:
+              enum:
+                  -  Meteredserviceinvoice
+                  -  Commercialinvoice
+                  -  Creditnote
+                  -  Debitnote
+                  -  Hireinvoice
+                  -  Selfbilledinvoice
+                  -  Remittanceadvicemessage
+                  -  Relatedpaymentinstruction
+                  -  Commercialcontract
+                  -  Foreignexchangedealreference
+                  -  Statementofaccount
+                  -  Dispatchadvice
+                  -  Purchaseorder
+                  -  Billoflading
+                  -  Voucher
+                  -  Accountreceivableopenitem
+                  -  Cashierreceipt
+                  -  Customerreceipt
+                  -  Journal
+                  -  Salereceipt
+              format: Document
+          DocumentStatus:
+              $ref: '#/components/schemas/Status'
+          DocumentDateTime:
+              $ref: '#/components/schemas/Datetime'
+          DocumentName:
+              $ref: '#/components/schemas/Name'
+          DocumentDateTimeType:
+              enum:
+                  -  CreationDate
+                  -  CapturingDate
+                  -  VersionDate
+                  -  ValueDate
+                  -  IssueDate
+              format: Document
+          DocumentPurpose:
+              $ref: '#/components/schemas/Text'
+          DocumentFormat:
+              $ref: '#/components/schemas/Text'
+          DocumentSubject:
+              $ref: '#/components/schemas/Text'
+          DocumentDescription:
+              $ref: '#/components/schemas/Text'
+          DocumentValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          Document:
+              type: string
+              format: Class
+              description: >-
+                Something tangible that records something, such as a recording
+                or a photograph, or a writing that can be used to furnish
+                evidence or information (FIBO)
+
+
+                Definition: A physical or digital representation of something
+                meaningful to the audience.
+
+
+                Comment: 
+
+                1.Technical: Manuals, instructions, tutorials, procedures,
+                specifications, etc., that accompany a piece of equipment or
+                software, and provide guidance for its proper use and
+                maintenance.
+
+                2.Trading: Preparation of a set of commercial and financial
+                documents that record or support a business transaction.
+                International trade documentations include air waybill, bill of
+                exchange, bill of lading, certificate of inspection, certificate
+                of insurance, certificate of origin, commercial invoice, and
+                consular invoice.
+
+
+
+                Read more:
+                http://www.businessdictionary.com/definition/documentation.html#ixzz3EQGRGC4W
+                 
+    Identifier:
+        type: object
+        format: Identifier
+        description: >-
+          An identifier that allows to uniquely refer to an instance of a
+          Document. 
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+          Identifier:
+              type: string
+              format: DataType
+              description: >-
+                An identifier is a character string used to uniquely identify
+                one instance of an object within an identification scheme that
+                is managed by an agency. (UN/CEFAT) 
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Involvedparty:
+        type: object
+        format: Involvedparty
+        description: >-
+          Party who plays a  specific role in the context of assigning a
+          status. 
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+          Involvedparty:
+              type: string
+              format: DataType
+              description: 'Party who plays a specific role  '
+    Party:
+        type: object
+        format: Party
+        description: ' '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+          PartyType:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Party
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+          PartyLegalStructureType:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Party
+    Name:
+        type: object
+        format: Name
+        description: ' '
+        properties:
+          Name:
+              type: string
+              format: DataType
+              description: >-
+                A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+        type: object
+        format: Partyidentification
+        description: ' '
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentification
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+          Partyidentification:
+              type: string
+              format: DataType
+              description: ''
+    Partyrole:
+        type: object
+        format: Partyrole
+        description: ' '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyrole
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: ' '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+          Datetimeperiod:
+              type: string
+              format: DataType
+              description: >-
+                Time span defined by a start date and time, and an end date and
+                time. (ISO20022) 
+    Status:
+        type: object
+        format: Status
+        description: ' '
+        properties:
+          StatusReason:
+              $ref: '#/components/schemas/Text'
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          StatusInvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+          Status:
+              type: string
+              format: DataType
+              description: >-
+                A characteristic that describe the object by referring to a
+                state transition in its lifecycle. 
+    Requirement:
+        type: object
+        format: Requirement
+        description: ' '
+        properties:
+          RequirementType:
+              type: string
+              format: String
+              description: ''
+    Date:
+        type: object
+        format: Date
+        description: 'Date when the assessment expires. (ISO20022) '
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    CustomerEligibilityAssessment:
+        type: object
+        description: ''
+        properties:
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+          CustomerProductandServiceProfile:
+              $ref: '#/components/schemas/CustomerProductAndServiceProfile'
+          ProductandServiceType:
+              $ref: '#/components/schemas/Customerproductserviceprofiletypevalues'
+          CustomerProductandServiceTypeEligibility:
+              $ref: '#/components/schemas/Arrangement'
+          CustomerProductandServiceTypeUsage:
+              $ref: '#/components/schemas/ProductUsage'
+          Date:
+              $ref: '#/components/schemas/Date'
+    CustomerProductAndServiceProfile:
+        type: object
+        format: CustomerProductAndServiceProfile
+        description: "This is the is the eligibility profile including in-force product terms \r\n"
+        properties:
+          ProfileType:
+              $ref: '#/components/schemas/Customerproductserviceprofiletypevalues'
+          CustomerReference:
+              $ref: '#/components/schemas/Customerrelationship'
+          ProductReference:
+              $ref: '#/components/schemas/Bankingproduct'
+          ServiceReference:
+              $ref: '#/components/schemas/Service'
+    Customerrelationship:
+        type: object
+        format: Customerrelationship
+        description: ' '
+        properties:
+          CustomerRelationship:
+              type: string
+              format: Class
+              description: >-
+                A specific relationship between a specific Bank ( -  party acting
+                as a supplier of banking services) and one or more other
+                involved parties acting as (potential) consumers of banking
+                services as agreed in one or more banking product or service
+                offerings and/or agreements. 
+    Bankingproduct:
+        type: object
+        format: Bankingproduct
+        description: ' '
+        properties:
+          ProductIdentification:
+              $ref: '#/components/schemas/Productidentification'
+          ProductType:
+              enum:
+                  -  LoanProduct
+                  -  CurrentAccountProduct
+                  -  SavingAccountProduct
+                  -  BrokeredProduct
+                  -  TermDepositProduct
+              format: Bankingproduct
+          ProductLifecycleStatus:
+              $ref: '#/components/schemas/Productlifecyclestatus'
+          ProductPriority:
+              $ref: '#/components/schemas/Text'
+          ProductDescription:
+              $ref: '#/components/schemas/Text'
+          ProductVersion:
+              $ref: '#/components/schemas/Text'
+          ProductName:
+              $ref: '#/components/schemas/Name'
+    Productidentification:
+        type: object
+        format: Productidentification
+        description: 'The identifier of product e.g. ISIN Code. '
+        properties:
+          ProductIdentification:
+              $ref: '#/components/schemas/Identifier'
+          ProductIdentificationType:
+              enum:
+                  -  ISINCode
+                  -  PackageCode
+                  -  Buyersitemnumber
+                  -  EAN
+                  -  Harmonizedtariffcodename
+                  -  Manufacturersitemnumber
+                  -  Modelnumber
+                  -  Partnumber
+                  -  Quotacategory
+                  -  Stylenumber
+                  -  Suppliersitemnumber
+                  -  Universalproductcode
+              format: Productidentification
+    Productlifecyclestatus:
+        type: object
+        format: Productlifecyclestatus
+        description: >-
+          Refers to the lifecycle of a product (e.g., initiated, announced,
+          active, obsolete, withdrawn). 
+        properties:
+          ProductLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          ProductLifecycleStatusType:
+              enum:
+                  -  Initiated
+                  -  Announced
+                  -  Sold
+                  -  Obsolete
+                  -  Active
+              format: Productlifecyclestatus
+    Service:
+        type: object
+        format: Service
+        description: ' '
+        properties:
+          ServiceName:
+              $ref: '#/components/schemas/Name'
+          ServiceDescription:
+              $ref: '#/components/schemas/Text'
+          ServiceType:
+              enum:
+                  -  ITService
+                  -  AdministrativeService
+                  -  SystemService
+                  -  FinancialService
+                  -  InformationService
+                  -  BusinessService
+              format: Service
+          ServiceIdentification:
+              $ref: '#/components/schemas/Identifier'
+          ServiceLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          ServiceFeature:
+              $ref: '#/components/schemas/Feature'
+    Feature:
+        type: object
+        format: Feature
+        description: >-
+          A characteristic of service which refers 1) mainly to the function or
+          condition of service. 2) to non-functional features like quality and
+          security 
+        properties:
+          FeatureType:
+              $ref: '#/components/schemas/Text'
+          FeatureIdentification:
+              $ref: '#/components/schemas/Identifier'
+          FeatureName:
+              $ref: '#/components/schemas/Name'
+          FeatureLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          FeatureDescription:
+              $ref: '#/components/schemas/Text'
+    Arrangement:
+        type: object
+        format: Arrangement
+        description: >-
+          Defines if and under what terms a product/service is available to this
+          customer this detail is maintained by the service domain and
+          referenced by this evaluation ObligationObligation
+          (https://www.iso20022.org/standardsrepository/type/Obligation)StandardISO20022
+          BM ()
+        properties:
+          ArrangementAction:
+              $ref: '#/components/schemas/Action'
+          ArrangementStartDate:
+              $ref: '#/components/schemas/Datetime'
+          ArrangementEndDate:
+              $ref: '#/components/schemas/Datetime'
+          ArrangementStatus:
+              $ref: '#/components/schemas/Arrangementlifecyclestatus'
+          ArrangementSubjectMatter:
+              $ref: '#/components/schemas/Subject'
+          Arrangementtype:
+              enum:
+                  -  SweepArrangement
+                  -  WithdrawalArrangement
+                  -  DepositArrangement
+                  -  InterestArrangement
+                  -  FeeArrangement
+                  -  LienArrangement
+                  -  InformationArrangement
+                  -  PaymentArrangement
+                  -  EntitlementArrangement
+                  -  PeriodArrangement
+                  -  CollateralArrangement
+                  -  LimitArrangement
+                  -  AccessArrangement
+                  -  CardPaymentArrangement
+                  -  StandingOrderArrangement
+                  -  OverdraftArrangement
+                  -  RepaymentArrangement
+                  -  StatementArrangement
+                  -  CreditTransferArrangement
+                  -  ProductAndServiceArrangement
+                  -  FactoringArrangement
+                  -  RolloverArrangement
+                  -  RestructuringArrangement
+                  -  InsuranceArrangement
+                  -  CollectionArrangement
+                  -  UnderwritingArrangement
+                  -  TerminationArrangement
+                  -  MaturityArrangement
+              format: Arrangement
+    Action:
+        type: object
+        format: Action
+        description: ' '
+        properties:
+          ActionType:
+              enum:
+                  -  Initiate
+                  -  Execute
+                  -  Create
+                  -  Transfer
+                  -  Pay
+                  -  Deliver
+                  -  Apply
+                  -  Calculate
+              format: Action
+    Arrangementlifecyclestatus:
+        type: object
+        format: Arrangementlifecyclestatus
+        description: >-
+          A characteristic of arrangement which refers to the LifecycleStatus of
+          arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+          terminated, fulfilled, etc.) 
+        properties:
+          ArrangementLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          ArrangementLifecycleStatusType:
+              enum:
+                  -  Requested
+                  -  Proposed
+                  -  Offered
+                  -  Accepted
+                  -  Cancelled
+                  -  Fulfilled
+                  -  Terminated
+              format: Arrangementlifecyclestatus
+    Subject:
+        type: object
+        format: Subject
+        description: ' '
+        properties:
+          Subject:
+              type: string
+              format: Class
+              description: >-
+                A thing that is discussed or dealt whit in agreement/arrangement
+                about doing or not doing (as action) something. 
+    ProductUsage:
+        type: object
+        format: ProductUsage
+        description: "Records the sold/in-force status of a product/service with the customer. Again this detail is maintained by the service domain and referenced by this evaluation \r\n"
+        properties:
+          ProductUsageDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ProductUsageVolume:
+              $ref: '#/components/schemas/Text'
+          ProductUsageIndicator:
+              $ref: '#/components/schemas/Yesnoindicator'
+    Yesnoindicator:
+        type: object
+        format: Yesnoindicator
+        description: >-
+          An indicator specifying if the whether the customer has bought  the
+          banking product or not.  
+        properties:
+          Yesnoindicator:
+              type: string
+              format: DataType
+              description: >-
+                Indicates a "Yes" or "No" type of answer for an element.
+                (ISO20022)
+
+                true: Yes
+
+                false: No 

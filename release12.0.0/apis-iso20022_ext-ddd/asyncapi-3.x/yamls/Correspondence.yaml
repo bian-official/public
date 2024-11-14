@@ -1,0 +1,286 @@
+asyncapi: 2.6.0
+info:
+  title: Correspondence
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    orchestrates the production of pre-formatted correspondence and batches of
+    correspondence (e.g. mail shots).
+  version: 12.0.3
+channels:
+  CorrespondenceOperatingSession/Created:
+      description: ''
+      publish:
+        operationId: CorrespondenceOperatingSession-created
+        summary: CorrespondenceOperatingSession
+        message:
+          $ref: '#/components/messages/CorrespondenceOperatingSession'
+  CorrespondenceOperatingSession/Updated:
+      description: ''
+      publish:
+        operationId: CorrespondenceOperatingSession-updated
+        summary: CorrespondenceOperatingSession
+        message:
+          $ref: '#/components/messages/CorrespondenceOperatingSession'
+  OutboundWithResponse/Created:
+      description: ''
+      publish:
+        summary: OutboundWithResponse
+        message:
+          $ref: '#/components/messages/OutboundWithResponse'
+  OutboundWithResponse/Updated:
+      description: ''
+      publish:
+        summary: OutboundWithResponse
+        message:
+          $ref: '#/components/messages/OutboundWithResponse'
+  Outbound/Created:
+      description: ''
+      publish:
+        summary: Outbound
+        message:
+          $ref: '#/components/messages/Outbound'
+  Outbound/Updated:
+      description: ''
+      publish:
+        summary: Outbound
+        message:
+          $ref: '#/components/messages/Outbound'
+  Inbound/Created:
+      description: ''
+      publish:
+        summary: Inbound
+        message:
+          $ref: '#/components/messages/Inbound'
+  Inbound/Updated:
+      description: ''
+      publish:
+        summary: Inbound
+        message:
+          $ref: '#/components/messages/Inbound'
+  BlockMailing/Created:
+      description: ''
+      publish:
+        summary: BlockMailing
+        message:
+          $ref: '#/components/messages/BlockMailing'
+  BlockMailing/Updated:
+      description: ''
+      publish:
+        summary: BlockMailing
+        message:
+          $ref: '#/components/messages/BlockMailing'
+components:
+  messages:
+    CorrespondenceOperatingSession:
+        name: CorrespondenceOperatingSession
+        description: >-
+          Operate equipment and/or a largely automated facility within
+          Correspondence. 
+        payload:
+          $ref: '#/components/schemas/CorrespondenceOperatingSession'
+    OutboundWithResponse:
+        name: OutboundWithResponse
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/OutboundWithResponse'
+    Outbound:
+        name: Outbound
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Outbound'
+    Inbound:
+        name: Inbound
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Inbound'
+    BlockMailing:
+        name: BlockMailing
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/BlockMailing'
+  schemas:
+    OutboundWithResponse:
+        type: object
+        description: ''
+        properties:
+          ResponseDueDate:
+              $ref: '#/components/schemas/Date'
+          ResponseCorrespondenceReference:
+              type: string
+              format: Object
+              description: "Reference to the inbound correspondence received that has been matched to the outbound message \r\n"
+          ResponseCorrespondenceRecord:
+              type: string
+              format: String
+              description: "Content of the inbound correspondence \r\n"
+    Date:
+        type: object
+        format: Date
+        description: >-
+          Date when the response expected. This can result in chasing activities
+          and notification to the sending unit ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    Outbound:
+        type: object
+        description: ''
+        properties:
+          CorrespondenceSourceReference:
+              type: string
+              format: Object
+              description: "Internal source reference to the correspondence item passed for delivery (can be used to match responses) \r\n"
+          CorrespondenceRecord:
+              type: string
+              format: String
+              description: "The correspondence message \r\n"
+          CorrespondenceType:
+              type: string
+              format: String
+              description: "The type of correspondence (e.g. confirmation note, mail shot) \r\n"
+          CorrespondenceTemplateReference:
+              type: string
+              format: Object
+              description: "Reference to a template used to assemble standard format correspondence (can be supplied with the correspondence or maintained within the Correspondence service domain as appropriate) \r\n"
+          CorrespondenceTemplateRecord:
+              type: string
+              format: String
+              description: "The template definition used in correspondence assembly \r\n"
+          CorrespondenceContent:
+              type: string
+              format: String
+              description: "The message content (aligned to template as appropriate) \r\n"
+          CorrespondenceMediaChannel:
+              type: string
+              format: String
+              description: "Identifies the preferred media and channel for delivery of the message \r\n"
+          CorrespondenceAddressee:
+              type: string
+              format: String
+              description: "The address for message delivery (needs to match channel selection) \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "If addressee is identified as a customer with channel preferences for correspondence \r\n"
+          ChannelAccessPreferenceReference:
+              type: string
+              format: Object
+              description: "??? \r\n"
+          ChannelAccessPreferenceProfile:
+              type: string
+              format: String
+              description: "The channel usage profile applied for the correspondence \r\n"
+          ChannelAccessChannelDeviceType:
+              type: string
+              format: String
+              description: "The target device defines the format to be used (e.g. email) \r\n"
+          ChannelAccessChannelDeviceTypePreference:
+              type: string
+              format: String
+              description: "A description of the customer's delivery preferences applied to the message (e.g. no paper correspondence, stuffing and batching allowed) \r\n"
+          ProductandServiceType:
+              type: string
+              format: String
+              description: "The associated product/service if applicable \r\n"
+          EmployeeBusinessUnitReference:
+              type: string
+              format: Object
+              description: "The sending entity within the bank (can be used for responses) \r\n"
+          DateType:
+              type: string
+              format: String
+              description: "Key dates used for tracking delivery (e.g. generation date, mailing date, receipt confirmation date, re-send date) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "The value of the date and time \r\n"
+    Inbound:
+        type: object
+        description: ''
+        properties:
+          InboundCorrespondenceInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the inbound correspondence item \r\n"
+          InboundCorrespondenceRecord:
+              type: string
+              format: String
+              description: "The inbound correspondence message \r\n"
+          InboundCorrespondenceType(e.g.unsolicitedmessage_productservicerelated_complaint):
+              type: string
+              format: String
+              description: "The interpreted type of correspondence (e.g. unsolicited message, product/service related, complaint) \r\n"
+          InboundCorrespondenceContent:
+              type: string
+              format: String
+              description: "The inbound message content in whatever format appropriate \r\n"
+          InboundCorrespondenceAddressee:
+              type: string
+              format: String
+              description: "The identified source of inbound message (extracted from the content) \r\n"
+          InboundCorrespondenceCustomerReference:
+              type: string
+              format: Object
+              description: "Matched bank customer (from reference details extracted from the content where possible) \r\n"
+          InboundCorrespondenceEmployeeBusinessUnitReference:
+              type: string
+              format: Object
+              description: "Identified internal addressee (from reference details extracted from the content where possible) \r\n"
+          DateType:
+              type: string
+              format: String
+              description: "Key dates used for tracking internal delivery (e.g. receipt date, internal distribution, receipt confirmation date, re-route date) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "The value of the date and time \r\n"
+    BlockMailing:
+        type: object
+        description: ''
+        properties:
+          BlockmailingRecord:
+              type: string
+              format: String
+              description: "Used to track receipt and return of the individual messages making up the block mail \r\n"
+    CorrespondenceOperatingSession:
+        type: object
+        description: ''
+        properties:
+          CorrespondenceServiceSessionStatistics:
+              type: string
+              format: String
+              description: "Service activity statistics that are maintained during the session \r\n"
+          CorrespondenceServiceSessionReportType:
+              type: string
+              format: String
+              description: "Session reports that can be accessed during the session (e.g. real-time status, session statistics) \r\n"
+          CorrespondenceServiceSessionReport:
+              type: string
+              format: String
+              description: "The session activity report \r\n"
+          CorrespondenceServiceSessionDate:
+              $ref: '#/components/schemas/Date'

@@ -1,0 +1,597 @@
+asyncapi: 2.6.0
+info:
+  title: Credit Facility
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Credit Facility
+    Service Domain manages the Credit Facilities that a Corporate Customer has
+    with the bank. A Credit Facility is an agreement between the bank and a
+    (corporate) customer to allow the customer to acquire asset products from
+    the bank up to the limit of the credit facility without the need for a full
+    due diligence and underwriting for each of these products.
+  version: 12.0.3
+channels:
+  CreditLineFacility/Created:
+      description: ''
+      publish:
+        operationId: CreditLineFacility-created
+        summary: CreditLineFacility
+        message:
+          $ref: '#/components/messages/CreditLineFacility'
+  CreditLineFacility/Updated:
+      description: ''
+      publish:
+        operationId: CreditLineFacility-updated
+        summary: CreditLineFacility
+        message:
+          $ref: '#/components/messages/CreditLineFacility'
+  Repayment/Created:
+      description: ''
+      publish:
+        summary: Repayment
+        message:
+          $ref: '#/components/messages/Repayment'
+  Repayment/Updated:
+      description: ''
+      publish:
+        summary: Repayment
+        message:
+          $ref: '#/components/messages/Repayment'
+  ServiceFees/Created:
+      description: ''
+      publish:
+        summary: ServiceFees
+        message:
+          $ref: '#/components/messages/ServiceFees'
+  ServiceFees/Updated:
+      description: ''
+      publish:
+        summary: ServiceFees
+        message:
+          $ref: '#/components/messages/ServiceFees'
+  Maintenance/Created:
+      description: ''
+      publish:
+        summary: Maintenance
+        message:
+          $ref: '#/components/messages/Maintenance'
+  Maintenance/Updated:
+      description: ''
+      publish:
+        summary: Maintenance
+        message:
+          $ref: '#/components/messages/Maintenance'
+  Interest/Created:
+      description: ''
+      publish:
+        summary: Interest
+        message:
+          $ref: '#/components/messages/Interest'
+  Interest/Updated:
+      description: ''
+      publish:
+        summary: Interest
+        message:
+          $ref: '#/components/messages/Interest'
+components:
+  messages:
+    CreditLineFacility:
+        name: CreditLineFacility
+        description: >-
+          Fulfill any scheduled and ad-hoc obligations under a service
+          arrangement, most typically for a financial product or facility within
+          Credit Facility. 
+        payload:
+          $ref: '#/components/schemas/CreditLineFacility'
+    Repayment:
+        name: Repayment
+        description: The product features/services available with a financical facility
+        payload:
+          $ref: '#/components/schemas/Repayment'
+    ServiceFees:
+        name: ServiceFees
+        description: The product features/services available with a financical facility
+        payload:
+          $ref: '#/components/schemas/ServiceFees'
+    Maintenance:
+        name: Maintenance
+        description: The product features/services available with a financical facility
+        payload:
+          $ref: '#/components/schemas/Maintenance'
+    Interest:
+        name: Interest
+        description: The product features/services available with a financical facility
+        payload:
+          $ref: '#/components/schemas/Interest'
+  schemas:
+    Repayment:
+        type: object
+        description: ''
+        properties:
+          RepaymentTransactionType:
+              type: string
+              format: String
+              description: "The type of repayment (e.g. scheduled repayment, balloon/early termination) \r\n"
+          RepaymentTransactionPayerReference:
+              type: string
+              format: Object
+              description: "Reference to the payer \r\n"
+          RepaymentTransactionPayerProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the account where the payment is made from \r\n"
+          RepaymentTransactionPayerBankReference:
+              type: string
+              format: Object
+              description: "Reference to the payer's bank \r\n"
+          RepaymentTransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          RepaymentTransactionCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          RepaymentTransactionValueDate:
+              $ref: '#/components/schemas/Date'
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          The amount of the repayment CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: >-
+          The currency used for the repayment CurrencyCodeCurrencyCode
+          (https://www.iso20022.org/standardsrepository/type/CurrencyCode)StandardISO20022
+          BM ()
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    Date:
+        type: object
+        format: Date
+        description: >-
+          The value date for the repayment transaction ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    ServiceFees:
+        type: object
+        description: ''
+        properties:
+          FeeConfigurationProfile:
+              type: string
+              format: String
+              description: "The profile of applicable fees and penalties \r\n"
+          FeeType:
+              type: string
+              format: String
+              description: "The fee or penalty type applied \r\n"
+          FeeDefinition:
+              type: string
+              format: String
+              description: "Definition of the fee or penalty including when and how to apply \r\n"
+          FeeApplicationRecord:
+              type: string
+              format: String
+              description: "The record of applied fees and penalties including transactions and accrued amounts \r\n"
+          FeeTransaction:
+              type: string
+              format: String
+              description: "A record of an applied fee or penalty \r\n"
+          TransactionDescription:
+              type: string
+              format: String
+              description: "General description of the fee or penalty transaction \r\n"
+          TransactionFeeType:
+              type: string
+              format: String
+              description: "The fee or penalty type applied \r\n"
+          TransactionFeeCharge:
+              type: string
+              format: String
+              description: "The derived fee or penalty amount applied \r\n"
+          FeeProjectionsandCommitments:
+              type: string
+              format: String
+              description: "A record of projected fees and penalties \r\n"
+          ProjectedTransactionDescription:
+              type: string
+              format: String
+              description: "General description of the projected fee or penalty \r\n"
+          ProjectedTransactionFeeType:
+              type: string
+              format: String
+              description: "The fee or penalty type \r\n"
+          ProjectedTransactionFeeCharge:
+              type: string
+              format: String
+              description: "The anticipated fee or penalty amount \r\n"
+          FeeAccrualAmount:
+              $ref: '#/components/schemas/Amount'
+          AccrualFeeType:
+              type: string
+              format: String
+              description: "The fee or penalty type being tracked \r\n"
+          AccrualFeeCharge:
+              type: string
+              format: String
+              description: "The accrued amount of fees and penalties \r\n"
+    Maintenance:
+        type: object
+        description: ''
+        properties:
+          MaintenanceReportType:
+              type: string
+              format: String
+              description: "The type of maintenance action and report processed (e.g. tax, regulatory, accounting) \r\n"
+          CreditFacilityTaxReport:
+              type: string
+              format: String
+              description: "A report summarizing tax considerations \r\n"
+          CreditFacilityFeeType:
+              type: string
+              format: String
+              description: "The type of fee applied \r\n"
+          CreditFacilityFees:
+              type: string
+              format: String
+              description: "A report detailing fees applied to the loan account (range of fees possible for different actions) \r\n"
+          CreditFacilityPenalties:
+              type: string
+              format: String
+              description: "A report detailing penalties incurred as booked against loan account \r\n"
+          CreditFacilityCollateralValuation:
+              type: string
+              format: String
+              description: "A report detailing the current applied collateral valuation (value confirmed as of date) \r\n"
+    Interest:
+        type: object
+        description: ''
+        properties:
+          InterestRateType:
+              type: string
+              format: String
+              description: "Applicable rate type \r\n"
+          InterestRateApplicationSchedule:
+              $ref: '#/components/schemas/Rate'
+          InterestRateConfiguration:
+              $ref: '#/components/schemas/Rate'
+          InterestRate:
+              $ref: '#/components/schemas/Rate'
+          InterestApplicationRecord:
+              type: string
+              format: String
+              description: "The record of applied interest \r\n"
+          InterestTransaction:
+              type: string
+              format: String
+              description: "A record of applied interest \r\n"
+          TransactionDescription:
+              type: string
+              format: String
+              description: "General description of the interest transaction \r\n"
+          TransactionRateType:
+              type: string
+              format: String
+              description: "Applicable rate type \r\n"
+          TransactionInterestCharge:
+              type: string
+              format: String
+              description: "The derived interest amount to be applied \r\n"
+          InterestAccrualAmount:
+              $ref: '#/components/schemas/Amount'
+          InterestAccrualType:
+              type: string
+              format: String
+              description: "The interest type being tracked \r\n"
+          InterestAccrualCharge:
+              type: string
+              format: String
+              description: "The accrued amount of applied interest \r\n"
+    Rate:
+        type: object
+        format: Rate
+        description: >-
+          The interest rate value to be applied (note could be variable)
+          PercentageRatePercentageRate
+          (https://www.iso20022.org/standardsrepository/type/PercentageRate)StandardISO20022
+          BM ()
+        properties:
+          RateValue:
+              $ref: '#/components/schemas/Value'
+          RateUnit:
+              $ref: '#/components/schemas/Text'
+          RatePeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          RateCapitalUnit:
+              $ref: '#/components/schemas/Text'
+    Text:
+        type: object
+        format: Text
+        description: ' '
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: ' '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+    Datetime:
+        type: object
+        format: Datetime
+        description: 'Date and time at which the range ends. (ISO20022) '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    CreditLineFacility:
+        type: object
+        description: ''
+        properties:
+          ProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the credit facility product instance \r\n"
+          CreditFacilityNumber:
+              type: string
+              format: String
+              description: "The associated credit facility account number in any suitable format \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the account primary party/owner \r\n"
+          PartyReference:
+              type: string
+              format: Object
+              description: "The legal entity reference for the borrower, likely to be the same as the corporate customer \r\n"
+          CustomerAgreementReference:
+              type: string
+              format: Object
+              description: "Reference to the associated customer agreement \r\n"
+          CustomerCreditAssessmentReference:
+              type: string
+              format: Object
+              description: "Reference to an associated credit assessment \r\n"
+          InsuranceReference:
+              type: string
+              format: Object
+              description: "Reference to applicable insurance arrangements \r\n"
+          DelinquencyCollectionReference:
+              type: string
+              format: Object
+              description: "Reference to collections/delinquency processing made against the credit facility \r\n"
+          BankBranchLocationReference:
+              type: string
+              format: Object
+              description: "Bank branch associated with the facility for booking purposes \r\n"
+          BankAccountingUnitReference:
+              type: string
+              format: Object
+              description: "Bank accounting unit associated with the facility for booking purposes \r\n"
+          CreditFacilityType:
+              type: string
+              format: String
+              description: "The specific type of credit facility (e.g. term, revolving, letter of credit, retail) \r\n"
+          CreditFacilityAmount:
+              $ref: '#/components/schemas/Amount'
+          CreditFacilityCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          CreditFacilityRateType:
+              type: string
+              format: String
+              description: "The rate type to be applied to the credit facility \r\n"
+          CreditFacilityApplicableRate:
+              $ref: '#/components/schemas/Rate'
+          RepaymentType:
+              type: string
+              format: String
+              description: "The type of repayment arrangement in place (e.g. structured, revolving) \r\n"
+          InterestType:
+              type: string
+              format: String
+              description: "The type of interest to be applied (e.g. prime plus) \r\n"
+          InterestAccrualMethod:
+              type: string
+              format: String
+              description: "The accrual method applied to interest calculations \r\n"
+          CreditFacilityOriginationDate:
+              $ref: '#/components/schemas/Date'
+          CreditFacilityMaturityDate:
+              $ref: '#/components/schemas/Date'
+          CollateralReference:
+              type: string
+              format: Object
+              description: "Reference to allocated collateral \r\n"
+          CollateralAllocation:
+              type: string
+              format: String
+              description: "The collateral value applied to the credit facility loan \r\n"
+          TaxReference:
+              type: string
+              format: Object
+              description: "Reference identifier linking the account to appropriate tax handling \r\n"
+          CreditFacilityAccessTerms:
+              type: string
+              format: String
+              description: "Access terms that apply (e.g. allowed drawdown terms, repayment) \r\n"
+          CreditFacilityUnderlyingDrawdown:
+              type: string
+              format: String
+              description: "Details the one or more underlying loans made against the facility \r\n"
+          DrawdownReference:
+              type: string
+              format: Object
+              description: "Reference to the underlying loan \r\n"
+          DrawdownRecord:
+              type: string
+              format: String
+              description: "Record of the underlying loan details \r\n"
+          DrawdownLoanTransaction:
+              type: string
+              format: String
+              description: "The underlying loan transaction details \r\n"
+          EntitlementOptionDefinition:
+              type: string
+              format: String
+              description: "The definition of an applicable entitlement option \r\n"
+          EntitlementOptionSetting:
+              type: string
+              format: String
+              description: "The setting for the entitlement option \r\n"
+          RestrictionOptionDefinition:
+              type: string
+              format: String
+              description: "The definition of an applicable restriction option \r\n"
+          RestrictionOptionSetting:
+              type: string
+              format: String
+              description: "The setting for the restriction option \r\n"
+          Associations:
+              type: string
+              format: String
+              description: "Definition of the involved parties or associations to the facility \r\n"
+          AssociationType:
+              type: string
+              format: String
+              description: "The type of association (e.g. guarantor, co-signer) \r\n"
+          AssociationObligationEntitlement:
+              type: string
+              format: String
+              description: "Description of the role, obligations or entitlements of the associated party \r\n"
+          AssociationReference:
+              type: string
+              format: Object
+              description: "Reference to the associated party \r\n"
+          CreditFacilityRepaymentSchedule:
+              type: string
+              format: String
+              description: "The schedule for repayments \r\n"
+          StagedRepaymentStatement:
+              type: string
+              format: String
+              description: "A statement maintained tracking repayments \r\n"
+          CustomerCommentary:
+              type: string
+              format: String
+              description: "A record of customer correspondence/feedback \r\n"
+          CreditFacilityOutstandingBalance:
+              type: string
+              format: String
+              description: "The outstanding balance available for the credit facility \r\n"
+          DateType:
+              type: string
+              format: String
+              description: "Key dates associated with the account (e.g. opening date, closing date) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "Value of the date type \r\n"

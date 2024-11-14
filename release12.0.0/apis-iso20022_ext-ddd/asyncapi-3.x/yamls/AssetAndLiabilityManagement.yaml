@@ -1,0 +1,213 @@
+asyncapi: 2.6.0
+info:
+  title: Asset And Liability Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The unit overseeing the 
+    banks asset & liability policies and position
+  version: 12.0.3
+channels:
+  AssetAndLiabilityPortfolioStrategy/Created:
+      description: ''
+      publish:
+        operationId: AssetAndLiabilityPortfolioStrategy-created
+        summary: AssetAndLiabilityPortfolioStrategy
+        message:
+          $ref: '#/components/messages/AssetAndLiabilityPortfolioStrategy'
+  AssetAndLiabilityPortfolioStrategy/Updated:
+      description: ''
+      publish:
+        operationId: AssetAndLiabilityPortfolioStrategy-updated
+        summary: AssetAndLiabilityPortfolioStrategy
+        message:
+          $ref: '#/components/messages/AssetAndLiabilityPortfolioStrategy'
+  TransactionAlignment/Created:
+      description: ''
+      publish:
+        summary: TransactionAlignment
+        message:
+          $ref: '#/components/messages/TransactionAlignment'
+  TransactionAlignment/Updated:
+      description: ''
+      publish:
+        summary: TransactionAlignment
+        message:
+          $ref: '#/components/messages/TransactionAlignment'
+components:
+  messages:
+    AssetAndLiabilityPortfolioStrategy:
+        name: AssetAndLiabilityPortfolioStrategy
+        description: >-
+          Define the policies, goals & objectives and strategies for an
+          organizational entity or unit  within Asset And Liability Management. 
+
+          Example: Direct a division of the enterprise.
+        payload:
+          $ref: '#/components/schemas/AssetAndLiabilityPortfolioStrategy'
+    TransactionAlignment:
+        name: TransactionAlignment
+        description: >-
+          A collection of goals and objectives for the enterprise and its main
+          divisions
+
+
+          Example: Increase marketshare
+        payload:
+          $ref: '#/components/schemas/TransactionAlignment'
+  schemas:
+    TransactionAlignment:
+        type: object
+        description: ''
+        properties:
+          BusinessUnitReference:
+              type: string
+              format: Object
+              description: "Business unit responsible for proposing the major transaction \r\n"
+          ProposedTransactionOriginatorReference:
+              type: string
+              format: Object
+              description: "Identifies the source or originator of the transaction \r\n"
+          ProposedTransactionType:
+              type: string
+              format: String
+              description: "The type of financial transaction (e.g. project finance, acquisition) \r\n"
+          ProposedTransactionDescription:
+              type: string
+              format: String
+              description: "Any necessary details describing the purpose or reference properties of the transaction \r\n"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          ProposedTransactionRiskAssessment:
+              type: string
+              format: String
+              description: "An analysis of the financial risks associated with the transaction (e.g. market scenario based impact on P&L) \r\n"
+          DocumentDirectoryEntryInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to associated documents \r\n"
+          CorrespondenceInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the correspondence generated for the transaction \r\n"
+          DateType:
+              type: string
+              format: String
+              description: "Key dates and times associated with the financial transaction (e.g. proposal, decision by/expiry) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "Value of the date type \r\n"
+          AssetAndLiabilityAlignmentAssessment:
+              type: string
+              format: String
+              description: "The decision as to whether the transaction is approved within policy including any required changes as may be needed to comply \r\n"
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          The overall volume or value of the transaction included projected cash
+          flows over the intended duration CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    AssetAndLiabilityPortfolioStrategy:
+        type: object
+        description: ''
+        properties:
+          AssetAndLiabilityBalanceSheet:
+              type: string
+              format: String
+              description: "The consolidated book of the bank's loans and deposits \r\n"
+          AssetAndLiabilityMaturityLadder:
+              type: string
+              format: String
+              description: "An analysis of expected cash flows related to the book of business (used for long and short term liquidity management) \r\n"
+          AssetAndLiabilityCapitalAllocation:
+              type: string
+              format: String
+              description: "An analysis of available bank capital covering the required allocations \r\n"
+          AssetAndLiabilityPolicyGoalRecord:
+              type: string
+              format: String
+              description: "The policy formulation and assessment of the bank's book of business for a specific perspective/policy type \r\n"
+          AssetAndLiabilityPolicyType:
+              type: string
+              format: String
+              description: "The type of policy or goal applied to the book of business (e.g. Credit, Segment, Geopolitical, Instrument, Currency) can be referred to as a dimension of the book of business \r\n"
+          AssetAndLiabilityPolicyTypeDefinition:
+              type: string
+              format: String
+              description: "A definition of how the policy type is defined and goals and assessments applied \r\n"
+          AssetAndLiabilityPolicyTypeGoals:
+              type: string
+              format: String
+              description: "Defines the target thresholds for the bank's asset and liability position for the specific dimension. These can be adjusted to influence transaction activity to remain within the bank's intended asset and liability risk profile \r\n"
+          AssetAndLiabilityPolicyTypePosition:
+              type: string
+              format: String
+              description: "A consolidated assessment of the bank's current and projected position for the policy type dimension \r\n"
+          AssetAndLiabilityPolicyTypeSensitivityAssessment:
+              type: string
+              format: String
+              description: "A range of sensitivity assessments that project the bank's position for different market scenarios \r\n"

@@ -1,0 +1,224 @@
+asyncapi: 2.6.0
+info:
+  title: Branch Currency Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Track cash inventory,
+    project demand and ensure all cash is accounted for within the branch
+  version: 12.0.3
+channels:
+  BranchCashAllocation/Created:
+      description: ''
+      publish:
+        operationId: BranchCashAllocation-created
+        summary: BranchCashAllocation
+        message:
+          $ref: '#/components/messages/BranchCashAllocation'
+  BranchCashAllocation/Updated:
+      description: ''
+      publish:
+        operationId: BranchCashAllocation-updated
+        summary: BranchCashAllocation
+        message:
+          $ref: '#/components/messages/BranchCashAllocation'
+  BranchCurrencyManagementOutcome/Created:
+      description: ''
+      publish:
+        summary: BranchCurrencyManagementOutcome
+        message:
+          $ref: '#/components/messages/BranchCurrencyManagementOutcome'
+  BranchCurrencyManagementOutcome/Updated:
+      description: ''
+      publish:
+        summary: BranchCurrencyManagementOutcome
+        message:
+          $ref: '#/components/messages/BranchCurrencyManagementOutcome'
+  InventoryAllocation/Created:
+      description: ''
+      publish:
+        summary: InventoryAllocation
+        message:
+          $ref: '#/components/messages/InventoryAllocation'
+  InventoryAllocation/Updated:
+      description: ''
+      publish:
+        summary: InventoryAllocation
+        message:
+          $ref: '#/components/messages/InventoryAllocation'
+components:
+  messages:
+    BranchCashAllocation:
+        name: BranchCashAllocation
+        description: >-
+          Maintain an inventory or holding of some resource and make
+          assignments/allocations as requested  within Branch Currency
+          Management. 
+
+          Example: Track the inventory and administer the distribution of
+          central cash holdings throughout the branch & ATM network.
+        payload:
+          $ref: '#/components/schemas/BranchCashAllocation'
+    BranchCurrencyManagementOutcome:
+        name: BranchCurrencyManagementOutcome
+        description: >-
+          Set of rules for the purpose of deciding if or if not something is
+          applicable
+
+
+          Examples:- Staff assignment, Facility allocation.
+        payload:
+          $ref: '#/components/schemas/BranchCurrencyManagementOutcome'
+    InventoryAllocation:
+        name: InventoryAllocation
+        description: >-
+          Set of rules for the purpose of deciding if or if not something is
+          applicable
+
+
+          Examples:- Staff assignment, Facility allocation.
+        payload:
+          $ref: '#/components/schemas/InventoryAllocation'
+  schemas:
+    BranchCurrencyManagementOutcome:
+        type: object
+        description: ''
+        properties:
+          BranchCurrencyManagementAllocation:
+              $ref: '#/components/schemas/Currencycode'
+          BranchCurrencyManagementWorkProduct:
+              $ref: '#/components/schemas/Currencycode'
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' CurrencyCodeCurrencyCode (https://www.iso20022.org/standardsrepository/type/CurrencyCode)StandardISO20022 BM ()'
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    InventoryAllocation:
+        type: object
+        description: ''
+        properties:
+          InventoryAllocationPreconditions:
+              type: string
+              format: String
+              description: "The required status/situation before the allocation can be made \r\n"
+          InventoryAllocationAllocationSchedule:
+              type: string
+              format: String
+              description: "The schedule and timing of allocation decisions \r\n"
+          CashInventoryAllocation:
+              $ref: '#/components/schemas/BusinessService'
+          CashInventoryAllocationServiceType:
+              type: string
+              format: String
+              description: "Reference to the specific business service type \r\n"
+          CashInventoryAllocationServiceDescription:
+              type: string
+              format: String
+              description: "Description of the performed business service \r\n"
+          CashInventoryAllocationServiceInputsandOuputs:
+              type: string
+              format: String
+              description: "Mandatory and optional inputs and output information for the business service \r\n"
+          CashInventoryAllocationServiceWorkProduct:
+              type: string
+              format: String
+              description: "Documentation, meeting schedules, notes, reasearch. calculations and any other work products produced by the business service \r\n"
+          CashInventoryAllocationServiceName:
+              type: string
+              format: String
+              description: ''
+    BusinessService:
+        type: object
+        format: BusinessService
+        description: "The Branch Cash Allocation specific  Business Service \r\n"
+        properties:
+          BusinessServiceType:
+              enum:
+                  -  Businessservicetypevalues
+              format: BusinessService
+    BranchCashAllocation:
+        type: object
+        description: ''
+        properties:
+          BranchCashAllocationParameterType:
+              type: string
+              format: String
+              description: "A Classification value that distinguishes between allocation Options according to the optional business services defined within Branch Cash Allocation \r\n"
+          BranchCashAllocationSelectedOption:
+              type: string
+              format: String
+              description: "A selected optional business service for which resources are allocated \r\n"
+          BranchCashAllocation<SubjectArea>Type:
+              type: string
+              format: String
+              description: "A Classification value, that distinguishes between the the type of resource allocated withing the Branch Cash Allocation \r\n"
+          BranchCashAllocationDescription:
+              type: string
+              format: String
+              description: "Documentation of Branch Cash Allocation \r\n"
+          BranchCashAllocationRequest:
+              type: string
+              format: String
+              description: "Request to allocate BranchCash \r\n"
+          BranchCashAllocationSchedule:
+              type: string
+              format: String
+              description: "Timetable to allocate BranchCash \r\n"
+          BranchCashAllocationStatus:
+              type: string
+              format: String
+              description: "The status of Branch Cash Allocation \r\n"
+          BranchCashAllocationReference:
+              type: string
+              format: Object
+              description: "Reference to the party who is involved in Branch Cash Allocation \r\n"
+          BranchCashAllocationCustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the customer who is involved in Branch Cash Allocation \r\n"
+          BranchCashAllocationCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          BranchCashAllocationRegulationReference:
+              type: string
+              format: Object
+              description: "Reference to the regulation which is defined for Branch Cash Allocation \r\n"
+          BranchCashAllocationRegulationType:
+              type: string
+              format: String
+              description: "A Classification that distinguishes between the regularity domains of Branch Cash Allocation \r\n"
+          BranchCashAllocationJurisdiction:
+              type: string
+              format: String
+              description: "Reference to the jurisdiction that is assigned to Branch Cash Allocation in case of legal dispute. \r\n"
+          BranchCashAllocationBookingLocation:
+              type: string
+              format: String
+              description: "The financial accounting unit into which the financial events, with regard to the origination and fulfillment of the agreement, are entered. \r\n"
+          BranchCashAllocationAccountType:
+              type: string
+              format: String
+              description: "The type of account which is linked to Branch Cash Allocation \r\n"
+          BranchCashAllocationAccountReference:
+              type: string
+              format: Object
+              description: "Reference to the account which is linked to Branch Cash Allocation \r\n"
+          BranchCashAllocationInstance:
+              type: string
+              format: String
+              description: "Reference to Branch Cash Allocation Instance \r\n"
