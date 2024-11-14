@@ -1,0 +1,964 @@
+asyncapi: 2.6.0
+info:
+  title: Stock Lending and Repos
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service Domain
+    supports the bank offering tri-party repo transactions made between its
+    customers to support their short term capital management requirements
+  version: 12.0.3
+channels:
+  RepoTransaction/Created:
+      description: ''
+      publish:
+        operationId: RepoTransaction-created
+        summary: RepoTransaction
+        message:
+          $ref: '#/components/messages/RepoTransaction'
+  RepoTransaction/Updated:
+      description: ''
+      publish:
+        operationId: RepoTransaction-updated
+        summary: RepoTransaction
+        message:
+          $ref: '#/components/messages/RepoTransaction'
+  RepoTransactionSecurityTransfer/Created:
+      description: ''
+      publish:
+        summary: RepoTransactionSecurityTransfer
+        message:
+          $ref: '#/components/messages/RepoTransactionSecurityTransfer'
+  RepoTransactionSecurityTransfer/Updated:
+      description: ''
+      publish:
+        summary: RepoTransactionSecurityTransfer
+        message:
+          $ref: '#/components/messages/RepoTransactionSecurityTransfer'
+  RepoTransactionInitiation/Created:
+      description: ''
+      publish:
+        summary: RepoTransactionInitiation
+        message:
+          $ref: '#/components/messages/RepoTransactionInitiation'
+  RepoTransactionInitiation/Updated:
+      description: ''
+      publish:
+        summary: RepoTransactionInitiation
+        message:
+          $ref: '#/components/messages/RepoTransactionInitiation'
+  RepoTransactionCashTransfer/Created:
+      description: ''
+      publish:
+        summary: RepoTransactionCashTransfer
+        message:
+          $ref: '#/components/messages/RepoTransactionCashTransfer'
+  RepoTransactionCashTransfer/Updated:
+      description: ''
+      publish:
+        summary: RepoTransactionCashTransfer
+        message:
+          $ref: '#/components/messages/RepoTransactionCashTransfer'
+  StockLendingandReposOutcome/Created:
+      description: ''
+      publish:
+        summary: StockLendingandReposOutcome
+        message:
+          $ref: '#/components/messages/StockLendingandReposOutcome'
+  StockLendingandReposOutcome/Updated:
+      description: ''
+      publish:
+        summary: StockLendingandReposOutcome
+        message:
+          $ref: '#/components/messages/StockLendingandReposOutcome'
+  RepoTransaction/Notify:
+      subscribe:
+        message:
+          $ref: '#/components/messages/RepoTransactionNotify'
+  RepoTransactionCashTransfer/Notify:
+      subscribe:
+        message:
+          $ref: '#/components/messages/RepoTransactionCashTransferNotify'
+  RepoTransactionInitiation/Notify:
+      subscribe:
+        message:
+          $ref: '#/components/messages/RepoTransactionInitiationNotify'
+  RepoTransactionSecurityTransfer/Notify:
+      subscribe:
+        message:
+          $ref: '#/components/messages/RepoTransactionSecurityTransferNotify'
+components:
+  messages:
+    RepoTransaction:
+        name: RepoTransaction
+        description: >-
+          Execute a well-bounded financial transaction/task, typically involving
+          largely automated/structured fulfillment processing within Stock
+          Lending and Repos. 
+        payload:
+          $ref: '#/components/schemas/RepoTransaction'
+    RepoTransactionSecurityTransfer:
+        name: RepoTransactionSecurityTransfer
+        description: >-
+          The Repo Transaction Security Transfer Task is a discrete action or
+          task that is required in the execution of the Repo Transaction
+          Security Transfer Task
+        payload:
+          $ref: '#/components/schemas/RepoTransactionSecurityTransfer'
+    RepoTransactionInitiation:
+        name: RepoTransactionInitiation
+        description: >-
+          The Repo Transaction Security Transfer Task is a discrete action or
+          task that is required in the execution of the Repo Transaction
+          Security Transfer Task
+        payload:
+          $ref: '#/components/schemas/RepoTransactionInitiation'
+    RepoTransactionCashTransfer:
+        name: RepoTransactionCashTransfer
+        description: >-
+          The Repo Transaction Security Transfer Task is a discrete action or
+          task that is required in the execution of the Repo Transaction
+          Security Transfer Task
+        payload:
+          $ref: '#/components/schemas/RepoTransactionCashTransfer'
+    StockLendingandReposOutcome:
+        name: StockLendingandReposOutcome
+        description: >-
+          The Repo Transaction Security Transfer Task is a discrete action or
+          task that is required in the execution of the Repo Transaction
+          Security Transfer Task
+        payload:
+          $ref: '#/components/schemas/StockLendingandReposOutcome'
+    RepoTransactionNotify:
+        name: RepoTransactionNotify
+        payload:
+          $ref: '#/components/schemas/RepoTransactionNotify'
+    RepoTransactionCashTransferNotify:
+        name: RepoTransactionCashTransferNotify
+        payload:
+          $ref: '#/components/schemas/RepoTransactionCashTransferNotify'
+    RepoTransactionInitiationNotify:
+        name: RepoTransactionInitiationNotify
+        payload:
+          $ref: '#/components/schemas/RepoTransactionInitiationNotify'
+    RepoTransactionSecurityTransferNotify:
+        name: RepoTransactionSecurityTransferNotify
+        payload:
+          $ref: '#/components/schemas/RepoTransactionSecurityTransferNotify'
+  schemas:
+    RepoTransactionSecurityTransfer:
+        type: object
+        description: ''
+        properties:
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          RepoTransactionReference:
+              $ref: '#/components/schemas/Transaction'
+          RepoTransactionSecurityTransferTaskReference:
+              $ref: '#/components/schemas/Task'
+          RepoTransactionSecurityTransferTaskType:
+              $ref: '#/components/schemas/Text'
+    Condition:
+        type: object
+        format: Condition
+        description: "The completion status and any triggered/dependent actions once the task has been completed \r\n"
+        properties:
+          Condition:
+              type: string
+              format: Class
+              description: >-
+                Condition is a premise upon which the fulfillment of an
+                agreement depends 
+
+
+                General and special arrangements, provisions, requirements,
+                rules, specifications, and standards that form an integral part
+                of an agreement or contract.
+
+
+                Read more:
+                http://www.businessdictionary.com/definition/terms-and-conditions.html
+
+                 
+    Schedule:
+        type: object
+        format: Schedule
+        description: "The timing and key actions/milestones involved in completing the transaction task \r\n"
+        properties:
+          ScheduleType:
+              type: string
+              format: String
+              description: ''
+    BusinessService:
+        type: object
+        format: BusinessService
+        description: "The Repo Transaction Security Transfer Task specific Business Service \r\n"
+        properties:
+          BusinessServiceType:
+              enum:
+                  -  Businessservicetypevalues
+              format: BusinessService
+    Transaction:
+        type: object
+        format: Transaction
+        description: "Reference to Repo Transaction Security Transfer Task \r\n"
+        properties:
+          TransactionIdentification:
+              $ref: '#/components/schemas/Identifier'
+          TransactionDate:
+              $ref: '#/components/schemas/Transactiondate'
+          TransactionType:
+              enum:
+                  -  FinancialTransaction
+                  -  BusinessTransaction
+                  -  BankingTransaction
+                  -  AccountingTransaction
+                  -  BookingTransaction
+                  -  AllocationTransaction
+                  -  DeliveryTransaction
+                  -  ProductionTransaction
+              format: Transaction
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+          TransactionStatus:
+              $ref: '#/components/schemas/Transactionlifecyclestatus'
+          TransactionName:
+              $ref: '#/components/schemas/Name'
+    Identifier:
+        type: object
+        format: Identifier
+        description: ' '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+          Identifier:
+              type: string
+              format: DataType
+              description: >-
+                An identifier is a character string used to uniquely identify
+                one instance of an object within an identification scheme that
+                is managed by an agency. (UN/CEFAT) 
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Involvedparty:
+        type: object
+        format: Involvedparty
+        description: >-
+          Party who plays a  specific role in the context of assigning a
+          status. 
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+          Involvedparty:
+              type: string
+              format: DataType
+              description: 'Party who plays a specific role  '
+    Party:
+        type: object
+        format: Party
+        description: ' '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+          PartyType:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Party
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+          PartyLegalStructureType:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Party
+    Name:
+        type: object
+        format: Name
+        description: 'The name of transaction. '
+        properties:
+          Name:
+              type: string
+              format: DataType
+              description: >-
+                A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+        type: object
+        format: Datetime
+        description: 'Date and time at which the status was assigned. '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    Partyidentification:
+        type: object
+        format: Partyidentification
+        description: ' '
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentification
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+          Partyidentification:
+              type: string
+              format: DataType
+              description: ''
+    Partyrole:
+        type: object
+        format: Partyrole
+        description: ' '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyrole
+    Text:
+        type: object
+        format: Text
+        description: "The type of Repo Transaction Security Transfer Task \r\n"
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: 'Period of time during which the status is valid. '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+          Datetimeperiod:
+              type: string
+              format: DataType
+              description: >-
+                Time span defined by a start date and time, and an end date and
+                time. (ISO20022) 
+    Transactiondate:
+        type: object
+        format: Transactiondate
+        description: >-
+          The Date that the transaction has occurred or is planned to occur.
+
+          A characteristic of transaction which refers to the LifecycleDate of
+          transaction (e.g., initiated date, executed date, fulfillment date).  
+        properties:
+          TransactionDate:
+              $ref: '#/components/schemas/Datetime'
+          TransactionDateType:
+              enum:
+                  -  TransactionExecutedDate
+                  -  TransactionFulfillmentDate
+                  -  TransactionInitiatedDate
+                  -  TransactionCancelledDate
+                  -  TransactionApprovedDate
+              format: Transactiondate
+    Transactionlifecyclestatus:
+        type: object
+        format: Transactionlifecyclestatus
+        description: >-
+          A characteristic of transaction which refers to the LifecycleStatus of
+          transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+        properties:
+          TransactionLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          TransactionLifecycleStatusType:
+              enum:
+                  -  Initiated
+                  -  Executed
+                  -  Cancelled
+                  -  Confirmed
+                  -  Suspended
+                  -  Pending
+                  -  Completed
+                  -  Notified
+                  -  Booked
+                  -  Rejected
+              format: Transactionlifecyclestatus
+    Status:
+        type: object
+        format: Status
+        description: ' '
+        properties:
+          StatusReason:
+              $ref: '#/components/schemas/Text'
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          StatusInvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+    Task:
+        type: object
+        format: Task
+        description: "Reference to Repo Transaction Security Transfer Task \r\n"
+        properties:
+          Task:
+              type: string
+              format: DataType
+              description: ''
+    RepoTransactionInitiation:
+        type: object
+        description: ''
+        properties:
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          RepoTransactionReference:
+              $ref: '#/components/schemas/Transaction'
+          RepoTransactionInitiationTaskReference:
+              $ref: '#/components/schemas/Task'
+          RepoTransactionInitiationTaskType:
+              $ref: '#/components/schemas/Text'
+    RepoTransactionCashTransfer:
+        type: object
+        description: ''
+        properties:
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          RepoTransactionReference:
+              $ref: '#/components/schemas/Transaction'
+          RepoTransactionCashTransferTaskReference:
+              $ref: '#/components/schemas/Task'
+          RepoTransactionCashTransferTaskType:
+              $ref: '#/components/schemas/Text'
+    StockLendingandReposOutcome:
+        type: object
+        description: ''
+        properties:
+          StockLendingandReposCalendar:
+              $ref: '#/components/schemas/Calendar'
+          StockLendingandReposCounterparty:
+              $ref: '#/components/schemas/Involvedparty'
+          StockLendingandReposDividend:
+              $ref: '#/components/schemas/Text'
+          StockLendingandReposFees:
+              $ref: '#/components/schemas/FeeTransaction'
+          StockLendingandReposInterest:
+              $ref: '#/components/schemas/InterestTransaction'
+          StockLendingandReposMargining:
+              $ref: '#/components/schemas/Text'
+          StockLendingandReposNotionalPrincipal:
+              $ref: '#/components/schemas/Text'
+          StockLendingandReposOptions:
+              $ref: '#/components/schemas/Text'
+          StockLendingandReposRates:
+              $ref: '#/components/schemas/Rate'
+          StockLendingandReposSettlement:
+              $ref: '#/components/schemas/Text'
+          StockLendingandReposWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+    Calendar:
+        type: object
+        format: Calendar
+        description: " \r\n"
+        properties:
+          CalendarReference:
+              type: string
+              format: String
+              description: ''
+          CalendarType:
+              type: string
+              format: String
+              description: ''
+    FeeTransaction:
+        type: object
+        format: FeeTransaction
+        description: ' ChargesCharges (https://www.iso20022.org/standardsrepository/type/Charges)StandardISO20022 BM ()'
+        properties:
+          AppliedFeeType:
+              enum:
+                  -  Accountingfee
+                  -  Adrfee
+                  -  Advisoryfee
+                  -  Airwaybillfee
+                  -  Backendload
+                  -  Brokeragefee
+                  -  Clearanceandhandlingatorigin
+                  -  Collectfreight
+                  -  Commission
+                  -  Correspondentbankcharge
+                  -  Custodyfee
+                  -  Dangerousgoodsfee
+                  -  Dilutionlevy
+                  -  Discount
+                  -  Equalisation
+                  -  Frontendload
+                  -  Initial
+                  -  Insurancepremium
+                  -  Issuancecancellationfee
+                  -  Issuancefee
+                  -  Managementfee
+                  -  Matchingfees
+                  -  Miscellaneousfee
+                  -  Other
+                  -  Packaging
+                  -  Partacquis
+                  -  Penalty
+                  -  Pickup
+                  -  Postagecharge
+                  -  Premium
+                  -  Publicationfee
+                  -  Regulatoryfee
+                  -  Securitycharge
+                  -  Serviceprovisionfee
+                  -  Shippingcharge
+                  -  Signatureservice
+                  -  Specialconcessions
+                  -  Speciallyagreedfrontendload
+                  -  Storageatdestination
+                  -  Storageatorigin
+                  -  Switch
+                  -  Transferfee
+                  -  Transportcharges
+                  -  Ucitscommission
+              format: FeeTransaction
+          AccruedFeeAmount:
+              $ref: '#/components/schemas/Amount'
+          AppliedFeeAmount:
+              $ref: '#/components/schemas/Amount'
+    Amount:
+        type: object
+        format: Amount
+        description: 'Amount of applied interest '
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+          Amount:
+              type: string
+              format: DataType
+              description: >-
+                Number of monetary units specified in a currency, where the unit
+                of currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+                The decimal seperator is a dot.
+
+
+
+                Number of monetary units specified in a currency, where the unit
+                of currency is explicit and compliant with ISO 4217. The decimal
+                separator is a dot. (ISO20022)
+
+                Note: A zero amount is considered a positive amount.
+
+                total number of digits: 18
+
+                number of digits in fractional part: 5
+
+                minInclusive: 0 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    InterestTransaction:
+        type: object
+        format: InterestTransaction
+        description: ' InterestInterest (https://www.iso20022.org/standardsrepository/type/Interest)StandardISO20022 BM ()'
+        properties:
+          InterestTransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          InterestTransactionDescription:
+              $ref: '#/components/schemas/Text'
+          InterestTransactionType:
+              enum:
+                  -  InterestPaymentTransaction
+              format: InterestTransaction
+          AppliedInterestRate:
+              $ref: '#/components/schemas/Rate'
+          AppliedInteretType:
+              enum:
+                  -  Fixed
+                  -  Floatingratenote
+                  -  Dualbasis
+                  -  Index
+                  -  Discounted
+                  -  Zerocoupon
+                  -  Exinterest
+                  -  Cuminterest
+              format: InterestTransaction
+          InterestCreditDebitIndicator:
+              enum:
+                  -  Debit
+                  -  Credit
+              format: InterestTransaction
+    Rate:
+        type: object
+        format: Rate
+        description: ' PercentageRatePercentageRate (https://www.iso20022.org/standardsrepository/type/PercentageRate)StandardISO20022 BM ()'
+        properties:
+          RateValue:
+              $ref: '#/components/schemas/Value'
+          RateUnit:
+              $ref: '#/components/schemas/Text'
+          RatePeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          RateCapitalUnit:
+              $ref: '#/components/schemas/Text'
+    Workproduct:
+        type: object
+        format: Workproduct
+        description: " \r\n"
+        properties:
+          WorkProductType:
+              enum:
+                  -  Document
+                  -  WorkingPaper
+                  -  ActivityLog
+                  -  Form
+                  -  File
+                  -  MeetingSchedule
+                  -  MeetingMinute
+              format: Workproduct
+          WorkProductIdentifoication:
+              type: string
+              format: String
+              description: ''
+    RepoTransaction:
+        type: object
+        format: RepoTransaction
+        description: "An unique reference to an item or an occurrence of Repo Transaction \r\n"
+        properties:
+          RepoTransactionParameterType:
+              $ref: '#/components/schemas/Text'
+          RepoTransactionSelectedOption:
+              $ref: '#/components/schemas/Service'
+          RepoTransactionStatus:
+              $ref: '#/components/schemas/Transactionlifecyclestatus'
+          RepoTransactionType:
+              enum:
+                  -  Swap
+                  -  Repurchasecall
+                  -  Pairoff
+                  -  Reporate
+                  -  Rollover
+                  -  Topup
+                  -  Withdrawal
+                  -  Principalexposureadjustment
+              format: RepoTransaction
+          RepoTransactionReference:
+              $ref: '#/components/schemas/RepoTransaction'
+          RepoTransaction:
+              type: string
+              format: Class
+              description: >-
+                A Transaction that is the result of fulfillment of Repo
+                Arrangement 
+          RepurchaseAgreementReference:
+              $ref: '#/components/schemas/RepurchaseAgreement'
+          RepurchaseAgreementInvolvedPartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+          RepurchaseAgreementInvolvementType:
+              enum:
+                  -  Investor/Lender
+                  -  Borrower
+                  -  Dealer
+                  -  Tri-PartyAgent
+              format: RepoTransaction
+          RepurchaseArrangementReference:
+              $ref: '#/components/schemas/RepoArrangement'
+    Service:
+        type: object
+        format: Service
+        description: "A selected optional business service as subject matter of Repo Transaction \r\n"
+        properties:
+          ServiceName:
+              $ref: '#/components/schemas/Name'
+          ServiceDescription:
+              $ref: '#/components/schemas/Text'
+          ServiceType:
+              enum:
+                  -  ITService
+                  -  AdministrativeService
+                  -  SystemService
+                  -  FinancialService
+                  -  InformationService
+                  -  BusinessService
+              format: Service
+          ServiceIdentification:
+              $ref: '#/components/schemas/Identifier'
+          ServiceLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          ServiceFeature:
+              $ref: '#/components/schemas/Feature'
+    Feature:
+        type: object
+        format: Feature
+        description: >-
+          A characteristic of service which refers 1) mainly to the function or
+          condition of service. 2) to non-functional features like quality and
+          security 
+        properties:
+          FeatureType:
+              $ref: '#/components/schemas/Text'
+          FeatureIdentification:
+              $ref: '#/components/schemas/Identifier'
+          FeatureName:
+              $ref: '#/components/schemas/Name'
+          FeatureLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          FeatureDescription:
+              $ref: '#/components/schemas/Text'
+    RepurchaseAgreement:
+        type: object
+        format: RepurchaseAgreement
+        description: " \r\n"
+        properties:
+          RepurchaseAgreementType:
+              enum:
+                  -  SpecificCollateral
+                  -  GeneralCollateral
+              format: RepurchaseAgreement
+    RepoArrangement:
+        type: object
+        format: RepoArrangement
+        description: " \r\n"
+        properties:
+          RepurchaseRate:
+              $ref: '#/components/schemas/Rate'
+          TerminationDateTime:
+              $ref: '#/components/schemas/Datetime'
+          RepurchaseAmount:
+              $ref: '#/components/schemas/Amount'
+          RepurchaseType:
+              enum:
+                  -  Swap
+                  -  Repurchasecall
+                  -  Pairoff
+                  -  Reporate
+                  -  Rollover
+                  -  Topup
+                  -  Withdrawal
+                  -  Principalexposureadjustment
+              format: RepoArrangement
+    RepoTransactionNotify:
+        type: object
+        description: ''
+        properties:
+          RepoTransactionParameterType:
+              $ref: '#/components/schemas/Text'
+          RepoTransactionSelectedOption:
+              $ref: '#/components/schemas/Service'
+          RepoTransactionStatus:
+              $ref: '#/components/schemas/Transactionlifecyclestatus'
+          RepoTransactionType:
+              enum:
+                  -  Swap
+                  -  Repurchasecall
+                  -  Pairoff
+                  -  Reporate
+                  -  Rollover
+                  -  Topup
+                  -  Withdrawal
+                  -  Principalexposureadjustment
+          RepoTransactionReference:
+              $ref: '#/components/schemas/RepoTransaction'
+    RepoTransactionCashTransferNotify:
+        type: object
+        description: ''
+        properties:
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          RepoTransactionReference:
+              $ref: '#/components/schemas/Transaction'
+          RepoTransactionCashTransferTaskReference:
+              $ref: '#/components/schemas/Task'
+          RepoTransactionCashTransferTaskType:
+              $ref: '#/components/schemas/Text'
+    RepoTransactionInitiationNotify:
+        type: object
+        description: ''
+        properties:
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          RepoTransactionReference:
+              $ref: '#/components/schemas/Transaction'
+          RepoTransactionInitiationTaskReference:
+              $ref: '#/components/schemas/Task'
+          RepoTransactionInitiationTaskType:
+              $ref: '#/components/schemas/Text'
+    RepoTransactionSecurityTransferNotify:
+        type: object
+        description: ''
+        properties:
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          RepoTransactionReference:
+              $ref: '#/components/schemas/Transaction'
+          RepoTransactionSecurityTransferTaskReference:
+              $ref: '#/components/schemas/Task'
+          RepoTransactionSecurityTransferTaskType:
+              $ref: '#/components/schemas/Text'

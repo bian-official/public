@@ -1,0 +1,250 @@
+asyncapi: 2.6.0
+info:
+  title: Reward Points Account
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Administer the booking
+    and remittance of rewards points
+  version: 12.0.3
+channels:
+  RewardPointsLog/Created:
+      description: ''
+      publish:
+        operationId: RewardPointsLog-created
+        summary: RewardPointsLog
+        message:
+          $ref: '#/components/messages/RewardPointsLog'
+  RewardPointsLog/Updated:
+      description: ''
+      publish:
+        operationId: RewardPointsLog-updated
+        summary: RewardPointsLog
+        message:
+          $ref: '#/components/messages/RewardPointsLog'
+  RewardPointsAccountOutcome/Created:
+      description: ''
+      publish:
+        summary: RewardPointsAccountOutcome
+        message:
+          $ref: '#/components/messages/RewardPointsAccountOutcome'
+  RewardPointsAccountOutcome/Updated:
+      description: ''
+      publish:
+        summary: RewardPointsAccountOutcome
+        message:
+          $ref: '#/components/messages/RewardPointsAccountOutcome'
+  Capture/Created:
+      description: ''
+      publish:
+        summary: Capture
+        message:
+          $ref: '#/components/messages/Capture'
+  Capture/Updated:
+      description: ''
+      publish:
+        summary: Capture
+        message:
+          $ref: '#/components/messages/Capture'
+  Expiration/Created:
+      description: ''
+      publish:
+        summary: Expiration
+        message:
+          $ref: '#/components/messages/Expiration'
+  Expiration/Updated:
+      description: ''
+      publish:
+        summary: Expiration
+        message:
+          $ref: '#/components/messages/Expiration'
+components:
+  messages:
+    RewardPointsLog:
+        name: RewardPointsLog
+        description: >-
+          Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis 
+          within Reward Points Account. 
+
+          Examples:- Maintain a financial journal of transactions processed for a
+          product or service and maintain a log of customer events and activity
+          for subsequent analysis.
+        payload:
+          $ref: '#/components/schemas/RewardPointsLog'
+    RewardPointsAccountOutcome:
+        name: RewardPointsAccountOutcome
+        description: 
+          A collection of the events/transactions recorded by the log
+
+          Examples:- Customer life event, Servicing event
+        payload:
+          $ref: '#/components/schemas/RewardPointsAccountOutcome'
+    Capture:
+        name: Capture
+        description: 
+          A collection of the events/transactions recorded by the log
+
+          Examples:- Customer life event, Servicing event
+        payload:
+          $ref: '#/components/schemas/Capture'
+    Expiration:
+        name: Expiration
+        description: 
+          A collection of the events/transactions recorded by the log
+
+          Examples:- Customer life event, Servicing event
+        payload:
+          $ref: '#/components/schemas/Expiration'
+  schemas:
+    RewardPointsAccountOutcome:
+        type: object
+        description: ''
+        properties:
+          RewardPointsAccountIncident:
+              type: string
+              format: String
+              description: ''
+          RewardPointsAccountLog:
+              type: string
+              format: String
+              description: ''
+    Capture:
+        type: object
+        description: ''
+        properties:
+          CapturePreconditions:
+              type: string
+              format: String
+              description: "The required status/situation before the event is captured \r\n"
+          CaptureEventSchedule:
+              type: string
+              format: String
+              description: "The timing and key actions/milestones involved in capturing the event \r\n"
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          CapturePostconditions:
+              type: string
+              format: String
+              description: "The completion status once the event has been captured \r\n"
+          CaptureServiceType:
+              type: string
+              format: String
+              description: "Reference to the specific business service type \r\n"
+          CaptureServiceDescription:
+              type: string
+              format: String
+              description: "Description of the performed business service \r\n"
+          CaptureServiceInputsandOuputs:
+              type: string
+              format: String
+              description: "Mandatory and optional inputs and output information for the business service \r\n"
+          CaptureServiceWorkProduct:
+              type: string
+              format: String
+              description: "Documentation, meeting schedules, notes, reasearch. calculations and any other work products produced by the business service \r\n"
+          CaptureServiceName:
+              type: string
+              format: String
+              description: ''
+    BusinessService:
+        type: object
+        format: BusinessService
+        description: "The Reward Points Log specific  Business Service \r\n"
+        properties:
+          BusinessServiceType:
+              enum:
+                  -  Businessservicetypevalues
+              format: BusinessService
+    Expiration:
+        type: object
+        description: ''
+        properties:
+          ExpirationPreconditions:
+              type: string
+              format: String
+              description: "The required status/situation before the event is captured \r\n"
+          ExpirationEventSchedule:
+              type: string
+              format: String
+              description: "The timing and key actions/milestones involved in capturing the event \r\n"
+          LogEventExpiration:
+              $ref: '#/components/schemas/BusinessService'
+          ExpirationPostconditions:
+              type: string
+              format: String
+              description: "The completion status once the event has been captured \r\n"
+          ExpirationLogEventExpirationServiceType:
+              type: string
+              format: String
+              description: "Reference to the specific business service type \r\n"
+          ExpirationLogEventExpirationServiceDescription:
+              type: string
+              format: String
+              description: "Description of the performed business service \r\n"
+          ExpirationLogEventExpirationServiceInputsandOuputs:
+              type: string
+              format: String
+              description: "Mandatory and optional inputs and output information for the business service \r\n"
+          ExpirationLogEventExpirationServiceWorkProduct:
+              type: string
+              format: String
+              description: "Documentation, meeting schedules, notes, reasearch. calculations and any other work products produced by the business service \r\n"
+          ExpirationLogEventExpirationServiceName:
+              type: string
+              format: String
+              description: ''
+    RewardPointsLog:
+        type: object
+        description: ''
+        properties:
+          RewardPointsLogParameterType:
+              type: string
+              format: String
+              description: "A Classification value that distinguishes between business service events logged within Reward Points Log \r\n"
+          RewardPointsLogSelectedOption:
+              type: string
+              format: String
+              description: "A selected optional business service as subject matter of Reward Points Log \r\n"
+          RewardPointsLogType:
+              type: string
+              format: String
+              description: "The type of Reward Points Log \r\n"
+          RewardPointsLogSchedule:
+              type: string
+              format: String
+              description: "Timetable to track RewardPoints \r\n"
+          RewardPointsLogUsageLog:
+              type: string
+              format: String
+              description: "Reference to the log of (usage) ativities/events  of Reward Points Log \r\n"
+          RewardPointsLogUpdateLog:
+              type: string
+              format: String
+              description: "Reference to the log of (update) ativities/events of Reward Points Log \r\n"
+          RewardPointsLogReference:
+              type: string
+              format: Object
+              description: "Reference to the party who is involved in Reward Points Log \r\n"
+          RewardPointsLogBusinessUnitReference:
+              type: string
+              format: Object
+              description: "Reference to the business unit which is involved in Reward Points Log \r\n"
+          RewardPointsLogCustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the customer who is involved in Reward Points Log \r\n"
+          RewardPointsLogServiceConfiguration:
+              type: string
+              format: String
+              description: "The configuration of Reward Points Log \r\n"
+          RewardPointsLogPosition:
+              type: string
+              format: String
+              description: "The position of Reward Points Log \r\n"
+          RewardPointsLogPositionType:
+              type: string
+              format: String
+              description: "A classification value expressing the kind of position withing the Reward Points Log \r\n"
+          RewardPointsLogPositionLimitTime:
+              type: string
+              format: String
+              description: "Reference to the time limitation related to the position  of Reward Points Log \r\n"
