@@ -1,0 +1,243 @@
+asyncapi: 2.6.0
+info:
+  title: Open Item Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    provides a service for handling the resolution of open items against
+    accounts (such as overdue loan payments)
+  version: 12.0.3
+channels:
+  OpenItemProcedure/Created:
+      description: ''
+      publish:
+        operationId: OpenItemProcedure-created
+        summary: OpenItemProcedure
+        message:
+          $ref: '#/components/messages/OpenItemProcedure'
+  OpenItemProcedure/Updated:
+      description: ''
+      publish:
+        operationId: OpenItemProcedure-updated
+        summary: OpenItemProcedure
+        message:
+          $ref: '#/components/messages/OpenItemProcedure'
+  Tracking/Created:
+      description: ''
+      publish:
+        summary: Tracking
+        message:
+          $ref: '#/components/messages/Tracking'
+  Tracking/Updated:
+      description: ''
+      publish:
+        summary: Tracking
+        message:
+          $ref: '#/components/messages/Tracking'
+  Repayment/Created:
+      description: ''
+      publish:
+        summary: Repayment
+        message:
+          $ref: '#/components/messages/Repayment'
+  Repayment/Updated:
+      description: ''
+      publish:
+        summary: Repayment
+        message:
+          $ref: '#/components/messages/Repayment'
+components:
+  messages:
+    OpenItemProcedure:
+        name: OpenItemProcedure
+        description: >-
+          Complete work tasks following a defined procedure in support of
+          general office activities and product and service delivery within Open
+          Item Management. 
+        payload:
+          $ref: '#/components/schemas/OpenItemProcedure'
+    Tracking:
+        name: Tracking
+        description: 
+          The main worsteps to be followed in th eexecution of the procedure
+
+          Examples:- Invoice generation
+        payload:
+          $ref: '#/components/schemas/Tracking'
+    Repayment:
+        name: Repayment
+        description: 
+          The main worsteps to be followed in th eexecution of the procedure
+
+          Examples:- Invoice generation
+        payload:
+          $ref: '#/components/schemas/Repayment'
+  schemas:
+    Tracking:
+        type: object
+        description: ''
+        properties:
+          CustomerBillingProcedureInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the associated customer billing transaction \r\n"
+          CustomerBillingParty:
+              type: string
+              format: String
+              description: "The billed customer \r\n"
+          CustomerBillingAddress:
+              type: string
+              format: String
+              description: "The address the bill was sent to (can be electronic) \r\n"
+          CustomerBillingPeriod:
+              type: string
+              format: String
+              description: "The billing period is applicable \r\n"
+          CustomerBillingStatement:
+              type: string
+              format: String
+              description: "The content of the billing statement used in the bill \r\n"
+          CustomerBillingAmount:
+              $ref: '#/components/schemas/Amount'
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          The amount of the customer bill CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    Repayment:
+        type: object
+        description: ''
+        properties:
+          TransactionPayerReference:
+              type: string
+              format: Object
+              description: "Reference to the payer of the funds \r\n"
+          TransactionPayerProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the source of the payment funds \r\n"
+          TransactionPayerBankReference:
+              type: string
+              format: Object
+              description: "Reference to the payers account holding bank \r\n"
+          TransactionType:
+              type: string
+              format: String
+              description: "The type of repayment transaction (e.g. wire) \r\n"
+          TransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          TransactionCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          TransactionDate:
+              $ref: '#/components/schemas/Date'
+    Date:
+        type: object
+        format: Date
+        description: >-
+          Key dates associated with the transaction (e.g. value date)
+          ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    OpenItemProcedure:
+        type: object
+        description: ''
+        properties:
+          OpenItemType:
+              type: string
+              format: String
+              description: "The type of open item, typically an overdue payment \r\n"
+          OpenItemDescription:
+              type: string
+              format: String
+              description: "Specific detail of the open item for reference \r\n"
+          ProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the associated loan account \r\n"
+          PartyReference:
+              type: string
+              format: Object
+              description: "Reference to the customer/party responsible \r\n"
+          LoanRepaymentSchedule:
+              type: string
+              format: String
+              description: "Payment schedule used for staged payments \r\n"
+          LoanOutstandingBalance:
+              type: string
+              format: String
+              description: "The outstanding balance \r\n"
+          LoanTerminationDate:
+              $ref: '#/components/schemas/Date'
+          RepaymentStatement:
+              type: string
+              format: String
+              description: "A statement of repayment transactions made against the item \r\n"

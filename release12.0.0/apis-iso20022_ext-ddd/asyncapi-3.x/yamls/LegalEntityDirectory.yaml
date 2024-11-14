@@ -1,0 +1,447 @@
+asyncapi: 2.6.0
+info:
+  title: Legal Entity Directory
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    maintains details of the legal entity structure of the party including
+    dependents and associations for individuals and ownership/subsidiary
+    structures for corporations. Some financial indicators and product
+    coverage/activity details can be included where this defines the nature of
+    the legal entity relationship in particular for corporate entities
+  version: 12.0.3
+channels:
+  LegalEntityDirectoryEntry/Created:
+      description: ''
+      publish:
+        operationId: LegalEntityDirectoryEntry-created
+        summary: LegalEntityDirectoryEntry
+        message:
+          $ref: '#/components/messages/LegalEntityDirectoryEntry'
+  LegalEntityDirectoryEntry/Updated:
+      description: ''
+      publish:
+        operationId: LegalEntityDirectoryEntry-updated
+        summary: LegalEntityDirectoryEntry
+        message:
+          $ref: '#/components/messages/LegalEntityDirectoryEntry'
+  Profile/Created:
+      description: ''
+      publish:
+        summary: Profile
+        message:
+          $ref: '#/components/messages/Profile'
+  Profile/Updated:
+      description: ''
+      publish:
+        summary: Profile
+        message:
+          $ref: '#/components/messages/Profile'
+  Associations/Created:
+      description: ''
+      publish:
+        summary: Associations
+        message:
+          $ref: '#/components/messages/Associations'
+  Associations/Updated:
+      description: ''
+      publish:
+        summary: Associations
+        message:
+          $ref: '#/components/messages/Associations'
+  Reference/Created:
+      description: ''
+      publish:
+        summary: Reference
+        message:
+          $ref: '#/components/messages/Reference'
+  Reference/Updated:
+      description: ''
+      publish:
+        summary: Reference
+        message:
+          $ref: '#/components/messages/Reference'
+components:
+  messages:
+    LegalEntityDirectoryEntry:
+        name: LegalEntityDirectoryEntry
+        description: >-
+          Capture and maintain reference information about some type of entitity
+          within Legal Entity Directory.
+        payload:
+          $ref: '#/components/schemas/LegalEntityDirectoryEntry'
+    Profile:
+        name: Profile
+        description: 
+          "An assertion or statement with regard to a concept, a characteristic.
+
+          Examples:- Product pricing rules, Customer reference details
+
+          A descriptor can be atomic or composed."
+          Prospect Management
+        payload:
+          $ref: '#/components/schemas/Profile'
+    Associations:
+        name: Associations
+        description: 
+          "An assertion or statement with regard to a concept, a characteristic.
+
+          Examples:- Product pricing rules, Customer reference details
+
+          A descriptor can be atomic or composed."
+          Prospect Management
+        payload:
+          $ref: '#/components/schemas/Associations'
+    Reference:
+        name: Reference
+        description: 
+          "An assertion or statement with regard to a concept, a characteristic.
+
+          Examples:- Product pricing rules, Customer reference details
+
+          A descriptor can be atomic or composed."
+          Prospect Management
+        payload:
+          $ref: '#/components/schemas/Reference'
+  schemas:
+    Profile:
+        type: object
+        description: ''
+        properties:
+          OrganizationCapitalization:
+              type: string
+              format: String
+              description: "The estimated capitalization of the entity \r\n"
+          OrganizationDebtLevel:
+              type: string
+              format: String
+              description: "The estimated debt level for the entity \r\n"
+          OrganizationEconomicIntent:
+              type: string
+              format: String
+              description: "The projected economic performance for the entity \r\n"
+          OrganizationGrowthRate:
+              $ref: '#/components/schemas/Rate'
+          OrganizationProfitabilityStocks:
+              type: string
+              format: String
+              description: "Analysis of past performance  (a summary description) \r\n"
+          OrganizationRevenueTurnover:
+              type: string
+              format: String
+              description: "Description of revenues, production volumes and staff turnover  a summary description) \r\n"
+    Rate:
+        type: object
+        format: Rate
+        description: >-
+          Past and projected growth rates PercentageRatePercentageRate
+          (https://www.iso20022.org/standardsrepository/type/PercentageRate)StandardISO20022
+          BM ()
+        properties:
+          RateValue:
+              $ref: '#/components/schemas/Value'
+          RateUnit:
+              $ref: '#/components/schemas/Text'
+          RatePeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          RateCapitalUnit:
+              $ref: '#/components/schemas/Text'
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Text:
+        type: object
+        format: Text
+        description: ' '
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: ' '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+    Datetime:
+        type: object
+        format: Datetime
+        description: 'Date and time at which the range ends. (ISO20022) '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    Associations:
+        type: object
+        description: ''
+        properties:
+          LegalEntityAssociationReference:
+              type: string
+              format: Object
+              description: "Reference to the associated entity (e.g. company or individual) \r\n"
+          LegalEntityAssociationType:
+              type: string
+              format: String
+              description: "Nature or type of association (e.g. corporate or familial) \r\n"
+          LegalEntityAssociationObligation:
+              type: string
+              format: String
+              description: "Description of the association and applicable obligations  (e.g. shareholder, director, guardian, guarantor) \r\n"
+          ParentLegalEntityReference:
+              type: string
+              format: Object
+              description: "Reference the parent entity if applicable \r\n"
+          SubsidiaryLegalEntityReference:
+              type: string
+              format: Object
+              description: "Reference the subsidiary entity if applicable \r\n"
+          ShareholdingProfile:
+              type: string
+              format: String
+              description: "List of major shareholders and shareholdings of significance \r\n"
+    Reference:
+        type: object
+        description: ''
+        properties:
+          LegalEntityOfficialName:
+              type: string
+              format: String
+              description: "The registered name of the entity \r\n"
+          LegalEntityType:
+              type: string
+              format: String
+              description: "The type of legal entity (e.g. individual, Inc, Plc) \r\n"
+          SectorsofOperation:
+              type: string
+              format: String
+              description: "The sectors of operation (e.g. finance, Asia) \r\n"
+          RegisteredAddress:
+              type: string
+              format: String
+              description: "The registered address for the legal entity \r\n"
+          HeadquartersLocation:
+              type: string
+              format: String
+              description: "The location of the head office (and regional offices if appropriate) \r\n"
+          DateofIncorporation:
+              type: string
+              format: String
+              description: "The date of incorporation (or dates when subsidiaries involved) \r\n"
+          JurisdictionofIncorporation:
+              type: string
+              format: String
+              description: "The jurisdiction governing the company \r\n"
+          RegistrationAuthority:
+              type: string
+              format: String
+              description: "The associated legal or registration authority \r\n"
+          PrimaryRegulator:
+              type: string
+              format: String
+              description: "The primary, and additional regulators as appropriate \r\n"
+          TaxReference:
+              type: string
+              format: Object
+              description: "Reference identifier linking the entity to appropriate tax authority \r\n"
+          ContactRole:
+              type: string
+              format: String
+              description: "The bank's contact role or roles established to maintain the relationship with the bank (e.g. CEO) \r\n"
+          ContactAddressDetails:
+              type: string
+              format: String
+              description: "The address of the bank's contact's within the entity \r\n"
+    LegalEntityDirectoryEntry:
+        type: object
+        description: ''
+        properties:
+          LegalEntityReference:
+              type: string
+              format: Object
+              description: "Reference to the legal entity that is the subject of the entry \r\n"
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          DirectoryEntryDateType:
+              enum:
+                  -  OpenDate
+                  -  RefreshDate
+          DirectoryEntryDate:
+              $ref: '#/components/schemas/Datetime'
+    Party:
+        type: object
+        format: Party
+        description: ' '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+          PartyType:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Party
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+          Party:
+              type: string
+              format: Class
+              description: >-
+                A party represents an autonomous entity in which a bank has a
+                business interest. It has a legal definition and identity. A
+                party is a Person, Organization, (a proposed definition for BIAN
+                BOM adapted from BIAN Party Working Group) 
+
+
+                Entity involved in an activity. (ISO20022) 
+          PartyLegalStructureType:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Party
+    Name:
+        type: object
+        format: Name
+        description: >-
+          Name by which a party is known and which is usually used to identify
+          that party. (ISO20022)
+           
+        properties:
+          Name:
+              type: string
+              format: DataType
+              description: >-
+                A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+        type: object
+        format: Partyidentification
+        description: ' '
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentification
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+          Partyidentification:
+              type: string
+              format: DataType
+              description: ''
+    Identifier:
+        type: object
+        format: Identifier
+        description: ' '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+    Involvedparty:
+        type: object
+        format: Involvedparty
+        description: 'Entity that assigns and manages the identification. '
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+    Partyrole:
+        type: object
+        format: Partyrole
+        description: ' '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyrole

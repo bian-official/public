@@ -1,0 +1,182 @@
+asyncapi: 2.6.0
+info:
+  title: eBranch Operations
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    operates the bank's on-line web based electronic branch capabilities -
+    controlling access and load balancing across available communications and
+    processing resources to optimize performance/availability
+  version: 12.0.3
+channels:
+  eBranchChannelOperatingSession/Created:
+      description: ''
+      publish:
+        operationId: eBranchChannelOperatingSession-created
+        summary: eBranchChannelOperatingSession
+        message:
+          $ref: '#/components/messages/eBranchChannelOperatingSession'
+  eBranchChannelOperatingSession/Updated:
+      description: ''
+      publish:
+        operationId: eBranchChannelOperatingSession-updated
+        summary: eBranchChannelOperatingSession
+        message:
+          $ref: '#/components/messages/eBranchChannelOperatingSession'
+  Outbound/Created:
+      description: ''
+      publish:
+        summary: Outbound
+        message:
+          $ref: '#/components/messages/Outbound'
+  Outbound/Updated:
+      description: ''
+      publish:
+        summary: Outbound
+        message:
+          $ref: '#/components/messages/Outbound'
+  Inbound/Created:
+      description: ''
+      publish:
+        summary: Inbound
+        message:
+          $ref: '#/components/messages/Inbound'
+  Inbound/Updated:
+      description: ''
+      publish:
+        summary: Inbound
+        message:
+          $ref: '#/components/messages/Inbound'
+components:
+  messages:
+    eBranchChannelOperatingSession:
+        name: eBranchChannelOperatingSession
+        description: >-
+          Operate equipment and/or a largely automated facility within eBranch
+          Operations. 
+        payload:
+          $ref: '#/components/schemas/eBranchChannelOperatingSession'
+    Outbound:
+        name: Outbound
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Outbound'
+    Inbound:
+        name: Inbound
+        description: >-
+          The collection of operational serivces/functions offered by the
+          operational facility
+
+
+          Examples:- messages, capture, routines
+        payload:
+          $ref: '#/components/schemas/Inbound'
+  schemas:
+    Outbound:
+        type: object
+        description: ''
+        properties:
+          EmployeeBusinessUnitReference:
+              type: string
+              format: Object
+              description: "Reference to the source of outbound connection \r\n"
+          CustomerContactRecordReference:
+              type: string
+              format: Object
+              description: "The outbound connection will be part of a customer contact to ensure all logging is performed \r\n"
+          CustomerSessionDialogueRecord:
+              type: string
+              format: String
+              description: "This is the payload of the exchange it is the specific session within the contact that handles the customer interaction. Content passes through the E-Branch facility transparently \r\n"
+          EBranchCustomerDeviceReference:
+              type: string
+              format: Object
+              description: "Reference to the device being connected to \r\n"
+          EBranchOutboundConnectionStartTime:
+              type: string
+              format: String
+              description: "Log of the initial connection \r\n"
+          EBranchOutboundConnectionDuration:
+              type: string
+              format: String
+              description: "Connection duration for capacity planning purposes \r\n"
+    Inbound:
+        type: object
+        description: ''
+        properties:
+          EBranchDeviceReference:
+              type: string
+              format: Object
+              description: "Reference to the device being used for access (captured for security and identification) \r\n"
+          EBranchDevicePropertyValue:
+              type: string
+              format: String
+              description: "Property of the Device e.g. URL if available \r\n"
+          EBranchInboundConnectionStartTime:
+              type: string
+              format: String
+              description: "Log of the initial connection \r\n"
+          EBranchInboundConnectionDuration:
+              type: string
+              format: String
+              description: "Connection duration for capacity planning purposes \r\n"
+          EBranchInboundConnectionContactRecordReference:
+              type: string
+              format: Object
+              description: "This is returned by SD-Contact Handler for reference if the connection leads to a log-in session \r\n"
+    eBranchChannelOperatingSession:
+        type: object
+        description: ''
+        properties:
+          EBranchOperationsServiceMenu:
+              type: string
+              format: String
+              description: "The channel customer selection menu selection is configurable for the session. This is used optionally to identify the purpose of the connection \r\n"
+          EBranchServiceSessionStatistics:
+              type: string
+              format: String
+              description: "Service activity statistics that are maintained during the session \r\n"
+          EBranchServiceSessionReportType:
+              type: string
+              format: String
+              description: "Session reports that can be accessed during the session (e.g. real-time status, session statistics) \r\n"
+          EBranchServiceSessionReport:
+              type: string
+              format: String
+              description: "The session activity report \r\n"
+          EBranchProductionIssueRecord:
+              type: string
+              format: String
+              description: "A record of any production issues arising during the session \r\n"
+          EmployeeBusinessUnitReference:
+              type: string
+              format: Object
+              description: "The source of the issue report if appropriate \r\n"
+          CustomerContactRecordReference:
+              type: string
+              format: Object
+              description: "Reference to the specific customer contact where the issue occurred if appropriate \r\n"
+          ProductionIssueType:
+              type: string
+              format: String
+              description: "The type of network event or error being recorded (e.g. device failure) \r\n"
+          ProductionIssueDescription:
+              type: string
+              format: String
+              description: "The description of the event error \r\n"
+          ProductionIssueDiagnosis:
+              type: string
+              format: String
+              description: "Evaluation of the event cause and impact assessment \r\n"
+          ProductionIssueResolutionTask:
+              type: string
+              format: String
+              description: "Description of corrective action proposed and taken \r\n"
+          ProductionIssueStatus:
+              type: string
+              format: String
+              description: "Tracking the state of resolution of a reported issue during the session \r\n"

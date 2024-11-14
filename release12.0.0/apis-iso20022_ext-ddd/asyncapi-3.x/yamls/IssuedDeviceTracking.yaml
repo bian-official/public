@@ -1,0 +1,163 @@
+asyncapi: 2.6.0
+info:
+  title: Issued Device Tracking
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    handles operational access to issued device tracking services. Services
+    report on the status of devices such as cards, fobs, etc. that have been
+    issued to customers. Service notifications include fraud warnings/alerts and
+    device cancellation.
+  version: 12.0.3
+channels:
+  IssuedDeviceState/Created:
+      description: ''
+      publish:
+        operationId: IssuedDeviceState-created
+        summary: IssuedDeviceState
+        message:
+          $ref: '#/components/messages/IssuedDeviceState'
+  IssuedDeviceState/Updated:
+      description: ''
+      publish:
+        operationId: IssuedDeviceState-updated
+        summary: IssuedDeviceState
+        message:
+          $ref: '#/components/messages/IssuedDeviceState'
+  InternalNotification/Created:
+      description: ''
+      publish:
+        summary: InternalNotification
+        message:
+          $ref: '#/components/messages/InternalNotification'
+  InternalNotification/Updated:
+      description: ''
+      publish:
+        summary: InternalNotification
+        message:
+          $ref: '#/components/messages/InternalNotification'
+  ExternalReport/Created:
+      description: ''
+      publish:
+        summary: ExternalReport
+        message:
+          $ref: '#/components/messages/ExternalReport'
+  ExternalReport/Updated:
+      description: ''
+      publish:
+        summary: ExternalReport
+        message:
+          $ref: '#/components/messages/ExternalReport'
+components:
+  messages:
+    IssuedDeviceState:
+        name: IssuedDeviceState
+        description: >-
+          Monitor and define the status/rating of some entity within Issued
+          Device Tracking. 
+        payload:
+          $ref: '#/components/schemas/IssuedDeviceState'
+    InternalNotification:
+        name: InternalNotification
+        description: >-
+          A collection of information feeds/measures that can be used to track
+          the status of one or more items/entitites
+
+
+          Examples:- Composite position, Customer alert
+        payload:
+          $ref: '#/components/schemas/InternalNotification'
+    ExternalReport:
+        name: ExternalReport
+        description: >-
+          A collection of information feeds/measures that can be used to track
+          the status of one or more items/entitites
+
+
+          Examples:- Composite position, Customer alert
+        payload:
+          $ref: '#/components/schemas/ExternalReport'
+  schemas:
+    InternalNotification:
+        type: object
+        description: ''
+        properties:
+          IssuedDeviceReference:
+              type: string
+              format: Object
+              description: "Provided reference to the target issued device \r\n"
+          IssuedDeviceType:
+              type: string
+              format: String
+              description: "Type of issued device being notified \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the associated customer if applicable \r\n"
+          ProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the associated product instance if appropriate \r\n"
+          StatusUpdateDetails:
+              type: string
+              format: String
+              description: "The details of the status update (e.g. reported lost or stolen device, device broken) \r\n"
+          StatusUpdateResult:
+              type: string
+              format: String
+              description: "The response to the status update request (e.g. update processed) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "Key dates and times associated with the notification \r\n"
+    ExternalReport:
+        type: object
+        description: ''
+        properties:
+          InformationFeedServiceContentRecord:
+              type: string
+              format: String
+              description: "Is the record of the information notified by the IP that can reference a single device notification or a batch file covering multiple devices \r\n"
+          IssuedDeviceReference:
+              type: string
+              format: Object
+              description: "Provided reference to the target issued device in the form defined by the IP \r\n"
+          IssuedDeviceType:
+              type: string
+              format: String
+              description: "Type of issued device being notified in the form defined by the IP \r\n"
+          CustomerReference:
+              type: string
+              format: Object
+              description: "Reference to the associated customer in the form defined by the IP \r\n"
+          ProductInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the associated product instance in the form defined by the IP \r\n"
+          StatusUpdateDetails:
+              type: string
+              format: String
+              description: "The details of the status update (e.g. reported lost or stolen device, device broken) \r\n"
+          StatusUpdateResult:
+              type: string
+              format: String
+              description: "The response to the status update request (e.g. update processed) \r\n"
+          Date:
+              type: string
+              format: String
+              description: "Key dates and times associated with the external notification \r\n"
+    IssuedDeviceState:
+        type: object
+        description: ''
+        properties:
+          InformationFeedProviderReference:
+              type: string
+              format: Object
+              description: "Reference to the external information feed service supplier (IP) providing device status reports \r\n"
+          IssuedDeviceAllocationInstanceReference:
+              type: string
+              format: Object
+              description: "Reference to the issued device, include its status as maintained by administration \r\n"
+          IssuedDeviceAllocationStatus:
+              type: string
+              format: String
+              description: "Is the status of the issued device that is updated \r\n"

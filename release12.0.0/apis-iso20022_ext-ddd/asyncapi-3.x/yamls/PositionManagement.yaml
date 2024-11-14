@@ -1,0 +1,269 @@
+asyncapi: 2.6.0
+info:
+  title: Position Management
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Service Domain tracks
+    the bank's consolidated financial positions for major customers and complex
+    market conditions
+  version: 12.0.3
+channels:
+  FinancialPositionState/Created:
+      description: ''
+      publish:
+        operationId: FinancialPositionState-created
+        summary: FinancialPositionState
+        message:
+          $ref: '#/components/messages/FinancialPositionState'
+  FinancialPositionState/Updated:
+      description: ''
+      publish:
+        operationId: FinancialPositionState-updated
+        summary: FinancialPositionState
+        message:
+          $ref: '#/components/messages/FinancialPositionState'
+  TrialTransaction/Created:
+      description: ''
+      publish:
+        summary: TrialTransaction
+        message:
+          $ref: '#/components/messages/TrialTransaction'
+  TrialTransaction/Updated:
+      description: ''
+      publish:
+        summary: TrialTransaction
+        message:
+          $ref: '#/components/messages/TrialTransaction'
+  TransactionApplication/Created:
+      description: ''
+      publish:
+        summary: TransactionApplication
+        message:
+          $ref: '#/components/messages/TransactionApplication'
+  TransactionApplication/Updated:
+      description: ''
+      publish:
+        summary: TransactionApplication
+        message:
+          $ref: '#/components/messages/TransactionApplication'
+components:
+  messages:
+    FinancialPositionState:
+        name: FinancialPositionState
+        description: >-
+          Monitor and define the status/rating of some entity within Position
+          Management. 
+        payload:
+          $ref: '#/components/schemas/FinancialPositionState'
+    TrialTransaction:
+        name: TrialTransaction
+        description: >-
+          A collection of information feeds/measures that can be used to track
+          the status of one or more items/entitites
+
+
+          Examples:- Composite position, Customer alert
+        payload:
+          $ref: '#/components/schemas/TrialTransaction'
+    TransactionApplication:
+        name: TransactionApplication
+        description: >-
+          A collection of information feeds/measures that can be used to track
+          the status of one or more items/entitites
+
+
+          Examples:- Composite position, Customer alert
+        payload:
+          $ref: '#/components/schemas/TransactionApplication'
+  schemas:
+    TrialTransaction:
+        type: object
+        description: ''
+        properties:
+          TrialTransactionReference:
+              type: string
+              format: Object
+              description: "A trial transaction that will impacts a managed position) \r\n"
+          TrialTransactionType:
+              type: string
+              format: String
+              description: "The type of transaction that would be applied to the managed position \r\n"
+          TrialTransactionRecord:
+              type: string
+              format: String
+              description: "Key details of the trial transaction \r\n"
+          TrialTransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          TrialTransactionDate:
+              $ref: '#/components/schemas/Date'
+          TrialTransactionBookingEntity:
+              type: string
+              format: String
+              description: "The booking entity where the trial transaction would be made \r\n"
+          TrailTransactionPositionImpactAssessment:
+              type: string
+              format: String
+              description: "The projected impact the trial transaction will have on the managed position \r\n"
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          The make up of the values of the transaction
+          CurrencyAndAmountCurrencyAndAmount
+          (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)StandardISO20022 
+          ()
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: ' '
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    Date:
+        type: object
+        format: Date
+        description: >-
+          Key dates and times associated with the trial transaction
+          ISODateISODate
+          (https://www.iso20022.org/standardsrepository/type/ISODate)StandardISO20022
+          BM ()
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    TransactionApplication:
+        type: object
+        description: ''
+        properties:
+          TransactionReference:
+              type: string
+              format: Object
+              description: "A trial transaction that will impacts a managed position) \r\n"
+          TransactionType:
+              type: string
+              format: String
+              description: "The type of transaction that would be applied to the managed position \r\n"
+          TransactionRecord:
+              type: string
+              format: String
+              description: "Key details of the trial transaction \r\n"
+          TransactionAmount:
+              $ref: '#/components/schemas/Amount'
+          TransactionDate:
+              $ref: '#/components/schemas/Date'
+          TransactionBookingEntity:
+              type: string
+              format: String
+              description: "The booking entity where the trial transaction would be made \r\n"
+          TransactionPositionImpactAssessment:
+              type: string
+              format: String
+              description: "The projected impact the trial transaction will have on the managed position \r\n"
+    FinancialPositionState:
+        type: object
+        description: ''
+        properties:
+          PositionType:
+              type: string
+              format: String
+              description: "The type of position being monitored (e.g. consolidated customer exposure, geographic/sector exposure) \r\n"
+          PositionCustomerReference:
+              type: string
+              format: Object
+              description: "The customer or customer type associated with the position if applicable \r\n"
+          PositionSector:
+              type: string
+              format: String
+              description: "The sector or segment associated with the position if applicable \r\n"
+          PositionProductType:
+              type: string
+              format: String
+              description: "The product type or specific product associated with the position if applicable \r\n"
+          PositionDefinition:
+              type: string
+              format: String
+              description: "Description of the specification and purpose position monitoring (e.g. real-time limit, trend) \r\n"
+          PositionThresholdsLimits:
+              type: string
+              format: String
+              description: "Thresholds limits associated with the position \r\n"
+          PositionValue:
+              type: string
+              format: String
+              description: "The current, historical and if applicable projected values of the monitored position \r\n"
+          PositionNotificationArrangementReference:
+              type: string
+              format: Object
+              description: "Reference to a notification source requesting updates on position changes \r\n"
+          PositionNotificationArrangementRecord:
+              type: string
+              format: String
+              description: "The details maintained for the notification service \r\n"
+          PositionNotificationBusinessUnitReference:
+              type: string
+              format: Object
+              description: "Reference to the notified party \r\n"
+          PositionNotificationDetails:
+              type: string
+              format: String
+              description: "Details of the requirements/schedule for position notification \r\n"
+          PositionNotificationRecord:
+              type: string
+              format: String
+              description: "The position notification record generated as required \r\n"

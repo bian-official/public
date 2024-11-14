@@ -1,0 +1,1040 @@
+asyncapi: 2.6.0
+info:
+  title: Payment Order
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service domain
+    handles the bank-side processing of funds transfers, making the necessary
+    bank and regulatory checks on the involved parties and applying their
+    payment preferences where appropriate
+  version: 12.0.3
+channels:
+  PaymentOrderProcedure/Created:
+      description: ''
+      publish:
+        operationId: PaymentOrderProcedure-created
+        summary: PaymentOrderProcedure
+        message:
+          $ref: '#/components/messages/PaymentOrderProcedure'
+  PaymentOrderProcedure/Updated:
+      description: ''
+      publish:
+        operationId: PaymentOrderProcedure-updated
+        summary: PaymentOrderProcedure
+        message:
+          $ref: '#/components/messages/PaymentOrderProcedure'
+  OrderConfirmation/Created:
+      description: ''
+      publish:
+        summary: OrderConfirmation
+        message:
+          $ref: '#/components/messages/OrderConfirmation'
+  OrderConfirmation/Updated:
+      description: ''
+      publish:
+        summary: OrderConfirmation
+        message:
+          $ref: '#/components/messages/OrderConfirmation'
+  ExecutionInitiation/Created:
+      description: ''
+      publish:
+        summary: ExecutionInitiation
+        message:
+          $ref: '#/components/messages/ExecutionInitiation'
+  ExecutionInitiation/Updated:
+      description: ''
+      publish:
+        summary: ExecutionInitiation
+        message:
+          $ref: '#/components/messages/ExecutionInitiation'
+components:
+  messages:
+    PaymentOrderProcedure:
+        name: PaymentOrderProcedure
+        description: >-
+          Complete work tasks following a defined procedure in support of
+          general office activities and product and service delivery within
+          Payment Order. 
+        payload:
+          $ref: '#/components/schemas/PaymentOrderProcedure'
+    OrderConfirmation:
+        name: OrderConfirmation
+        description: 
+          The main worsteps to be followed in th eexecution of the procedure
+
+          Examples:- Invoice generation
+        payload:
+          $ref: '#/components/schemas/OrderConfirmation'
+    ExecutionInitiation:
+        name: ExecutionInitiation
+        description: 
+          The main worsteps to be followed in th eexecution of the procedure
+
+          Examples:- Invoice generation
+        payload:
+          $ref: '#/components/schemas/ExecutionInitiation'
+  schemas:
+    OrderConfirmation:
+        type: object
+        description: ''
+        properties:
+          PaymentOrderComplianceCheckType:
+              $ref: '#/components/schemas/Text'
+          PaymentOrderComplianceCheckResult:
+              $ref: '#/components/schemas/Text'
+          OrderConfirmationTaskResult:
+              $ref: '#/components/schemas/Workstep'
+    Text:
+        type: object
+        format: Text
+        description: ' '
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    Workstep:
+        type: object
+        format: Workstep
+        description: "Details of the overall confirmation checking process \r\n"
+        properties:
+          WorkstepResult:
+              $ref: '#/components/schemas/Text'
+          WorkstepType:
+              enum:
+                  -  Worksteptypevalues
+              format: Workstep
+          WorkstepDescription:
+              $ref: '#/components/schemas/Text'
+          WorkstepDateTime:
+              $ref: '#/components/schemas/Datetime'
+          WorkstepStatus:
+              $ref: '#/components/schemas/Status'
+    Datetime:
+        type: object
+        format: Datetime
+        description: ' '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    Status:
+        type: object
+        format: Status
+        description: ' '
+        properties:
+          StatusReason:
+              $ref: '#/components/schemas/Text'
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          StatusInvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: ' '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+          Datetimeperiod:
+              type: string
+              format: DataType
+              description: >-
+                Time span defined by a start date and time, and an end date and
+                time. (ISO20022) 
+    Involvedparty:
+        type: object
+        format: Involvedparty
+        description: 'Entity that assigns and manages the identification. '
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          Involvedparty:
+              type: string
+              format: DataType
+              description: 'Party who plays a specific role  '
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+    Party:
+        type: object
+        format: Party
+        description: ' '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+          PartyType:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Party
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+          PartyLegalStructureType:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Party
+    Name:
+        type: object
+        format: Name
+        description: ' '
+        properties:
+          Name:
+              type: string
+              format: DataType
+              description: >-
+                A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+        type: object
+        format: Partyidentification
+        description: ' '
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentification
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+          Partyidentification:
+              type: string
+              format: DataType
+              description: ''
+    Identifier:
+        type: object
+        format: Identifier
+        description: ' '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Partyrole:
+        type: object
+        format: Partyrole
+        description: ' '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyrole
+    ExecutionInitiation:
+        type: object
+        description: ''
+        properties:
+          PaymentExecutionProcedureInstanceReference:
+              $ref: '#/components/schemas/PaymentExecutionProcedure'
+          PaymentExecutionProcedureInstanceStatus:
+              $ref: '#/components/schemas/Status'
+          ExecutionInitiationTaskResult:
+              $ref: '#/components/schemas/Workstep'
+    PaymentExecutionProcedure:
+        type: object
+        format: PaymentExecutionProcedure
+        description: "The reference to the payment execution processing task \r\n"
+        properties:
+          PaymentExecutionProcedure:
+              type: string
+              format: Class
+              description: ''
+    PaymentOrderProcedure:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionInitiatorReference:
+              $ref: '#/components/schemas/Involvedparty'
+          PayerReference:
+              $ref: '#/components/schemas/Involvedparty'
+          PayerBankReference:
+              $ref: '#/components/schemas/Involvedparty'
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+          PayeeReference:
+              $ref: '#/components/schemas/Involvedparty'
+          PayeeBankReference:
+              $ref: '#/components/schemas/Involvedparty'
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+          Amount:
+              $ref: '#/components/schemas/Amount'
+          Currency:
+              $ref: '#/components/schemas/Currencycode'
+          DateType:
+              enum:
+                  -  Requestedexecutiondate
+                  -  Acceptancedatetime
+                  -  Creationdate
+                  -  Valuedate
+                  -  Duedate
+                  -  Expirydate
+          Date:
+              $ref: '#/components/schemas/Datetime'
+          PaymentMechanismType:
+              enum:
+                  -  ACH
+                  -  SWIFT
+          PaymentInstructions:
+              $ref: '#/components/schemas/PaymentInstruction'
+          InterestedParties:
+              $ref: '#/components/schemas/Involvedparty'
+          ProductType:
+              enum:
+                  -  CurrentAccountAgreement
+                  -  SavingsAccountAgreement
+                  -  BrokeredProductAgreement
+                  -  ConsumerLoanAgreement
+                  -  MortgageLoanAgreement
+                  -  DirectDebitServiceAgreement
+          SettlementInstructions:
+              $ref: '#/components/schemas/SettlementInstruction'
+          PaymentProcessingConfiguration:
+              $ref: '#/components/schemas/PaymentProcessingArrangementModality'
+    ProductAgreement:
+        type: object
+        format: ProductAgreement
+        description: "Reference to the payee's account (the target for the funds) \r\n"
+        properties:
+          Type:
+              enum:
+                  -  CurrentAccountAgreement
+                  -  SavingsAccountAgreement
+                  -  BrokeredProductAgreement
+                  -  ConsumerLoanAgreement
+                  -  MortgageLoanAgreement
+                  -  DirectDebitServiceAgreement
+              format: ProductAgreement
+          ProductReference:
+              $ref: '#/components/schemas/Bankingproduct'
+          AgreementReference:
+              $ref: '#/components/schemas/Agreement'
+          ProductAgreement:
+              type: string
+              format: Class
+              description: >-
+                An agreement with the subject matter of the product between
+                Customer and Provider. 
+
+                An agreement between a Financial Service Provider and its
+                customer for a sold product. 
+                 
+    Bankingproduct:
+        type: object
+        format: Bankingproduct
+        description: ' '
+        properties:
+          ProductIdentification:
+              $ref: '#/components/schemas/Productidentification'
+          ProductType:
+              enum:
+                  -  LoanProduct
+                  -  CurrentAccountProduct
+                  -  SavingAccountProduct
+                  -  BrokeredProduct
+                  -  TermDepositProduct
+              format: Bankingproduct
+          ProductLifecycleStatus:
+              $ref: '#/components/schemas/Productlifecyclestatus'
+          ProductPriority:
+              $ref: '#/components/schemas/Text'
+          ProductDescription:
+              $ref: '#/components/schemas/Text'
+          ProductVersion:
+              $ref: '#/components/schemas/Text'
+          ProductName:
+              $ref: '#/components/schemas/Name'
+    Productidentification:
+        type: object
+        format: Productidentification
+        description: 'The identifier of product e.g. ISIN Code. '
+        properties:
+          ProductIdentification:
+              $ref: '#/components/schemas/Identifier'
+          ProductIdentificationType:
+              enum:
+                  -  ISINCode
+                  -  PackageCode
+                  -  Buyersitemnumber
+                  -  EAN
+                  -  Harmonizedtariffcodename
+                  -  Manufacturersitemnumber
+                  -  Modelnumber
+                  -  Partnumber
+                  -  Quotacategory
+                  -  Stylenumber
+                  -  Suppliersitemnumber
+                  -  Universalproductcode
+              format: Productidentification
+    Productlifecyclestatus:
+        type: object
+        format: Productlifecyclestatus
+        description: >-
+          Refers to the lifecycle of a product (e.g., initiated, announced,
+          active, obsolete, withdrawn). 
+        properties:
+          ProductLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          ProductLifecycleStatusType:
+              enum:
+                  -  Initiated
+                  -  Announced
+                  -  Sold
+                  -  Obsolete
+                  -  Active
+              format: Productlifecyclestatus
+    Agreement:
+        type: object
+        format: Agreement
+        description: ' '
+        properties:
+          AgreementSignedDate:
+              $ref: '#/components/schemas/Date'
+          AgreementType:
+              enum:
+                  -  CustomerAgreement
+                  -  SupplierAgreement
+                  -  BrokerAgreement
+                  -  SalesAgreement
+                  -  PurchaseAgreement
+                  -  MaintenanceAgreement
+                  -  ProductAgreement
+                  -  ProductSalesAgreement
+                  -  ResourceAgreement
+              format: Agreement
+          AgreementValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          AgreementVersion:
+              $ref: '#/components/schemas/Text'
+          AgreementStatus:
+              $ref: '#/components/schemas/Agreementlifecyclestatus'
+          AgreementSubjectMatter:
+              $ref: '#/components/schemas/Text'
+          AgreementIdentification:
+              $ref: '#/components/schemas/Identifier'
+          AgreementDate:
+              $ref: '#/components/schemas/Datetime'
+          AgreementDescription:
+              $ref: '#/components/schemas/Text'
+    Date:
+        type: object
+        format: Date
+        description: 'Date on which the agreement was signed by all parties. (ISO20022) '
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    Agreementlifecyclestatus:
+        type: object
+        format: Agreementlifecyclestatus
+        description: >-
+          A characteristic of agreement which refers to the LifecycleStatus of
+          agreement (e.g., potential, offered, confirmed, completed, signed,
+          terminated). 
+        properties:
+          AgreementLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          AgreementLifecycleStatusType:
+              enum:
+                  -  Offered
+                  -  Confirmed
+                  -  Completed
+                  -  Signed
+                  -  Terminated
+                  -  Rejected
+              format: Agreementlifecyclestatus
+    Amount:
+        type: object
+        format: Amount
+        description: >-
+          Amount of money moved between the instructing agent and the instructed
+          agent. (ISO20022) 
+        properties:
+          AmountValue:
+              $ref: '#/components/schemas/Value'
+          AmountCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          DecimalPointPosition:
+              type: string
+              format: String
+              description: 
+                Decimal point position starts calulating from the right
+                 
+          AmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: Amount
+          Amount:
+              type: string
+              format: DataType
+              description: >-
+                Number of monetary units specified in a currency, where the unit
+                of currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+                The decimal seperator is a dot.
+
+
+
+                Number of monetary units specified in a currency, where the unit
+                of currency is explicit and compliant with ISO 4217. The decimal
+                separator is a dot. (ISO20022)
+
+                Note: A zero amount is considered a positive amount.
+
+                total number of digits: 18
+
+                number of digits in fractional part: 5
+
+                minInclusive: 0 
+    Currencycode:
+        type: object
+        format: Currencycode
+        description: >-
+          Amount Currency of money moved between the instructing agent and the
+          instructed agent. (ISO20022) 
+        properties:
+          Currencycode:
+              type: string
+              format: DataType
+              description: >-
+                A code identifying a currency according to ISO-4217.
+
+                A currency is a system of money in general use in a particular
+                country.
+
+
+                Code allocated to a currency, by a maintenance agency, under an
+                international identification scheme as described in the latest
+                edition of the international standard ISO 4217 "Codes for the
+                representation of currencies and funds". Valid currency codes
+                are registered with the ISO 4217 Maintenance Agency, and consist
+                of three contiguous letters. (ISO20022)
+
+                 
+    PaymentInstruction:
+        type: object
+        format: PaymentInstruction
+        description: >-
+          Any specific payment instructions as appropriate
+          PaymentInstructionPaymentInstruction
+          (https://www.iso20022.org/standardsrepository/type/PaymentInstruction)StandardISO20022
+          BM ()
+        properties:
+          PaymentInstructionDirectionType:
+              $ref: '#/components/schemas/Text'
+          PaymentInstructionType:
+              enum:
+                  -  Cashtransaction
+                  -  Domesticpayment
+                  -  Domestichighvaluepayment
+                  -  Domesticprioritypayment
+                  -  Crossborderpayment
+                  -  Crossborderprioritypayment
+                  -  Crossborderhighvaluepayment
+                  -  Thirdcurrencypayment
+                  -  Thirdcurrencyprioritypayment
+                  -  Tradesettlementpayment
+                  -  Foreignexchange
+                  -  Equivalentamount
+                  -  Loan
+                  -  Loanrepayment
+                  -  Securities
+                  -  Lockbox
+                  -  Dividend
+                  -  Crossedcheque
+                  -  Opencheque
+                  -  Ordercheque
+                  -  Circularcheque
+                  -  Travellerscheques
+                  -  Bankdraft
+                  -  Cashletter
+                  -  Documentarycredit
+                  -  Billofexchange
+                  -  Collection
+                  -  Cashmanagementtransfer
+                  -  Sweepaccount
+                  -  Topaccount
+                  -  Zerobalanceaccount
+                  -  Standingfacilities
+                  -  Swiftpayservicelevelcredit
+                  -  Priorityservicelevelcredit
+                  -  Standardservicelevelcredit
+                  -  Liquiditytransfer
+                  -  Advancepayment
+                  -  Valuedateadjustment
+                  -  Dvpgross
+                  -  Dvpnet
+                  -  Netting
+                  -  Limitpayment
+                  -  Backup
+                  -  Expresspayment
+                  -  Centralbankoperation
+                  -  Clspayment
+                  -  Eurodomesticpayment
+                  -  Agriculturaltransfer
+                  -  Alimonypayment
+                  -  Balanceretail
+                  -  Bonuspayment.
+                  -  Brokeragefee
+                  -  Capitalbuilding
+                  -  Charitypayment
+                  -  Childbenefit
+                  -  Commercialcredit
+                  -  Commission
+                  -  Commoditytransfer
+                  -  Costs
+                  -  Copyright
+                  -  Governmentpayment
+                  -  Insurancepremium
+                  -  Intracompanypayment
+                  -  Interest
+                  -  Licensefee
+                  -  Metals
+                  -  Pensionpayment
+                  -  Purchasesaleofgoods
+                  -  Refund
+                  -  Rent
+                  -  Royalties
+                  -  Purchasesaleofservices
+                  -  Salarypayment
+                  -  Socialsecuritybenefit
+                  -  Standingorder
+                  -  Subscription
+                  -  Treasurystatepayment
+                  -  Valueaddedtaxpayment
+                  -  Withholdingtax
+                  -  Taxpayment
+                  -  Miscellaneous
+                  -  Overnightdeposit
+                  -  Marginallending
+                  -  Other
+                  -  Upfront
+                  -  Unwind
+                  -  Principalexchange
+              format: PaymentInstruction
+          PaymentInstructionRequestedMechanism:
+              $ref: '#/components/schemas/Text'
+          PaymentInstructionDatetimeType:
+              enum:
+                  -  Requestedexecutiondate
+                  -  Acceptancedatetime
+                  -  Creationdate
+                  -  Valuedate
+                  -  Duedate
+                  -  Expirydate
+              format: PaymentInstruction
+          PaymentInstructionProcessingValidityTime:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PaymentInstructionPriority:
+              enum:
+                  -  Urgent
+                  -  High
+                  -  Normal
+                  -  Low
+              format: PaymentInstruction
+          PaymentInstructionClearingChannel:
+              enum:
+                  -  Realtimenetsettlementsystem
+                  -  Masspaymentnetsystem
+                  -  Booktransfer
+              format: PaymentInstruction
+          PaymentCreditDebitIndicator:
+              enum:
+                  -  Debit
+                  -  Credit
+              format: PaymentInstruction
+          PaymentInstructionStatus:
+              $ref: '#/components/schemas/Paymentinstructionstatus'
+          PaymentInstructionAmount:
+              $ref: '#/components/schemas/Amount'
+          PaymentInstructionDatetime:
+              $ref: '#/components/schemas/Datetime'
+          PaymentInstructionAmountType:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+              format: PaymentInstruction
+    Paymentinstructionstatus:
+        type: object
+        format: Paymentinstructionstatus
+        description: ' '
+        properties:
+          PaymentInstructionStatus:
+              $ref: '#/components/schemas/Status'
+          PaymentInstructionStatusType:
+              enum:
+                  -  Pendingprocessing
+                  -  Acknowledgedaccepted
+                  -  Rejected
+                  -  Accepted
+                  -  Completed
+                  -  Notreceived
+                  -  Cancelled
+                  -  Beingcancelled
+                  -  Receivedbyissuerorregistrar
+                  -  Pending
+                  -  Standinginstruction
+                  -  Queued
+                  -  Cancelledbysubcustodian
+                  -  Forwarded
+              format: Paymentinstructionstatus
+    SettlementInstruction:
+        type: object
+        format: SettlementInstruction
+        description: >-
+          Requested settlement instructions, may be overridden by execution
+          CashSettlementCashSettlement
+          (https://www.iso20022.org/standardsrepository/type/CashSettlement)StandardISO20022
+          BM ()
+        properties:
+          SettlementInstructionIdentifier:
+              $ref: '#/components/schemas/Identifier'
+          InterbankSettlementAmount:
+              $ref: '#/components/schemas/Amount'
+          InterbankSettlementCurrency:
+              $ref: '#/components/schemas/Currencycode'
+          CreditDateTime:
+              $ref: '#/components/schemas/Datetime'
+          DebitDateTime:
+              $ref: '#/components/schemas/Datetime'
+    PaymentProcessingArrangementModality:
+        type: object
+        format: PaymentProcessingArrangementModality
+        description: >-
+          Specifies how a payment must be processed, for instance through which
+          specific clearing channel. (ISO20022)
+          PaymentProcessingPaymentProcessing
+          (https://www.iso20022.org/standardsrepository/type/PaymentProcessing)StandardISO20022
+          BM ()
+        properties:
+          PaymentProcessingPriority:
+              enum:
+                  -  Urgent
+                  -  High
+                  -  Normal
+                  -  Low
+              format: PaymentProcessingArrangementModality
+          PaymentProcessingArrangement:
+              $ref: '#/components/schemas/Arrangement'
+          PaymentProcessingClearingChannel:
+              enum:
+                  -  Realtimenetsettlementsystem
+                  -  Masspaymentnetsystem
+                  -  Booktransfer
+              format: PaymentProcessingArrangementModality
+          PaymentLocalInstument:
+              enum:
+                  -  Batchpaymentsaruba
+                  -  Instantpaymentsaruba
+                  -  Credittransfers
+                  -  Preauthoriseddirectdebitat
+                  -  Cashperpost
+                  -  Returnedcredittransfers
+                  -  Truncatedcredittransfers
+                  -  Directdebits
+                  -  Returneddirectdebits
+                  -  Truncatedchecks
+                  -  Revokedcredittransfers
+                  -  Revokeddirectdebits
+                  -  Revokedreturneddirectdebits
+                  -  Revokedtruncatedchecks
+                  -  Cardclearing
+                  -  Preauthoriseddirectdebitde
+                  -  Imagebasedchequecollection
+                  -  Paperlesschequecollection
+                  -  Backuppayment
+                  -  Mandatedpayment
+                  -  Dutchdomesticbulkpayment
+                  -  Dutchurgentpayment
+                  -  Incidentmanagementcorrection
+                  -  Masspaymentbeneficiary
+                  -  Masspaymentours
+                  -  Masspaymentshared
+                  -  Standingorder
+                  -  Oneoffauthorisation
+                  -  Oneoffauthorisationcharities
+                  -  Standingauthorisationgeneral
+                  -  Convertedbankpayment
+                  -  Businesspayment
+                  -  Overnight
+                  -  Paymentwitheri
+                  -  Sameday
+                  -  Corenorefund
+                  -  Directdebitfixedamount
+                  -  Sepadirectdebitcore
+                  -  Sepab2bdirectdebitami
+                  -  Sepacored1directdebitami
+                  -  Sepacoredirectdebitami
+                  -  Sepafadirectdebitami
+                  -  Instantcredittransfer
+                  -  Authenticateddirectdebit
+                  -  Unauthenticateddirectdebit
+                  -  Cashconcentrationintragroup
+                  -  Banktransfer
+                  -  Checksamedaysettlementwire
+                  -  Customertransfer
+                  -  Customertransferplus
+                  -  Deposittosendersaccount
+                  -  Fedfundsreturned
+                  -  Fedfundssold
+                  -  Nonvalueservicemessage
+                  -  Internationalach
+                  -  Corporatetradeexchange
+                  -  Customerinitiatedentry
+                  -  Representedcheckentry
+                  -  Accountsreceivablecheck
+                  -  Internetinitiatedentry
+                  -  Pointofpurchase
+                  -  Pointofsale
+                  -  Telephoneinitiatedentry
+              format: PaymentProcessingArrangementModality
+          PaymentCategoryPurpose:
+              enum:
+                  -  Bonuspayment
+                  -  Cashmanagementtransfer
+                  -  Cardbulkclearing
+                  -  Creditcardpayment
+                  -  Tradesettlementpayment
+                  -  Debitcardpayment
+                  -  Dividend
+                  -  Deliveragainstpayment
+                  -  Epayment
+                  -  Feecollection
+                  -  Governmentpayment
+                  -  Hedging
+                  -  Irrevocablecreditcardpayment
+                  -  Irrevocabledebitcardpayment
+                  -  Intracompanypayment
+                  -  Interest
+                  -  Loan
+                  -  Commercial
+                  -  Consumer
+                  -  Otherpayment
+                  -  Pensionpayment
+                  -  Represented
+                  -  Receiveagainstpayment
+                  -  Salarypayment
+                  -  Securities
+                  -  Socialsecuritybenefit
+                  -  Supplierpayment
+                  -  Taxpayment
+                  -  Trade
+                  -  Treasurypayment
+                  -  Valueaddedtaxpayment
+                  -  Withholding
+              format: PaymentProcessingArrangementModality
+          PaymentSequence:
+              enum:
+                  -  First
+                  -  Recurring
+                  -  Final
+                  -  Oneoff
+                  -  Represented
+              format: PaymentProcessingArrangementModality
+    Arrangement:
+        type: object
+        format: Arrangement
+        description: ' '
+        properties:
+          ArrangementAction:
+              $ref: '#/components/schemas/Action'
+          ArrangementStartDate:
+              $ref: '#/components/schemas/Datetime'
+          ArrangementEndDate:
+              $ref: '#/components/schemas/Datetime'
+          ArrangementStatus:
+              $ref: '#/components/schemas/Arrangementlifecyclestatus'
+          ArrangementSubjectMatter:
+              $ref: '#/components/schemas/Subject'
+          Arrangementtype:
+              enum:
+                  -  SweepArrangement
+                  -  WithdrawalArrangement
+                  -  DepositArrangement
+                  -  InterestArrangement
+                  -  FeeArrangement
+                  -  LienArrangement
+                  -  InformationArrangement
+                  -  PaymentArrangement
+                  -  EntitlementArrangement
+                  -  PeriodArrangement
+                  -  CollateralArrangement
+                  -  LimitArrangement
+                  -  AccessArrangement
+                  -  CardPaymentArrangement
+                  -  StandingOrderArrangement
+                  -  OverdraftArrangement
+                  -  RepaymentArrangement
+                  -  StatementArrangement
+                  -  CreditTransferArrangement
+                  -  ProductAndServiceArrangement
+                  -  FactoringArrangement
+                  -  RolloverArrangement
+                  -  RestructuringArrangement
+                  -  InsuranceArrangement
+                  -  CollectionArrangement
+                  -  UnderwritingArrangement
+                  -  TerminationArrangement
+                  -  MaturityArrangement
+              format: Arrangement
+    Action:
+        type: object
+        format: Action
+        description: ' '
+        properties:
+          ActionType:
+              enum:
+                  -  Initiate
+                  -  Execute
+                  -  Create
+                  -  Transfer
+                  -  Pay
+                  -  Deliver
+                  -  Apply
+                  -  Calculate
+              format: Action
+    Arrangementlifecyclestatus:
+        type: object
+        format: Arrangementlifecyclestatus
+        description: >-
+          A characteristic of arrangement which refers to the LifecycleStatus of
+          arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+          terminated, fulfilled, etc.) 
+        properties:
+          ArrangementLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          ArrangementLifecycleStatusType:
+              enum:
+                  -  Requested
+                  -  Proposed
+                  -  Offered
+                  -  Accepted
+                  -  Cancelled
+                  -  Fulfilled
+                  -  Terminated
+              format: Arrangementlifecyclestatus
+    Subject:
+        type: object
+        format: Subject
+        description: ' '
+        properties:
+          Subject:
+              type: string
+              format: Class
+              description: >-
+                A thing that is discussed or dealt whit in agreement/arrangement
+                about doing or not doing (as action) something. 

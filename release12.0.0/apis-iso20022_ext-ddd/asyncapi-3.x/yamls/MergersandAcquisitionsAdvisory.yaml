@@ -1,0 +1,747 @@
+asyncapi: 2.6.0
+info:
+  title: Mergers and Acquisitions Advisory
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service Domain
+    handles mergers and acquisition, IPO, MBO and LBO projects with the bank
+    acting in the lead and/or subordinate role
+  version: 12.0.3
+channels:
+  MergersAndAcquisitionAdvice/Created:
+      description: ''
+      publish:
+        operationId: MergersAndAcquisitionAdvice-created
+        summary: MergersAndAcquisitionAdvice
+        message:
+          $ref: '#/components/messages/MergersAndAcquisitionAdvice'
+  MergersAndAcquisitionAdvice/Updated:
+      description: ''
+      publish:
+        operationId: MergersAndAcquisitionAdvice-updated
+        summary: MergersAndAcquisitionAdvice
+        message:
+          $ref: '#/components/messages/MergersAndAcquisitionAdvice'
+  M&ACandidateSelectionandEvaluation/Created:
+      description: ''
+      publish:
+        summary: M&ACandidateSelectionandEvaluation
+        message:
+          $ref: '#/components/messages/MACandidateSelectionandEvaluation'
+  M&ACandidateSelectionandEvaluation/Updated:
+      description: ''
+      publish:
+        summary: M&ACandidateSelectionandEvaluation
+        message:
+          $ref: '#/components/messages/MACandidateSelectionandEvaluation'
+  MergersandAcquisitionsAdvisoryOutcome/Created:
+      description: ''
+      publish:
+        summary: MergersandAcquisitionsAdvisoryOutcome
+        message:
+          $ref: '#/components/messages/MergersandAcquisitionsAdvisoryOutcome'
+  MergersandAcquisitionsAdvisoryOutcome/Updated:
+      description: ''
+      publish:
+        summary: MergersandAcquisitionsAdvisoryOutcome
+        message:
+          $ref: '#/components/messages/MergersandAcquisitionsAdvisoryOutcome'
+  MergersAndAcquisitionAdvice/Notify:
+      subscribe:
+        message:
+          $ref: '#/components/messages/MergersAndAcquisitionAdviceNotify'
+  M&ACandidateSelectionandEvaluation/Notify:
+      subscribe:
+        message:
+          $ref: '#/components/messages/M&ACandidateSelectionandEvaluationNotify'
+components:
+  messages:
+    MergersAndAcquisitionAdvice:
+        name: MergersAndAcquisitionAdvice
+        description: >-
+          Provide specialist advice and/or support as an ongoing service or for
+          a specific task/event within Mergers and Acquisitions Advisory
+        payload:
+          $ref: '#/components/schemas/MergersAndAcquisitionAdvice'
+    M&ACandidateSelectionandEvaluation:
+        name: M&ACandidateSelectionandEvaluation
+        description: >-
+          The M&A Candidate Selection and Evaluation Topic advice is one
+          specific topic that can be included in providing M&A Candidate
+          Selection and Evaluation Topic
+        payload:
+          $ref: '#/components/schemas/M&ACandidateSelectionandEvaluation'
+    MergersandAcquisitionsAdvisoryOutcome:
+        name: MergersandAcquisitionsAdvisoryOutcome
+        description: >-
+          The M&A Candidate Selection and Evaluation Topic advice is one
+          specific topic that can be included in providing M&A Candidate
+          Selection and Evaluation Topic
+        payload:
+          $ref: '#/components/schemas/MergersandAcquisitionsAdvisoryOutcome'
+    MergersAndAcquisitionAdviceNotify:
+        name: MergersAndAcquisitionAdviceNotify
+        payload:
+          $ref: '#/components/schemas/MergersAndAcquisitionAdviceNotify'
+    M&ACandidateSelectionandEvaluationNotify:
+        name: M&ACandidateSelectionandEvaluationNotify
+        payload:
+          $ref: '#/components/schemas/M&ACandidateSelectionandEvaluationNotify'
+  schemas:
+    M&ACandidateSelectionandEvaluation:
+        type: object
+        description: ''
+        properties:
+          MergersAndAcquisitionAdviceReference:
+              type: string
+              format: Object
+              description: "Reference to M&A Candidate Selection and Evaluation Topic \r\n"
+          M&ACandidateSelectionandEvaluationTopicReference:
+              type: string
+              format: Object
+              description: "Reference to M&A Candidate Selection and Evaluation Topic \r\n"
+          M&ACandidateSelectionandEvaluationTopicType:
+              $ref: '#/components/schemas/Text'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          BusinessUnitEmployeeReference:
+              $ref: '#/components/schemas/Involvedparty'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
+    Text:
+        type: object
+        format: Text
+        description: ' '
+        properties:
+          Text:
+              type: string
+              format: DataType
+              description: >-
+                Text is a character string such as a finite set of characters
+                generally in the form of words of a language. (UN/CEFACT) 
+    BusinessService:
+        type: object
+        format: BusinessService
+        description: "The M&A Candidate Selection and Evaluation Topic specific Business Service \r\n"
+        properties:
+          BusinessServiceType:
+              enum:
+                  -  Businessservicetypevalues
+              format: BusinessService
+    Involvedparty:
+        type: object
+        format: Involvedparty
+        description: 'Entity that assigns and manages the identification. '
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          Involvedparty:
+              type: string
+              format: DataType
+              description: 'Party who plays a specific role  '
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+    Party:
+        type: object
+        format: Party
+        description: ' '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+          PartyType:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Party
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+          PartyLegalStructureType:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Party
+    Name:
+        type: object
+        format: Name
+        description: ' '
+        properties:
+          Name:
+              type: string
+              format: DataType
+              description: >-
+                A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+        type: object
+        format: Datetime
+        description: 'Date and time at which the range ends. (ISO20022) '
+        properties:
+          DateTimeContent:
+              type: string
+              format: String
+              description: ''
+          TimeZoneCode:
+              type: string
+              format: String
+              description: ''
+          DaylightSavingIndicator:
+              type: string
+              format: String
+              description: ''
+          Datetime:
+              type: string
+              format: DataType
+              description: >-
+                A date time identifies a date and time of day to various common
+                resolutions: year, month, week, day, hour, minute, second, and
+                fraction of second. (UN/CEFACT)
+
+
+                A particular point in the progression of time defined by a
+                mandatory date and a mandatory time component, expressed in
+                either UTC time format (YYYY-MM-DDThh:mm:ss.sssZ), local time
+                with UTC offset format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or
+                local time format (YYYY-MM-DDThh:mm:ss.sss). These
+                representations are defined in "XML Schema Part 2: Datatypes
+                Second Edition W3C Recommendation 28 October 2004" which is
+                aligned with ISO 8601. (ISO20022)
+
+                Note on the time format:
+
+                1) beginning / end of calendar day
+
+                00:00:00  -  the beginning of a calendar day
+
+                24:00:00  -  the end of a calendar day
+
+                2) fractions of second in time format
+
+                Decimal fractions of seconds may be included. In this case, the
+                involved parties shall agree on the maximum number of digits
+                that are allowed. 
+    Partyidentification:
+        type: object
+        format: Partyidentification
+        description: ' '
+        properties:
+          PartyIdentificationType:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentification
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+          Partyidentification:
+              type: string
+              format: DataType
+              description: ''
+    Identifier:
+        type: object
+        format: Identifier
+        description: ' '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+    Value:
+        type: object
+        format: Value
+        description: ' '
+        properties:
+          Value:
+              type: string
+              format: DataType
+              description: >-
+                Data or set of data 
+
+
+                A value is the concept of worth in general that is assigned or
+                is determined by measurement, assessment or calculation.
+                (UN/CEFACT) 
+    Partyrole:
+        type: object
+        format: Partyrole
+        description: ' '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          PartyInvolvementType:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyrole
+    Datetimeperiod:
+        type: object
+        format: Datetimeperiod
+        description: ' '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+          Datetimeperiod:
+              type: string
+              format: DataType
+              description: >-
+                Time span defined by a start date and time, and an end date and
+                time. (ISO20022) 
+    Condition:
+        type: object
+        format: Condition
+        description: "The required status/situation before the advice/recommendation can be provided \r\n"
+        properties:
+          Condition:
+              type: string
+              format: Class
+              description: >-
+                Condition is a premise upon which the fulfillment of an
+                agreement depends 
+
+
+                General and special arrangements, provisions, requirements,
+                rules, specifications, and standards that form an integral part
+                of an agreement or contract.
+
+
+                Read more:
+                http://www.businessdictionary.com/definition/terms-and-conditions.html
+
+                 
+    Schedule:
+        type: object
+        format: Schedule
+        description: "The timing and key actions/milestones involved in providing the advice/recommendation \r\n"
+        properties:
+          ScheduleType:
+              type: string
+              format: String
+              description: ''
+    MergersandAcquisitionsAdvisoryOutcome:
+        type: object
+        description: ''
+        properties:
+          MergersandAcquisitionsAdvisoryTask:
+              $ref: '#/components/schemas/Task'
+          MergersandAcquisitionsAdvisoryProject:
+              $ref: '#/components/schemas/Project'
+          MergersandAcquisitionsAdvisoryWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+          MergersandAcquisitionsAdvisoryWorkforceAnalysis:
+              $ref: '#/components/schemas/Analysis'
+          MergersandAcquisitionsAdvisoryWorkforceAssignment:
+              $ref: '#/components/schemas/Assignment'
+    Task:
+        type: object
+        format: Task
+        description: " \r\n"
+        properties:
+          Task:
+              type: string
+              format: DataType
+              description: ''
+    Project:
+        type: object
+        format: Project
+        description: " \r\n"
+        properties:
+          ProjectName:
+              type: string
+              format: String
+              description: 'The name of project '
+          ProjectType:
+              type: string
+              format: String
+              description: 'A classification of the project '
+          ProjectDescription:
+              type: string
+              format: String
+              description: 'A description of the scope, goal and make-up of the project '
+          ProjectOrganisation:
+              type: string
+              format: String
+              description: ''
+          ProjectSchedule:
+              type: string
+              format: String
+              description: ''
+          ProjectDateTime:
+              type: string
+              format: String
+              description: ''
+    Workproduct:
+        type: object
+        format: Workproduct
+        description: " \r\n"
+        properties:
+          WorkProductType:
+              enum:
+                  -  Document
+                  -  WorkingPaper
+                  -  ActivityLog
+                  -  Form
+                  -  File
+                  -  MeetingSchedule
+                  -  MeetingMinute
+              format: Workproduct
+          WorkProductIdentifoication:
+              type: string
+              format: String
+              description: ''
+    Analysis:
+        type: object
+        format: Analysis
+        description: " \r\n"
+        properties:
+          AnalysisType:
+              enum:
+                  -  PerformanceAnalysis
+                  -  ActivityAnalysis
+              format: Analysis
+          AnalysisResult:
+              $ref: '#/components/schemas/Text'
+          AnalysisPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          AnalysisDocument:
+              $ref: '#/components/schemas/Document'
+          AnalysisDateTime:
+              $ref: '#/components/schemas/Datetime'
+          AnalysisSpecification:
+              $ref: '#/components/schemas/Text'
+    Document:
+        type: object
+        format: Document
+        description: ' '
+        properties:
+          DocumentIdentification:
+              $ref: '#/components/schemas/Identifier'
+          DocumentVersion:
+              type: string
+              format: Number
+              description: ''
+          DocumentType:
+              enum:
+                  -  Meteredserviceinvoice
+                  -  Commercialinvoice
+                  -  Creditnote
+                  -  Debitnote
+                  -  Hireinvoice
+                  -  Selfbilledinvoice
+                  -  Remittanceadvicemessage
+                  -  Relatedpaymentinstruction
+                  -  Commercialcontract
+                  -  Foreignexchangedealreference
+                  -  Statementofaccount
+                  -  Dispatchadvice
+                  -  Purchaseorder
+                  -  Billoflading
+                  -  Voucher
+                  -  Accountreceivableopenitem
+                  -  Cashierreceipt
+                  -  Customerreceipt
+                  -  Journal
+                  -  Salereceipt
+              format: Document
+          DocumentStatus:
+              $ref: '#/components/schemas/Status'
+          DocumentDateTime:
+              $ref: '#/components/schemas/Datetime'
+          DocumentName:
+              $ref: '#/components/schemas/Name'
+          DocumentDateTimeType:
+              enum:
+                  -  CreationDate
+                  -  CapturingDate
+                  -  VersionDate
+                  -  ValueDate
+                  -  IssueDate
+              format: Document
+          DocumentPurpose:
+              $ref: '#/components/schemas/Text'
+          DocumentFormat:
+              $ref: '#/components/schemas/Text'
+          DocumentSubject:
+              $ref: '#/components/schemas/Text'
+          DocumentDescription:
+              $ref: '#/components/schemas/Text'
+          DocumentValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+    Status:
+        type: object
+        format: Status
+        description: 'Status of the document (e.g. delivered, paid, etc.). ISO20022 '
+        properties:
+          StatusReason:
+              $ref: '#/components/schemas/Text'
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+          StatusInvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+          Status:
+              type: string
+              format: DataType
+              description: >-
+                A characteristic that describe the object by referring to a
+                state transition in its lifecycle. 
+    Assignment:
+        type: object
+        format: Assignment
+        description: " \r\n"
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+          SubjectMatter:
+              type: string
+              format: Object
+              description: ''
+    MergersAndAcquisitionAdvice:
+        type: object
+        description: ''
+        properties:
+          MergersAndAcquisitionAdviceSubjectAreaType:
+              $ref: '#/components/schemas/Text'
+          MergersAndAcquisitionAdviceParameterType:
+              $ref: '#/components/schemas/Text'
+          MergersAndAcquisitionAdviceSelectedOption:
+              $ref: '#/components/schemas/Feature'
+          MergersAndAcquisitionAdviceRequest:
+              $ref: '#/components/schemas/Instruction'
+          MergersAndAcquisitionAdviceUsageLog:
+              $ref: '#/components/schemas/Log'
+          MergersAndAcquisitionAdviceFeedback:
+              $ref: '#/components/schemas/Text'
+          MergersAndAcquisitionAdviceType:
+              $ref: '#/components/schemas/Actiontype'
+          MergersAndAcquisitionAdviceReference:
+              type: string
+              format: Object
+              description: "An unique reference to an item or an occurrence of Mergers And Acquisition Advice \r\n"
+    Feature:
+        type: object
+        format: Feature
+        description: "A selected option, identified by Parameter Type \r\n"
+        properties:
+          FeatureType:
+              $ref: '#/components/schemas/Text'
+          FeatureIdentification:
+              $ref: '#/components/schemas/Identifier'
+          FeatureName:
+              $ref: '#/components/schemas/Name'
+          FeatureLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+          FeatureDescription:
+              $ref: '#/components/schemas/Text'
+    Instruction:
+        type: object
+        format: Instruction
+        description: "Request to advise \r\n"
+        properties:
+          InstructionDate:
+              $ref: '#/components/schemas/Instructiondate'
+          InstructionStatus:
+              $ref: '#/components/schemas/Instructionlifecyclestatus'
+          InstructionIdentifier:
+              $ref: '#/components/schemas/Instructionidentification'
+          InstructionType:
+              enum:
+                  -  PaymentInstruction
+                  -  DeliveryOrder
+                  -  InformationRequest
+                  -  ExchangeInstruction
+                  -  AllocationInstruction
+                  -  MaintenanceInstruction
+              format: Instruction
+          InstructionResult:
+              $ref: '#/components/schemas/Text'
+          InstructionDescription:
+              $ref: '#/components/schemas/Text'
+          InstructionLog:
+              $ref: '#/components/schemas/Log'
+          InstructionPurpose:
+              $ref: '#/components/schemas/Text'
+    Instructiondate:
+        type: object
+        format: Instructiondate
+        description: ' '
+        properties:
+          InstructionDate:
+              $ref: '#/components/schemas/Date'
+          InstructionDateType:
+              enum:
+                  -  DueDate
+                  -  ExecutionDate
+                  -  FulfillmentDate
+              format: Instructiondate
+    Date:
+        type: object
+        format: Date
+        description: ' '
+        properties:
+          DateContent:
+              type: string
+              format: String
+              description: ''
+    Instructionlifecyclestatus:
+        type: object
+        format: Instructionlifecyclestatus
+        description: >-
+          A characteristic of instruction which refers to the LifecycleStatus of
+          instruction (e.g., requested, executed, fulfilled, etc.);  
+        properties:
+          InstructionLifecycleStatusType:
+              enum:
+                  -  Requested
+                  -  Prepared
+                  -  InProgress
+                  -  Fulfilled
+                  -  OnHold
+                  -  Failed
+              format: Instructionlifecyclestatus
+          InstructionLifecycleStatus:
+              $ref: '#/components/schemas/Status'
+    Instructionidentification:
+        type: object
+        format: Instructionidentification
+        description: >-
+          An identifier that allows to uniquely refer to an instance of an
+          Instruction.
+           
+        properties:
+          InstructionIdentifier:
+              $ref: '#/components/schemas/Identifier'
+          InstructionIdentifierType:
+              enum:
+                  -  OrderNumber
+                  -  InstructionNumber
+              format: Instructionidentification
+    Log:
+        type: object
+        format: Log
+        description: "Reference to the log of (usage) ativities/events of Mergers And Acquisition Advice \r\n"
+        properties:
+          LogType:
+              type: string
+              format: String
+              description: ''
+          LogPeriod:
+              type: string
+              format: String
+              description: ''
+          LogDate:
+              type: string
+              format: String
+              description: 'Key dates associated with the log (e.g. start time). '
+          LogIdentification:
+              type: string
+              format: String
+              description: ''
+          Log:
+              type: string
+              format: Class
+              description: 
+                A record of events/entries.
+                 
+    Actiontype:
+        type: object
+        format: Actiontype
+        description: "A Classification value that distinguishes between the type of actions undertaken within Mergers And Acquisition Advice \r\n"
+        properties:
+          ActionTypeName:
+              $ref: '#/components/schemas/Name'
+          ActionType:
+              enum:
+                  -  Initiate
+                  -  Execute
+                  -  Create
+                  -  Transfer
+                  -  Pay
+                  -  Deliver
+                  -  Apply
+                  -  Calculate
+              format: Actiontype
+    MergersAndAcquisitionAdviceNotify:
+        type: object
+        description: ''
+        properties:
+          MergersAndAcquisitionAdviceSubjectAreaType:
+              $ref: '#/components/schemas/Text'
+          MergersAndAcquisitionAdviceParameterType:
+              $ref: '#/components/schemas/Text'
+          MergersAndAcquisitionAdviceSelectedOption:
+              $ref: '#/components/schemas/Feature'
+          MergersAndAcquisitionAdviceRequest:
+              $ref: '#/components/schemas/Instruction'
+          MergersAndAcquisitionAdviceUsageLog:
+              $ref: '#/components/schemas/Log'
+          MergersAndAcquisitionAdviceFeedback:
+              $ref: '#/components/schemas/Text'
+          MergersAndAcquisitionAdviceType:
+              $ref: '#/components/schemas/Actiontype'
+          MergersAndAcquisitionAdviceReference:
+              type: string
+              format: Object
+              description: >-
+                An unique reference to an item or an occurrence of Mergers And
+                Acquisition Advice 
+    M&ACandidateSelectionandEvaluationNotify:
+        type: object
+        description: ''
+        properties:
+          MergersAndAcquisitionAdviceReference:
+              type: string
+              format: Object
+              description: Reference to M&A Candidate Selection and Evaluation Topic 
+          M&ACandidateSelectionandEvaluationTopicReference:
+              type: string
+              format: Object
+              description: Reference to M&A Candidate Selection and Evaluation Topic 
+          M&ACandidateSelectionandEvaluationTopicType:
+              $ref: '#/components/schemas/Text'
+          BusinessService:
+              $ref: '#/components/schemas/BusinessService'
+          BusinessUnitEmployeeReference:
+              $ref: '#/components/schemas/Involvedparty'
+          Postconditions:
+              $ref: '#/components/schemas/Condition'
+          Preconditions:
+              $ref: '#/components/schemas/Condition'
+          Schedule:
+              $ref: '#/components/schemas/Schedule'
