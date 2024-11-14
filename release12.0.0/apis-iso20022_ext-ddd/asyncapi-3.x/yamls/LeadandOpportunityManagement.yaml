@@ -1,0 +1,199 @@
+asyncapi: 3.0.0
+info:
+  title: Lead and Opportunity Management
+  version: 12.0.2
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain captures, classifies and
+    track sales lead/opportunities with established clients for additional
+    products or services. It handles the processing of the opportunity through
+    to the point of formal offer processing.
+channels:
+  LeadandOpportunityProcedure/Created:
+    address: LeadandOpportunityProcedure/Created
+    messages:
+      LeadandOpportunityProcedure-created.message:
+        $ref: '#/components/messages/LeadandOpportunityProcedure'
+    description: ''
+  LeadandOpportunityProcedure/Updated:
+    address: LeadandOpportunityProcedure/Updated
+    messages:
+      LeadandOpportunityProcedure-updated.message:
+        $ref: '#/components/messages/LeadandOpportunityProcedure'
+    description: ''
+  Development/Created:
+    address: Development/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Development'
+    description: ''
+  Development/Updated:
+    address: Development/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Development'
+    description: ''
+operations:
+  LeadandOpportunityProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/LeadandOpportunityProcedure~1Created'
+    summary: (DDD Domain Event) LeadandOpportunityProcedure
+    messages:
+      - $ref: >-
+          #/channels/LeadandOpportunityProcedure~1Created/messages/LeadandOpportunityProcedure-created.message
+  LeadandOpportunityProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/LeadandOpportunityProcedure~1Updated'
+    summary: (DDD Domain Event) LeadandOpportunityProcedure
+    messages:
+      - $ref: >-
+          #/channels/LeadandOpportunityProcedure~1Updated/messages/LeadandOpportunityProcedure-updated.message
+  Development/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Development~1Created'
+    summary: (DDD Domain Event) Development
+    messages:
+      - $ref: '#/channels/Development~1Created/messages/publish.message'
+  Development/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Development~1Updated'
+    summary: (DDD Domain Event) Development
+    messages:
+      - $ref: '#/channels/Development~1Updated/messages/publish.message'
+components:
+  messages:
+    LeadandOpportunityProcedure:
+      name: LeadandOpportunityProcedure
+      description: >-
+        (DDD Entity) - Complete work tasks following a defined procedure in
+        support of general office activities and product and service delivery
+        within Lead and Opportunity Management. 
+      payload:
+        $ref: '#/components/schemas/LeadandOpportunityProcedure'
+    Development:
+      name: Development
+      description: >-
+        (DDD Entity) - The main worsteps to be followed in th eexecution of the
+        procedure
+
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Development'
+  schemas:
+    Development:
+      type: object
+      description: >-
+        (DDD Entity) - The main worsteps to be followed in th eexecution of the
+        procedure
+
+        Examples:- Invoice generation
+      properties:
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Employees involved in progressing the
+            lead/opportunity
+        CustomerContactRecordReference:
+          type: string
+          format: Object
+          description: (DDD Entity) - Reference to a contact event log
+        CorrespondenceInstanceReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to the correspondence generated and
+            received
+        CorrespondenceContent:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Correspondence content messages sent to and received
+            from involved parties
+        DocumentDirectoryEntryInstanceReference:
+          type: string
+          format: Object
+          description: (DDD Entity) - The document reference for associated documents
+        DocumentContent:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Document copy/content legal or significant documents
+            created & referenced
+        LeadDevelopmentWorkProducts:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Work documentation, forms and schedules produced and
+            referenced during the lead development
+        LeadDevelopmentTaskResult:
+          type: string
+          format: String
+          description: (DDD Entity) - The outcome of the lead development workstep
+        DateTimeLocation:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Date and time and the location the lead/opportunity
+            was developed
+    LeadandOpportunityProcedure:
+      type: object
+      description: >-
+        (DDD Entity) - Complete work tasks following a defined procedure in
+        support of general office activities and product and service delivery
+        within Lead and Opportunity Management. 
+      properties:
+        CustomerReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to the associated customer (can currently
+            be a person or a company)
+        CustomerCampaignReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to the customer campaign generating the
+            lead (if the opportunity is generated by a campaign)
+        CustomerCampaignType:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The type of campaign (e.g. cross-sell, up-sell,
+            retention)
+        CustomerCampaignVersionNumber:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The version number of the campaign (used to track
+            campaign impact)
+        ProductandServiceType:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The type of product or service identified in the
+            lead/opportunity
+        ProductInstanceReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to a specific product instance if the lead
+            is an up-sell to an existing product agreement
+        EmployeeBusinessUnitReference:
+          type: string
+          format: Object
+          description: (DDD Entity) - Employees involved in capturing the lead/opportunity
+        LeadandOpportunityDescription:
+          type: string
+          format: String
+          description: (DDD Entity) - Narrative/description of the opportunity if available
+        DateTimeLocation:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Date and time and the location the lead/opportunity
+            was captured

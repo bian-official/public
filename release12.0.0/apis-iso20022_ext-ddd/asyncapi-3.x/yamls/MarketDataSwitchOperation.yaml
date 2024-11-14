@@ -1,0 +1,3327 @@
+asyncapi: 3.0.0
+info:
+  title: Market Data Switch Operation
+  version: 12.0.2
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain operates the internal
+    information distribution facility/switch in compliance with administered
+    external subscription information feed service access rights. Note the
+    content is retrieved by the Market Feed Operation service domain from the
+    various external feed services. Internal information can also be published
+    over the switch from various bank sources (such as bank rates provided by
+    treasury).
+channels:
+  InformationFeedSwitchOperatingSession/Created:
+    address: InformationFeedSwitchOperatingSession/Created
+    messages:
+      InformationFeedSwitchOperatingSession-created.message:
+        $ref: '#/components/messages/InformationFeedSwitchOperatingSession'
+    description: ''
+  InformationFeedSwitchOperatingSession/Updated:
+    address: InformationFeedSwitchOperatingSession/Updated
+    messages:
+      InformationFeedSwitchOperatingSession-updated.message:
+        $ref: '#/components/messages/InformationFeedSwitchOperatingSession'
+    description: ''
+  InternalPublication/Created:
+    address: InternalPublication/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalPublication'
+    description: ''
+  InternalPublication/Updated:
+    address: InternalPublication/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalPublication'
+    description: ''
+  FeedUpload/Created:
+    address: FeedUpload/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FeedUpload'
+    description: ''
+  FeedUpload/Updated:
+    address: FeedUpload/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FeedUpload'
+    description: ''
+  Distribution/Created:
+    address: Distribution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Distribution'
+    description: ''
+  Distribution/Updated:
+    address: Distribution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Distribution'
+    description: ''
+operations:
+  InformationFeedSwitchOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/InformationFeedSwitchOperatingSession~1Created'
+    summary: (DDD Domain Event) InformationFeedSwitchOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/InformationFeedSwitchOperatingSession~1Created/messages/InformationFeedSwitchOperatingSession-created.message
+  InformationFeedSwitchOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/InformationFeedSwitchOperatingSession~1Updated'
+    summary: (DDD Domain Event) InformationFeedSwitchOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/InformationFeedSwitchOperatingSession~1Updated/messages/InformationFeedSwitchOperatingSession-updated.message
+  InternalPublication/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalPublication~1Created'
+    summary: (DDD Domain Event) InternalPublication
+    messages:
+      - $ref: '#/channels/InternalPublication~1Created/messages/publish.message'
+  InternalPublication/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalPublication~1Updated'
+    summary: (DDD Domain Event) InternalPublication
+    messages:
+      - $ref: '#/channels/InternalPublication~1Updated/messages/publish.message'
+  FeedUpload/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FeedUpload~1Created'
+    summary: (DDD Domain Event) FeedUpload
+    messages:
+      - $ref: '#/channels/FeedUpload~1Created/messages/publish.message'
+  FeedUpload/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FeedUpload~1Updated'
+    summary: (DDD Domain Event) FeedUpload
+    messages:
+      - $ref: '#/channels/FeedUpload~1Updated/messages/publish.message'
+  Distribution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Distribution~1Created'
+    summary: (DDD Domain Event) Distribution
+    messages:
+      - $ref: '#/channels/Distribution~1Created/messages/publish.message'
+  Distribution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Distribution~1Updated'
+    summary: (DDD Domain Event) Distribution
+    messages:
+      - $ref: '#/channels/Distribution~1Updated/messages/publish.message'
+components:
+  messages:
+    InformationFeedSwitchOperatingSession:
+      name: InformationFeedSwitchOperatingSession
+      description: >-
+        (DDD Entity) - Operate equipment and/or a largely automated facility
+        within Market Data Switch Operation. 
+      payload:
+        $ref: '#/components/schemas/InformationFeedSwitchOperatingSession'
+    InternalPublication:
+      name: InternalPublication
+      description: >-
+        (DDD Entity) - The collection of operational serivces/functions offered
+        by the operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/InternalPublication'
+    FeedUpload:
+      name: FeedUpload
+      description: >-
+        (DDD Entity) - The collection of operational serivces/functions offered
+        by the operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/FeedUpload'
+    Distribution:
+      name: Distribution
+      description: >-
+        (DDD Entity) - The collection of operational serivces/functions offered
+        by the operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Distribution'
+  schemas:
+    InternalPublication:
+      type: object
+      description: >-
+        (DDD Entity) - The collection of operational serivces/functions offered
+        by the operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        InternalInformationFeedServiceReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to internal sources of published
+            information (e.g. bank rates)
+        InternalInformationFeedServiceProfile:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Defines the range of internally published information
+            services/pages
+        InternalInformationFeedServiceRecordReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to 'live' internal pages of information
+            that is published
+        InternalInformationFeedServiceRecord:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - This is the internally generated information that is
+            distributed over the switch
+    FeedUpload:
+      type: object
+      description: >-
+        (DDD Entity) - The collection of operational serivces/functions offered
+        by the operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        MarketInformationFeedServiceRecordReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Reference to packets of information/records provided,
+            perhaps with real-time updates
+        MarketInformationFeedServiceRecord:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - This is the uploaded market information that is
+            distributed over the switch its content is updated dynamically
+            during the operating session
+    Distribution:
+      type: object
+      description: >-
+        (DDD Entity) - The collection of operational serivces/functions offered
+        by the operational facility
+
+
+        Examples:- messages, capture, routines
+      properties:
+        MarketDataSwitchUserAccessRightsRecordReference:
+          type: string
+          format: Object
+          description: (DDD Entity) - Reference to a user's switch service access rights
+        MarketDataSwitchUserAccessRightsRecord:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - The users are registered to access different
+            services/information made available through the switch it is used to
+            control information distribution
+        MarketDataSwitchServiceUserSessionRecord:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - This tracks the switch service content that the user
+            will receive for this session reflecting their user access rights
+    InformationFeedSwitchOperatingSession:
+      type: object
+      description: >-
+        (DDD Entity) - Operate equipment and/or a largely automated facility
+        within Market Data Switch Operation. 
+      properties:
+        MarketInformationFeedServiceReference:
+          type: string
+          format: Object
+          description: >-
+            (DDD Entity) - Refers to the market feed service Note: the service
+            operated by SD Information Provider Operation actually extracts the
+            feed content
+        MarketInformationFeedServiceProfile:
+          type: string
+          format: String
+          description: >-
+            (DDD Entity) - Sets out the range of information services/pages
+            available - possibly with some form of selection menu
+    Loan:
+      type: object
+      description: >-
+        (DDD Entity) - Act of provding an amount of money, a property or other
+        material goods to a another party in exchange for future repayment of
+        the principal amount along with interest or other finance charges.
+      properties:
+        PrincipalAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Amount of money borrowed, or part of that amount
+            which remains unpaid (excluding interest).
+        InterestPaymentsSchedule:
+          type: string
+          format: PaymentTerms
+          description: >-
+            (DDD Entity) - Schedule for the payment of the interests due on the
+            loan.
+        IntraCompanyLoanIndicator:
+          type: string
+          format: YesNoIndicator
+          description: (DDD Entity) - Loan is an intra-company loan.
+    Name:
+      type: string
+      format: ''
+      description: (DDD Entity) - W3C XML Schema Built-in datatype "Name".
+    Clearing:
+      type: object
+      description: >-
+        (DDD Entity) - Mechanism allowing financial institutions that are
+        members of a clearing house to pay and to receive the amounts linked to
+        the transactions that they have executed on the market. The addition of
+        all the positions per product results in one net position (due or to
+        receive) with the clearing house or the central clearing counterparty.
+      properties:
+        ClearingThresholdIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Specifies whether the contract is above or below the
+            clearing threshold. Where N indicates the contract is below the
+            clearing threshold and Y indicates the contract is above the
+            clearing threshold.
+        ClearedIdentification:
+          type: string
+          format: Max35Text
+          description: >-
+            (DDD Entity) - Reference number assigned by the Central Counterparty
+            (CCP).
+        GuaranteedTrade:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indicates if the central counterparty has to novate
+            and guarantee the trade or not.
+        TradePostingType:
+          type: string
+          format: TradePostingCode
+          description: >-
+            (DDD Entity) - Indicates how a trade is maintained in the clearing
+            account.
+        ClearingSystem:
+          type: string
+          format: ClearingSystem
+          description: >-
+            (DDD Entity) - Specifies the system which plays a role in the
+            clearing of securities or cash.
+    CashSettlement:
+      type: object
+      description: >-
+        (DDD Entity) - Instruction between two financial institutions
+        stipulating the cash transfer characteristics between the two parties.
+      properties:
+        InterbankSettlementAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Amount of money moved between the instructing agent
+            and the instructed agent.
+        InterbankSettlementDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date on which the amount of money ceases to be
+            available to the agent that owes it and when the amount of money
+            becomes available to the agent to which it is due.
+        RTGS:
+          type: string
+          format: Max4AlphaNumericText
+          description: (DDD Entity) - Qualifies the RTGS status.
+        CreditDateTime:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Information on the occurred settlement time(s) of the
+            payment transaction for the credit side.
+        RelatedPaymentInstruction:
+          type: string
+          format: PaymentInstruction
+          description: >-
+            (DDD Entity) - PaymentInstruction which is the source of the
+            settlement instruction.
+        SettlementMethod:
+          type: string
+          format: SettlementMethodCode
+          description: >-
+            (DDD Entity) - Method used to settle the (batch of) payment
+            instructions.
+        SettlementAccount:
+          type: string
+          format: CashAccount
+          description: >-
+            (DDD Entity) - A specific purpose account used to post debit and
+            credit entries as a result of the transaction.
+        DebitDateTime:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Information on the occurred settlement time(s) of the
+            payment transaction for the debit side.
+        PartyRole:
+          type: string
+          format: CashSettlementInstructionPartyRole
+          description: >-
+            (DDD Entity) - Specifies each role linked to the settlement of a
+            payment and played by a party at that step in a payment flow.
+        RelatedTransactionAdministrator:
+          type: string
+          format: TransactionAdministrator
+          description: >-
+            (DDD Entity) - Transaction administrator which manages the related
+            settlement instructions.
+        BookEntry:
+          type: string
+          format: BookEntry
+          description: >-
+            (DDD Entity) - Movement of cash between two accounts in the same
+            financial institution, resulting from the settlement of an
+            instruction.
+        RelatedInvestigationCase:
+          type: string
+          format: PaymentInvestigationCaseResolution
+          description: >-
+            (DDD Entity) - Case resolution which is the source of the correction
+            of a settlement instruction.
+        Reservation:
+          type: string
+          format: Reservation
+          description: >-
+            (DDD Entity) - Liquidity set aside by the payer for specific
+            purposes.
+    Account:
+      type: object
+      description: >-
+        (DDD Entity) - Record of transactions in specific types of assets,
+        maintained by a servicing party on behalf of one or more owning parties.
+        Business relationship between an account servicer and one or more
+        account owners.
+      properties:
+        BaseCurrency:
+          type: string
+          format: CurrencyCode
+          description: (DDD Entity) - Base currency of the account.
+        Identification:
+          type: string
+          format: AccountIdentification
+          description: >-
+            (DDD Entity) - Unique and unambiguous identification for the account
+            between the account owner and the account servicer.
+        ParentAccount:
+          type: string
+          format: Account
+          description: >-
+            (DDD Entity) - Account for which one or more sub-accounts are
+            specified.
+        SubAccount:
+          type: string
+          format: Account
+          description: >-
+            (DDD Entity) - Subdivision of an account used to segregate specific
+            holdings.
+        RelatedFundProcessingCharacteristics:
+          type: string
+          format: InvestmentFundClassProcessingCharacteristics
+          description: >-
+            (DDD Entity) - Fund processing characteristics for which a
+            settlement account is specified.
+        Status:
+          type: string
+          format: AccountStatus
+          description: >-
+            (DDD Entity) - Specifies the current state of an account, eg,
+            enabled or deleted.
+        Language:
+          type: string
+          format: LanguageCode
+          description: >-
+            (DDD Entity) - Language for all communication concerning the
+            account.
+        PartyRole:
+          type: string
+          format: AccountPartyRole
+          description: >-
+            (DDD Entity) - Specifies each role linked to an account and played
+            by a party in that context.
+        TradePartyRole:
+          type: string
+          format: TradePartyRole
+          description: >-
+            (DDD Entity) - Party for which an account is specified in the
+            context of a trade.
+        ReportingCurrency:
+          type: string
+          format: CurrencyCode
+          description: >-
+            (DDD Entity) - Currency used to calculate and report the balance and
+            related entries of an account.
+        AccountRestriction:
+          type: string
+          format: AccountRestriction
+          description: (DDD Entity) - Restriction on capability or operations allowed.
+        SettlementPartyRole:
+          type: string
+          format: SettlementPartyRole
+          description: >-
+            (DDD Entity) - Specifies the role of the party which uses the
+            account for settlement.
+        Purpose:
+          type: string
+          format: Max140Text
+          description: (DDD Entity) - Specifies the purpose of the account.
+        ClosingDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date on which the account and related services cease
+            effectively to be operational for the account owner.
+        LiveDate:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date of the first movement on the account.
+        ReportedPeriod:
+          type: string
+          format: DateTimePeriod
+          description: >-
+            (DDD Entity) - Specifies the period for which the movements in the
+            account are reported.
+        InvestmentFundPartyRole:
+          type: string
+          format: InvestmentFundPartyRole
+          description: (DDD Entity) - Party role for which an account is specified.
+        RelatedCollateralProcess:
+          type: string
+          format: Collateral
+          description: >-
+            (DDD Entity) - Collateral data for which a collateral account is
+            specified.
+        Type:
+          type: string
+          format: GenericIdentification
+          description: (DDD Entity) - Specifies the type of account.
+        RelatedProceedsDelivery:
+          type: string
+          format: CorporateActionProceedsDeliveryInstruction
+          description: >-
+            (DDD Entity) - Proceeds delivery instruction which contain account
+            identification.
+        RelatedCorporateActionPartyRole:
+          type: string
+          format: CorporateActionPartyRole
+          description: >-
+            (DDD Entity) - Party for which an account is specified in the
+            context of a corporate action.
+        DefaultFundAccountOwner:
+          type: string
+          format: ClearingMemberRole
+          description: >-
+            (DDD Entity) - Clearing member which holds a default fund account at
+            an ICSD or at the central bank.
+        System:
+          type: string
+          format: System
+          description: (DDD Entity) - System where the account is held.
+        Balance:
+          type: string
+          format: Balance
+          description: >-
+            (DDD Entity) - Overall position representing the net debits and
+            credits in an account at a specific point in time.
+        Entry:
+          type: string
+          format: Entry
+          description: (DDD Entity) - Record of the movements into or out of an account.
+        AccountContract:
+          type: string
+          format: AccountContract
+          description: >-
+            (DDD Entity) - Agreement which provides information on the account
+            and on the services linked to it.
+        OpeningDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date on which the account and related basic services
+            are effectively operational for the account owner.
+        CurrencyExchange:
+          type: string
+          format: CurrencyExchange
+          description: >-
+            (DDD Entity) - Rate used to calculate the difference between amounts
+            based on the base currency and the reporting currency.
+        DefaultFundContribution:
+          type: string
+          format: DefaultFundContribution
+          description: >-
+            (DDD Entity) - Default fund contribution parameters associated with
+            a contribution account.
+        SystemMember:
+          type: string
+          format: SystemMemberRole
+          description: >-
+            (DDD Entity) - Member of a system which is the owner of an account
+            with the system.
+        CollateralAccountType:
+          type: string
+          format: CollateralAccountTypeCode
+          description: (DDD Entity) - Specifies the collateral account type.
+        AccountService:
+          type: string
+          format: AccountService
+          description: >-
+            (DDD Entity) - Services linked to the account and specified in the
+            account contract.
+        Reconciliation:
+          type: string
+          format: Reconciliation
+          description: >-
+            (DDD Entity) - Process which compares and matches trade information
+            with entries in an account.
+        ManagedAccountProduct:
+          type: string
+          format: ManagedAccountProduct
+          description: >-
+            (DDD Entity) - Product which provides guidance to investors to
+            manage their portfolios.
+    DirectDebitMandate:
+      type: object
+      description: >-
+        (DDD Entity) - Authorisation in favour of the creditor given by the
+        debtor to debit its own account.
+      properties:
+        RelatedDirectDebit:
+          type: string
+          format: DirectDebit
+          description: (DDD Entity) - Direct debit to which a mandate applies.
+        FinalCollectionDate:
+          type: string
+          format: ISODate
+          description: >-
+            (DDD Entity) - Date of the final collection of a direct debit as per
+            the mandate.
+        FirstCollectionDate:
+          type: string
+          format: ISODate
+          description: >-
+            (DDD Entity) - Date of the first collection of a direct debit as per
+            the mandate.
+        CollectionAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Fixed amount that the debtor has agreed will be
+            collected from their account.
+        MaximumAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Maximum amount that may be collected from the
+            debtor's account, per instruction.
+        PreNotification:
+          type: string
+          format: TrueFalseIndicator
+          description: >-
+            (DDD Entity) - Indicates wether a pre-notification must be sent by
+            the creditor to the debtor before a direct debit occurs
+        PreNotificationThreshold:
+          type: string
+          format: Number
+          description: >-
+            (DDD Entity) - Specifies the number of days before the direct debit
+            for notifying the debtor.
+        Classification:
+          type: string
+          format: MandateClassificationCode
+          description: (DDD Entity) - Type of direct debit instruction.
+        PointInTime:
+          type: string
+          format: FrequencyCode
+          description: >-
+            (DDD Entity) - Specifies a frequency in terms of an exact point in
+            time or moment within a specified period type.
+    Party:
+      type: object
+      description: (DDD Entity) - Entity involved in an activity.
+      properties:
+        ContactPoint:
+          type: string
+          format: ContactPoint
+          description: >-
+            (DDD Entity) - Number, physical or virtual address, used for
+            communication.
+        Identification:
+          type: string
+          format: PartyIdentificationInformation
+          description: (DDD Entity) - Specific identification assigned to a party.
+        MoneyLaunderingCheck:
+          type: string
+          format: MoneyLaunderingCheckCode
+          description: >-
+            (DDD Entity) - Status of an identity check to prevent money
+            laundering. This includes the counter-terrorism check.
+        TaxationConditions:
+          type: string
+          format: Tax
+          description: >-
+            (DDD Entity) - Taxation parameters which apply to an individual
+            person or to an organisation.
+        Domicile:
+          type: string
+          format: Location
+          description: >-
+            (DDD Entity) - Location in which a person is permanently domiciled
+            (the place of a person's permanent home).
+        Residence:
+          type: string
+          format: Location
+          description: >-
+            (DDD Entity) - Location from which the affairs of a company are
+            directed or location in which a person resides (the place of a
+            person's home).
+        PowerOfAttorney:
+          type: string
+          format: PowerOfAttorney
+          description: (DDD Entity) - Power of attorney which is held by the party.
+        Location:
+          type: string
+          format: Location
+          description: (DDD Entity) - Location of the taxable party.
+        CloseLinkSecurity:
+          type: string
+          format: Security
+          description: >-
+            (DDD Entity) - Security for which a close link with a party is
+            identified.
+        CreditQuality:
+          type: string
+          format: CreditQualityCode
+          description: (DDD Entity) - Credit quality for the clearing member.
+        ShareholdingType:
+          type: string
+          format: ShareholdingTypeCode
+          description: (DDD Entity) - Specifies the type of shareholding.
+    PaymentTerms:
+      type: object
+      description: (DDD Entity) - Specifies the payment terms of the obligation.
+      properties:
+        Amount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Specifies that the payment terms apply to an amount.
+        Percentage:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Specifies that the payment conditions apply to a
+            percentage of the amount due.
+        PaymentPeriod:
+          type: string
+          format: DateTimePeriod
+          description: (DDD Entity) - Period to which the payment terms apply.
+        RelatedPaymentObligation:
+          type: string
+          format: PaymentObligation
+          description: >-
+            (DDD Entity) - Payment obligation for which payment terms are
+            specified.
+        PaymentTime:
+          type: string
+          format: PaymentTimeCode
+          description: >-
+            (DDD Entity) - Specifies the time of the payment relative to an
+            event such as product delivery or receipt of invoice. 
+        RelatedPaymentScheduleType:
+          type: string
+          format: RegisteredContract
+          description: >-
+            (DDD Entity) - Related type of the payment schedule provided in the
+            contract.
+        RelatedLoan:
+          type: string
+          format: Loan
+          description: >-
+            (DDD Entity) - Schedule for the payment of the interests due on the
+            related loan.
+    PaymentExecution:
+      type: object
+      description: >-
+        (DDD Entity) - Process required for executing an end to end payment. It
+        consists of a payment initiation which may be followed by a series of
+        instructions.
+      properties:
+        CreditDebitIndicator:
+          type: string
+          format: DebitCreditCode
+          description: (DDD Entity) - Indicates whether the payment is a debit or a credit.
+        CreationDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date and time at which the payment execution was
+            created by the instructing agent.
+        AcceptanceDateTime:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date and time at which all processing conditions for
+            execution of the payment are met and adequate financial cover is
+            available at the account servicing agent.
+        Payment:
+          type: string
+          format: Payment
+          description: >-
+            (DDD Entity) - Specifies the end to end payment which is at the
+            origin of the payment instruction.
+        ProcessingInstructions:
+          type: string
+          format: PaymentProcessing
+          description: >-
+            (DDD Entity) - Specifies how the payment must be processed, for
+            instance through which specific clearing channel.
+        RequestedExecutionDate:
+          type: string
+          format: ISODateTime
+          description: "(DDD Entity) - Date at which the initiating party requests the clearing agent to process the payment. \r\nUsage: This is the date on which the debtor's account is to be debited. If payment by cheque, the date when the cheque must be generated by the bank."
+        RelatedInvestigationCase:
+          type: string
+          format: PaymentInvestigationCase
+          description: (DDD Entity) - Investigation case assigned to the payment execution.
+        RelatedInvestigationCaseResolution:
+          type: string
+          format: PaymentInvestigationCaseResolution
+          description: >-
+            (DDD Entity) - Payment investigation case resolution which is the
+            source of the corrected payment execution.
+        Next:
+          type: string
+          format: PaymentInstruction
+          description: >-
+            (DDD Entity) - Specifies the next payment instruction in the payment
+            end-to-end chain.
+        CurrencyExchange:
+          type: string
+          format: CurrencyExchange
+          description: >-
+            (DDD Entity) - Rate used to transform the original amount into the
+            credited amount.
+    PaymentProcessing:
+      type: object
+      description: >-
+        (DDD Entity) - Specifies how a payment must be processed, for instance
+        through which specific clearing channel.
+      properties:
+        Priority:
+          type: string
+          format: PriorityCode
+          description: >-
+            (DDD Entity) - Indicator of the urgency or order of importance that
+            the instructing party would like the instructed party to apply to
+            the processing of the instruction.
+        ServiceLevel:
+          type: string
+          format: ServiceLevel
+          description: >-
+            (DDD Entity) - Agreement under which or rules under which the
+            transaction should be processed.
+        ClearingChannel:
+          type: string
+          format: ClearingChannelCode
+          description: >-
+            (DDD Entity) - Specifies the clearing channel to be used to process
+            the payment instruction.
+        LocalInstrument:
+          type: string
+          format: ExternalLocalInstrumentCode
+          description: >-
+            (DDD Entity) - User community specific instrument.
+
+            Usage : When available, codes provided by local authorities should
+            be used.
+        CategoryPurpose:
+          type: string
+          format: PaymentCategoryPurposeCode
+          description: >-
+            (DDD Entity) - Specifies the high level purpose of the instruction
+            based on a set of pre-defined categories.
+        PaymentExecution:
+          type: string
+          format: PaymentExecution
+          description: >-
+            (DDD Entity) - Payment execution process for which processing
+            parameters are specified.
+        SequenceType:
+          type: string
+          format: SequenceTypeCode
+          description: (DDD Entity) - Identifies the payment sequence where applicable.
+        RelatedMandate:
+          type: string
+          format: Mandate
+          description: >-
+            (DDD Entity) - Mandate for which payment processing parametres are
+            specified.
+        BankTransaction:
+          type: string
+          format: BankTransaction
+          description: (DDD Entity) - Code of the underlying bank transaction.
+        ContactPoint:
+          type: string
+          format: ContactPoint
+          description: >-
+            (DDD Entity) - Specifies the notification method to be used to
+            inform the beneficiary.
+        AdviceType:
+          type: string
+          format: AdviceTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of advice to report back for the
+            transaction.
+    CurrencyAndAmount:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - Number of monetary units specified in a currency, where
+        the unit of currency is explicit and compliant with ISO 4217. The
+        decimal separator is a dot.
+
+        Note: A zero amount is considered a positive amount.
+    ISODateTime:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - A particular point in the progression of time defined by
+        a mandatory date and a mandatory time component, expressed in either UTC
+        time format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset
+        format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+        (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+        Schema Part 2: Datatypes Second Edition W3C Recommendation 28 October
+        2004" which is aligned with ISO 8601.
+
+        Note on the time format:
+
+        1) beginning / end of calendar day
+
+        00:00:00  -  the beginning of a calendar day
+
+        24:00:00  -  the end of a calendar day
+
+        2) fractions of second in time format
+
+        Decimal fractions of seconds may be included. In this case, the involved
+        parties shall agree on the maximum number of digits that are allowed.
+    Location:
+      type: object
+      description: (DDD Entity) - Specifies a place.
+      properties:
+        NativePerson:
+          type: string
+          format: Person
+          description: (DDD Entity) - Person for which a birth place is specified.
+        System:
+          type: string
+          format: System
+          description: (DDD Entity) - System for which a location is specified.
+        DomiciledParty:
+          type: string
+          format: Party
+          description: (DDD Entity) - Party which is domiciled in a specific location.
+        OperatingOrganisation:
+          type: string
+          format: Organisation
+          description: >-
+            (DDD Entity) - Organisation which has its operations in a specific
+            location.
+        Address:
+          type: string
+          format: PostalAddress
+          description: >-
+            (DDD Entity) - Information that locates and identifies a specific
+            address.
+        IssuedDocument:
+          type: string
+          format: Document
+          description: (DDD Entity) - Document which was issued at a specific location.
+        Incoterms:
+          type: string
+          format: Incoterms
+          description: (DDD Entity) - Incoterms associated with a location.
+        DepartureTransportParameters:
+          type: string
+          format: Transport
+          description: (DDD Entity) - Transport parameters linked to a place of departure.
+        DestinationTransportParameters:
+          type: string
+          format: Transport
+          description: >-
+            (DDD Entity) - Transport parameters linked to a place of
+            destination.
+        InsuranceCertificate:
+          type: string
+          format: InsuranceCertificate
+          description: >-
+            (DDD Entity) - Insurance for which the claims are payable at a
+            specific location.
+        Party:
+          type: string
+          format: Party
+          description: (DDD Entity) - Party which resides in a specific location.
+        RelatedExpiry:
+          type: string
+          format: Expiry
+          description: (DDD Entity) - Expiry information which contains an expiry location.
+        RelatedJurisdiction:
+          type: string
+          format: Jurisdiction
+          description: (DDD Entity) - Jurisdiction of the location.
+        Identification:
+          type: string
+          format: GenericIdentification
+          description: >-
+            (DDD Entity) - Identifies the location, for instance, the name of an
+            airport, a county, a state, a province or a city by a code or a
+            text. eg LHR for London Heathrow airport.
+        TaxableParty:
+          type: string
+          format: Party
+          description: (DDD Entity) - Party which is taxable at a specific location
+        RegisteredOrganisation:
+          type: string
+          format: Organisation
+          description: (DDD Entity) - Organisation which is registered at that location.
+        RelatedTransport:
+          type: string
+          format: Transport
+          description: >-
+            (DDD Entity) - Transport process for which a transit location is
+            specified.
+        TimeZone:
+          type: string
+          format: UTCOffset
+          description: '(DDD Entity) - Offset of the time before or after 00:00 hour UTC.'
+    Status:
+      type: object
+      description: '(DDD Entity) - The status of an instruction, advice or request.'
+      properties:
+        StatusReason:
+          type: string
+          format: StatusReason
+          description: (DDD Entity) - Specifies the reasons for the status.
+        StatusDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the status was assigned.
+        ValidityTime:
+          type: string
+          format: DateTimePeriod
+          description: (DDD Entity) - Period of time during which the status is valid.
+        StatusDescription:
+          type: string
+          format: Max350Text
+          description: (DDD Entity) - Specifies the state or the condition.
+        InstructionProcessingStatus:
+          type: string
+          format: StatusCode
+          description: (DDD Entity) - Status of the processing of an instruction.
+        PartyRole:
+          type: string
+          format: InvestigationPartyRole
+          description: >-
+            (DDD Entity) - Role played by a party in the context of assigning a
+            status.
+        SettlementStatus:
+          type: string
+          format: SecuritiesSettlementStatusCode
+          description: (DDD Entity) - Status of settlement of a transaction.
+        CancellationProcessingStatus:
+          type: string
+          format: CancellationProcessingStatusCode
+          description: (DDD Entity) - Specifies the status of a cancellation request.
+        TransactionProcessingStatus:
+          type: string
+          format: InstructionProcessingStatusCode
+          description: >-
+            (DDD Entity) - Status of processing of a transaction at account
+            servicer level.
+        ModificationProcessingStatus:
+          type: string
+          format: ModificationProcessingStatusCode
+          description: (DDD Entity) - Provides the status of a modification request.
+    Obligation:
+      type: object
+      description: >-
+        (DDD Entity) - Specifies the assets (quantity of securities, goods,
+        services, and cash amounts) that have to be delivered.
+      properties:
+        RequestedSettlementDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date and time at which a trade must be executed. For
+            a direct debit, it is the date and time at which the creditor
+            requests that the amount of money is to be collected from the
+            debtor. For a credit transfer, it is the date and time at which the
+            debtor requests the clearing agent to process the payment. For a
+            securities trade, it is the date and time at which the securities
+            are to be delivered or received.
+        RequestedSettlementAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Total amount of money to be paid or received.
+        Priority:
+          type: string
+          format: Max4AlphaNumericText
+          description: >-
+            (DDD Entity) - Specifies whether the transaction is to be executed
+            with a high priority.
+        Trade:
+          type: string
+          format: Trade
+          description: >-
+            (DDD Entity) - Specifies the trade which originates the obligation
+            to deliver a product, cash or securities..
+        TransactionRisk:
+          type: string
+          format: TransactionRisk
+          description: (DDD Entity) - Transaction risk calculated per obligation type.
+        ParentObligation:
+          type: string
+          format: Obligation
+          description: >-
+            (DDD Entity) - Obligation which is divided into several
+            sub-obligations.
+        SubObligation:
+          type: string
+          format: Obligation
+          description: >-
+            (DDD Entity) - Specifies an obligation resulting from another
+            existing obligation, for instance each leg of a financing agreement
+            is a sub-obligation of the global financing obligation.
+        Offset:
+          type: string
+          format: ObligationFulfilment
+          description: >-
+            (DDD Entity) - Specifies the method used to settle a specific
+            obligation.
+        OriginalObligationProcess:
+          type: string
+          format: ObligationFulfilment
+          description: >-
+            (DDD Entity) - Obligation fulfilment process which did not
+            extinguish the obligation but replaced it by a new one, for instance
+            in case of netting.
+        ExposureType:
+          type: string
+          format: ExposureTypeV2Code
+          description: (DDD Entity) - Type of exposure related to this obligation.
+    AccountIdentification:
+      type: object
+      description: >-
+        (DDD Entity) - Unique identifier of an account, as assigned by the
+        account servicer.
+      properties:
+        Account:
+          type: string
+          format: Account
+          description: (DDD Entity) - Account for which an identification is provided.
+        IBAN:
+          type: string
+          format: IBAN2007Identifier
+          description: >-
+            (DDD Entity) - International Bank Account Number (IBAN) identifier
+            used internationally by financial institutions to uniquely identify
+            the account of a customer. Further specifications of the format and
+            content of the IBAN can be found in the standard ISO 13616 "Banking
+            and related financial services International Bank Account Number
+            (IBAN)" version 1997-10-01, or later revisions.
+        BBAN:
+          type: string
+          format: BBANIdentifier
+          description: >-
+            (DDD Entity) - Basic Bank Account Number (BBAN) identifier used
+            nationally by financial institutions, ie, in individual countries,
+            generally as part of a National Account Numbering Scheme(s), to
+            uniquely identify the account of a customer.
+        UPIC:
+          type: string
+          format: UPICIdentifier
+          description: >-
+            (DDD Entity) - Universal Payment Identification Code (UPIC)
+            identifier used by the New York Clearing House to mask confidential
+            data, such as bank accounts and bank routing numbers. UPIC numbers
+            remain with business customers, regardless of banking relationship
+            changes.
+        ProprietaryIdentification:
+          type: string
+          format: GenericIdentification
+          description: >-
+            (DDD Entity) - Unique identifier for an account. It is assigned by
+            the account servicer using a proprietary identification scheme.
+        Name:
+          type: string
+          format: Max70Text
+          description: >-
+            (DDD Entity) - Name of the account. It provides an additional means
+            of identification, and is designated by the account servicer in
+            agreement with the account owner.
+        CostReferencePattern:
+          type: string
+          format: GenericIdentification
+          description: >-
+            (DDD Entity) - Template describing the mask of the structure for the
+            format of the accounting account identifier; for example "AABBBBCC"
+            where AA represents the country, BBBB the service classification, CC
+            the sales area.
+        Number:
+          type: string
+          format: Max140Text
+          description: >-
+            (DDD Entity) - String of characters (mainly numbers) used to
+            identify an account.
+    GenericIdentification:
+      type: object
+      description: >-
+        (DDD Entity) - Information related to a non-standardised identification,
+        such as a proprietary party identification or account identification.
+      properties:
+        Identification:
+          type: string
+          format: Max35Text
+          description: >-
+            (DDD Entity) - Name or number assigned by an entity to enable
+            recognition of that entity, for example account identifier,
+            identification assigned by a provider to identify its customers.
+        IdentificationForContactPoint:
+          type: string
+          format: ContactPoint
+          description: >-
+            (DDD Entity) - Contact point which uses a generic identification as
+            identification.
+        IdentificationForAccount:
+          type: string
+          format: AccountIdentification
+          description: >-
+            (DDD Entity) - Account Identification which uses a generic
+            identification as proprietary identification.
+        RelatedPartyIdentification:
+          type: string
+          format: PartyIdentificationInformation
+          description: (DDD Entity) - Party identified with a scheme.
+        IssueDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date at which the identification was issued.
+        ExpiryDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date at which the identification expires.
+        Scheme:
+          type: string
+          format: Scheme
+          description: >-
+            (DDD Entity) - Information regarding an enumerated code list and its
+            owner.
+        IdentificationForSecuritiesCertificate:
+          type: string
+          format: SecuritiesCertificate
+          description: >-
+            (DDD Entity) - Securities certificate which uses a generic
+            identification as certificate number.
+        IdentificationForLot:
+          type: string
+          format: LotBreakdown
+          description: >-
+            (DDD Entity) - Lot breakdown which uses a generic identification as
+            lot number.
+        PartyRole:
+          type: string
+          format: InformationPartyRole
+          description: (DDD Entity) - Entity that assigns the identification.
+        IdentificationForCashProceedsIncome:
+          type: string
+          format: CashProceedsDefinition
+          description: >-
+            (DDD Entity) - Cash proceeds definition which uses a generic
+            identification as type of income.
+        RelatedStatusReason:
+          type: string
+          format: StatusReason
+          description: >-
+            (DDD Entity) - Specifies the status reason for which a data source
+            scheme is specified.
+        IdentificationForBankTransaction:
+          type: string
+          format: BankTransaction
+          description: >-
+            (DDD Entity) - Bank transaction which uses a generic identification
+            as proprietary identification.
+        IdentificationForAccountCostReferencePattern:
+          type: string
+          format: AccountIdentification
+          description: >-
+            (DDD Entity) - Account identification for which a cost reference
+            pattern is provided.
+        Account:
+          type: string
+          format: Account
+          description: (DDD Entity) - Account for which a type is specified
+        RelatedSystemIdentification:
+          type: string
+          format: SystemIdentification
+          description: >-
+            (DDD Entity) - System identification which uses a generic
+            identification.
+        IdentificationForInterestName:
+          type: string
+          format: Interest
+          description: (DDD Entity) - Interest which uses a generic identification as name.
+        RelatedCashAccountService:
+          type: string
+          format: CashAccountService
+          description: (DDD Entity) - Cash account service identified in a generic way.
+        IdentificationForInvestmentFundClass:
+          type: string
+          format: InvestmentFundClass
+          description: >-
+            (DDD Entity) - Investment fund class which uses a generic
+            identification as fund classification.
+        IdentifiedLocation:
+          type: string
+          format: Location
+          description: (DDD Entity) - Location for which an identification is provided.
+        RelatedSecuritiesIdentification:
+          type: string
+          format: SecuritiesIdentification
+          description: >-
+            (DDD Entity) - Securities identification for which generic
+            identification elements and scheme are provided.
+        IdentifiedDocument:
+          type: string
+          format: Document
+          description: (DDD Entity) - Document for which an identification is provided.
+        RelatedPurchaseOrder:
+          type: string
+          format: PurchaseOrder
+          description: >-
+            (DDD Entity) - Purchase order for which an identification is
+            provided.
+        RelatedCertificate:
+          type: string
+          format: RegisteredContract
+          description: >-
+            (DDD Entity) - Related certificate against which all transactions in
+            the scope of the regulatory requirements are registered.
+    GovernanceRules:
+      type: object
+      description: >-
+        (DDD Entity) - Rules governing an undertaking such as a guarantee or
+        standby letter of credit.
+      properties:
+        ModelForm:
+          type: string
+          format: ModelForm
+          description: (DDD Entity) - Model form to which the governance rules apply.
+        Identification:
+          type: string
+          format: GovernanceIdentificationCode
+          description: (DDD Entity) - Identification of the governance rules.
+        ApplicableLaw:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Law under which the undertaking has been issued.
+        Jurisdiction:
+          type: string
+          format: Jurisdiction
+          description: (DDD Entity) - Jurisdiction which applies to the governance rules.
+        PublicationAgency:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Agency that publishes the governance rules.
+    Mandate:
+      type: object
+      description: >-
+        (DDD Entity) - Authorisation given by an issuing party to a holder party
+        to act on the issuer's behalf.
+      properties:
+        SignatureConditions:
+          type: string
+          format: SignatureCondition
+          description: >-
+            (DDD Entity) - Specifies the signature requirements related to the
+            document.
+        MandateIdentification:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Unique and unambiguous identification of the mandate.
+        OriginalMandate:
+          type: string
+          format: Mandate
+          description: (DDD Entity) - Mandate which is amended.
+        Amendment:
+          type: string
+          format: Mandate
+          description: (DDD Entity) - Improvement on a mandate.
+        MandatePartyRole:
+          type: string
+          format: MandatePartyRole
+          description: >-
+            (DDD Entity) - Specifies each role linked to a mandate and played by
+            a party in that context.
+        MandateStatus:
+          type: string
+          format: MandateStatus
+          description: (DDD Entity) - Specifies the status of a mandate
+        AccountContract:
+          type: string
+          format: AccountContract
+          description: (DDD Entity) - Contract on which a mandate applies.
+        Authentication:
+          type: string
+          format: Authentication
+          description: >-
+            (DDD Entity) - Specifies the transport authentication details
+            related to the mandate.
+        TrackingDays:
+          type: string
+          format: Max35NumericText
+          description: >-
+            (DDD Entity) - Specifies the number of days the mandate must be
+            tracked.
+        TrackingIndicator:
+          type: string
+          format: TrueFalseIndicator
+          description: >-
+            (DDD Entity) - Specifies whether the direct debit instructions
+            should be automatically re-submitted periodically when bilaterally
+            agreed.
+        Rate:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Pre-agreed increase or decrease rate that will be
+            applied to the collection amount.
+        Frequency:
+          type: string
+          format: FrequencyCode
+          description: >-
+            (DDD Entity) - Regularity with which payment instructions are to be
+            created and processed.
+        MandatePaymentType:
+          type: string
+          format: PaymentProcessing
+          description: >-
+            (DDD Entity) - Identifies the type of mandate (service level and/or
+            paper or electronic) being requested or given by the initiating
+            party.
+    DateTimePeriod:
+      type: object
+      description: >-
+        (DDD Entity) - Time span defined by a start date and time, and an end
+        date and time.
+      properties:
+        FromDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the range starts.
+        ToDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time at which the range ends.
+        RelatedStandingOrder:
+          type: string
+          format: StandingOrder
+          description: >-
+            (DDD Entity) - Standing order for which a validity period is
+            specified.
+        PaymentInstruction:
+          type: string
+          format: PaymentInstruction
+          description: >-
+            (DDD Entity) - Payment instruction for which a processing validity
+            time is specified.
+        NumberOfDays:
+          type: string
+          format: Number
+          description: (DDD Entity) - Period specified as a number of days.
+        ValuationStatistics:
+          type: string
+          format: ValuationStatistics
+          description: >-
+            (DDD Entity) - Valuation statistics for which a reference period is
+            specified.
+        PerformanceFactors:
+          type: string
+          format: PerformanceFactors
+          description: >-
+            (DDD Entity) - Performance factors for which an accumulation period
+            is specified.
+        Status:
+          type: string
+          format: Status
+          description: (DDD Entity) - Status for which a validity time is specified.
+        PriceCalculationRelatedPricing:
+          type: string
+          format: SecuritiesPricing
+          description: >-
+            (DDD Entity) - Securities pricing for which a price calculation
+            period is specified.
+        CorporateActionOption:
+          type: string
+          format: CorporateActionOption
+          description: >-
+            (DDD Entity) - Corporate action option for which an action period is
+            defined.
+        ParallelTradingProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which a parallel trading
+            period is specified.
+        PrivilegeSuspensionCorporateAction:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a privilege suspension
+            period has been defined.
+        WithdrawalSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals is specified.
+        RelatedInterestCalculation:
+          type: string
+          format: InterestCalculation
+          description: >-
+            (DDD Entity) - Interest calculation process for which an interest
+            period is specified.
+        BiddingConditions:
+          type: string
+          format: BiddingConditions
+          description: >-
+            (DDD Entity) - Bidding conditions for which a compulsory purchase
+            period is specified.
+        ClassAction:
+          type: string
+          format: ClassAction
+          description: (DDD Entity) - Class action for which a claim period is specified.
+        BookEntryTransferSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            book entry transfers is specified.
+        DepositAtAgentSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            deposits at agent is specified.
+        DepositSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            deposits is specified.
+        PledgeSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            pledges is specified.
+        SegregationPeriodRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            segregation is specified.
+        WithdrawalAtAgentSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals at agent is specified.
+        WithdrawalInNomineeNameSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals in nominee name is specified.
+        WithdrawalInStreetNameSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            withdrawals in street name is specified.
+        BookClosureCorporateAction:
+          type: string
+          format: CorporateActionEvent
+          description: >-
+            (DDD Entity) - Corporate action for which a book closure period has
+            been specified.
+        CoDepositoriesSuspensionRelatedEvent:
+          type: string
+          format: SuspensionPeriod
+          description: >-
+            (DDD Entity) - Corporate event for which a suspension period for
+            co-depositories is specified.
+        ExtendiblePeriodDebt:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which an extendible period is specified.
+        SecuritiesConversion:
+          type: string
+          format: SecuritiesConversion
+          description: >-
+            (DDD Entity) - Securities conversion process for which a conversion
+            period is specified.
+        YieldCalculation:
+          type: string
+          format: YieldCalculation
+          description: >-
+            (DDD Entity) - Yield calculation for which a value period is
+            specified.
+        CustomDateDebt:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which a custom date is specified.
+        TaxPeriod:
+          type: string
+          format: TaxPeriod
+          description: (DDD Entity) - Tax period for which a from/to date is specified.
+        Account:
+          type: string
+          format: Account
+          description: (DDD Entity) - Account for which a reported period is specified.
+        RelatedAgreement:
+          type: string
+          format: Agreement
+          description: (DDD Entity) - Agreement for which a validity period is specified.
+        AssentedLinePeriodProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which an assented line period
+            is specified.
+        SellThruIssuerProceedsDefinition:
+          type: string
+          format: SecuritiesProceedsDefinition
+          description: >-
+            (DDD Entity) - Securities proceeds for which a sell thru issuer
+            period is specified.
+        RelatedProductDelivery:
+          type: string
+          format: ProductDelivery
+          description: >-
+            (DDD Entity) - Trade delivery process for which a delivery period is
+            specified.
+        RelatedInvoice:
+          type: string
+          format: Invoice
+          description: (DDD Entity) - Invoice for which a period is specified.
+        TradeCertificate:
+          type: string
+          format: TradeCertificate
+          description: >-
+            (DDD Entity) - Trade certificate for which an inspection date is
+            specified.
+        RelatedPortfolioValuation:
+          type: string
+          format: PortfolioValuation
+          description: >-
+            (DDD Entity) - Portfolio valuation process for which a valuation
+            period is specified.
+        System:
+          type: string
+          format: System
+          description: (DDD Entity) - System for which a validity period is specified.
+        AccountRestriction:
+          type: string
+          format: AccountRestriction
+          description: >-
+            (DDD Entity) - Account restriction for which a validity period is
+            specified.
+        BankOperation:
+          type: string
+          format: BankOperation
+          description: >-
+            (DDD Entity) - Bank operation for which an applicable period is
+            specified.
+        RelatedCorporateAction:
+          type: string
+          format: CorporateActionEvent
+          description: >-
+            (DDD Entity) - Corporate action event for which a trading period is
+            specified.
+        RelatedLimit:
+          type: string
+          format: Limit
+          description: (DDD Entity) - Limit for which a validity period is specified.
+        RelatedIdentification:
+          type: string
+          format: PartyIdentificationInformation
+          description: >-
+            (DDD Entity) - Party identification for which a validity period is
+            specified.
+        AssessmentValidityScheme:
+          type: string
+          format: Scheme
+          description: (DDD Entity) - Scheme for which a validity period is specified.
+        ExercisePeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which an exercise period is specified.
+        OfferPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which an offer period is specified.
+        TradingPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which a trading period is specified.
+        BlockingPeriodDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash and securities distribution information for
+            which a blocking period is specified.
+        Guarantee:
+          type: string
+          format: Guarantee
+          description: (DDD Entity) - Guarantee for which an effective period is specified.
+        PriceFactRelatedPricing:
+          type: string
+          format: SecuritiesPricing
+          description: >-
+            (DDD Entity) - Securities pricing for which a price fact period is
+            specified.
+        CashDistribution:
+          type: string
+          format: Distribution
+          description: >-
+            (DDD Entity) - Cash distribution for which an interest period is
+            specified.
+        ComponentSecurity:
+          type: string
+          format: ComponentSecurity
+          description: >-
+            (DDD Entity) - Security component for which a separation period is
+            specified.
+        TradingSession:
+          type: string
+          format: TradingSession
+          description: >-
+            (DDD Entity) - Trading session for which a time bracket is
+            specified.
+        FinancialInstrumentSwap:
+          type: string
+          format: FinancialInstrumentSwap
+          description: (DDD Entity) - Swap for which a maturity period is specified.
+        RelatedPostalAddress:
+          type: string
+          format: PostalAddress
+          description: >-
+            (DDD Entity) - Postal address for which a validity period is
+            specified.
+        RedemptionSchedule:
+          type: string
+          format: RedemptionSchedule
+          description: >-
+            (DDD Entity) - Redemption schedule for which a notice period is
+            provided.
+        RelatedAccountLink:
+          type: string
+          format: AccountLink
+          description: >-
+            (DDD Entity) - Link between two accounts for which a validity period
+            is specified.
+        RelatedAdjustment:
+          type: string
+          format: Adjustment
+          description: (DDD Entity) - Adjustment for which a validity period is provided.
+        RelatedSecuritiesIdentification:
+          type: string
+          format: SecuritiesIdentification
+          description: >-
+            (DDD Entity) - Securities identification for which a validity period
+            is specified.
+        RelatedStandingSettlementInstruction:
+          type: string
+          format: StandingSettlementInstruction
+          description: (DDD Entity) - SSI for which a validity period is specified.
+        RelatedSecuritiesRegistration:
+          type: string
+          format: BasicSecuritiesRegistration
+          description: >-
+            (DDD Entity) - Securities registration process for which a split
+            period is specified.
+        Amount:
+          type: string
+          format: AmountAndPeriod
+          description: (DDD Entity) - Relationship with an amount.
+        RelatedInvestmentPlan:
+          type: string
+          format: InvestmentPlan
+          description: >-
+            (DDD Entity) - InvestmentPlan for which an investment period is
+            specified.
+        Issuance:
+          type: string
+          format: Issuance
+          description: >-
+            (DDD Entity) - Issuance for which subscription information is
+            provided.
+        RelatedPaymentTerms:
+          type: string
+          format: PaymentTerms
+          description: (DDD Entity) - Payment terms for which a period is specified.
+        Percentage:
+          type: string
+          format: PercentageAndPeriod
+          description: (DDD Entity) - Relationship with a percentage.
+        RelatedRolePlayer:
+          type: string
+          format: RolePlayer
+          description: (DDD Entity) - Role player for which a validity period is specified.
+        RelatedSystemAvailability:
+          type: string
+          format: SystemAvailability
+          description: >-
+            (DDD Entity) - System availability for which the closure period is
+            provided.
+    FrequencyCode:
+      type: object
+      description: (DDD Entity) - Specifies the regularity of an event.
+      properties:
+        Annual:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place every year or once a year.
+        Monthly:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place every month or once a month.
+        Quarterly:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event takes place every three months or four times a
+            year.
+        SemiAnnual:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event takes place every six months or two times a
+            year.
+        Weekly:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place once a week.
+        Daily:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place every day.
+        Adhoc:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place on request or as necessary.
+        IntraDay:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place several times a day.
+        Overnight:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place overnight.
+        TenDays:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place every ten business days.
+        Fortnightly:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place every two weeks.
+        TriggeredByMovement:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event takes place at the end of the day if there was
+            a movement on the account, otherwise nothing is sent that day.
+        Never:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event does never take place.
+        Rate:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place based on a change of a rate.
+        OnCreditEvent:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event occurs due to a credit event occurring for an
+            issuer.
+        Upfront:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event that takes place at the initiation of a trade
+            or agreement.
+        OnExpiry:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event occurs on expiry of a financial contract.
+        Hourly:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place every hours.
+        TriAnnual:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event takes place every four months or three times a
+            year.
+        Bimonthly:
+          type: string
+          format: ''
+          description: >-
+            (DDD Entity) - Event takes place every two months or six times a
+            year.
+        OnDemand:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event takes place on demand.
+        Shift:
+          type: string
+          format: ''
+          description: (DDD Entity) - Event associated with a shift.
+        TwiceAWeek:
+          type: string
+          format: ''
+          description: (DDD Entity) - Two times a week
+    Tax:
+      type: object
+      description: >-
+        (DDD Entity) - Amount of money due to the government or tax authority,
+        according to various pre-defined parameters such as thresholds or
+        income.
+      properties:
+        ExemptionReason:
+          type: string
+          format: TaxExemptReasonCode
+          description: (DDD Entity) - Reason for a tax exemption.
+        Country:
+          type: string
+          format: Country
+          description: >-
+            (DDD Entity) - Place of taxation of an individual person or an
+            organisation, where the tax is due.
+        TaxLiabilityValueCalculation:
+          type: string
+          format: NetAssetValueCalculation
+          description: >-
+            (DDD Entity) - Net asset value calculation for which tax liability
+            information is provided.
+        Type:
+          type: string
+          format: TaxTypeCode
+          description: (DDD Entity) - Type of tax applied.
+        Amount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Amount of money resulting from the calculation of the
+            tax.
+        Rate:
+          type: string
+          format: PercentageRate
+          description: (DDD Entity) - Rate used for calculation of the tax.
+        TaxableParty:
+          type: string
+          format: Party
+          description: (DDD Entity) - Party which is taxable at a specific location
+        TaxRefundValueCalculation:
+          type: string
+          format: NetAssetValueCalculation
+          description: >-
+            (DDD Entity) - Net asset value calculation for which tax refund
+            information is provided.
+        Basis:
+          type: string
+          format: TaxationBasisCode
+          description: >-
+            (DDD Entity) - Basis used to determine the capital gain or loss, eg,
+            the purchase price.
+        SecuritiesTransfer:
+          type: string
+          format: SecuritiesTransfer
+          description: (DDD Entity) - Transfer process for which a tax is specified.
+        TaxRateType:
+          type: string
+          format: RateTypeCode
+          description: (DDD Entity) - Specifies the type of tax rate.
+        TaxAccount:
+          type: string
+          format: CashAccount
+          description: (DDD Entity) - Account to be used for taxes.
+        TaxationConditions:
+          type: string
+          format: Max350Text
+          description: (DDD Entity) - Specifies other taxation conditions.
+        Adjustment:
+          type: string
+          format: Adjustment
+          description: (DDD Entity) - Specifies the adjustments subject to a tax.
+        Interest:
+          type: string
+          format: Interest
+          description: (DDD Entity) - Interest for which a tax is specified.
+        Identification:
+          type: string
+          format: Max35Text
+          description: >-
+            (DDD Entity) - Reference used to identify the nature of tax levied,
+            such as Value Added Tax (VAT).
+        RelatedPaymentSettlement:
+          type: string
+          format: Payment
+          description: (DDD Entity) - Payment to which the tax applies.
+        TaxableBaseAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Amount of money on which the tax is based.
+        TaxDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date by which tax is due.
+        CertificateIdentification:
+          type: string
+          format: Max35Text
+          description: >-
+            (DDD Entity) - Document issued by taxing authority identifying the
+            tax payer.
+        AdministrationZone:
+          type: string
+          format: Max140Text
+          description: >-
+            (DDD Entity) - Territorial part of a country to which the tax
+            payment is related.
+        Method:
+          type: string
+          format: Max35Text
+          description: >-
+            (DDD Entity) - Method used to indicate the underlying business or
+            how the tax is paid.
+        Record:
+          type: string
+          format: TaxRecord
+          description: (DDD Entity) - Record of tax details.
+        Product:
+          type: string
+          format: Product
+          description: (DDD Entity) - Product on which a tax is applied.
+        CurrencyExchange:
+          type: string
+          format: CurrencyExchange
+          description: (DDD Entity) - Currency exchange applicable to a tax
+        Currency:
+          type: string
+          format: CurrencyCode
+          description: (DDD Entity) - Currency in which the tax must be settled.
+        PartyRole:
+          type: string
+          format: TaxPartyRole
+          description: >-
+            (DDD Entity) - Specifies each role linked to a tax and played by a
+            party in that context.
+        TaxDeduction:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Amount of tax that have been previously deducted.
+        RelatedCorporateActionDistribution:
+          type: string
+          format: Distribution
+          description: (DDD Entity) - Distribution process for which a tax is specified.
+        CalculationDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date on which the tax is calculated.
+        Dividend:
+          type: string
+          format: Dividend
+          description: (DDD Entity) - Dividend for which a tax is specified.
+        WithholdingTaxType:
+          type: string
+          format: WithholdingTaxRateTypeCode
+          description: (DDD Entity) - Type of withholding tax rate.
+        CorporateActionEvent:
+          type: string
+          format: CorporateActionEvent
+          description: (DDD Entity) - Event for which a transaction tax is specified.
+        TaxIdentificationType:
+          type: string
+          format: TaxIdentificationNumberTypeCode
+          description: (DDD Entity) - Type of tax identification number or identifier.
+        TaxRateMarker:
+          type: string
+          format: TaxRateMarkerCode
+          description: (DDD Entity) - Specifies the rate of tax levied.
+    Interest:
+      type: object
+      description: >-
+        (DDD Entity) - Consideration, such as amount of money,  paid or received
+        in exchange for an asset that has been invested, loaned or borrowed for
+        a certain period. The interest is expressed as a fixed amount or
+        percentage of the amount upon which the interest is applied.
+      properties:
+        AccruedInterestAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Interest amount that has accrued in between coupon
+            payment periods.
+        InterestCalculation:
+          type: string
+          format: InterestCalculation
+          description: >-
+            (DDD Entity) - Calculation parameters used to obtain the interest
+            amount.
+        Amount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Amount of money representing interest payments.
+        Rate:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - The actual interest rate used for the payment of the
+            interest for the specified interest period.
+        RelatedCashProceedsDefinition:
+          type: string
+          format: CashProceedsDefinition
+          description: >-
+            (DDD Entity) - Cash proceeds definition for which an interest is
+            provided.
+        SecuritiesFinancing:
+          type: string
+          format: SecuritiesFinancing
+          description: >-
+            (DDD Entity) - Specifies the financing trade on which this interest
+            apply.
+        InterestTax:
+          type: string
+          format: Tax
+          description: (DDD Entity) - Specifies the tax on interest.
+        CreditDebitIndicator:
+          type: string
+          format: DebitCreditCode
+          description: (DDD Entity) - Indicates whether the interest is a debit or credit.
+        CashEntry:
+          type: string
+          format: CashEntry
+          description: (DDD Entity) - Entry which contains the interest.
+        PaymentDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date of the next interest payment.
+        RelatedInterestManagement:
+          type: string
+          format: InterestManagement
+          description: >-
+            (DDD Entity) - Management of interest which consists into
+            calculating the interest, requesting its payment or distributing the
+            interest proceeds.
+        RelatedUndertakingAmount:
+          type: string
+          format: UndertakingAmount
+          description: >-
+            (DDD Entity) - Undertaking amount for which an interest is
+            specified.
+        RelatedDebitCreditFacility:
+          type: string
+          format: DebitCreditFacility
+          description: >-
+            (DDD Entity) - Debit and credit facilities on which the interest
+            applies.
+        SecuritiesSettlement:
+          type: string
+          format: SecuritiesSettlement
+          description: >-
+            (DDD Entity) - Securities settlement process for which an accrued
+            interest is specified.
+        InterestName:
+          type: string
+          format: GenericIdentification
+          description: (DDD Entity) - Interest rate expressed as a rate name.
+        RelatedAssetHolding:
+          type: string
+          format: AssetHolding
+          description: (DDD Entity) - Asset holding on which interest is paid.
+        Deposit:
+          type: string
+          format: Deposit
+          description: (DDD Entity) - Deposit for which an interest is specified.
+        AccountBalance:
+          type: string
+          format: Balance
+          description: (DDD Entity) - Balance for which an interest is calculated.
+        RelatedAccountContract:
+          type: string
+          format: AccountContract
+          description: >-
+            (DDD Entity) - Account contract for which interest parameters are
+            specified.
+        RelatedNetAssetValueCalculation:
+          type: string
+          format: NetAssetValueCalculation
+          description: >-
+            (DDD Entity) - Net asset value calculation for which an accrued
+            interest is specified.
+        TypeOfInterest:
+          type: string
+          format: InterestTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of interest associated with a
+            trade.
+        RelatedPaymentCard:
+          type: string
+          format: PaymentCard
+          description: >-
+            (DDD Entity) - Payment card for which interest on due amounts is
+            specified.
+    Adjustment:
+      type: object
+      description: >-
+        (DDD Entity) - Modification on the value of goods and / or services. For
+        example: rebate, discount.
+      properties:
+        Amount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Amount of money that results from the application of
+            an adjustment (charges. fees, discount or allowance) to the amount
+            due.
+        ChargeRate:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Rate used to calculate the amount of the adjustment,
+            allowance, charge or fee.
+        CalculationMethod:
+          type: string
+          format: TaxationBasisCode
+          description: >-
+            (DDD Entity) - Method used to calculate an adjustment (financial
+            adjustment, charge or allowance).
+        Payment:
+          type: string
+          format: Payment
+          description: >-
+            (DDD Entity) - Specifies the payment resulting from charges due by
+            one party to another or the payment to which adjustements (for
+            instance charges) are applied.
+        Direction:
+          type: string
+          format: AdjustmentDirectionCode
+          description: >-
+            (DDD Entity) - Specifies whether the adjustment must be subtracted
+            or added to the total amount.
+        Reason:
+          type: string
+          format: Max4AlphaNumericText
+          description: (DDD Entity) - Reason for the amount adjustment.
+        RelatedLineItem:
+          type: string
+          format: LineItem
+          description: >-
+            (DDD Entity) - Specifies the line item on which a financial
+            adjustment took place.
+        AllowanceChargeIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indication of whether or not this allowance charge is
+            a charge (Indicator is Yes) that should be added or an allowance
+            that should be subtracted (Indicator is No).
+        Price:
+          type: string
+          format: Price
+          description: (DDD Entity) - Specifies the price which is adjusted.
+        ChargeIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indication of whether or not this allowance charge is
+            a charge.
+        Type:
+          type: string
+          format: AdjustmentTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of adjustment applied to the
+            amount of goods/services by means of a code.
+        CollateralManagement:
+          type: string
+          format: CollateralManagement
+          description: >-
+            (DDD Entity) - Process which groups the activities related to
+            collateral.
+        AdjustedBalance:
+          type: string
+          format: Balance
+          description: (DDD Entity) - Balance for which adjustments are specified.
+        ChargesPartyRole:
+          type: string
+          format: ChargePartyRole
+          description: (DDD Entity) - Role played by a party in the context of charges due.
+        EffectivePeriod:
+          type: string
+          format: DateTimePeriod
+          description: (DDD Entity) - Period during which the adjustment is applicable.
+        CurrencyExchange:
+          type: string
+          format: CurrencyExchange
+          description: >-
+            (DDD Entity) - Currency exchange for which adjustments such as fees
+            or commissions are applied.
+        SecuritiesOrder:
+          type: string
+          format: SecuritiesOrder
+          description: (DDD Entity) - Order for which adjustments are specified.
+        Tax:
+          type: string
+          format: Tax
+          description: >-
+            (DDD Entity) - Information on the calculation method resulting in
+            the tax amount included in the charge transfer. The tax is expressed
+            as a fixed amount, or as a percentage of the charge amount, upon
+            which the tax is applied.
+    PercentageRate:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - Rate expressed as a percentage, that is, in hundredths,
+        for example, 0.7 is 7/10 of a percent, and 7.0 is 7%.
+    ISODate:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - A particular point in the progression of time in a
+        calendar year expressed in the YYYY-MM-DD format. This representation is
+        defined in "XML Schema Part 2: Datatypes Second Edition W3C
+        Recommendation 28 October 2004" which is aligned with ISO 8601.
+    CashDeposit:
+      type: object
+      description: >-
+        (DDD Entity) - Amount of money representing a value paid by a debtor to
+        an agent bank.
+      properties:
+        NoteDenomination:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Specifies the note or coin denomination, including
+            the currency, such as a 50 euro note.
+        NumberOfNotes:
+          type: string
+          format: Max15NumericText
+          description: >-
+            (DDD Entity) - Specifies the number of notes of the same
+            denomination in the deposit.
+        DepositAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Specifies the total amount of money in the cash
+            deposit, that is the note denomination times the number of notes.
+        RelatedBankingTransaction:
+          type: string
+          format: BankingTransaction
+          description: >-
+            (DDD Entity) - Describes the type of transaction associated with a
+            cash deposit.
+    CurrencyCode:
+      type: string
+      format: ''
+      description: >-
+        (DDD Entity) - Code allocated to a currency, by a maintenance agency,
+        under an international identification scheme as described in the latest
+        edition of the international standard ISO 4217 "Codes for the
+        representation of currencies and funds". Valid currency codes are
+        registered with the ISO 4217 Maintenance Agency, and consist of three
+        contiguous letters.
+    Jurisdiction:
+      type: object
+      description: >-
+        (DDD Entity) - Specifies the jurisdiction (country, county, state,
+        province, city).
+      properties:
+        GovernanceRules:
+          type: string
+          format: GovernanceRules
+          description: >-
+            (DDD Entity) - Rules for which an applicable law and a jurisdiction
+            are specified.
+        Identification:
+          type: string
+          format: Location
+          description: >-
+            (DDD Entity) - Specifies the jurisdiction (country, county, state,
+            province, city).
+        RegisteredSecurities:
+          type: string
+          format: Security
+          description: >-
+            (DDD Entity) - Securities which are registered under a specific
+            jurisdiction.
+        AssociatedStrategy:
+          type: string
+          format: JurisdictionStrategy
+          description: (DDD Entity) - Strategy which is based on a specific jurisdiction.
+        SecuritiesRestriction:
+          type: string
+          format: SecuritiesRestriction
+          description: >-
+            (DDD Entity) - Securities restrictions which apply in a specific
+            jurisdiction.
+        RelatedSecuritiesTax:
+          type: string
+          format: SecuritiesTax
+          description: (DDD Entity) - Securities tax for which a jurisdiction is specified.
+        RelatedMarket:
+          type: string
+          format: Market
+          description: (DDD Entity) - Market to which the jurisdiction is related.
+        RelatedAgreement:
+          type: string
+          format: Agreement
+          description: >-
+            (DDD Entity) - Agreement which is subject to a specific
+            jurisdiction.
+    Document:
+      type: object
+      description: >-
+        (DDD Entity) - General information that unambiguously identifies a
+        document, such as identification number and issue date time.
+      properties:
+        IssueDate:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Issue date of the document.
+        CopyDuplicate:
+          type: string
+          format: CopyDuplicateCode
+          description: >-
+            (DDD Entity) - Specifies if this document is a copy, a duplicate, or
+            a duplicate of a copy.
+        PlaceOfStorage:
+          type: string
+          format: ContactPoint
+          description: (DDD Entity) - Specifies where the document is stored.
+        PaymentObligation:
+          type: string
+          format: PaymentObligation
+          description: >-
+            (DDD Entity) - Document which is referred to in a payment
+            obligation.
+        Type:
+          type: string
+          format: DocumentTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of the document, for example
+            commercial invoice.
+        Amount:
+          type: string
+          format: ActiveCurrencyAndAmount
+          description: "(DDD Entity) - Amount of money and currency of a document. \r\nThe amount can be either the original amount due and payable for instance the ordered amount, or the amount actually remitted for the referred document."
+        Agreement:
+          type: string
+          format: Agreement
+          description: (DDD Entity) - Agreement which is materialised by a document
+        PlaceOfIssue:
+          type: string
+          format: Location
+          description: (DDD Entity) - Place where the document was issued.
+        DocumentVersion:
+          type: string
+          format: Number
+          description: >-
+            (DDD Entity) - Unambiguous identification of the version of a
+            document.
+        Status:
+          type: string
+          format: Max140Text
+          description: '(DDD Entity) - Status of the document (eg delivered, paid, etc.)'
+        Reconciliation:
+          type: string
+          format: Reconciliation
+          description: >-
+            (DDD Entity) - Reconciliation process for which a document is
+            specified.
+        LetterOfCredit:
+          type: string
+          format: LetterOfCredit
+          description: >-
+            (DDD Entity) - Written undertaking by a bank to honour a demand for
+            payment.
+        PartyRole:
+          type: string
+          format: DocumentPartyRole
+          description: >-
+            (DDD Entity) - Role played by a party in the context of a document
+            or in the context of the business linked to the document.
+        DataSetType:
+          type: string
+          format: DataSetTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of data set in which the document
+            is included.
+        Transport:
+          type: string
+          format: Transport
+          description: >-
+            (DDD Entity) - Transport process for which related documents are
+            specified.
+        SignedIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indication whether the document must be signed or
+            not.
+        RemittedAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Amount of money remitted for the referred document.
+        Guarantee:
+          type: string
+          format: Guarantee
+          description: (DDD Entity) - Guarantee that is described in a document.
+        Language:
+          type: string
+          format: LanguageCode
+          description: >-
+            (DDD Entity) - Language used for textual information in the
+            document.
+        Purpose:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Specifies the function of the document.
+        DocumentIdentification:
+          type: string
+          format: GenericIdentification
+          description: >-
+            (DDD Entity) - Identification of a document for instance unique
+            identification of the purchase order, assigned by the buyer.
+        Evidence:
+          type: string
+          format: Evidence
+          description: (DDD Entity) - Proof of evidence which uses a document.
+        CommercialTrade:
+          type: string
+          format: CommercialTrade
+          description: (DDD Entity) - Trade for which a certificare is issued.
+        Presentation:
+          type: string
+          format: Presentation
+          description: (DDD Entity) - Presentation of documents and statements.
+        RelatedContract:
+          type: string
+          format: RegisteredContract
+          description: (DDD Entity) - Related document which materialises the agreement.
+    Presentation:
+      type: object
+      description: (DDD Entity) - Presentation of documents.
+      properties:
+        CommunicationMethod:
+          type: string
+          format: ExternalChannelCode
+          description: (DDD Entity) - Method by which the document is to be delivered.
+        PresentedUndertaking:
+          type: string
+          format: Undertaking
+          description: >-
+            (DDD Entity) - Specifies the undertaking which is presented and its
+            associated documents.
+        Medium:
+          type: string
+          format: PresentationMediumCode
+          description: >-
+            (DDD Entity) - Medium through which the presentation can be
+            submitted such as paper, electronic or both.
+        PresentedDocument:
+          type: string
+          format: Document
+          description: (DDD Entity) - Documents which are presented.
+        ElectronicPresentationAddress:
+          type: string
+          format: ElectronicAddress
+          description: (DDD Entity) - Electronic address for the presentation of documents.
+        PresentationDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date on which the presentation is made.
+        ApplicableChannel:
+          type: string
+          format: CommunicationMethodCode
+          description: (DDD Entity) - Channel used for the transmission of a document.
+    Undertaking:
+      type: object
+      description: >-
+        (DDD Entity) - Independent undertaking, such as a demand guarantee or
+        standby letter of credit, that provides financial assurance, to be
+        collected on the presentation of documents that comply with its terms
+        and conditions.
+      properties:
+        ElectronicSignature:
+          type: string
+          format: ElectronicSignature
+          description: (DDD Entity) - Digital signature.
+        UndertakingStatus:
+          type: string
+          format: UndertakingStatus
+          description: (DDD Entity) - Status of the undertaking.
+        Identification:
+          type: string
+          format: Max35Text
+          description: >-
+            (DDD Entity) - Unique and unambiguous identifier assigned to the
+            undertaking issued by the guarantor/issuer. This reference is used
+            throughout the life cycle of the undertaking.
+        Demand:
+          type: string
+          format: Demand
+          description: >-
+            (DDD Entity) - Document signed by the beneficiary demanding payment
+            under a demand guarantee or standby letter of credit.
+        TerminationDate:
+          type: string
+          format: ISODate
+          description: (DDD Entity) - Date when the undertaking terminates.
+        UndertakingAmount:
+          type: string
+          format: UndertakingAmount
+          description: (DDD Entity) - Amount of the undertaking.
+        Expiry:
+          type: string
+          format: Expiry
+          description: (DDD Entity) - Expiry information about the undertaking.
+        PartyRole:
+          type: string
+          format: UndertakingPartyRole
+          description: >-
+            (DDD Entity) - Role played by a party in the context of an
+            undertaking or in the context of the business linked to the
+            undertaking.
+        UndertakingAmendment:
+          type: string
+          format: AmendmentOfUndertaking
+          description: >-
+            (DDD Entity) - Modification of an undertaking such as an guarantee
+            or standby letter of credit.
+        SpecifiedDocument:
+          type: string
+          format: UndertakingDocument
+          description: (DDD Entity) - Document related to the undertaking.
+        DateOfAdvice:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date on which the undertaking or its amendment is
+            advised.
+        Purpose:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Description of the purpose of the undertaking.
+        UndertakingName:
+          type: string
+          format: UndertakingNameCode
+          description: >-
+            (DDD Entity) - Name of undertaking such as, demand guarantee,
+            standby letter of credit.
+        Type:
+          type: string
+          format: ExternalUndertakingTypeCode
+          description: >-
+            (DDD Entity) - Type of guarantee or standby letter of credit, for
+            example, performance,  payment, etc.
+        ConfirmationIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indicates whether the advising bank (confirmer) is
+            requested to add its confirmation to the undertaking.
+        CounterUndertakingIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indicates whether the undertaking is a
+            counter-undertaking.
+        RelatedChargesPayableBy:
+          type: string
+          format: ExternalTypeOfPartyCode
+          description: >-
+            (DDD Entity) - Indicates whether the applicant/obligor or
+            beneficiary is responsible for payment of the charges.
+        StandardClaimDocumentIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indication as to whether a claim is to utilise a
+            standard claim form of the issuing institution.
+        UnderlyingTransaction:
+          type: string
+          format: UnderlyingTransaction
+          description: >-
+            (DDD Entity) - Reference information on a commercial obligation
+            between the beneficiary and applicant for which an undertaking is
+            issued.
+        ModelForm:
+          type: string
+          format: ModelForm
+          description: >-
+            (DDD Entity) - Wording template for the undertaking content made
+            available for use with certain governance rules or made available by
+            particular institutions. 
+        MultipleDemandIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indicates whether multiple demands are permitted
+            against the undertaking.
+        PartialDemandIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indicates whether partial demands/drawings are
+            permitted against the undertaking.
+        TransferIndicator:
+          type: string
+          format: YesNoIndicator
+          description: (DDD Entity) - Indicates whether the undertaking is transferrable.
+        PredefinedVariation:
+          type: string
+          format: AutomaticVariation
+          description: >-
+            (DDD Entity) - Changes that may be made to the undertaking covered
+            by clauses in the existing undertaking and its amendments.
+        Charges:
+          type: string
+          format: Charges
+          description: (DDD Entity) - Amount and currency of the commissions and changes.
+        Presentation:
+          type: string
+          format: Presentation
+          description: (DDD Entity) - Presentation information related to the undertaking.
+        UndertakingExtension:
+          type: string
+          format: UndertakingExtension
+          description: >-
+            (DDD Entity) - Specifies information related to the extension of an
+            undertaking.
+    PaymentInstruction:
+      type: object
+      description: >-
+        (DDD Entity) - Instruction to pay an amount of money to an ultimate
+        beneficiary, on behalf of an originator. This instruction may have to be
+        forwarded several times to complete the settlement chain.
+      properties:
+        ProcessingValidityTime:
+          type: string
+          format: DateTimePeriod
+          description: >-
+            (DDD Entity) - Date and time range within which the payment
+            instruction must be processed.
+        InstructionForNextAgent:
+          type: string
+          format: InstructionCode
+          description: "(DDD Entity) - Further information related to the processing of the payment instruction that may need to be acted upon by the next agent. \r\nUsage: The next agent may not be the creditor agent.\r\nThe instruction can relate to a level of service, can be an instruction that has to be executed by the agent, or can be information required by the next agent."
+        SettlementInstruction:
+          type: string
+          format: CashSettlement
+          description: >-
+            (DDD Entity) - Instruction for the cash settlement between two
+            clearing agents.
+        ClearingChargeAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Amount of money taken by a clearing agent as
+            compensation for the processing of the payment instruction. This
+            charge is paid either by the debtor or by the creditor or shared
+            between them.
+        StandingOrder:
+          type: string
+          format: StandingOrder
+          description: >-
+            (DDD Entity) - Instruction given by an account holder to an account
+            servicer to make regular transfers on given dates to the same
+            beneficiary.
+        Previous:
+          type: string
+          format: PaymentExecution
+          description: >-
+            (DDD Entity) - Specifies that a payment instruction may be preceeded
+            by another payment instruction.
+    Demand:
+      type: object
+      description: >-
+        (DDD Entity) - Document signed by the beneficiary demanding payment
+        under a demand guarantee or standby letter of credit.
+      properties:
+        Undertaking:
+          type: string
+          format: Undertaking
+          description: >-
+            (DDD Entity) - Undertaking for which a document signed by the
+            beneficiary demanding payment is specified.
+        SubmissionDateTime:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date and time the demand is submitted.
+        DemandAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Amount to be paid.
+        Type:
+          type: string
+          format: DemandTypeCode
+          description: '(DDD Entity) - Type of demand, for example, pay or extend.'
+        TotalClaimAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Amount and currency of the total amount claimed (sum
+            of the demand amount plus counterparty commission and charges).
+        Payment:
+          type: string
+          format: PaymentObligation
+          description: (DDD Entity) - Payment of the demand.
+        AssociatedDocument:
+          type: string
+          format: UndertakingDocument
+          description: (DDD Entity) - Documents which are associated with a demand.
+    Expiry:
+      type: object
+      description: (DDD Entity) - Expiry parameters.
+      properties:
+        ExpiryDateTime:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date and time when the expiry of the undertaking
+            takes effect.
+        Undertaking:
+          type: string
+          format: Undertaking
+          description: >-
+            (DDD Entity) - Undertaking for which expiry information is
+            specified.
+        ExpiryCondition:
+          type: string
+          format: Max2000Text
+          description: >-
+            (DDD Entity) - Condition that indicates when the undertaking will
+            cease to be available at the place for presentation. 
+        OpenEndedIndicator:
+          type: string
+          format: YesNoIndicator
+          description: (DDD Entity) - Specifies whether the expiry period is open ended.
+        ExpiryPlace:
+          type: string
+          format: Location
+          description: >-
+            (DDD Entity) - Place where the expiry of the undertaking takes
+            effect.
+    YesNoIndicator:
+      type: string
+      format: ''
+      description: (DDD Entity) - Indicates a "Yes" or "No" type of answer for an element.
+    AmendmentOfUndertaking:
+      type: object
+      description: >-
+        (DDD Entity) - Modification of an undertaking such as an guarantee or
+        standby letter of credit.
+      properties:
+        DateOfIssuance:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date the amendment is issued.
+        ChangeOfAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Decrease (negative) or increase (positive) of the
+            undertaking as a result of the amendment. 
+        Undertaking:
+          type: string
+          format: Undertaking
+          description: (DDD Entity) - Contents of an UndertakingAmendmentResponse message.
+        BeneficiaryConsentRequestIndicator:
+          type: string
+          format: YesNoIndicator
+          description: >-
+            (DDD Entity) - Indicates whether or not a request for consent is
+            required from the beneficiary.
+        AmendmentIdentification:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Identification of the amendment.
+    Charges:
+      type: object
+      description: (DDD Entity) - Amount of money associated with a service.
+      properties:
+        ChargeType:
+          type: string
+          format: ChargeTypeCode
+          description: (DDD Entity) - Type of service for which a charge is asked or paid.
+        CalculationBasis:
+          type: string
+          format: CalculationBasisCode
+          description: (DDD Entity) - Calculation basis for the charge or fee.
+        BearerType:
+          type: string
+          format: ChargeBearerTypeCode
+          description: >-
+            (DDD Entity) - Specifies which party/parties will bear the charges
+            associated with the processing of the payment transaction.
+        ChargesDebitAccount:
+          type: string
+          format: CashAccount
+          description: (DDD Entity) - Account from which a charge is debited.
+        CashEntry:
+          type: string
+          format: CashEntry
+          description: (DDD Entity) - Entry which contains the charges.
+        CreditDebitIndicator:
+          type: string
+          format: DebitCreditCode
+          description: (DDD Entity) - Indicates whether a charge is a credit or a debit.
+        MaximumAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Maximum amount of money asked or paid for the charge
+            for example depending on the type of investors.
+        InvestmentFundTransaction:
+          type: string
+          format: InvestmentFundTransaction
+          description: >-
+            (DDD Entity) - Investment fund transaction for which charges are
+            specified.
+        LogisticsChargeLineItem:
+          type: string
+          format: LineItem
+          description: >-
+            (DDD Entity) - Specifies the line item to which the logistics charge
+            applies.
+        Transport:
+          type: string
+          format: Transport
+          description: >-
+            (DDD Entity) - Specifies the transport process to which the charges
+            apply.
+        Services:
+          type: string
+          format: AccountService
+          description: >-
+            (DDD Entity) - Account services for which account administration
+            charges are specified.
+        RelatedUndertaking:
+          type: string
+          format: Undertaking
+          description: (DDD Entity) - Undertaking for which charges are specified.
+        LineItem:
+          type: string
+          format: LineItem
+          description: (DDD Entity) - Line item for which charges are specified
+        NetPriceChargeLineItem:
+          type: string
+          format: LineItem
+          description: >-
+            (DDD Entity) - Specifies the line item to which the net price charge
+            applies.
+        BaseAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Amount on which the charges are calculated.
+        MaximumRate:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Maximum rate used to calculate the amount of the
+            charge or fee for example depending on the type of investors.
+        MinimumRate:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Minimum rate used to calculate the amount of the
+            charge or fee for example depending on the type of investors.
+        MinimumAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: >-
+            (DDD Entity) - Minimum amount of money asked or paid for the charge
+            for example depending on the type of investors.
+        RelatedInterest:
+          type: string
+          format: InterestCalculation
+          description: (DDD Entity) - Interest on which charges are applied.
+        ChargePaymentMethod:
+          type: string
+          format: ChargePaymentMethodCode
+          description: (DDD Entity) - Specifies how charges are paid.
+    UndertakingPartyRole:
+      type: object
+      description: (DDD Entity) - Role played by a party in the context of an undertaking.
+      properties:
+        Undertaking:
+          type: string
+          format: Undertaking
+          description: >-
+            (DDD Entity) - Identifies the undertaking for which a party plays a
+            role.
+    Assessment:
+      type: object
+      description: (DDD Entity) - Assessment for the components of a system.
+      properties:
+        AssessmentType:
+          type: string
+          format: POIComponentAssessmentCode
+          description: (DDD Entity) - Type of assessment.
+        System:
+          type: string
+          format: System
+          description: (DDD Entity) - System for which an assessment is produced.
+        ExpiryDate:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date when the assessment expires.
+        DeliveryDate:
+          type: string
+          format: ISODateTime
+          description: (DDD Entity) - Date when the assessment document was delivered.
+    InterestCalculation:
+      type: object
+      description: (DDD Entity) - Set of parameters used to calculate an interest amount.
+      properties:
+        DayCountBasis:
+          type: string
+          format: InterestComputationMethodCode
+          description: >-
+            (DDD Entity) - Identifies the computation method of accrued interest
+            of the related financial instrument.
+        Rate:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Percentage charged for the use of an amount of money,
+            usually expressed at an annual rate. The interest rate is the ratio
+            of the amount of interest paid during a certain period of time
+            compared to the principal amount of the interest bearing financial
+            instrument.
+        Interest:
+          type: string
+          format: Interest
+          description: (DDD Entity) - Interest resulting from the interest calculation.
+        RateType:
+          type: string
+          format: InterestRateTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of rate used to calculate the
+            interest.
+        InterestPeriod:
+          type: string
+          format: DateTimePeriod
+          description: >-
+            (DDD Entity) - Period during which the interest rate has been
+            applied.
+        RelatedIndex:
+          type: string
+          format: PercentageRate
+          description: >-
+            (DDD Entity) - Index rate related to the interest rate of the
+            forthcoming interest payment.
+        InterestAccrualDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Start date used for calculating accrued interest on
+            debt instruments which are being sold between interest payment
+            dates. Often but not always the same as the issue date and the dated
+            date.
+        CalculationMethod:
+          type: string
+          format: CalculationMethodCode
+          description: >-
+            (DDD Entity) - Specifies whether the interest is simple or
+            compounded.
+        VariableInterest:
+          type: string
+          format: VariableInterest
+          description: >-
+            (DDD Entity) - Specifies the parameters to be used for variable
+            interest payments.
+        InterestType:
+          type: string
+          format: InterestCode
+          description: (DDD Entity) - Specifies the type of interest.
+        RateValidityRange:
+          type: string
+          format: AmountRange
+          description: >-
+            (DDD Entity) - Specifies the amount range for which the interest
+            rate is applicable.
+        InterestMethod:
+          type: string
+          format: InterestMethodCode
+          description: >-
+            (DDD Entity) - Indicates whether the interest will be settled in
+            cash or rolled in the existing collateral balance.
+        CalculationFrequency:
+          type: string
+          format: FrequencyCode
+          description: >-
+            (DDD Entity) - Specifies the periodicity of the calculation of the
+            interest.
+        CalculationDate:
+          type: string
+          format: ISODate
+          description: >-
+            (DDD Entity) - Indicates the calculation date of the interest
+            amount.
+        Charges:
+          type: string
+          format: Charges
+          description: (DDD Entity) - Specifies the charges on interest.
+        DebtInstrument:
+          type: string
+          format: Debt
+          description: (DDD Entity) - Debt for which a next interest is specified.
+        Spread:
+          type: string
+          format: Spread
+          description: (DDD Entity) - Specifies the difference between two interests.
+        PaymentFrequency:
+          type: string
+          format: FrequencyCode
+          description: (DDD Entity) - Specifies the frequency of an interest payment.
+        RelatedInterestManagement:
+          type: string
+          format: InterestManagement
+          description: >-
+            (DDD Entity) - Interest management process which requires interest
+            calculation.                        
+    Asset:
+      type: object
+      description: (DDD Entity) - Tangible items of value to a business.
+      properties:
+        ExpiryDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date on which an order, a privilege, an entitlement
+            or an offer terminates. For an interest bearing asset, it is the
+            date/time at which it becomes due and has to be repaid.
+        MaturityDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Planned date, at the time of issuance, on which an
+            interest bearing financial instrument becomes due and principal is
+            repaid by the issuer to the investor.
+        Derivative:
+          type: string
+          format: Derivative
+          description: >-
+            (DDD Entity) - Specifies the parameters of a derivative instrument
+            based on a specific asset.
+        AssetValue:
+          type: string
+          format: AssetHolding
+          description: (DDD Entity) - Specifies the different values of an asset.
+        AssetClassification:
+          type: string
+          format: AssetClassification
+          description: (DDD Entity) - Classification of the asset.
+        FinancialAssetCategory:
+          type: string
+          format: FinancialAssetTypeCategoryCode
+          description: (DDD Entity) - Categorization of financial asset type.
+        AssetPartyRole:
+          type: string
+          format: AssetPartyRole
+          description: (DDD Entity) - Party which plays a role for a specific asset.
+        Issuance:
+          type: string
+          format: Issuance
+          description: (DDD Entity) - Details regarding the issuance of an asset.
+        Portfolio:
+          type: string
+          format: Portfolio
+          description: (DDD Entity) - Asset which is part of a portfolio.
+        InvestmentAmount:
+          type: string
+          format: CurrencyAndAmount
+          description: (DDD Entity) - Invested amount of the portfolio asset.
+        InvestmentRate:
+          type: string
+          format: PercentageRate
+          description: (DDD Entity) - Invested percentage of the portfolio asset.
+        EffectiveDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Cut off date/time for the information of the
+            specified portfolio asset.
+        FinancialInstrumentSubStructure:
+          type: string
+          format: InstrumentSubStructureTypeCode
+          description: (DDD Entity) - Indicates the type of deal for structured finance.
+        InvestmentPlan:
+          type: string
+          format: InvestmentPlan
+          description: (DDD Entity) - Investment plan that invests in a specific asset.
+        Trade:
+          type: string
+          format: Trade
+          description: (DDD Entity) - Trade which which involves a specific asset.
+        Tranche:
+          type: string
+          format: Tranche
+          description: >-
+            (DDD Entity) - One of a number of related assets offered as part of
+            the same transaction.
+        LegAdditionalInformation:
+          type: string
+          format: Leg
+          description: (DDD Entity) - Provides details about the leg.
+        StandingSettlementInstruction:
+          type: string
+          format: StandingSettlementInstruction
+          description: >-
+            (DDD Entity) - Standing settlement instruction for which an asset is
+            specified.
+        GenericAssetIdentification:
+          type: string
+          format: ''
+          description: (DDD Entity) - Identifies the asset.
+    AccountRestriction:
+      type: object
+      description: (DDD Entity) - Restriction on capability or operations allowed.
+      properties:
+        Account:
+          type: string
+          format: Account
+          description: (DDD Entity) - Account on which restrictions are specified.
+        RestrictionType:
+          type: string
+          format: Max35Text
+          description: (DDD Entity) - Type of the restriction.
+        ValidityPeriod:
+          type: string
+          format: DateTimePeriod
+          description: (DDD Entity) - Period during which the restriction is effective.
+    AccountPartyRole:
+      type: object
+      description: >-
+        (DDD Entity) - Role played by a party in the context of account
+        operations.
+      properties:
+        Account:
+          type: string
+          format: Account
+          description: >-
+            (DDD Entity) - Identifies the account for which a party plays a
+            role.
+    Balance:
+      type: object
+      description: >-
+        (DDD Entity) - Numerical representation of the net increases and
+        decreases in an account at a specific point in time.
+      properties:
+        Type:
+          type: string
+          format: BalanceTypeCode
+          description: (DDD Entity) - Specifies the nature of a balance.
+        ValueDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Date and time at which the balance is or will be
+            available.
+        CreditDebitIndicator:
+          type: string
+          format: DebitCreditCode
+          description: >-
+            (DDD Entity) - Indicates whether the balance is a credit or a debit
+            balance. A zero balance is considered to be a credit balance
+        AssetHolding:
+          type: string
+          format: AssetHolding
+          description: >-
+            (DDD Entity) - Specifies in terms of value and quantity the assets
+            held in a balance.
+        CalculationDate:
+          type: string
+          format: ISODateTime
+          description: >-
+            (DDD Entity) - Specifies the date and time at which the balance is
+            calculated.
+        Adjustment:
+          type: string
+          format: Adjustment
+          description: (DDD Entity) - Specifies the balance adjustments.
+        Account:
+          type: string
+          format: Account
+          description: >-
+            (DDD Entity) - Account or sub-account for which a balance is
+            calculated.
+        Interest:
+          type: string
+          format: Interest
+          description: >-
+            (DDD Entity) - Set of elements used to provide interest information
+            that applies to the balance.
+        BalanceEntry:
+          type: string
+          format: Entry
+          description: (DDD Entity) - Credit or debit postings used to calculate a balance.
+        ProcessingRestriction:
+          type: string
+          format: ProcessingTypeCode
+          description: >-
+            (DDD Entity) - Specifies the type of balance processing restrictions
+            that must be applied.
+        OpeningClosingCode:
+          type: string
+          format: OpeningClosingCode
+          description: >-
+            (DDD Entity) - Specifies whether the balance is an opening or a
+            closing one.
