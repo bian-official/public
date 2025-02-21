@@ -43,5 +43,5 @@ Each Swagger represents a BIAN Service Domain.
 6. Add any new features to _mybranch_
 7. The next step would be to stage, commit, and push the changed files back to your 'forked' repository on GitHub. You would be able to use _git add_, _commit_, and _push_ commands. Additional detailed information can be found here: https://git-scm.com/docs
 8. Go to your forked repository on GitHub and submit a Pull Request by clicking the 'Pull Request' button
-9. BIAN will review the changes proposed in your Pull Request, in the BIAN Working Groups with it's members. BIAN might then come back to you with questions / clarifications / suggestions for ammendments. If these changes are approved in the BIAN Working Groups, they will be used to enhance the BIAN standards, and released as part of scheduled future releases. 
+9. BIAN will review the changes proposed in your Pull Request, in the BIAN Working Groups with it's members. BIAN might then come back to you with questions / clarifications / suggestions for amendments. If these changes are approved in the BIAN Working Groups, they will be used to enhance the BIAN standards, and released as part of scheduled future releases. 
 10. You are of course welcome to maintain your own fork, as your own flavour of implementation of the BIAN standard.
