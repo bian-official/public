@@ -1,0 +1,712 @@
+asyncapi: 3.0.0
+info:
+  title: Product Design
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Develop/refine product
+    designs and supporting specification details
+channels:
+  ProductorServiceSpecification/Created:
+    address: ProductorServiceSpecification/Created
+    messages:
+      ProductorServiceSpecification-created.message:
+        $ref: '#/components/messages/ProductorServiceSpecification'
+    description: ''
+  ProductorServiceSpecification/Updated:
+    address: ProductorServiceSpecification/Updated
+    messages:
+      ProductorServiceSpecification-updated.message:
+        $ref: '#/components/messages/ProductorServiceSpecification'
+    description: ''
+  Production/Created:
+    address: Production/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Production'
+    description: ''
+  Production/Updated:
+    address: Production/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Production'
+    description: ''
+  Testing/Created:
+    address: Testing/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Testing'
+    description: ''
+  Testing/Updated:
+    address: Testing/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Testing'
+    description: ''
+  FunctionalRequirements/Created:
+    address: FunctionalRequirements/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FunctionalRequirements'
+    description: ''
+  FunctionalRequirements/Updated:
+    address: FunctionalRequirements/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FunctionalRequirements'
+    description: ''
+operations:
+  ProductorServiceSpecification-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ProductorServiceSpecification~1Created'
+    summary: ProductorServiceSpecification
+    messages:
+      - $ref: >-
+          #/channels/ProductorServiceSpecification~1Created/messages/ProductorServiceSpecification-created.message
+  ProductorServiceSpecification-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ProductorServiceSpecification~1Updated'
+    summary: ProductorServiceSpecification
+    messages:
+      - $ref: >-
+          #/channels/ProductorServiceSpecification~1Updated/messages/ProductorServiceSpecification-updated.message
+  Production/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Production~1Created'
+    summary: Production
+    messages:
+      - $ref: '#/channels/Production~1Created/messages/publish.message'
+  Production/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Production~1Updated'
+    summary: Production
+    messages:
+      - $ref: '#/channels/Production~1Updated/messages/publish.message'
+  Testing/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Testing~1Created'
+    summary: Testing
+    messages:
+      - $ref: '#/channels/Testing~1Created/messages/publish.message'
+  Testing/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Testing~1Updated'
+    summary: Testing
+    messages:
+      - $ref: '#/channels/Testing~1Updated/messages/publish.message'
+  FunctionalRequirements/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FunctionalRequirements~1Created'
+    summary: FunctionalRequirements
+    messages:
+      - $ref: '#/channels/FunctionalRequirements~1Created/messages/publish.message'
+  FunctionalRequirements/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FunctionalRequirements~1Updated'
+    summary: FunctionalRequirements
+    messages:
+      - $ref: '#/channels/FunctionalRequirements~1Updated/messages/publish.message'
+components:
+  messages:
+    ProductorServiceSpecification:
+      name: ProductorServiceSpecification
+      description: >-
+        Create and maintain a design for a procedure, product/service model or
+        other such entity  within Product Design. 
+
+        Example: Create and maintain product designs and analytical models.
+      payload:
+        $ref: '#/components/schemas/ProductorServiceSpecification'
+    Production:
+      name: Production
+      description: |-
+        The main design elements/views making up the overall specification
+        Examples:- Business Requirements
+      payload:
+        $ref: '#/components/schemas/Production'
+    Testing:
+      name: Testing
+      description: |-
+        The main design elements/views making up the overall specification
+        Examples:- Business Requirements
+      payload:
+        $ref: '#/components/schemas/Testing'
+    FunctionalRequirements:
+      name: FunctionalRequirements
+      description: |-
+        The main design elements/views making up the overall specification
+        Examples:- Business Requirements
+      payload:
+        $ref: '#/components/schemas/FunctionalRequirements'
+  schemas:
+    Production:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceSpecificationOperationalRequirements:
+          $ref: '#/components/schemas/Requirement'
+        ProductandServiceSpecificationAllowedUsage:
+          type: string
+          format: Object
+          description: "Defines rules and suitability for the product or service usage ||\r\n|"
+        ProductandServiceSpecificationUsageGuidelines:
+          $ref: '#/components/schemas/RuleSet'
+    Requirement:
+      type: object
+      format: Requirement
+      description: "Specification of the operational and technical requirements ||\r\n|"
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Provides guidance on the use of the product or service
+        GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Text:
+      type: object
+      format: Text
+      description: 'Specifies the reasons for the status. '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Testing:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceSpecificationTestReference:
+          $ref: '#/components/schemas/Test'
+        ProductandServiceSpecificationTestType:
+          $ref: '#/components/schemas/Text'
+        ProductandServiceSpecificationTestHarnessReference:
+          type: string
+          format: Object
+          description: "Reference to the testing environment used to apply the test (can include production events and transactions to simulate performance) ||\r\n|"
+        ProductandServiceSpecificationTestResult:
+          $ref: '#/components/schemas/Test'
+        ProductandServiceSpecificationTestingTaskReference:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationTestingTaskRecord:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationComplianceTaskReference:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationComplianceTaskRecord:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationComplianceTestReference:
+          $ref: '#/components/schemas/Test'
+        ProductandServiceSpecificationComplianceTestType:
+          $ref: '#/components/schemas/Text'
+    Test:
+      type: object
+      format: Test
+      description: "Reference to a compliance task performed against the specification ||\r\n|"
+      properties:
+        TestResult:
+          $ref: '#/components/schemas/Text'
+        TestGuidance:
+          $ref: '#/components/schemas/Text'
+        Testtypevalues:
+          enum:
+            - ProductEligibilityTest
+            - NextBestProductTest
+            - IssuedDeviceTest
+            - CardHolderAuthenticationTest
+            - CardFundsAvailableTest
+            - CardTransactionFraudTest
+            - CardStand-InAuthorizationTest
+            - ExternalAccessRequestTest
+            - SuitabilityTest
+            - LegalComplianceTest
+            - RegulatoryComplianceTest
+            - SystemFunctionalTest
+            - SystemProductionTest
+            - SystemBusinessRiskTest
+            - SystemOperationsTest
+            - CreditPolicyComplianceTest
+            - RuleSetAndDecisionTreeTest
+            - ModelBasedTests
+            - AssetAndLiabilityValuationTest
+            - LiquidityAndCashFlowTest
+            - RiskTest
+            - SensitivityTest
+          format: Test
+        TestDescription:
+          $ref: '#/components/schemas/Text'
+    Task:
+      type: object
+      format: Task
+      description: "Record of the compliance conformance check for the specification ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    FunctionalRequirements:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceSpecificationDesignTaskReference:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationDesignTaskRecord:
+          $ref: '#/components/schemas/Task'
+        MarketResearchDataServiceReference:
+          $ref: '#/components/schemas/Service'
+        MarketResearchDataRecord:
+          type: string
+          format: Object
+          description: "Record of the product or service related market research ||\r\n|"
+        ProductandServiceFeedbackRecord:
+          type: string
+          format: Object
+          description: "User provided and solicited feedback, suggestions for product or service refinement ||\r\n|"
+        ProductandServiceRequirementsSpecification:
+          $ref: '#/components/schemas/Text'
+    Service:
+      type: object
+      format: Service
+      description: "Reference to external service information provider used to obtain product or service related market research as input to the design ||\r\n|"
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+        ServiceDescription:
+          $ref: '#/components/schemas/Text'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Service
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+    Feature:
+      type: object
+      format: Feature
+      description: >-
+        A characteristic of service which refers 1) mainly to the function or
+        condition of service. 2) to non-functional features like quality and
+        security 
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    ProductorServiceSpecification:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceType:
+          $ref: '#/components/schemas/Text'
+        ProductandServiceDescription:
+          $ref: '#/components/schemas/Text'
+        ProductandServiceSpecificationDeployment:
+          type: string
+          format: Object
+          description: "Maintains the current production deployment configuration of the product or service ||\r\n|"
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ProductandServiceSpecificationDeploymentConfiguration:
+          $ref: '#/components/schemas/Arrangement'
+        ProductandServiceSpecificationDeploymentTaskReference:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationDeploymentTaskRecord:
+          $ref: '#/components/schemas/Task'
+        ProductandServiceSpecificationStatus:
+          $ref: '#/components/schemas/Status'
+        ProductandServiceSpecificationUsage:
+          type: string
+          format: Object
+          description: "Tracking deployment and product or service usage frequency ||\r\n|"
+        ProductandServiceSpecificationImpact:
+          type: string
+          format: Object
+          description: "Track reporting of the performance/profitability (of specific features ) of the product or service specification ||\r\n|"
+        ProductandServiceSpecificationVersion:
+          $ref: '#/components/schemas/Text'
+        ProductandServiceSpecification:
+          $ref: '#/components/schemas/Text'
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        Details of the product or service specification deployment for reference
+        Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 

@@ -1,0 +1,452 @@
+asyncapi: 3.0.0
+info:
+  title: Financial Market Research
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The service domain
+    consolidates external financial market research
+channels:
+  FinancialMarketResearchDirectoryEntry/Created:
+    address: FinancialMarketResearchDirectoryEntry/Created
+    messages:
+      FinancialMarketResearchDirectoryEntry-created.message:
+        $ref: '#/components/messages/FinancialMarketResearchDirectoryEntry'
+    description: ''
+  FinancialMarketResearchDirectoryEntry/Updated:
+    address: FinancialMarketResearchDirectoryEntry/Updated
+    messages:
+      FinancialMarketResearchDirectoryEntry-updated.message:
+        $ref: '#/components/messages/FinancialMarketResearchDirectoryEntry'
+    description: ''
+operations:
+  FinancialMarketResearchDirectoryEntry-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketResearchDirectoryEntry~1Created'
+    summary: FinancialMarketResearchDirectoryEntry
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketResearchDirectoryEntry~1Created/messages/FinancialMarketResearchDirectoryEntry-created.message
+  FinancialMarketResearchDirectoryEntry-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketResearchDirectoryEntry~1Updated'
+    summary: FinancialMarketResearchDirectoryEntry
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketResearchDirectoryEntry~1Updated/messages/FinancialMarketResearchDirectoryEntry-updated.message
+components:
+  messages:
+    FinancialMarketResearchDirectoryEntry:
+      name: FinancialMarketResearchDirectoryEntry
+      description: >-
+        Capture and maintain reference information about some type of entitity
+        within Financial Market Research.
+      payload:
+        $ref: '#/components/schemas/FinancialMarketResearchDirectoryEntry'
+  schemas:
+    FinancialMarketResearchDirectoryEntry:
+      type: object
+      description: ''
+      properties:
+        Marketresearchviewpointtypevalues:
+          enum:
+            - CustomerViewpoint
+            - CompetitorViewpoint
+            - MarketDynamicsViewpoint
+            - ProductServiceViewpoint
+            - GeographicViewpoint
+            - EconomicAndPoliticalViewpoint
+            - TechnologicalViewpoint
+            - EnvironmentalAndSustainabilityView
+            - ChannelAndDistributionViewpoint
+            - FinancialViewpoint
+        FinancialMarketResearchViewpointDescription:
+          $ref: '#/components/schemas/Text'
+        ReferencedFinancialMarketResearchRecord:
+          $ref: '#/components/schemas/FinancialMarketResearch'
+        FinancialMarketResearchReportTypeReference:
+          $ref: '#/components/schemas/MarketResearchReportType'
+        FinancialMarketResearchReportTypeDefinition:
+          $ref: '#/components/schemas/Text'
+        FinancialMarketResearchReportVersionPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        FinancialMarketResearchReport:
+          $ref: '#/components/schemas/FinancialMarketResearchReport'
+        FinancialMarketResearchViewpointUsage:
+          $ref: '#/components/schemas/Text'
+        FinancialMarketResearchReportRequest:
+          $ref: '#/components/schemas/Instruction'
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    FinancialMarketResearch:
+      type: object
+      format: FinancialMarketResearch
+      description: "The externally sourced reports that are used to assemble the research viewpoint ||\r\n|"
+      properties:
+        FinancialMarketResearch:
+          type: string
+          format: Class
+          description: >-
+            The process of gathering, analyzing and interpreting information
+            about a financial market, about the financial instruments to be
+            offered for sale in that market, and about the past, present and
+            potential customers.  
+    MarketResearchReportType:
+      type: object
+      format: MarketResearchReportType
+      description: "Reference to a specific type of predefined market research report or database ||\r\n|"
+      properties:
+        MarketResearchReportType:
+          type: string
+          format: String
+          description: |-
+            Classification of a Market Research Report
+            further classification within the report type" market research"
+        MrketResearchReportTypeDefinition:
+          type: string
+          format: String
+          description: >-
+            description of what can be expected from the content of a market
+            research report of this type 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Key dates associated with the log (e.g. start time). '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    FinancialMarketResearchReport:
+      type: object
+      format: FinancialMarketResearchReport
+      description: "Is the content of the report or database in any suitable form ||\r\n|"
+      properties:
+        FinancialMarketResearchReport:
+          type: string
+          format: Class
+          description: A report resulting from the financial market research.
+    Instruction:
+      type: object
+      format: Instruction
+      description: "Details of the research request ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/Instructionidentification'
+        Instructiontypevalues:
+          enum:
+            - PaymentInstruction
+            - DeliveryOrder
+            - InformationRequest
+            - ExchangeInstruction
+            - AllocationInstruction
+            - MaintenanceInstruction
+          format: Instruction
+        InstructionResult:
+          $ref: '#/components/schemas/Text'
+        InstructionDescription:
+          $ref: '#/components/schemas/Text'
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/Text'
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+        Instructiondatetimetypevalues:
+          enum:
+            - DueDate
+            - ExecutionDate
+            - FulfillmentDate
+          format: Instructiondatetime
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction (e.g., requested, executed, fulfilled, etc.);  
+      properties:
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Instructionstatus
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "The employee/business unit requesting the research ||\r\n|"
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Instructionidentificationtypevalues:
+          enum:
+            - OrderNumber
+            - InstructionNumber
+          format: Instructionidentification
+    Log:
+      type: object
+      format: Log
+      description: ' '
+      properties:
+        LogType:
+          $ref: '#/components/schemas/Text'
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'

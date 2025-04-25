@@ -1,0 +1,517 @@
+asyncapi: 3.0.0
+info:
+  title: Financial Accounting
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The Financial Accounting
+    Service Domain takes in financial facts and based on these, creates
+    accounting instructions that will update the general ledger and sub ledger
+    accounts
+channels:
+  FinancialBookingLog/Created:
+    address: FinancialBookingLog/Created
+    messages:
+      FinancialBookingLog-created.message:
+        $ref: '#/components/messages/FinancialBookingLog'
+    description: ''
+  FinancialBookingLog/Updated:
+    address: FinancialBookingLog/Updated
+    messages:
+      FinancialBookingLog-updated.message:
+        $ref: '#/components/messages/FinancialBookingLog'
+    description: ''
+  LedgerPosting/Created:
+    address: LedgerPosting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LedgerPosting'
+    description: ''
+  LedgerPosting/Updated:
+    address: LedgerPosting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LedgerPosting'
+    description: ''
+operations:
+  FinancialBookingLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialBookingLog~1Created'
+    summary: FinancialBookingLog
+    messages:
+      - $ref: >-
+          #/channels/FinancialBookingLog~1Created/messages/FinancialBookingLog-created.message
+  FinancialBookingLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialBookingLog~1Updated'
+    summary: FinancialBookingLog
+    messages:
+      - $ref: >-
+          #/channels/FinancialBookingLog~1Updated/messages/FinancialBookingLog-updated.message
+  LedgerPosting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LedgerPosting~1Created'
+    summary: LedgerPosting
+    messages:
+      - $ref: '#/channels/LedgerPosting~1Created/messages/publish.message'
+  LedgerPosting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LedgerPosting~1Updated'
+    summary: LedgerPosting
+    messages:
+      - $ref: '#/channels/LedgerPosting~1Updated/messages/publish.message'
+components:
+  messages:
+    FinancialBookingLog:
+      name: FinancialBookingLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Financial Accounting. 
+      payload:
+        $ref: '#/components/schemas/FinancialBookingLog'
+    LedgerPosting:
+      name: LedgerPosting
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/LedgerPosting'
+  schemas:
+    LedgerPosting:
+      type: object
+      description: ''
+      properties:
+        PostingDirection:
+          type: string
+          format: Object
+          description: "Defines the posting location in the account ledger according to the chart of accounts (e.g. based on customer, transaction type) ||\r\n|"
+        PostingAmount(creditdebitpair):
+          $ref: '#/components/schemas/Amount'
+        PostingValueDate:
+          $ref: '#/components/schemas/Datetime'
+        PostingResult:
+          $ref: '#/components/schemas/Text'
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The posting amount as a credit-debit pair
+        CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Text:
+      type: object
+      format: Text
+      description: "Any confirmation notification ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        The date and time of the posting ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+    FinancialBookingLog:
+      type: object
+      description: ''
+      properties:
+        Accounttypevalues:
+          enum:
+            - DebitAccount
+            - CreditAccount
+            - VostroAcount
+            - NostroAccount
+            - PaymentAccount
+            - SettlementAccount
+            - SavingAccount
+            - CurrentAccount
+            - CashAccount
+            - LoanAccount
+            - IndividualAccount
+            - JointAccount
+            - LiquidationAccount
+            - ProvisionAccount
+            - PartnershipAccount
+            - InvestmentAccount
+        ProductandServiceReference:
+          $ref: '#/components/schemas/BankingProduct'
+        BusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        ChartofAccountBookingRules:
+          $ref: '#/components/schemas/RuleSet'
+        BaseCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        Status:
+          $ref: '#/components/schemas/Status'
+    BankingProduct:
+      type: object
+      format: BankingProduct
+      description: >-
+        Reference to the associated product or service for which this is the
+        underlying accounting Product_x000D_
+
+        |Product
+        (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+        BM ()
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: BankingProduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - Commercialdescriptioncodename
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+        Productstatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productstatus
+    Status:
+      type: object
+      format: Status
+      description: >-
+        Status of the financial log (e.g. active, in-suspense) Status |Status 
+        (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+        BM ()
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Reference to the owning business unit and associated business activity ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Reference to applicable account booking rules
+        GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'

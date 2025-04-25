@@ -1,0 +1,443 @@
+asyncapi: 3.0.0
+info:
+  title: Party Routing Profile
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains a small profile of key indicators for a customer that is
+    referenced during customer interactions to facilitate routing, servicing and
+    product/service fulfillment decisions. This can include status (such as
+    account in arrears), ratings (such as high value customer) and alerts (such
+    possible fraud activity detected)
+channels:
+  PartyState/Created:
+    address: PartyState/Created
+    messages:
+      PartyState-created.message:
+        $ref: '#/components/messages/PartyState'
+    description: ''
+  PartyState/Updated:
+    address: PartyState/Updated
+    messages:
+      PartyState-updated.message:
+        $ref: '#/components/messages/PartyState'
+    description: ''
+  Alert/Created:
+    address: Alert/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Alert'
+    description: ''
+  Alert/Updated:
+    address: Alert/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Alert'
+    description: ''
+  Status/Created:
+    address: Status/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Status'
+    description: ''
+  Status/Updated:
+    address: Status/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Status'
+    description: ''
+  Rating/Created:
+    address: Rating/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Rating'
+    description: ''
+  Rating/Updated:
+    address: Rating/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Rating'
+    description: ''
+  Status/Notify:
+    address: Status/Notify
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/StatusNotify'
+operations:
+  PartyState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/PartyState~1Created'
+    summary: PartyState
+    messages:
+      - $ref: '#/channels/PartyState~1Created/messages/PartyState-created.message'
+  PartyState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/PartyState~1Updated'
+    summary: PartyState
+    messages:
+      - $ref: '#/channels/PartyState~1Updated/messages/PartyState-updated.message'
+  Alert/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Alert~1Created'
+    summary: Alert
+    messages:
+      - $ref: '#/channels/Alert~1Created/messages/publish.message'
+  Alert/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Alert~1Updated'
+    summary: Alert
+    messages:
+      - $ref: '#/channels/Alert~1Updated/messages/publish.message'
+  Status/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Status~1Created'
+    summary: Status
+    messages:
+      - $ref: '#/channels/Status~1Created/messages/publish.message'
+  Status/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Status~1Updated'
+    summary: Status
+    messages:
+      - $ref: '#/channels/Status~1Updated/messages/publish.message'
+  Rating/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Rating~1Created'
+    summary: Rating
+    messages:
+      - $ref: '#/channels/Rating~1Created/messages/publish.message'
+  Rating/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Rating~1Updated'
+    summary: Rating
+    messages:
+      - $ref: '#/channels/Rating~1Updated/messages/publish.message'
+  Status/Notify.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/Status~1Notify'
+    messages:
+      - $ref: '#/channels/Status~1Notify/messages/subscribe.message'
+components:
+  messages:
+    PartyState:
+      name: PartyState
+      description: >-
+        Monitor and define the status/rating of some entity within Customer
+        Profile. 
+      payload:
+        $ref: '#/components/schemas/PartyState'
+    Alert:
+      name: Alert
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Alert'
+    Status:
+      name: Status
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Status'
+    Rating:
+      name: Rating
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Rating'
+    StatusNotify:
+      name: StatusNotify
+      payload:
+        $ref: '#/components/schemas/StatusNotify'
+  schemas:
+    Alert:
+      type: object
+      description: ''
+      properties:
+        CustomerRelationshipAlertType:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipAlert:
+          $ref: '#/components/schemas/CustomerRelationshipAlert'
+        CustomerRelationshipAlertNarrative:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipAlertValidFromToDate:
+          $ref: '#/components/schemas/Datetime'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    CustomerRelationshipAlert:
+      type: object
+      format: CustomerRelationshipAlert
+      description: "The maintained alert value (historical values may be retained as appropriate) ||\r\n|"
+      properties:
+        CustomerRelationshipAlert:
+          type: string
+          format: Class
+          description: >-
+            An event to notify the issue related to a specific customer
+            relationship. 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        Indication when the alert value is updated and time until given value
+        applies/is relevant as appropriate ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+    Status:
+      type: object
+      description: ''
+      properties:
+        CustomerRelationshipStatusType:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipStatus:
+          $ref: '#/components/schemas/CustomerRelationshipStatus'
+        CustomerRelationshipStatusNarrative:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipStatusValidFromToDate:
+          $ref: '#/components/schemas/Datetime'
+    CustomerRelationshipStatus:
+      type: object
+      format: CustomerRelationshipStatus
+      description: "The maintained state value (historical values may be retained as appropriate) ||\r\n|"
+      properties:
+        CustomerRelationshipStatusType:
+          type: string
+          format: String
+          description: ''
+        CustomerRelationshipStatusDescription:
+          type: string
+          format: String
+          description: ''
+        CustomerRelationshipStatusValue:
+          type: string
+          format: String
+          description: ''
+        CustomerRelationshipStatusValidityPeriod:
+          type: string
+          format: String
+          description: ''
+    Rating:
+      type: object
+      description: ''
+      properties:
+        CustomerRelationshipRatingType:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipRating:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipRatingNarrative:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipRatingValidFromToDate:
+          $ref: '#/components/schemas/Datetime'
+    PartyState:
+      type: object
+      description: ''
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+    StatusNotify:
+      type: object
+      description: ''
+      properties:
+        CustomerRelationshipStatusType:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipStatus:
+          $ref: '#/components/schemas/CustomerRelationshipStatus'
+        CustomerRelationshipStatusNarrative:
+          $ref: '#/components/schemas/Text'
+        CustomerRelationshipStatusValidFromToDate:
+          $ref: '#/components/schemas/Datetime'

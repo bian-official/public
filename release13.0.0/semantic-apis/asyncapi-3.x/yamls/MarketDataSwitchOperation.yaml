@@ -1,0 +1,668 @@
+asyncapi: 3.0.0
+info:
+  title: Market Data Switch Operation
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    operates the internal information distribution facility/switch in compliance
+    with administered external subscription information feed service access
+    rights. Note the content is retrieved by the Market Feed Operation service
+    domain from the various external feed services. Internal information can
+    also be published over the switch from various bank sources (such as bank
+    rates provided by treasury).
+channels:
+  InformationFeedSwitchOperatingSession/Created:
+    address: InformationFeedSwitchOperatingSession/Created
+    messages:
+      InformationFeedSwitchOperatingSession-created.message:
+        $ref: '#/components/messages/InformationFeedSwitchOperatingSession'
+    description: ''
+  InformationFeedSwitchOperatingSession/Updated:
+    address: InformationFeedSwitchOperatingSession/Updated
+    messages:
+      InformationFeedSwitchOperatingSession-updated.message:
+        $ref: '#/components/messages/InformationFeedSwitchOperatingSession'
+    description: ''
+  FeedUpload/Created:
+    address: FeedUpload/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FeedUpload'
+    description: ''
+  FeedUpload/Updated:
+    address: FeedUpload/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FeedUpload'
+    description: ''
+  InternalPublication/Created:
+    address: InternalPublication/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalPublication'
+    description: ''
+  InternalPublication/Updated:
+    address: InternalPublication/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalPublication'
+    description: ''
+  Distribution/Created:
+    address: Distribution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Distribution'
+    description: ''
+  Distribution/Updated:
+    address: Distribution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Distribution'
+    description: ''
+operations:
+  InformationFeedSwitchOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/InformationFeedSwitchOperatingSession~1Created'
+    summary: InformationFeedSwitchOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/InformationFeedSwitchOperatingSession~1Created/messages/InformationFeedSwitchOperatingSession-created.message
+  InformationFeedSwitchOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/InformationFeedSwitchOperatingSession~1Updated'
+    summary: InformationFeedSwitchOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/InformationFeedSwitchOperatingSession~1Updated/messages/InformationFeedSwitchOperatingSession-updated.message
+  FeedUpload/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FeedUpload~1Created'
+    summary: FeedUpload
+    messages:
+      - $ref: '#/channels/FeedUpload~1Created/messages/publish.message'
+  FeedUpload/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FeedUpload~1Updated'
+    summary: FeedUpload
+    messages:
+      - $ref: '#/channels/FeedUpload~1Updated/messages/publish.message'
+  InternalPublication/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalPublication~1Created'
+    summary: InternalPublication
+    messages:
+      - $ref: '#/channels/InternalPublication~1Created/messages/publish.message'
+  InternalPublication/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalPublication~1Updated'
+    summary: InternalPublication
+    messages:
+      - $ref: '#/channels/InternalPublication~1Updated/messages/publish.message'
+  Distribution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Distribution~1Created'
+    summary: Distribution
+    messages:
+      - $ref: '#/channels/Distribution~1Created/messages/publish.message'
+  Distribution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Distribution~1Updated'
+    summary: Distribution
+    messages:
+      - $ref: '#/channels/Distribution~1Updated/messages/publish.message'
+components:
+  messages:
+    InformationFeedSwitchOperatingSession:
+      name: InformationFeedSwitchOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Market Data
+        Switch Operation. 
+      payload:
+        $ref: '#/components/schemas/InformationFeedSwitchOperatingSession'
+    FeedUpload:
+      name: FeedUpload
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/FeedUpload'
+    InternalPublication:
+      name: InternalPublication
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/InternalPublication'
+    Distribution:
+      name: Distribution
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Distribution'
+  schemas:
+    FeedUpload:
+      type: object
+      description: ''
+      properties:
+        MarketInformationFeedServiceRecordReference:
+          type: string
+          format: Object
+          description: "Reference to packets of information/records provided, perhaps with real-time updates ||\r\n|"
+        MarketInformationFeedServiceRecord:
+          $ref: '#/components/schemas/Service'
+    Service:
+      type: object
+      format: Service
+      description: "This is the uploaded market information that is distributed over the switch its content is updated dynamically during the operating session ||\r\n|"
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+        ServiceDescription:
+          $ref: '#/components/schemas/Text'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Service
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Feature:
+      type: object
+      format: Feature
+      description: >-
+        A characteristic of service which refers 1) mainly to the function or
+        condition of service. 2) to non-functional features like quality and
+        security 
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    InternalPublication:
+      type: object
+      description: ''
+      properties:
+        InternalInformationFeedServiceReference:
+          $ref: '#/components/schemas/Service'
+        InternalInformationFeedServiceProfile:
+          $ref: '#/components/schemas/Profile'
+        InternalInformationFeedServiceRecordReference:
+          type: string
+          format: Object
+          description: "Reference to 'live' internal pages of information that is published ||\r\n|"
+        InternalInformationFeedServiceRecord:
+          $ref: '#/components/schemas/Service'
+    Profile:
+      type: object
+      format: Profile
+      description: "Defines the range of internally published information services/pages ||\r\n|"
+      properties:
+        Profile:
+          type: string
+          format: Class
+          description: >-
+            A brief description of the characteristics of something or someone.
+            (Business Dictionary) 
+    Distribution:
+      type: object
+      description: ''
+      properties:
+        MarketDataSwitchUserAccessRightsRecordReference:
+          type: string
+          format: Object
+          description: "Reference to a user's switch service access rights ||\r\n|"
+        MarketDataSwitchUserAccessRightsRecord:
+          $ref: '#/components/schemas/Arrangement'
+        MarketDataSwitchServiceUserSessionRecord:
+          $ref: '#/components/schemas/Session'
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        The users are registered to access different services/information made
+        available through the switch it is used to control information
+        distribution Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    Session:
+      type: object
+      format: Session
+      description: "This tracks the switch service content that the user will receive for this session reflecting their user access rights ||\r\n|"
+      properties:
+        SessionDuration:
+          $ref: '#/components/schemas/Duration'
+        SessionDateTime:
+          $ref: '#/components/schemas/Datetime'
+        SessionStatus:
+          $ref: '#/components/schemas/Status'
+        SessionType:
+          $ref: '#/components/schemas/Sessiontype'
+        SessionScheduel:
+          $ref: '#/components/schemas/Schedule'
+    Duration:
+      type: object
+      format: Duration
+      description: 'The time the session was active '
+      properties:
+        Duration:
+          type: string
+          format: DataType
+          description: >-
+            A duration is the specification of a length of time without a fixed
+            start or end time, expressed in Gregorian calendar time units (Year,
+            Month, Week, Day) and Hours, Minutes or Seconds. (UN/CEFACT) 
+    Sessiontype:
+      type: object
+      format: Sessiontype
+      description: >-
+        Specifies the classification of session like Customer Contact Session,
+        Channel Operating Session, Device Operating Session, etc. 
+      properties:
+        SessionTypeName:
+          $ref: '#/components/schemas/Name'
+        Sessiontypevalues:
+          enum:
+            - ContactHandlingSession
+            - CustomerDialogueSession
+            - ChannelOperatingSession
+            - GatewayOperatingSession
+            - SwitchOperatingSession
+            - DeviceOperatingSession
+            - InterbankTransactionOperatingSessi
+            - CorrespondenceOperatingSession
+            - InteractiveHelpOperatingSession
+            - ACHOperatingSession
+          format: Sessiontype
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    InformationFeedSwitchOperatingSession:
+      type: object
+      description: ''
+      properties:
+        MarketInformationFeedServiceReference:
+          $ref: '#/components/schemas/Service'
+        MarketInformationFeedServiceProfile:
+          $ref: '#/components/schemas/Profile'

@@ -1,0 +1,665 @@
+asyncapi: 3.0.0
+info:
+  title: Market Information Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Market information
+    management consolidates and improves market information from multiple
+    sources in order to build up a bank knowledge base in targeted areas
+channels:
+  FinancialMarketInformationAdministrativePlan/Created:
+    address: FinancialMarketInformationAdministrativePlan/Created
+    messages:
+      FinancialMarketInformationAdministrativePlan-created.message:
+        $ref: '#/components/messages/FinancialMarketInformationAdministrativePlan'
+    description: ''
+  FinancialMarketInformationAdministrativePlan/Updated:
+    address: FinancialMarketInformationAdministrativePlan/Updated
+    messages:
+      FinancialMarketInformationAdministrativePlan-updated.message:
+        $ref: '#/components/messages/FinancialMarketInformationAdministrativePlan'
+    description: ''
+  Reporting/Created:
+    address: Reporting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Reporting'
+    description: ''
+  Reporting/Updated:
+    address: Reporting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Reporting'
+    description: ''
+  Improvement/Created:
+    address: Improvement/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Improvement'
+    description: ''
+  Improvement/Updated:
+    address: Improvement/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Improvement'
+    description: ''
+  Consolidation/Created:
+    address: Consolidation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Consolidation'
+    description: ''
+  Consolidation/Updated:
+    address: Consolidation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Consolidation'
+    description: ''
+operations:
+  FinancialMarketInformationAdministrativePlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketInformationAdministrativePlan~1Created'
+    summary: FinancialMarketInformationAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketInformationAdministrativePlan~1Created/messages/FinancialMarketInformationAdministrativePlan-created.message
+  FinancialMarketInformationAdministrativePlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketInformationAdministrativePlan~1Updated'
+    summary: FinancialMarketInformationAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketInformationAdministrativePlan~1Updated/messages/FinancialMarketInformationAdministrativePlan-updated.message
+  Reporting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Reporting~1Created'
+    summary: Reporting
+    messages:
+      - $ref: '#/channels/Reporting~1Created/messages/publish.message'
+  Reporting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Reporting~1Updated'
+    summary: Reporting
+    messages:
+      - $ref: '#/channels/Reporting~1Updated/messages/publish.message'
+  Improvement/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Improvement~1Created'
+    summary: Improvement
+    messages:
+      - $ref: '#/channels/Improvement~1Created/messages/publish.message'
+  Improvement/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Improvement~1Updated'
+    summary: Improvement
+    messages:
+      - $ref: '#/channels/Improvement~1Updated/messages/publish.message'
+  Consolidation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Consolidation~1Created'
+    summary: Consolidation
+    messages:
+      - $ref: '#/channels/Consolidation~1Created/messages/publish.message'
+  Consolidation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Consolidation~1Updated'
+    summary: Consolidation
+    messages:
+      - $ref: '#/channels/Consolidation~1Updated/messages/publish.message'
+components:
+  messages:
+    FinancialMarketInformationAdministrativePlan:
+      name: FinancialMarketInformationAdministrativePlan
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Market Information Management. 
+      payload:
+        $ref: '#/components/schemas/FinancialMarketInformationAdministrativePlan'
+    Reporting:
+      name: Reporting
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Reporting'
+    Improvement:
+      name: Improvement
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Improvement'
+    Consolidation:
+      name: Consolidation
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Consolidation'
+  schemas:
+    Reporting:
+      type: object
+      description: ''
+      properties:
+        FinancialMarketInformationReport:
+          $ref: '#/components/schemas/Report'
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+        FinancialMarketInformationReportDescription:
+          $ref: '#/components/schemas/Text'
+        FinancialMarketInformationReportSchedule:
+          $ref: '#/components/schemas/Schedule'
+        FinancialMarketInformationReportAccessHistory:
+          type: string
+          format: Object
+          description: "Is a log/record of access made to the report by bank users ||\r\n|"
+    Report:
+      type: object
+      format: Report
+      description: "Is the report itself, including historical versions as appropriate ||\r\n|"
+      properties:
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+          format: Report
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/Text'
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Is the schedule for maintaining the report content ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Improvement:
+      type: object
+      description: ''
+      properties:
+        FinancialMarketInformationImprovementTaskType:
+          $ref: '#/components/schemas/Text'
+        FinancialMarketInformationImprovementTaskSources:
+          type: string
+          format: Object
+          description: "References to the different sources of financial market information used to improve the content (can be primary source and comparison data) ||\r\n|"
+        FinancialMarketInformationImprovementTaskWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        FinancialMarketInformationImprovementTaskResult:
+          $ref: '#/components/schemas/Task'
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the enquiry ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Task:
+      type: object
+      format: Task
+      description: "Output of the improvement task that is recorded back to the Financial Market Information Database ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Consolidation:
+      type: object
+      description: ''
+      properties:
+        FinancialMarketInformationServiceReport:
+          $ref: '#/components/schemas/Report'
+        FinancialMarketInformationServiceReportProperties:
+          $ref: '#/components/schemas/Feature'
+    Feature:
+      type: object
+      format: Feature
+      description: "Key properties of the report used in its improvement (e.g. date created, qualifications of integrity) ||\r\n|"
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    FinancialMarketInformationAdministrativePlan:
+      type: object
+      description: ''
+      properties:
+        FinancialMarketInformationService:
+          $ref: '#/components/schemas/FinancialMarketInformationService'
+        FinancialMarketInformationProvider:
+          $ref: '#/components/schemas/Involvedparty'
+        FinancialMarketinformationDescription:
+          $ref: '#/components/schemas/Text'
+        Informationservicetypevalues:
+          enum:
+            - AdvisoryService
+            - ReportingService
+            - FinancialInformationService
+        FinancialMarketInformationServiceSchedule:
+          $ref: '#/components/schemas/Schedule'
+        FinancialMarketInformationServiceAgreement:
+          $ref: '#/components/schemas/ServiceAgreement'
+        FinancialMarketInformationDatabase:
+          type: string
+          format: Object
+          description: "Refers to the consolidated financial market information that is enhanced/improved by the bank for internal reference. This is a collection of different subject areas for which a bank perspective is maintained ||\r\n|"
+        FinancialMarketInformationSubjectArea:
+          $ref: '#/components/schemas/Subject'
+        FinancialMarketInformationSubjectAreaDescription:
+          $ref: '#/components/schemas/Text'
+        FinancialMarketInformationSubjectAreaUpdateHistory:
+          $ref: '#/components/schemas/Text'
+        FinancialMarketInformationSubjectAreaRecord:
+          $ref: '#/components/schemas/Subject'
+    FinancialMarketInformationService:
+      type: object
+      format: FinancialMarketInformationService
+      description: "Reference to the external sources of financial market information. Can be an ongoing service or some form of report ||\r\n|"
+      properties:
+        FinancialMarketInformationService:
+          type: string
+          format: Class
+          description: >-
+            An information service to consolidate market information from
+            multiple sources and in any suitable media/format in order to build
+            a bank financial market knowledge-base. 
+    ServiceAgreement:
+      type: object
+      format: ServiceAgreement
+      description: "Reference to any agreement covering access to the external service ||\r\n|"
+      properties:
+        Type:
+          $ref: '#/components/schemas/Text'
+        ServiceReference:
+          $ref: '#/components/schemas/Service'
+        AgreementReference:
+          $ref: '#/components/schemas/Agreement'
+    Service:
+      type: object
+      format: Service
+      description: ' '
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+        ServiceDescription:
+          $ref: '#/components/schemas/Text'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Service
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+    Agreement:
+      type: object
+      format: Agreement
+      description: ' '
+      properties:
+        AgreementSignedDate:
+          $ref: '#/components/schemas/Date'
+        Agreementtypevalues:
+          enum:
+            - CustomerAgreement
+            - SupplierAgreement
+            - BrokerAgreement
+            - SalesAgreement
+            - PurchaseAgreement
+            - MaintenanceAgreement
+            - ProductAgreement
+            - ProductSalesAgreement
+            - ResourceAgreement
+          format: Agreement
+        AgreementValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AgreementVersion:
+          $ref: '#/components/schemas/Text'
+        AgreementStatus:
+          $ref: '#/components/schemas/Agreementstatus'
+        AgreementSubjectMatter:
+          $ref: '#/components/schemas/Text'
+        AgreementIdentification:
+          $ref: '#/components/schemas/Identifier'
+        AgreementDate:
+          $ref: '#/components/schemas/Datetime'
+        AgreementDescription:
+          $ref: '#/components/schemas/Text'
+    Date:
+      type: object
+      format: Date
+      description: 'Date on which the agreement was signed by all parties. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    Agreementstatus:
+      type: object
+      format: Agreementstatus
+      description: >-
+        A characteristic of agreement which refers to the LifecycleStatus of
+        agreement (e.g., potential, offered, confirmed, completed, signed,
+        terminated). 
+      properties:
+        AgreementStatus:
+          $ref: '#/components/schemas/Status'
+        Agreementstatustypevalues:
+          enum:
+            - Offered
+            - Confirmed
+            - Completed
+            - Signed
+            - Terminated
+            - Rejected
+          format: Agreementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: "The consolidated improved information, includes current and past historical records as necessary ||\r\n|"
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 

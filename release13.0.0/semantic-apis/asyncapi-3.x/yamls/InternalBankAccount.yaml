@@ -1,0 +1,1031 @@
+asyncapi: 3.0.0
+info:
+  title: Internal Bank Account
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service Domain
+    manages the banking-related accounts that are not owned by customers. These
+    are not general ledger accounts. Typical examples are holding accounts and
+    mirror accounts.
+channels:
+  InternalBankAccountFacility/Created:
+    address: InternalBankAccountFacility/Created
+    messages:
+      InternalBankAccountFacility-created.message:
+        $ref: '#/components/messages/InternalBankAccountFacility'
+    description: ''
+  InternalBankAccountFacility/Updated:
+    address: InternalBankAccountFacility/Updated
+    messages:
+      InternalBankAccountFacility-updated.message:
+        $ref: '#/components/messages/InternalBankAccountFacility'
+    description: ''
+  BookingAuthorization/Created:
+    address: BookingAuthorization/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BookingAuthorization'
+    description: ''
+  BookingAuthorization/Updated:
+    address: BookingAuthorization/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BookingAuthorization'
+    description: ''
+  InternalBankAccountFacility/Notify:
+    address: InternalBankAccountFacility/Notify
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/InternalBankAccountFacilityNotify'
+operations:
+  InternalBankAccountFacility-created:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalBankAccountFacility~1Created'
+    summary: InternalBankAccountFacility
+    messages:
+      - $ref: >-
+          #/channels/InternalBankAccountFacility~1Created/messages/InternalBankAccountFacility-created.message
+  InternalBankAccountFacility-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalBankAccountFacility~1Updated'
+    summary: InternalBankAccountFacility
+    messages:
+      - $ref: >-
+          #/channels/InternalBankAccountFacility~1Updated/messages/InternalBankAccountFacility-updated.message
+  BookingAuthorization/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BookingAuthorization~1Created'
+    summary: BookingAuthorization
+    messages:
+      - $ref: '#/channels/BookingAuthorization~1Created/messages/publish.message'
+  BookingAuthorization/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BookingAuthorization~1Updated'
+    summary: BookingAuthorization
+    messages:
+      - $ref: '#/channels/BookingAuthorization~1Updated/messages/publish.message'
+  InternalBankAccountFacility/Notify.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/InternalBankAccountFacility~1Notify'
+    messages:
+      - $ref: >-
+          #/channels/InternalBankAccountFacility~1Notify/messages/subscribe.message
+components:
+  messages:
+    InternalBankAccountFacility:
+      name: InternalBankAccountFacility
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Internal Bank Account. 
+      payload:
+        $ref: '#/components/schemas/InternalBankAccountFacility'
+    BookingAuthorization:
+      name: BookingAuthorization
+      description: ''
+      payload:
+        $ref: '#/components/schemas/BookingAuthorization'
+    InternalBankAccountFacilityNotify:
+      name: InternalBankAccountFacilityNotify
+      payload:
+        $ref: '#/components/schemas/InternalBankAccountFacilityNotify'
+  schemas:
+    BookingAuthorization:
+      type: object
+      description: ''
+      properties:
+        AccountReference:
+          $ref: '#/components/schemas/Account'
+        TransactionPriorityNumber:
+          type: string
+          format: Number
+          description: >-
+            Priority number of the payment transaction for use in determining
+            the available balance Number|Number
+            (https://www.iso20022.org/standardsrepository/type/Number)|Standard|ISO20022
+            BM ()
+        BookingDate:
+          $ref: '#/components/schemas/Datetime'
+        AuthorizationResult:
+          $ref: '#/components/schemas/Text'
+        AuthorizationRejectionReason:
+          $ref: '#/components/schemas/Text'
+        ValueDate:
+          $ref: '#/components/schemas/Datetime'
+        PositionKeepingReference:
+          $ref: '#/components/schemas/AccountEntry'
+        BookingAmount:
+          $ref: '#/components/schemas/Amount'
+    Account:
+      type: object
+      format: Account
+      description: >-
+        Reference to the account on which the amount is booked Account|Account 
+        (https://www.iso20022.org/standardsrepository/type/Account)|Standard|ISO20022
+        BM ()
+      properties:
+        AccountStatus:
+          $ref: '#/components/schemas/Accountstatus'
+        AccountIdentification:
+          $ref: '#/components/schemas/Accountidentification'
+        AccountDate:
+          $ref: '#/components/schemas/Accountdatetime'
+        Accounttypevalues:
+          enum:
+            - DebitAccount
+            - CreditAccount
+            - VostroAcount
+            - NostroAccount
+            - PaymentAccount
+            - SettlementAccount
+            - SavingAccount
+            - CurrentAccount
+            - CashAccount
+            - LoanAccount
+            - IndividualAccount
+            - JointAccount
+            - LiquidationAccount
+            - ProvisionAccount
+            - PartnershipAccount
+            - InvestmentAccount
+          format: Account
+        AccountPurpose:
+          $ref: '#/components/schemas/Text'
+        AccountBalance:
+          $ref: '#/components/schemas/Accountbalance'
+        AccountCurrency:
+          $ref: '#/components/schemas/Accountcurrency'
+        AccountDescription:
+          $ref: '#/components/schemas/Text'
+        AccountName:
+          $ref: '#/components/schemas/Name'
+    Accountstatus:
+      type: object
+      format: Accountstatus
+      description: >-
+        A characteristic of account which refers to the LifecycleStatus of
+        account like opened, closed, blocked, etc.
+
+
+        Specifies the current state of an account. (ISO20022) 
+      properties:
+        AccountStatus:
+          $ref: '#/components/schemas/Status'
+        Accountstatustypevalues:
+          enum:
+            - Enabled
+            - Disabled
+            - Deleted
+            - Proforma
+            - Pending
+          format: Accountstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Text:
+      type: object
+      format: Text
+      description: Decimal point position starts calulating from the right
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Accountidentification:
+      type: object
+      format: Accountidentification
+      description: 'The identifier of account like Account Number. '
+      properties:
+        Accountidentificationtypevalues:
+          enum:
+            - BBAN
+            - IBAN
+            - UPIC
+            - AccountNumber
+            - PAN
+            - Paym
+            - Wallet
+            - SortCodeAndAccountNumber
+          format: Accountidentification
+        AccountIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Accountdatetime:
+      type: object
+      format: Accountdatetime
+      description: >-
+        A characteristic of account which refers to LifecycleDate of account
+        (e.g., ClosingDate, OpeningDate, LiveDate, etc.)  
+      properties:
+        Accountdatetimetypevalues:
+          enum:
+            - OpeningDate
+            - ClosingDate
+            - BlockingDate
+            - MaturityDate
+            - LiveDate
+            - RenewalDate
+          format: Accountdatetime
+        AccountDate:
+          $ref: '#/components/schemas/Datetime'
+    Accountbalance:
+      type: object
+      format: Accountbalance
+      description: >-
+        The state of the obligations managed on the account, the result of all
+        entries on the account.
+
+
+        Numerical representation of the net increases and decreases in an
+        account at a specific point in time. (ISO20022)
+
+
+        Banking: Amount available in an account for withdrawal or use.
+
+        Read more: http://www.businessdictionary.com/definition/balance.html
+
+
+        Bookkeeping: Difference between the debit and credit sides of an
+        account.
+
+        Read more: http://www.businessdictionary.com/definition/balance.html 
+      properties:
+        BalanceAmount:
+          $ref: '#/components/schemas/Amount'
+        Balancetypevalues:
+          enum:
+            - OpeningBalance
+            - ClosingBalance
+            - CurrentBalance
+            - AvailableBalance
+            - LedgerBalance
+            - ReserveBalance
+            - FreeBalance
+            - PrincipalBalance
+            - ClosingAvailable
+            - ClosingBooked
+            - ForwardAvailable
+            - Information
+            - InterimAvailable
+            - InterimBooked
+            - OpeningAvailable
+            - OpeningBooked
+            - PreviouslyClosedBooked
+            - Expected
+          format: Accountbalance
+        BalanceValueDate:
+          $ref: '#/components/schemas/Datetime'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: Accountbalance
+        Balancecounterpartytypevalues:
+          enum:
+            - Bilateral
+            - Multilateral
+          format: Accountbalance
+        BalanceCalculationDate:
+          $ref: '#/components/schemas/Datetime'
+        Balancesubtypevalues:
+          enum:
+            - Adjustment
+            - Basecurrency
+            - Blocked
+            - Blockedfunds
+            - Daylightoverdraft
+            - Eligibleassets
+            - Firmcollateralization
+            - Amountsthathavebeenusedtoserveasfi
+            - Securitiesforecast
+            - Netfunding
+            - Intermediate
+            - Localcurrency
+            - Limitrelated
+            - Reservedliquidity
+            - Securitiespending
+            - Payinpayout
+            - Progressiveaverage
+            - Reserve
+            - Selfcollateralization
+            - Amountsthathavebeenusedtoserveasse
+            - Threshold
+          format: Accountbalance
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        Amount of the booking (+ means debit, means credit (?))
+        CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Accountcurrency:
+      type: object
+      format: Accountcurrency
+      description: 'The currency in which the AccountEntryAmount is expressed '
+      properties:
+        Currencytypevalues:
+          enum:
+            - BaseCurrency
+            - ReportingCurrency
+            - SecondaryCurrency
+            - TransferCurrency
+          format: Accountcurrency
+        AccountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+    AccountEntry:
+      type: object
+      format: AccountEntry
+      description: >-
+        Reference to the entry in Position Keeping of the booking to be
+        authorised Entry|Entry
+        (https://www.iso20022.org/standardsrepository/type/Entry)|Standard|ISO20022
+        BM ()
+      properties:
+        AccountEntryAmount:
+          $ref: '#/components/schemas/Amount'
+        AccountEntryCurrency:
+          $ref: '#/components/schemas/Accountcurrency'
+        AccountEntryPurpose:
+          $ref: '#/components/schemas/Text'
+        AccountEntryDate:
+          $ref: '#/components/schemas/Datetime'
+        AccountEntryStatus:
+          $ref: '#/components/schemas/Status'
+        Entrydatetypevalues:
+          enum:
+            - EntryDate
+            - ValueDate
+          format: AccountEntry
+        Entrytypevalues:
+          enum:
+            - Entrytypevalues
+          format: AccountEntry
+    InternalBankAccountFacility:
+      type: object
+      description: ''
+      properties:
+        Accountstatustypevalues:
+          enum:
+            - Enabled
+            - Disabled
+            - Deleted
+            - Proforma
+            - Pending
+        InternalBankAccountCalendarReference:
+          $ref: '#/components/schemas/Calendar'
+        InternalBankAccountReference:
+          $ref: '#/components/schemas/Account'
+        InternalBankAccountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        InternalBankAccountAssociatedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        InternalBankAccountSelectedOption:
+          $ref: '#/components/schemas/Feature'
+        InternalBankAccountPosition:
+          $ref: '#/components/schemas/Position'
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+        Internalbankaccounttypevalues:
+          enum:
+            - HoldingAccount
+            - MirrorAccount
+            - WorkingAccount
+        InternalBankAccountRegulationType:
+          $ref: '#/components/schemas/Rulesettype'
+        InternalBankAccountCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        InternalBankAccountBookingLocation:
+          $ref: '#/components/schemas/BusinessUnit'
+        InternalBankAccountRegulationReference:
+          $ref: '#/components/schemas/RuleSet'
+        InternalBankAccountJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        InternalBankAccountPositionLimit:
+          $ref: '#/components/schemas/LimitArrangement'
+        InternalBankAccountProductReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        InternalBankAccountFacilityReference:
+          $ref: '#/components/schemas/Identifier'
+    Calendar:
+      type: object
+      format: Calendar
+      description: "Reference to the calendar used to fulfill Internal Bank Account Facility ||\r\n|"
+      properties:
+        Calendartypevalues:
+          enum:
+            - UKCalendar
+            - ChineseCalendar
+          format: Calendar
+        CalendarName:
+          $ref: '#/components/schemas/Name'
+    Feature:
+      type: object
+      format: Feature
+      description: "A selected optional product feature as subject matter of Internal Bank Account Facility ||\r\n|"
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    Position:
+      type: object
+      format: Position
+      description: >-
+        The position of Internal Bank Account Position |Position 
+        (https://www.iso20022.org/standardsrepository/type/Position)|Standard|ISO20022
+        BM ()
+      properties:
+        PositionValue:
+          $ref: '#/components/schemas/Value'
+        PositionQuantity:
+          type: string
+          format: Number
+          description: ''
+        PositionDate:
+          $ref: '#/components/schemas/Datetime'
+        PositionAmount:
+          $ref: '#/components/schemas/Amount'
+    Rulesettype:
+      type: object
+      format: Rulesettype
+      description: "A Classification that distinguishes between the regularity domains of Internal Bank Account Facility ||\r\n|"
+      properties:
+        RuleSetTypeName:
+          $ref: '#/components/schemas/Name'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: Rulesettype
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "The financial accounting unit into which the financial events, with regard to the origination and fulfillment of the agreement in the context of Internal Bank Account Facility, are entered. ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Reference to the regulation which is defined in Internal Bank Account
+        Facility GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        Reference to the jurisdiction that is assigned to Internal Bank Account
+        Facility in case of legal dispute. Jurisdiction|Jurisdiction
+        (https://www.iso20022.org/standardsrepository/type/Jurisdiction)|Standard|ISO20022
+        BM ()
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '
+    LimitArrangement:
+      type: object
+      format: LimitArrangement
+      description: >-
+        Reference to the limitation related to the position of Internal Bank
+        Account Facility Limit|Limit
+        (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+        (https://www.iso20022.org/)
+      properties:
+        Limittypevalues:
+          enum:
+            - Multilateral
+            - Bilateral
+            - Netbilateral
+            - Indirectbilateral
+            - Global
+            - Mandatorybilateral
+            - Discretionarybilateral
+            - Directdebit
+            - Singlecustomerdirectdebit
+            - Singlefinancialinstitutiondirectde
+            - Totaldailycustomerdirectdebit
+            - Totaldailyfinancialinstitutiondire
+            - Autocollateralisation
+            - Unsecuredcredit
+            - Externalguarantee
+          format: LimitArrangement
+        LimitCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        LimitValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LimitAmount:
+          $ref: '#/components/schemas/Amount'
+        LimitStatus:
+          $ref: '#/components/schemas/Limitstatus'
+        LimitRate:
+          $ref: '#/components/schemas/Rate'
+        LimitFrequency:
+          $ref: '#/components/schemas/Frequency'
+        LimitIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LimitStartDatetime:
+          $ref: '#/components/schemas/Datetime'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: LimitArrangement
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: LimitArrangement
+    Limitstatus:
+      type: object
+      format: Limitstatus
+      description: 'Current status of the limit. '
+      properties:
+        LimitStatus:
+          $ref: '#/components/schemas/Status'
+        Limitstatustypevalues:
+          enum:
+            - Enabled
+            - Disabled
+            - Deleted
+            - Requested
+          format: Limitstatus
+    Rate:
+      type: object
+      format: Rate
+      description: >-
+        Specifies that the limit is a percentage of a related amount.
+        (ISO20022) 
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    Frequency:
+      type: object
+      format: Frequency
+      description: >-
+        Specifies the periodicity linked to a limit for example the periodicity
+        can indicate that the limit can be reached daily or monthly. (ISO20022) 
+      properties:
+        Frequencytypevalues:
+          enum:
+            - Annual
+            - Monthly
+            - Quarterly
+            - Semiannual
+            - Weekly
+            - Daily
+            - Adhoc
+            - Intraday
+            - Overnight
+            - Tendays
+            - Fortnightly
+            - Triggeredbymovement
+            - Never
+            - Rate
+            - Oncreditevent
+            - Upfront
+            - Onexpiry
+            - Hourly
+          format: Frequency
+        FrequencyName:
+          $ref: '#/components/schemas/Name'
+        FrequencyDefinition:
+          $ref: '#/components/schemas/Text'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the product which is linked to Internal Bank Account Facility ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    InternalBankAccountFacilityNotify:
+      type: object
+      description: ''
+      properties:
+        Accountstatustypevalues:
+          enum:
+            - Enabled
+            - Disabled
+            - Deleted
+            - Proforma
+            - Pending
+        InternalBankAccountCalendarReference:
+          $ref: '#/components/schemas/Calendar'
+        InternalBankAccountReference:
+          $ref: '#/components/schemas/Account'
+        InternalBankAccountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        InternalBankAccountAssociatedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        InternalBankAccountSelectedOption:
+          $ref: '#/components/schemas/Feature'
+        InternalBankAccountPosition:
+          $ref: '#/components/schemas/Position'
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+        Internalbankaccounttypevalues:
+          enum:
+            - HoldingAccount
+            - MirrorAccount
+            - WorkingAccount
+        InternalBankAccountRegulationType:
+          $ref: '#/components/schemas/Rulesettype'
+        InternalBankAccountCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        InternalBankAccountBookingLocation:
+          $ref: '#/components/schemas/BusinessUnit'
+        InternalBankAccountRegulationReference:
+          $ref: '#/components/schemas/RuleSet'
+        InternalBankAccountJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        InternalBankAccountPositionLimit:
+          $ref: '#/components/schemas/LimitArrangement'
+        InternalBankAccountProductReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        InternalBankAccountFacilityReference:
+          $ref: '#/components/schemas/Identifier'

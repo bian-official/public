@@ -1,0 +1,778 @@
+asyncapi: 3.0.0
+info:
+  title: Fraud Model
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles the design and maintenance of a portfolio of fraud models used
+    across all production activity to detect potential fraud on the part of
+    customers, merchants and other involved parties
+channels:
+  FraudModelSpecification/Created:
+    address: FraudModelSpecification/Created
+    messages:
+      FraudModelSpecification-created.message:
+        $ref: '#/components/messages/FraudModelSpecification'
+    description: ''
+  FraudModelSpecification/Updated:
+    address: FraudModelSpecification/Updated
+    messages:
+      FraudModelSpecification-updated.message:
+        $ref: '#/components/messages/FraudModelSpecification'
+    description: ''
+  FunctionalRequirements/Created:
+    address: FunctionalRequirements/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FunctionalRequirements'
+    description: ''
+  FunctionalRequirements/Updated:
+    address: FunctionalRequirements/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FunctionalRequirements'
+    description: ''
+  Production/Created:
+    address: Production/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Production'
+    description: ''
+  Production/Updated:
+    address: Production/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Production'
+    description: ''
+  Testing/Created:
+    address: Testing/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Testing'
+    description: ''
+  Testing/Updated:
+    address: Testing/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Testing'
+    description: ''
+operations:
+  FraudModelSpecification-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudModelSpecification~1Created'
+    summary: FraudModelSpecification
+    messages:
+      - $ref: >-
+          #/channels/FraudModelSpecification~1Created/messages/FraudModelSpecification-created.message
+  FraudModelSpecification-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudModelSpecification~1Updated'
+    summary: FraudModelSpecification
+    messages:
+      - $ref: >-
+          #/channels/FraudModelSpecification~1Updated/messages/FraudModelSpecification-updated.message
+  FunctionalRequirements/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FunctionalRequirements~1Created'
+    summary: FunctionalRequirements
+    messages:
+      - $ref: '#/channels/FunctionalRequirements~1Created/messages/publish.message'
+  FunctionalRequirements/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FunctionalRequirements~1Updated'
+    summary: FunctionalRequirements
+    messages:
+      - $ref: '#/channels/FunctionalRequirements~1Updated/messages/publish.message'
+  Production/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Production~1Created'
+    summary: Production
+    messages:
+      - $ref: '#/channels/Production~1Created/messages/publish.message'
+  Production/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Production~1Updated'
+    summary: Production
+    messages:
+      - $ref: '#/channels/Production~1Updated/messages/publish.message'
+  Testing/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Testing~1Created'
+    summary: Testing
+    messages:
+      - $ref: '#/channels/Testing~1Created/messages/publish.message'
+  Testing/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Testing~1Updated'
+    summary: Testing
+    messages:
+      - $ref: '#/channels/Testing~1Updated/messages/publish.message'
+components:
+  messages:
+    FraudModelSpecification:
+      name: FraudModelSpecification
+      description: >-
+        Create and maintain a design for a procedure, product/service model or
+        other such entity  within Fraud Model. 
+
+        Example: Create and maintain product designs and analytical models.
+      payload:
+        $ref: '#/components/schemas/FraudModelSpecification'
+    FunctionalRequirements:
+      name: FunctionalRequirements
+      description: |-
+        The main design elements/views making up the overall specification
+        Examples:- Business Requirements
+      payload:
+        $ref: '#/components/schemas/FunctionalRequirements'
+    Production:
+      name: Production
+      description: |-
+        The main design elements/views making up the overall specification
+        Examples:- Business Requirements
+      payload:
+        $ref: '#/components/schemas/Production'
+    Testing:
+      name: Testing
+      description: |-
+        The main design elements/views making up the overall specification
+        Examples:- Business Requirements
+      payload:
+        $ref: '#/components/schemas/Testing'
+  schemas:
+    FunctionalRequirements:
+      type: object
+      description: ''
+      properties:
+        FraudModelDesignTaskReference:
+          $ref: '#/components/schemas/Task'
+        FraudModelDesignTaskRecord:
+          $ref: '#/components/schemas/Task'
+        CustomerMarketDataServiceReference:
+          $ref: '#/components/schemas/Service'
+        CustomerMarketDataRecord:
+          type: string
+          format: Object
+          description: "Record of example production data file ||\r\n|"
+        FraudModelFeedbackRecord:
+          type: string
+          format: Object
+          description: "User provided and solicited feedback, suggestions for model refinement ||\r\n|"
+        FraudModelRequirementsSpecification:
+          $ref: '#/components/schemas/Text'
+    Task:
+      type: object
+      format: Task
+      description: "The record of work products used for the design task ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Service:
+      type: object
+      format: Service
+      description: "Reference to external service information provider used to obtain example production data for design ||\r\n|"
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+        ServiceDescription:
+          $ref: '#/components/schemas/Text'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Service
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Text:
+      type: object
+      format: Text
+      description: "The model functional requirements specification (with versioning as appropriate) ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Feature:
+      type: object
+      format: Feature
+      description: >-
+        A characteristic of service which refers 1) mainly to the function or
+        condition of service. 2) to non-functional features like quality and
+        security 
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    Production:
+      type: object
+      description: ''
+      properties:
+        FraudModelOperationalRequirements:
+          $ref: '#/components/schemas/Requirement'
+        FraudModelAllowedUsage:
+          type: string
+          format: Object
+          description: "Defines rules and suitability for model usage ||\r\n|"
+        FraudModelUsageGuidelines:
+          $ref: '#/components/schemas/RuleSet'
+    Requirement:
+      type: object
+      format: Requirement
+      description: "Specification of the operational and technical requirements ||\r\n|"
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Provides guidance on the use of the model
+        GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Testing:
+      type: object
+      description: ''
+      properties:
+        FraudModelTestReference:
+          $ref: '#/components/schemas/ModelTest'
+        FraudModelTestType:
+          $ref: '#/components/schemas/Text'
+        FraudModelTestHarnessReference:
+          type: string
+          format: Object
+          description: "Reference to the testing environment used to apply the test ||\r\n|"
+        FraudModelTestResult:
+          $ref: '#/components/schemas/ModelTest'
+        FraudModelTestingTaskReference:
+          $ref: '#/components/schemas/Task'
+        FraudModelTestingTaskRecord:
+          $ref: '#/components/schemas/Task'
+        FraudModelComplianceTaskReference:
+          $ref: '#/components/schemas/Task'
+        FraudModelComplianceTaskRecord:
+          $ref: '#/components/schemas/Task'
+        FraudModelComplianceTestReference:
+          $ref: '#/components/schemas/Test'
+        FraudModelComplianceTestType:
+          $ref: '#/components/schemas/Text'
+    ModelTest:
+      type: object
+      format: ModelTest
+      description: "Record of testing applied to the model ||\r\n|"
+      properties:
+        ModelTestType:
+          type: string
+          format: String
+          description: >-
+            Defines the type of test (e.g. unit, integration, load, user
+            acceptance etc.)
+             
+        ModelTestHarness:
+          type: string
+          format: String
+          description: Reference to the testing environment used to apply the test.
+        ModelTestActivity:
+          type: string
+          format: String
+          description: ''
+        ModelTestResult:
+          type: string
+          format: String
+          description: ''
+    Test:
+      type: object
+      format: Test
+      description: "Reference to a compliance task performed against the specification ||\r\n|"
+      properties:
+        TestResult:
+          $ref: '#/components/schemas/Text'
+        TestGuidance:
+          $ref: '#/components/schemas/Text'
+        Testtypevalues:
+          enum:
+            - ProductEligibilityTest
+            - NextBestProductTest
+            - IssuedDeviceTest
+            - CardHolderAuthenticationTest
+            - CardFundsAvailableTest
+            - CardTransactionFraudTest
+            - CardStand-InAuthorizationTest
+            - ExternalAccessRequestTest
+            - SuitabilityTest
+            - LegalComplianceTest
+            - RegulatoryComplianceTest
+            - SystemFunctionalTest
+            - SystemProductionTest
+            - SystemBusinessRiskTest
+            - SystemOperationsTest
+            - CreditPolicyComplianceTest
+            - RuleSetAndDecisionTreeTest
+            - ModelBasedTests
+            - AssetAndLiabilityValuationTest
+            - LiquidityAndCashFlowTest
+            - RiskTest
+            - SensitivityTest
+          format: Test
+        TestDescription:
+          $ref: '#/components/schemas/Text'
+    FraudModelSpecification:
+      type: object
+      description: ''
+      properties:
+        FraudModelType:
+          $ref: '#/components/schemas/Text'
+        FraudModelPurpose:
+          $ref: '#/components/schemas/Text'
+        FraudModelDeployment:
+          type: string
+          format: Object
+          description: "Maintains the current deployment configuration of the model ||\r\n|"
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        FraudModelDeploymentConfiguration:
+          $ref: '#/components/schemas/Arrangement'
+        FraudModelDeploymentTaskReference:
+          $ref: '#/components/schemas/Task'
+        FraudModelDeploymentTaskRecord:
+          $ref: '#/components/schemas/Task'
+        FraudModelStatus:
+          $ref: '#/components/schemas/Status'
+        FraudModelUsage:
+          $ref: '#/components/schemas/ModelUsage'
+        FraudModelImpact:
+          type: string
+          format: Object
+          description: "Track reporting of the impact/accuracy of the model's insights ||\r\n|"
+        FraudModelVersion:
+          $ref: '#/components/schemas/Text'
+        FraudModel:
+          $ref: '#/components/schemas/FraudModel'
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Reference to the business units where the model is deployed and in use ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        Details of the deployment for reference Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    ModelUsage:
+      type: object
+      format: ModelUsage
+      description: "Tracking deployment and usage frequency ||\r\n|"
+      properties:
+        ModelUsage:
+          type: string
+          format: Class
+          description: 'The use of a model over a specified time period. '
+    FraudModel:
+      type: object
+      format: FraudModel
+      description: "The deployable model in any appropriate form (including historical versions as appropriate) ||\r\n|"
+      properties:
+        FraudModel:
+          type: string
+          format: Class
+          description: >-
+            A model used across all production activity to detect the potential
+            fraud
+
+
+            Model is used to facilitate identifying out of pattern transactions
+            or events and their fraud risk score.  

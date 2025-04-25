@@ -1,0 +1,531 @@
+asyncapi: 3.0.0
+info:
+  title: Product Broker Agreement
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains product broker contractual and service level agreements and tracks
+    and confirms compliance and service related activity/volume goals when
+    necessary
+channels:
+  BrokerAgreement/Created:
+    address: BrokerAgreement/Created
+    messages:
+      BrokerAgreement-created.message:
+        $ref: '#/components/messages/BrokerAgreement'
+    description: ''
+  BrokerAgreement/Updated:
+    address: BrokerAgreement/Updated
+    messages:
+      BrokerAgreement-updated.message:
+        $ref: '#/components/messages/BrokerAgreement'
+    description: ''
+  PolicyTerms/Created:
+    address: PolicyTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PolicyTerms'
+    description: ''
+  PolicyTerms/Updated:
+    address: PolicyTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PolicyTerms'
+    description: ''
+  LegalTerms/Created:
+    address: LegalTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LegalTerms'
+    description: ''
+  LegalTerms/Updated:
+    address: LegalTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/LegalTerms'
+    description: ''
+  RegulatoryTerms/Created:
+    address: RegulatoryTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RegulatoryTerms'
+    description: ''
+  RegulatoryTerms/Updated:
+    address: RegulatoryTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/RegulatoryTerms'
+    description: ''
+operations:
+  BrokerAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BrokerAgreement~1Created'
+    summary: BrokerAgreement
+    messages:
+      - $ref: >-
+          #/channels/BrokerAgreement~1Created/messages/BrokerAgreement-created.message
+  BrokerAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BrokerAgreement~1Updated'
+    summary: BrokerAgreement
+    messages:
+      - $ref: >-
+          #/channels/BrokerAgreement~1Updated/messages/BrokerAgreement-updated.message
+  PolicyTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PolicyTerms~1Created'
+    summary: PolicyTerms
+    messages:
+      - $ref: '#/channels/PolicyTerms~1Created/messages/publish.message'
+  PolicyTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PolicyTerms~1Updated'
+    summary: PolicyTerms
+    messages:
+      - $ref: '#/channels/PolicyTerms~1Updated/messages/publish.message'
+  LegalTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LegalTerms~1Created'
+    summary: LegalTerms
+    messages:
+      - $ref: '#/channels/LegalTerms~1Created/messages/publish.message'
+  LegalTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/LegalTerms~1Updated'
+    summary: LegalTerms
+    messages:
+      - $ref: '#/channels/LegalTerms~1Updated/messages/publish.message'
+  RegulatoryTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryTerms~1Created'
+    summary: RegulatoryTerms
+    messages:
+      - $ref: '#/channels/RegulatoryTerms~1Created/messages/publish.message'
+  RegulatoryTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryTerms~1Updated'
+    summary: RegulatoryTerms
+    messages:
+      - $ref: '#/channels/RegulatoryTerms~1Updated/messages/publish.message'
+components:
+  messages:
+    BrokerAgreement:
+      name: BrokerAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Product Broker Agreement.
+
+
+      payload:
+        $ref: '#/components/schemas/BrokerAgreement'
+    PolicyTerms:
+      name: PolicyTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/PolicyTerms'
+    LegalTerms:
+      name: LegalTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/LegalTerms'
+    RegulatoryTerms:
+      name: RegulatoryTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/RegulatoryTerms'
+  schemas:
+    PolicyTerms:
+      type: object
+      description: ''
+      properties:
+        BankPolicy-RuleType:
+          $ref: '#/components/schemas/Text'
+        ApplicableBankPolicy-RuleReference:
+          $ref: '#/components/schemas/RuleSet'
+        ApplicableBankPolicy-RuleInterpretation:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      format: Text
+      description: "Explanation or interpretation of the policy or rule as applied ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Reference to the bank's policies or rules
+        GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    LegalTerms:
+      type: object
+      description: ''
+      properties:
+        Jurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        ApplicableLawReference:
+          $ref: '#/components/schemas/Law'
+        ApplicableLawInterpretation:
+          $ref: '#/components/schemas/Text'
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        The legal jurisdiction Jurisdiction|Jurisdiction
+        (https://www.iso20022.org/standardsrepository/type/Jurisdiction)|Standard|ISO20022
+        BM ()
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '
+    Law:
+      type: object
+      format: Law
+      description: "Reference to any legal requirements ||\r\n|"
+      properties:
+        LawType:
+          $ref: '#/components/schemas/Text'
+        LawDescription:
+          $ref: '#/components/schemas/Text'
+        LegalPenalty:
+          $ref: '#/components/schemas/Text'
+        LegalGuideline:
+          $ref: '#/components/schemas/Text'
+    RegulatoryTerms:
+      type: object
+      description: ''
+      properties:
+        RegulatoryAuthority:
+          $ref: '#/components/schemas/RegulatoryAuthority'
+        ApplicableRegulationReference:
+          $ref: '#/components/schemas/Regulation'
+        ApplicableRegulationInterpretation:
+          $ref: '#/components/schemas/Text'
+    RegulatoryAuthority:
+      type: object
+      format: RegulatoryAuthority
+      description: "The applicable regulatory authority ||\r\n|"
+      properties:
+        RegulatoryAuthority:
+          type: string
+          format: Class
+          description: 'An organisation that is alowed to impose regulations '
+    Regulation:
+      type: object
+      format: Regulation
+      description: "Reference to any regulatory requirements ||\r\n|"
+      properties:
+        RegulationDefinition:
+          $ref: '#/components/schemas/Text'
+    BrokerAgreement:
+      type: object
+      description: ''
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Agreementtypevalues:
+          enum:
+            - CustomerAgreement
+            - SupplierAgreement
+            - BrokerAgreement
+            - SalesAgreement
+            - PurchaseAgreement
+            - MaintenanceAgreement
+            - ProductAgreement
+            - ProductSalesAgreement
+            - ResourceAgreement
+        AgreementJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        AgreementValidFromToDate:
+          $ref: '#/components/schemas/Datetime'
+        AgreementSignaturesResponsibleParties:
+          $ref: '#/components/schemas/Involvedparty'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "Reference to any associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 

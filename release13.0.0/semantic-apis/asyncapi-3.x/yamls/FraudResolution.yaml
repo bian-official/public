@@ -1,0 +1,1570 @@
+asyncapi: 3.0.0
+info:
+  title: Fraud Resolution
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain sets
+    up and processes a fraud case resulting from fraud behavior that has been
+    detected during production processing
+channels:
+  FraudResolutionProcedure/Created:
+    address: FraudResolutionProcedure/Created
+    messages:
+      FraudResolutionProcedure-created.message:
+        $ref: '#/components/messages/FraudResolutionProcedure'
+    description: ''
+  FraudResolutionProcedure/Updated:
+    address: FraudResolutionProcedure/Updated
+    messages:
+      FraudResolutionProcedure-updated.message:
+        $ref: '#/components/messages/FraudResolutionProcedure'
+    description: ''
+  CaseAnalysis/Created:
+    address: CaseAnalysis/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseAnalysis'
+    description: ''
+  CaseAnalysis/Updated:
+    address: CaseAnalysis/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseAnalysis'
+    description: ''
+  CaseDetermination/Created:
+    address: CaseDetermination/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseDetermination'
+    description: ''
+  CaseDetermination/Updated:
+    address: CaseDetermination/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseDetermination'
+    description: ''
+  CaseResolution/Created:
+    address: CaseResolution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseResolution'
+    description: ''
+  CaseResolution/Updated:
+    address: CaseResolution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CaseResolution'
+    description: ''
+operations:
+  FraudResolutionProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudResolutionProcedure~1Created'
+    summary: FraudResolutionProcedure
+    messages:
+      - $ref: >-
+          #/channels/FraudResolutionProcedure~1Created/messages/FraudResolutionProcedure-created.message
+  FraudResolutionProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FraudResolutionProcedure~1Updated'
+    summary: FraudResolutionProcedure
+    messages:
+      - $ref: >-
+          #/channels/FraudResolutionProcedure~1Updated/messages/FraudResolutionProcedure-updated.message
+  CaseAnalysis/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseAnalysis~1Created'
+    summary: CaseAnalysis
+    messages:
+      - $ref: '#/channels/CaseAnalysis~1Created/messages/publish.message'
+  CaseAnalysis/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseAnalysis~1Updated'
+    summary: CaseAnalysis
+    messages:
+      - $ref: '#/channels/CaseAnalysis~1Updated/messages/publish.message'
+  CaseDetermination/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseDetermination~1Created'
+    summary: CaseDetermination
+    messages:
+      - $ref: '#/channels/CaseDetermination~1Created/messages/publish.message'
+  CaseDetermination/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseDetermination~1Updated'
+    summary: CaseDetermination
+    messages:
+      - $ref: '#/channels/CaseDetermination~1Updated/messages/publish.message'
+  CaseResolution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseResolution~1Created'
+    summary: CaseResolution
+    messages:
+      - $ref: '#/channels/CaseResolution~1Created/messages/publish.message'
+  CaseResolution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CaseResolution~1Updated'
+    summary: CaseResolution
+    messages:
+      - $ref: '#/channels/CaseResolution~1Updated/messages/publish.message'
+components:
+  messages:
+    FraudResolutionProcedure:
+      name: FraudResolutionProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Fraud
+        Resolution. 
+      payload:
+        $ref: '#/components/schemas/FraudResolutionProcedure'
+    CaseAnalysis:
+      name: CaseAnalysis
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CaseAnalysis'
+    CaseDetermination:
+      name: CaseDetermination
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CaseDetermination'
+    CaseResolution:
+      name: CaseResolution
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/CaseResolution'
+  schemas:
+    CaseAnalysis:
+      type: object
+      description: ''
+      properties:
+        FraudCaseRootCause:
+          $ref: '#/components/schemas/Case'
+    Case:
+      type: object
+      format: Case
+      description: >-
+        The result of the case analysis InvestigationCase |InvestigationCase 
+        (https://www.iso20022.org/standardsrepository/type/InvestigationCase)|Standard|ISO20022
+        BM ()
+      properties:
+        CaseCreationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Casetypevalues:
+          enum:
+            - Card
+            - Loan
+            - Fraud
+            - Payment
+            - Market
+            - Security
+            - Other
+          format: Case
+        CaseLocation:
+          $ref: '#/components/schemas/Location'
+        Casestatustypevalues:
+          enum:
+            - Closed
+            - Assigned
+            - UnderInvestigation
+            - Unknown
+            - Overdue
+          format: Case
+        CaseDocument:
+          $ref: '#/components/schemas/Document'
+        CaseDateTime:
+          $ref: '#/components/schemas/Datetime'
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Status:
+      type: object
+      format: Status
+      description: 'Status of the document (e.g. delivered, paid, etc.). ISO20022 '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        An identifier that allows to uniquely refer to an instance of a
+        Document. 
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: >-
+        The estimated (book) value of the property at the location rental and
+        purchase as appropriate. 
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+    Document:
+      type: object
+      format: Document
+      description: ' '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+    CaseDetermination:
+      type: object
+      description: ''
+      properties:
+        CustomerAgreementReference:
+          $ref: '#/components/schemas/CustomerAgreement'
+        CustomerAgreement:
+          $ref: '#/components/schemas/CustomerAgreement'
+        MerchantAgreementReference:
+          $ref: '#/components/schemas/MerchantAgreement'
+        MerchantAgreement:
+          $ref: '#/components/schemas/MerchantAgreement'
+        InterestedPartyAgreementReference:
+          $ref: '#/components/schemas/Agreement'
+        InterestedPartyAgreement:
+          $ref: '#/components/schemas/Agreement'
+        FraudCaseDeterminationRecord:
+          $ref: '#/components/schemas/FraudCaseDetermination'
+    CustomerAgreement:
+      type: object
+      format: CustomerAgreement
+      description: "Customer agreement accessed to determine constraints on resolution approach ||\r\n|"
+      properties:
+        CustomerAgreement:
+          type: string
+          format: Class
+          description: 'An agreement between a bank and its customer.  '
+    MerchantAgreement:
+      type: object
+      format: MerchantAgreement
+      description: "Merchant agreement accessed to determine constraints on resolution approach ||\r\n|"
+      properties:
+        MerchantAgreement:
+          type: string
+          format: Class
+          description: >-
+            An agreement between Acquiring Bank and Merchant for handling the
+            Merchant Account and the specific terms and conditions for the
+            merchant. 
+
+
+            A written contract between a merchant and an acquirer to honor or
+            accept credit cards, or to transmit or process for payment credit
+            card payments, for the purchase of goods or services or a charitable
+            contribution. (Law and Legal Definition)
+
+             
+    Agreement:
+      type: object
+      format: Agreement
+      description: >-
+        Interested party agreement accessed to determine constraints on
+        resolution approach Agreement_x000D_
+
+        |Agreement
+        (https://www.iso20022.org/standardsrepository/type/Agreement)|Standard|ISO20022
+        BM ()
+      properties:
+        AgreementSignedDate:
+          $ref: '#/components/schemas/Date'
+        Agreementtypevalues:
+          enum:
+            - CustomerAgreement
+            - SupplierAgreement
+            - BrokerAgreement
+            - SalesAgreement
+            - PurchaseAgreement
+            - MaintenanceAgreement
+            - ProductAgreement
+            - ProductSalesAgreement
+            - ResourceAgreement
+          format: Agreement
+        AgreementValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AgreementVersion:
+          $ref: '#/components/schemas/Text'
+        AgreementStatus:
+          $ref: '#/components/schemas/Agreementstatus'
+        AgreementSubjectMatter:
+          $ref: '#/components/schemas/Text'
+        AgreementIdentification:
+          $ref: '#/components/schemas/Identifier'
+        AgreementDate:
+          $ref: '#/components/schemas/Datetime'
+        AgreementDescription:
+          $ref: '#/components/schemas/Text'
+    Date:
+      type: object
+      format: Date
+      description: 'Date on which the agreement was signed by all parties. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    Agreementstatus:
+      type: object
+      format: Agreementstatus
+      description: >-
+        A characteristic of agreement which refers to the LifecycleStatus of
+        agreement (e.g., potential, offered, confirmed, completed, signed,
+        terminated). 
+      properties:
+        AgreementStatus:
+          $ref: '#/components/schemas/Status'
+        Agreementstatustypevalues:
+          enum:
+            - Offered
+            - Confirmed
+            - Completed
+            - Signed
+            - Terminated
+            - Rejected
+          format: Agreementstatus
+    FraudCaseDetermination:
+      type: object
+      format: FraudCaseDetermination
+      description: "Record of rules and guidelines applied to determine fraud case resolution ||\r\n|"
+      properties:
+        FraudCaseDetermination:
+          type: string
+          format: Class
+          description: 'The determination of the appropriate response to the fraud case. '
+    CaseResolution:
+      type: object
+      description: ''
+      properties:
+        FraudCaseResolutionRecord:
+          $ref: '#/components/schemas/FraudCaseResolution'
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CorrespondenceReference:
+          $ref: '#/components/schemas/Correspondence'
+        AdjustmentChargebackReference:
+          $ref: '#/components/schemas/FeeArrangement'
+        ConsortiaReportingInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        PaymentOrderReference:
+          $ref: '#/components/schemas/PaymentInstruction'
+    FraudCaseResolution:
+      type: object
+      format: FraudCaseResolution
+      description: "Record sets out, defines and assigns resolution tasks ||\r\n|"
+      properties:
+        FraudCaseResolution:
+          type: string
+          format: Class
+          description: >-
+            A procedure taken to investigate and resolve the fraud case which is
+            detected during the production processing.  
+    Correspondence:
+      type: object
+      format: Correspondence
+      description: >-
+        Reference to all correspondence (e.g. confirmation messages sent to
+        involved parties, includes internal and external legal/law enforcement
+        authorities) Presentation|Presentation
+        (https://www.iso20022.org/standardsrepository/type/Presentation)|Standard|ISO20022
+        BM ()
+      properties:
+        Correspondencetypevalues:
+          enum:
+            - UnsolicitedMessage
+            - Complaint
+          format: Correspondence
+        CorrespondenceAddress:
+          $ref: '#/components/schemas/Address'
+        CorrespondenceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        CorrespondenceContent:
+          $ref: '#/components/schemas/Text'
+        CorrespondenceTemplate:
+          $ref: '#/components/schemas/Text'
+        Correspondencecommunicationmethodtypevalues:
+          enum:
+            - Fax
+            - Email
+            - Proprietary
+            - Online
+            - Phone
+            - Postalservice
+            - File
+          format: Correspondence
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Correspondence
+        Correspondencemediumtypevalues:
+          enum:
+            - Paper
+            - Electronic
+            - Paperelectronic
+            - Biometric
+          format: Correspondence
+    FeeArrangement:
+      type: object
+      format: FeeArrangement
+      description: >-
+        Reference to any associated adjustment or chargeback transaction
+        initiated by the resolution Adjustment|Adjustment
+        (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+        BM ()
+      properties:
+        Feetypevalues:
+          enum:
+            - Accountingfee
+            - Adrfee
+            - Advisoryfee
+            - Airwaybillfee
+            - Backendload
+            - Brokeragefee
+            - Clearanceandhandlingatdestination
+            - Clearanceandhandlingatorigin
+            - Collectfreight
+            - Commission
+            - Contingencydeferredsalescharge
+            - Correspondentbankcharge
+            - Custodyfee
+            - Dangerousgoodsfee
+            - Dilutionlevy
+            - Discount
+            - Equalisation
+            - Frontendload
+            - Initial
+            - Insurancepremium
+            - Issuancecancellationfee
+            - Issuancefee
+            - Managementfee
+            - Matchingfees
+            - Miscellaneousfee
+            - Other
+            - Packaging
+            - Partacquis
+            - Penalty
+            - Pickup
+            - Postagecharge
+            - Premium
+            - Publicationfee
+            - Regulatoryfee
+            - Securitycharge
+            - Serviceprovisionfee
+            - Shippingcharge
+            - Signatureservice
+            - Specialconcessions
+            - Speciallyagreedfrontendload
+            - Storageatdestination
+            - Storageatorigin
+            - Switch
+            - Transferfee
+            - Transportcharges
+            - Ucitscommission
+            - ChequeRelatedFee
+          format: FeeArrangement
+        FeeAmount:
+          $ref: '#/components/schemas/Amount'
+        FeeRate:
+          $ref: '#/components/schemas/Rate'
+        FeeEffectivePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        FeeDueDate:
+          $ref: '#/components/schemas/Datetime'
+        FeePlan:
+          $ref: '#/components/schemas/Feeplan'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: FeeArrangement
+        FeeReason:
+          $ref: '#/components/schemas/Text'
+        Adjustmentdirectiontypevalues:
+          enum:
+            - Added
+            - Substracted
+          format: FeeArrangement
+        Chargebearertypevalues:
+          enum:
+            - Bornebydebtor
+            - Bornebycreditor
+            - Shared
+            - Followingservicelevel
+          format: FeeArrangement
+    Amount:
+      type: object
+      format: Amount
+      description: 'Amount of the payment (requested to be paid) '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+        Amount:
+          type: string
+          format: DataType
+          description: >-
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+            The decimal seperator is a dot.
+
+
+
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. The decimal
+            separator is a dot. (ISO20022)
+
+            Note: A zero amount is considered a positive amount.
+
+            total number of digits: 18
+
+            number of digits in fractional part: 5
+
+            minInclusive: 0 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Rate:
+      type: object
+      format: Rate
+      description: >-
+        Rate used to calculate the amount of the adjustment, allowance, charge
+        or fee. (ISO20022) 
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    Feeplan:
+      type: object
+      format: Feeplan
+      description: An arranged FeeRatePlan
+      properties:
+        FeePlanName:
+          $ref: '#/components/schemas/Name'
+        Feeplantypevalues:
+          enum:
+            - StandardFeePlan
+            - FinalFeePlan
+          format: Feeplan
+        FeePlan:
+          $ref: '#/components/schemas/Plan'
+    Plan:
+      type: object
+      format: Plan
+      description: ' '
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/Goal'
+        PlanBudget:
+          $ref: '#/components/schemas/Budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/Plannedaction'
+        Plantypevalues:
+          enum:
+            - AdministrativePlan
+            - ManagementPlan
+            - StratgyPlan
+            - FinancialPlan
+            - DevelopmentPlan
+          format: Plan
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/Text'
+    Goal:
+      type: object
+      format: Goal
+      description: ' '
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Budgetarrangement:
+      type: object
+      format: Budgetarrangement
+      description: >-
+        An arrangement which is specifying an estimate of costs, revenues, and
+        resources over a specified period, reflecting a reading of future
+        financial conditions and goals. (adapted from Business Dictionary) 
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/Budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/Amount'
+    Budgettype:
+      type: object
+      format: Budgettype
+      description: 'A Classification value that specifies the type of Budget '
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/Name'
+        Budgettypevalues:
+          enum:
+            - OperatingBudget
+            - FinancialBudget
+            - ResourceBudget
+          format: Budgettype
+    Plannedaction:
+      type: object
+      format: Plannedaction
+      description: 'An action that is arranged in a plan for doing or achieving something  '
+      properties:
+        PlannedAction:
+          type: string
+          format: Class
+          description: >-
+            An action that is arranged in a plan for doing or achieving
+            something  
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "The document reference for associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    PaymentInstruction:
+      type: object
+      format: PaymentInstruction
+      description: >-
+        Reference to any financial adjustments that are made during the case
+        Payment|Payment
+        (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+        BM ()
+      properties:
+        PaymentInstructionDirectionType:
+          $ref: '#/components/schemas/Text'
+        Paymenttypevalues:
+          enum:
+            - Cashtransaction
+            - Domesticpayment
+            - Domestichighvaluepayment
+            - Domesticprioritypayment
+            - Crossborderpayment
+            - Crossborderprioritypayment
+            - Crossborderhighvaluepayment
+            - Thirdcurrencypayment
+            - Thirdcurrencyhighvaluepayment
+            - Thirdcurrencyprioritypayment
+            - Tradesettlementpayment
+            - Foreignexchange
+            - Equivalentamount
+            - Loan
+            - Loanrepayment
+            - Securities
+            - Lockbox
+            - Dividend
+            - Crossedcheque
+            - Opencheque
+            - Ordercheque
+            - Circularcheque
+            - Travellerscheques
+            - Bankdraft
+            - Cashletter
+            - Documentarycredit
+            - Billofexchange
+            - Collection
+            - Cashmanagementtransfer
+            - Sweepaccount
+            - Topaccount
+            - Zerobalanceaccount
+            - Standingfacilities
+            - Swiftpayservicelevelcredit
+            - Priorityservicelevelcredit
+            - Standardservicelevelcredit
+            - Liquiditytransfer
+            - Advancepayment
+            - Valuedateadjustment
+            - Dvpgross
+            - Dvpnet
+            - Netting
+            - Limitpayment
+            - Backup
+            - Expresspayment
+            - Centralbankoperation
+            - Clspayment
+            - Eurodomesticpayment
+            - Agriculturaltransfer
+            - Alimonypayment
+            - Balanceretail
+            - Bonuspayment.
+            - Brokeragefee
+            - Capitalbuilding
+            - Charitypayment
+            - Childbenefit
+            - Commercialcredit
+            - Commission
+            - Commoditytransfer
+            - Costs
+            - Copyright
+            - Governmentpayment
+            - Instalmenthirepurchaseagreement
+            - Insurancepremium
+            - Intracompanypayment
+            - Interest
+            - Licensefee
+            - Metals
+            - Pensionpayment
+            - Purchasesaleofgoods
+            - Refund
+            - Rent
+            - Royalties
+            - Purchasesaleofservices
+            - Salarypayment
+            - Socialsecuritybenefit
+            - Standingorder
+            - Subscription
+            - Treasurystatepayment
+            - Unemploymentdisabilitybenefit
+            - Valueaddedtaxpayment
+            - Withholdingtax
+            - Taxpayment
+            - Miscellaneous
+            - Overnightdeposit
+            - Marginallending
+            - Other
+            - Upfront
+            - Unwind
+            - Principalexchange
+          format: PaymentInstruction
+        PaymentInstructionRequestedMechanism:
+          $ref: '#/components/schemas/Text'
+        PaymentInstructionProcessingValidityTime:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Priorityvaluetypes:
+          enum:
+            - Urgent
+            - High
+            - Normal
+            - Low
+          format: PaymentInstruction
+        Clearingchanneltypevalues:
+          enum:
+            - Realtimegrosssettlementsystem
+            - Realtimenetsettlementsystem
+            - Masspaymentnetsystem
+            - Booktransfer
+          format: PaymentInstruction
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: PaymentInstruction
+        PaymentInstructionStatus:
+          $ref: '#/components/schemas/Paymentinstructionstatus'
+        PaymentInstructionAmount:
+          $ref: '#/components/schemas/Amount'
+        PaymentInstructionDatetime:
+          $ref: '#/components/schemas/Paymentdatetime'
+    Paymentinstructionstatus:
+      type: object
+      format: Paymentinstructionstatus
+      description: ' '
+      properties:
+        PaymentInstructionStatus:
+          $ref: '#/components/schemas/Status'
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Paymentinstructionstatus
+    Paymentdatetime:
+      type: object
+      format: Paymentdatetime
+      description: ' '
+      properties:
+        PaymentDate:
+          $ref: '#/components/schemas/Datetime'
+        Paymentdatetimetypevalues:
+          enum:
+            - RequestedExecutionDate
+            - AcceptanceDate
+            - CreationDate
+            - ValueDate
+            - DueDate
+            - ExpiryDate
+          format: Paymentdatetime
+    FraudResolutionProcedure:
+      type: object
+      description: ''
+      properties:
+        Casetypevalues:
+          enum:
+            - Card
+            - Loan
+            - Fraud
+            - Payment
+            - Market
+            - Security
+            - Other
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        MerchantReference:
+          $ref: '#/components/schemas/Merchant'
+        InterstedPartyReference:
+          $ref: '#/components/schemas/Party'
+        ContactReference:
+          $ref: '#/components/schemas/CustomerContact'
+        TransactionReference:
+          $ref: '#/components/schemas/Transaction'
+        TransactionRecord:
+          $ref: '#/components/schemas/Transaction'
+        CaseLocation:
+          $ref: '#/components/schemas/Address'
+        Date:
+          $ref: '#/components/schemas/Datetime'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        FraudCaseWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        FraudCaseResolutionSchedule:
+          $ref: '#/components/schemas/Schedule'
+        FraudCaseStatus:
+          $ref: '#/components/schemas/Status'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the product/service associated with case ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    Merchant:
+      type: object
+      format: Merchant
+      description: >-
+        Reference to the merchant associated with case if applicable
+        MerchantRole|MerchantRole
+        (https://www.iso20022.org/standardsrepository/type/MerchantRole)|Standard|ISO20022
+        BM ()
+      properties:
+        Merchanttypevalues:
+          enum:
+            - Retailer
+            - Hotel
+          format: Merchant
+        MerchantAddress:
+          $ref: '#/components/schemas/Address'
+    CustomerContact:
+      type: object
+      format: CustomerContact
+      description: "Customer contact reference if the case was raised during a customer contact ||\r\n|"
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Target and actual dates for case processing/resolution ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+        Schedule:
+          type: string
+          format: DataType
+          description: >-
+            Defined sequence of planned tasks/actions or a timetable of
+            available services
+
+
+            A schedule is a time based series of something 
+    Device:
+      type: object
+      format: Device
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+          format: Device
+        DeviceProperty:
+          $ref: '#/components/schemas/Text'
+        DeviceElement:
+          $ref: '#/components/schemas/Text'
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/Text'
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/Text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/Text'
+        DeviceLocation:
+          $ref: '#/components/schemas/Location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/Text'
+        DeviceCountry:
+          $ref: '#/components/schemas/Country'
+        DeviceAddress:
+          $ref: '#/components/schemas/Address'
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Device
+        Deviceoperatingsystemtypevalues:
+          enum:
+            - Android
+            - Ios
+            - Windows
+            - Blackberry
+            - Tizen
+            - Othernational
+            - Otherprivate
+          format: Device
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Deviceidentificationtypevalues:
+          enum:
+            - IMEI
+            - Serialnumber
+            - Secureelementidentification
+            - Othernational
+            - Otherprivate
+          format: Deviceidentification
+    Country:
+      type: object
+      format: Country
+      description: 'Country of the location. '
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        Record contains all details of the transaction (not itemized)
+        ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+        Transaction:
+          type: string
+          format: Class
+          description: >-
+            A planned or performed action in the context of concluding an
+            agreement or fulfilling an arrangement
+
+
+            Act to do something. 
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Business unit and or employee reference where the case was raised ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "File of consolidated notes, forms and documents for the case ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'

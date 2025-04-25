@@ -1,0 +1,524 @@
+asyncapi: 3.0.0
+info:
+  title: Location Data Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintain details of the use and state of locations of interest to the bank.
+    This can include both physical and virtual addresses. It is used to check
+    for valid use and for sales/marketing activities
+channels:
+  LocationDirectoryEntry/Created:
+    address: LocationDirectoryEntry/Created
+    messages:
+      LocationDirectoryEntry-created.message:
+        $ref: '#/components/messages/LocationDirectoryEntry'
+    description: ''
+  LocationDirectoryEntry/Updated:
+    address: LocationDirectoryEntry/Updated
+    messages:
+      LocationDirectoryEntry-updated.message:
+        $ref: '#/components/messages/LocationDirectoryEntry'
+    description: ''
+  Location/Created:
+    address: Location/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Location'
+    description: ''
+  Location/Updated:
+    address: Location/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Location'
+    description: ''
+  Use/Created:
+    address: Use/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Use'
+    description: ''
+  Use/Updated:
+    address: Use/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Use'
+    description: ''
+  Occupancy/Created:
+    address: Occupancy/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Occupancy'
+    description: ''
+  Occupancy/Updated:
+    address: Occupancy/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Occupancy'
+    description: ''
+operations:
+  LocationDirectoryEntry-created:
+    action: receive
+    channel:
+      $ref: '#/channels/LocationDirectoryEntry~1Created'
+    summary: LocationDirectoryEntry
+    messages:
+      - $ref: >-
+          #/channels/LocationDirectoryEntry~1Created/messages/LocationDirectoryEntry-created.message
+  LocationDirectoryEntry-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/LocationDirectoryEntry~1Updated'
+    summary: LocationDirectoryEntry
+    messages:
+      - $ref: >-
+          #/channels/LocationDirectoryEntry~1Updated/messages/LocationDirectoryEntry-updated.message
+  Location/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Location~1Created'
+    summary: Location
+    messages:
+      - $ref: '#/channels/Location~1Created/messages/publish.message'
+  Location/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Location~1Updated'
+    summary: Location
+    messages:
+      - $ref: '#/channels/Location~1Updated/messages/publish.message'
+  Use/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Use~1Created'
+    summary: Use
+    messages:
+      - $ref: '#/channels/Use~1Created/messages/publish.message'
+  Use/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Use~1Updated'
+    summary: Use
+    messages:
+      - $ref: '#/channels/Use~1Updated/messages/publish.message'
+  Occupancy/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Occupancy~1Created'
+    summary: Occupancy
+    messages:
+      - $ref: '#/channels/Occupancy~1Created/messages/publish.message'
+  Occupancy/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Occupancy~1Updated'
+    summary: Occupancy
+    messages:
+      - $ref: '#/channels/Occupancy~1Updated/messages/publish.message'
+components:
+  messages:
+    LocationDirectoryEntry:
+      name: LocationDirectoryEntry
+      description: >-
+        Capture and maintain reference information about some type of entitity
+        within Location Data Management.
+      payload:
+        $ref: '#/components/schemas/LocationDirectoryEntry'
+    Location:
+      name: Location
+      description: |-
+        An assertion or statement with regard to a concept, a characteristic.
+        Examples:- Product pricing rules, Customer reference details
+        A descriptor can be atomic or composed. Prospect Management
+      payload:
+        $ref: '#/components/schemas/Location'
+    Use:
+      name: Use
+      description: |-
+        An assertion or statement with regard to a concept, a characteristic.
+        Examples:- Product pricing rules, Customer reference details
+        A descriptor can be atomic or composed. Prospect Management
+      payload:
+        $ref: '#/components/schemas/Use'
+    Occupancy:
+      name: Occupancy
+      description: |-
+        An assertion or statement with regard to a concept, a characteristic.
+        Examples:- Product pricing rules, Customer reference details
+        A descriptor can be atomic or composed. Prospect Management
+      payload:
+        $ref: '#/components/schemas/Occupancy'
+  schemas:
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        Locationtypevalues:
+          enum:
+            - GeographicalArea
+            - DigitalArea
+            - StatisticalArea
+            - TimeZone
+            - TreatyArea
+          format: Location
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+        LocationCoordinates:
+          $ref: '#/components/schemas/Text'
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Text:
+      type: object
+      format: Text
+      description: "The general purpose and neighborhood of the property  (e.g. residential, industrial, commercial) ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Status:
+      type: object
+      format: Status
+      description: >-
+        The tracked status (e.g. under construction or repair, inhabited,
+        vacant) Status |Status 
+        (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+        BM ()
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Use:
+      type: object
+      description: ''
+      properties:
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationUsage:
+          $ref: '#/components/schemas/LocationUsage'
+    LocationUsage:
+      type: object
+      format: LocationUsage
+      description: "The allowed usage for the property at the location (e.g. domestic residence, manufacturing, retail) ||\r\n|"
+      properties:
+        LocationUsage:
+          type: string
+          format: Class
+          description: >-
+            The purpose or usage of  location in relationship to the associated
+            object like the mailing address for letters or URL for email
+            address.   
+    Occupancy:
+      type: object
+      description: ''
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        LocationOwnerTitle:
+          $ref: '#/components/schemas/Involvedparty'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationOccupierType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupierReference:
+          $ref: '#/components/schemas/Involvedparty'
+        LocationOccupierTerms:
+          $ref: '#/components/schemas/LocationArrangement'
+        AlliancePartnerReference:
+          $ref: '#/components/schemas/Involvedparty'
+    LocationArrangement:
+      type: object
+      format: LocationArrangement
+      description: "Nature of the access terms or entitlement of the occupier (e.g. leasehold, rental, public access) ||\r\n|"
+      properties:
+        LocationArrangement:
+          type: string
+          format: Class
+          description: ''
+    LocationDirectoryEntry:
+      type: object
+      description: ''
+      properties:
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Directoryentrydatetypevalues:
+          enum:
+            - OpenDate
+            - RefreshDate
+        DirectoryEntryDate:
+          $ref: '#/components/schemas/Datetime'

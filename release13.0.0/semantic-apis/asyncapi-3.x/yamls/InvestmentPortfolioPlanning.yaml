@@ -1,0 +1,569 @@
+asyncapi: 3.0.0
+info:
+  title: Investment Portfolio Planning
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Agree the policies and
+    required make-up of an investment portfolio and ensure all required bank and
+    regulatory terms and conditions are addressed
+channels:
+  ManagedInvestmentPortfolioAgreement/Created:
+    address: ManagedInvestmentPortfolioAgreement/Created
+    messages:
+      ManagedInvestmentPortfolioAgreement-created.message:
+        $ref: '#/components/messages/ManagedInvestmentPortfolioAgreement'
+    description: ''
+  ManagedInvestmentPortfolioAgreement/Updated:
+    address: ManagedInvestmentPortfolioAgreement/Updated
+    messages:
+      ManagedInvestmentPortfolioAgreement-updated.message:
+        $ref: '#/components/messages/ManagedInvestmentPortfolioAgreement'
+    description: ''
+  InvestmentTerms/Created:
+    address: InvestmentTerms/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InvestmentTerms'
+    description: ''
+  InvestmentTerms/Updated:
+    address: InvestmentTerms/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InvestmentTerms'
+    description: ''
+operations:
+  ManagedInvestmentPortfolioAgreement-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ManagedInvestmentPortfolioAgreement~1Created'
+    summary: ManagedInvestmentPortfolioAgreement
+    messages:
+      - $ref: >-
+          #/channels/ManagedInvestmentPortfolioAgreement~1Created/messages/ManagedInvestmentPortfolioAgreement-created.message
+  ManagedInvestmentPortfolioAgreement-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ManagedInvestmentPortfolioAgreement~1Updated'
+    summary: ManagedInvestmentPortfolioAgreement
+    messages:
+      - $ref: >-
+          #/channels/ManagedInvestmentPortfolioAgreement~1Updated/messages/ManagedInvestmentPortfolioAgreement-updated.message
+  InvestmentTerms/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InvestmentTerms~1Created'
+    summary: InvestmentTerms
+    messages:
+      - $ref: '#/channels/InvestmentTerms~1Created/messages/publish.message'
+  InvestmentTerms/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InvestmentTerms~1Updated'
+    summary: InvestmentTerms
+    messages:
+      - $ref: '#/channels/InvestmentTerms~1Updated/messages/publish.message'
+components:
+  messages:
+    ManagedInvestmentPortfolioAgreement:
+      name: ManagedInvestmentPortfolioAgreement
+      description: >+
+        Maintain the terms and conditions that apply to a commercial
+        relationship within Investment Portfolio Planning.
+
+
+      payload:
+        $ref: '#/components/schemas/ManagedInvestmentPortfolioAgreement'
+    InvestmentTerms:
+      name: InvestmentTerms
+      description: >-
+        A collection of terms (within some jurisdiction) that can be selected
+        and configured to define a contract /agreement
+
+
+        Examples:- Required disclosures
+      payload:
+        $ref: '#/components/schemas/InvestmentTerms'
+  schemas:
+    InvestmentTerms:
+      type: object
+      description: ''
+      properties:
+        InvestmentPortfolioAgreementTermType:
+          $ref: '#/components/schemas/Text'
+        InvestmentPortfolioAgreementTermDescription:
+          $ref: '#/components/schemas/Text'
+        InvestmentPortfolioAgreementTermConstraints:
+          $ref: '#/components/schemas/Condition'
+    Text:
+      type: object
+      format: Text
+      description: 'Specifies the reasons for the status. '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Condition:
+      type: object
+      format: Condition
+      description: "One or more specific constraint parameters that calibrate the term, applicable for position constraints (e.g. the specific percentage limit of holdings by value that can be applied to a type of security) ||\r\n|"
+      properties:
+        ConditionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ConditionName:
+          $ref: '#/components/schemas/Name'
+        ConditionValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ConditionDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ConditionStatus:
+          $ref: '#/components/schemas/Status'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'The name of Condition '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: 'Refers to the lifecycle of a Condition '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    ManagedInvestmentPortfolioAgreement:
+      type: object
+      description: ''
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        LegalEntityReference:
+          $ref: '#/components/schemas/Organisation'
+        InvestmentPortfolioInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        Agreementtypevalues:
+          enum:
+            - CustomerAgreement
+            - SupplierAgreement
+            - BrokerAgreement
+            - SalesAgreement
+            - PurchaseAgreement
+            - MaintenanceAgreement
+            - ProductAgreement
+            - ProductSalesAgreement
+            - ResourceAgreement
+        InvestmentPortfolioAgreementJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        InvestmentPortfolioAgreementValidFromToDate:
+          $ref: '#/components/schemas/Datetime'
+        InvestmentPortfolioAgreementSignatoriesResponsibleParties:
+          type: string
+          format: Object
+          description: "Reference to signatories ||\r\n|"
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        CustomerAgreementInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        PartyRelationshipProcedureInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        ManagedInvestmentPortfolioAgreement:
+          $ref: '#/components/schemas/Agreement'
+    Organisation:
+      type: object
+      format: Organisation
+      description: "Reference to the legal entity that is the subject of the agreement Organisation\__x000D_\n|Organisation\_ (https://www.iso20022.org/standardsrepository/type/Organisation)|Standard|ISO20022 BM ()"
+      properties:
+        OrganisationStructureHierarchy:
+          $ref: '#/components/schemas/Text'
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Organisationidentification'
+        OrganisationSector:
+          $ref: '#/components/schemas/Text'
+        LegalEntityIndicator:
+          type: string
+          format: String
+          description: ''
+        OrganisationDate:
+          $ref: '#/components/schemas/Organisationdatetime'
+        Organisationtypevalues:
+          enum:
+            - LegalEntity
+            - Authority
+            - OrganisationUnit
+            - FinancialInstitution
+            - Charity
+            - GovernmentBody
+          format: Organisation
+        OrganisationName:
+          $ref: '#/components/schemas/Organisationname'
+        Organisationlegalstructuretypevalues:
+          enum:
+            - Corporation
+            - Individual
+            - Supranational
+            - Sovereign
+            - Municipal
+            - Province
+            - State
+            - County
+            - Partnership
+            - Financialinstitution
+            - National
+          format: Organisation
+    Organisationidentification:
+      type: object
+      format: Organisationidentification
+      description: ' '
+      properties:
+        Organisationidentificationtypevalues:
+          enum:
+            - LEI
+            - ELF
+            - MIC
+            - BICFI
+            - Bankpartyidentification
+            - Centralbankidentificationnumber
+            - Clearingidentificationnumber
+            - Certificateofincorporationnumber
+            - Countryidentificationcode
+            - Customernumber
+            - Datauniversalnumberingsystem
+            - Employeridentificationnumber
+            - Gs1glnidentifier
+            - SIREN
+            - SIRET
+            - Taxidentificationnumber
+            - EANGLN
+          format: Organisationidentification
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Organisationdatetime:
+      type: object
+      format: Organisationdatetime
+      description: ' '
+      properties:
+        OrganisatioDate:
+          $ref: '#/components/schemas/Datetime'
+        Organisationdatetimetypevalues:
+          enum:
+            - RegistrationDate
+            - EstablishmentDate
+            - EntityExpirationDate
+          format: Organisationdatetime
+    Organisationname:
+      type: object
+      format: Organisationname
+      description: ' '
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Organisationnametypevalues:
+          enum:
+            - ShortName
+            - TradingName
+            - LegalName
+          format: Organisationname
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        The contractual jurisdiction or coverage of the investment portfolio
+        agreement (e.g. "governed by State") Jurisdiction|Jurisdiction
+        (https://www.iso20022.org/standardsrepository/type/Jurisdiction)|Standard|ISO20022
+        BM ()
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "Reference to any associated documents, (e.g. signed agreement document, disclosures) ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    Agreement:
+      type: object
+      format: Agreement
+      description: >-
+        The consolidated view of all of the constituent investment policy terms
+        and conditions in any suitable format Agreement_x000D_
+
+        |Agreement
+        (https://www.iso20022.org/standardsrepository/type/Agreement)|Standard|ISO20022
+        BM ()
+      properties:
+        AgreementSignedDate:
+          $ref: '#/components/schemas/Date'
+        Agreementtypevalues:
+          enum:
+            - CustomerAgreement
+            - SupplierAgreement
+            - BrokerAgreement
+            - SalesAgreement
+            - PurchaseAgreement
+            - MaintenanceAgreement
+            - ProductAgreement
+            - ProductSalesAgreement
+            - ResourceAgreement
+          format: Agreement
+        AgreementValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AgreementVersion:
+          $ref: '#/components/schemas/Text'
+        AgreementStatus:
+          $ref: '#/components/schemas/Agreementstatus'
+        AgreementSubjectMatter:
+          $ref: '#/components/schemas/Text'
+        AgreementIdentification:
+          $ref: '#/components/schemas/Identifier'
+        AgreementDate:
+          $ref: '#/components/schemas/Datetime'
+        AgreementDescription:
+          $ref: '#/components/schemas/Text'
+    Date:
+      type: object
+      format: Date
+      description: 'Date on which the agreement was signed by all parties. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    Agreementstatus:
+      type: object
+      format: Agreementstatus
+      description: >-
+        A characteristic of agreement which refers to the LifecycleStatus of
+        agreement (e.g., potential, offered, confirmed, completed, signed,
+        terminated). 
+      properties:
+        AgreementStatus:
+          $ref: '#/components/schemas/Status'
+        Agreementstatustypevalues:
+          enum:
+            - Offered
+            - Confirmed
+            - Completed
+            - Signed
+            - Terminated
+            - Rejected
+          format: Agreementstatus

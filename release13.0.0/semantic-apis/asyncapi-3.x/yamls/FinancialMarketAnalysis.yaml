@@ -1,0 +1,588 @@
+asyncapi: 3.0.0
+info:
+  title: Financial Market Analysis
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Provide different types
+    of financial market analysis using available financial market information
+    and research
+channels:
+  FinancialMarketAnalysis/Created:
+    address: FinancialMarketAnalysis/Created
+    messages:
+      FinancialMarketAnalysis-created.message:
+        $ref: '#/components/messages/FinancialMarketAnalysis'
+    description: ''
+  FinancialMarketAnalysis/Updated:
+    address: FinancialMarketAnalysis/Updated
+    messages:
+      FinancialMarketAnalysis-updated.message:
+        $ref: '#/components/messages/FinancialMarketAnalysis'
+    description: ''
+  FinancialMarketInsight/Created:
+    address: FinancialMarketInsight/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FinancialMarketInsight'
+    description: ''
+  FinancialMarketInsight/Updated:
+    address: FinancialMarketInsight/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FinancialMarketInsight'
+    description: ''
+  FinancialMarketAnalysisOutcome/Created:
+    address: FinancialMarketAnalysisOutcome/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FinancialMarketAnalysisOutcome'
+    description: ''
+  FinancialMarketAnalysisOutcome/Updated:
+    address: FinancialMarketAnalysisOutcome/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FinancialMarketAnalysisOutcome'
+    description: ''
+operations:
+  FinancialMarketAnalysis-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketAnalysis~1Created'
+    summary: FinancialMarketAnalysis
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketAnalysis~1Created/messages/FinancialMarketAnalysis-created.message
+  FinancialMarketAnalysis-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketAnalysis~1Updated'
+    summary: FinancialMarketAnalysis
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketAnalysis~1Updated/messages/FinancialMarketAnalysis-updated.message
+  FinancialMarketInsight/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketInsight~1Created'
+    summary: FinancialMarketInsight
+    messages:
+      - $ref: '#/channels/FinancialMarketInsight~1Created/messages/publish.message'
+  FinancialMarketInsight/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketInsight~1Updated'
+    summary: FinancialMarketInsight
+    messages:
+      - $ref: '#/channels/FinancialMarketInsight~1Updated/messages/publish.message'
+  FinancialMarketAnalysisOutcome/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketAnalysisOutcome~1Created'
+    summary: FinancialMarketAnalysisOutcome
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketAnalysisOutcome~1Created/messages/publish.message
+  FinancialMarketAnalysisOutcome/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialMarketAnalysisOutcome~1Updated'
+    summary: FinancialMarketAnalysisOutcome
+    messages:
+      - $ref: >-
+          #/channels/FinancialMarketAnalysisOutcome~1Updated/messages/publish.message
+components:
+  messages:
+    FinancialMarketAnalysis:
+      name: FinancialMarketAnalysis
+      description: >-
+        Analyze the performance or behavior of some on-going activity or entity 
+        within Financial Market Analysis. 
+
+        Examples:- Provide behavioral insights and analysis into customer
+        behavior and analyze financial market activity in order to identify
+        opportunities, define pricing and evaluate risks.
+
+
+        Analyze the performance or behavior of some on-going activity or entity.
+        Examples:- Provide behavioral insights and analysis into customer
+        behavior and analyze financial market activity in order to identify
+        opportunities, define pricing and evaluate risks.
+      payload:
+        $ref: '#/components/schemas/FinancialMarketAnalysis'
+    FinancialMarketInsight:
+      name: FinancialMarketInsight
+      description: >-
+        A collection of models/calculations/algoritms that can be applied to a
+        subject or activity
+
+
+        Examples:- Average balance calculation, Propensity to buy
+      payload:
+        $ref: '#/components/schemas/FinancialMarketInsight'
+    FinancialMarketAnalysisOutcome:
+      name: FinancialMarketAnalysisOutcome
+      description: >-
+        A collection of models/calculations/algoritms that can be applied to a
+        subject or activity
+
+
+        Examples:- Average balance calculation, Propensity to buy
+      payload:
+        $ref: '#/components/schemas/FinancialMarketAnalysisOutcome'
+  schemas:
+    FinancialMarketInsight:
+      type: object
+      description: ''
+      properties:
+        Preconditions:
+          $ref: '#/components/schemas/Condition'
+        AnalysisSchedule:
+          $ref: '#/components/schemas/Schedule'
+        VersionNumber:
+          type: string
+          format: Number
+          description: >-
+            The algorithm version employed in the analysis Number|Number
+            (https://www.iso20022.org/standardsrepository/type/Number)|Standard|ISO20022
+            BM ()
+        BusinessService:
+          $ref: '#/components/schemas/BusinessService'
+    Condition:
+      type: object
+      format: Condition
+      description: "The required status/situation before the algorithm can be applied ||\r\n|"
+      properties:
+        ConditionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ConditionName:
+          $ref: '#/components/schemas/Name'
+        ConditionValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ConditionDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ConditionStatus:
+          $ref: '#/components/schemas/Status'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'The name of Condition '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: 'Refers to the lifecycle of a Condition '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The schedule and timing of the analysis performed using the algorithm ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    BusinessService:
+      type: object
+      format: BusinessService
+      description: "The Financial Market Insight specific  Business Service ||\r\n|"
+      properties:
+        Businessservicetypevalues:
+          enum:
+            - Businessservicetypevalues
+          format: BusinessService
+    FinancialMarketAnalysisOutcome:
+      type: object
+      description: ''
+      properties:
+        FinancialMarketAnalysisWorkProduct:
+          type: string
+          format: String
+          description: ''
+        FinancialMarketAnalysisAnalysisType:
+          type: string
+          format: String
+          description: ''
+    FinancialMarketAnalysis:
+      type: object
+      description: ''
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+        FinancialMarketAnalysisSelectedOption:
+          $ref: '#/components/schemas/Feature'
+        FinancialMarketAnalysisRequest:
+          $ref: '#/components/schemas/Instruction'
+        FinancialMarketAnalysisSchedule:
+          $ref: '#/components/schemas/Schedule'
+        FinancialMarketAnalysisStatus:
+          $ref: '#/components/schemas/Status'
+        FinancialMarketAnalysisUsageLog:
+          $ref: '#/components/schemas/Log'
+        FinancialMarketAnalysisRequesterReference:
+          $ref: '#/components/schemas/Involvedparty'
+    Feature:
+      type: object
+      format: Feature
+      description: "A selected optional business service as subject matter of analysis ||\r\n|"
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    Instruction:
+      type: object
+      format: Instruction
+      description: "Request to perform Financial Market Analysis ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/Instructionidentification'
+        Instructiontypevalues:
+          enum:
+            - PaymentInstruction
+            - DeliveryOrder
+            - InformationRequest
+            - ExchangeInstruction
+            - AllocationInstruction
+            - MaintenanceInstruction
+          format: Instruction
+        InstructionResult:
+          $ref: '#/components/schemas/Text'
+        InstructionDescription:
+          $ref: '#/components/schemas/Text'
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/Text'
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+        Instructiondatetimetypevalues:
+          enum:
+            - DueDate
+            - ExecutionDate
+            - FulfillmentDate
+          format: Instructiondatetime
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction (e.g., requested, executed, fulfilled, etc.);  
+      properties:
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Instructionstatus
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Instructionidentificationtypevalues:
+          enum:
+            - OrderNumber
+            - InstructionNumber
+          format: Instructionidentification
+    Log:
+      type: object
+      format: Log
+      description: "Reference to the log of (usage) ativities/events of Financial Market Analysis ||\r\n|"
+      properties:
+        LogType:
+          $ref: '#/components/schemas/Text'
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Log:
+          type: string
+          format: Class
+          description: A record of events/entries.

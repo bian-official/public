@@ -1,0 +1,754 @@
+asyncapi: 3.0.0
+info:
+  title: Issued Device Tracking
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles operational access to issued device tracking services. Services
+    report on the status of devices such as cards, fobs, etc. that have been
+    issued to customers. Service notifications include fraud warnings/alerts and
+    device cancellation.
+channels:
+  IssuedDeviceState/Created:
+    address: IssuedDeviceState/Created
+    messages:
+      IssuedDeviceState-created.message:
+        $ref: '#/components/messages/IssuedDeviceState'
+    description: ''
+  IssuedDeviceState/Updated:
+    address: IssuedDeviceState/Updated
+    messages:
+      IssuedDeviceState-updated.message:
+        $ref: '#/components/messages/IssuedDeviceState'
+    description: ''
+  ExternalReport/Created:
+    address: ExternalReport/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ExternalReport'
+    description: ''
+  ExternalReport/Updated:
+    address: ExternalReport/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ExternalReport'
+    description: ''
+  InternalNotification/Created:
+    address: InternalNotification/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalNotification'
+    description: ''
+  InternalNotification/Updated:
+    address: InternalNotification/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalNotification'
+    description: ''
+operations:
+  IssuedDeviceState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/IssuedDeviceState~1Created'
+    summary: IssuedDeviceState
+    messages:
+      - $ref: >-
+          #/channels/IssuedDeviceState~1Created/messages/IssuedDeviceState-created.message
+  IssuedDeviceState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/IssuedDeviceState~1Updated'
+    summary: IssuedDeviceState
+    messages:
+      - $ref: >-
+          #/channels/IssuedDeviceState~1Updated/messages/IssuedDeviceState-updated.message
+  ExternalReport/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ExternalReport~1Created'
+    summary: ExternalReport
+    messages:
+      - $ref: '#/channels/ExternalReport~1Created/messages/publish.message'
+  ExternalReport/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ExternalReport~1Updated'
+    summary: ExternalReport
+    messages:
+      - $ref: '#/channels/ExternalReport~1Updated/messages/publish.message'
+  InternalNotification/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalNotification~1Created'
+    summary: InternalNotification
+    messages:
+      - $ref: '#/channels/InternalNotification~1Created/messages/publish.message'
+  InternalNotification/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalNotification~1Updated'
+    summary: InternalNotification
+    messages:
+      - $ref: '#/channels/InternalNotification~1Updated/messages/publish.message'
+components:
+  messages:
+    IssuedDeviceState:
+      name: IssuedDeviceState
+      description: >-
+        Monitor and define the status/rating of some entity within Issued Device
+        Tracking. 
+      payload:
+        $ref: '#/components/schemas/IssuedDeviceState'
+    ExternalReport:
+      name: ExternalReport
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/ExternalReport'
+    InternalNotification:
+      name: InternalNotification
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/InternalNotification'
+  schemas:
+    ExternalReport:
+      type: object
+      description: ''
+      properties:
+        InformationFeedServiceContentRecord:
+          type: string
+          format: Object
+          description: "Is the record of the information notified by the IP that can reference a single device notification or a batch file covering multiple devices ||\r\n|"
+        IssuedDeviceReference:
+          $ref: '#/components/schemas/IssuedDevice'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        StatusUpdateDetails:
+          $ref: '#/components/schemas/Text'
+        StatusUpdateResult:
+          $ref: '#/components/schemas/Text'
+        Date:
+          $ref: '#/components/schemas/Datetime'
+    IssuedDevice:
+      type: object
+      format: IssuedDevice
+      description: "Provided reference to the target issued device in the form defined by the IP ||\r\n|"
+      properties:
+        Issueddevicestatustypevalues:
+          enum:
+            - Issued
+            - IssuedButNotActivated
+            - Activated
+            - Suspended
+            - Retrieved
+          format: IssuedDevice
+        IssuedDevicePartyReference:
+          $ref: '#/components/schemas/Party'
+        IssuedDeviceConfiguration:
+          $ref: '#/components/schemas/Text'
+        IssuedDeviceReference:
+          $ref: '#/components/schemas/Device'
+        IssuedDeviceValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        IssuedDeviceDeliveryMethod:
+          $ref: '#/components/schemas/Text'
+        DeviceIssueDate:
+          $ref: '#/components/schemas/Datetime'
+        IssuedDeviceCollectLocation:
+          $ref: '#/components/schemas/Branch'
+        IssuedDeviceProductReference:
+          $ref: '#/components/schemas/Bankingproduct'
+        Devicecustomizationtypevalues:
+          enum:
+            - CardDesign
+          format: IssuedDevice
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Party:
+          type: string
+          format: Class
+          description: >-
+            A party represents an autonomous entity in which a bank has a
+            business interest. It has a legal definition and identity. A party
+            is a Person, Organization, (a proposed definition for BIAN BOM
+            adapted from BIAN Party Working Group) 
+
+
+            Entity involved in an activity. (ISO20022) 
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        Key dates and times associated with the external notification
+        ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Device:
+      type: object
+      format: Device
+      description: 'Reference to the device that is issued '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+          format: Device
+        DeviceProperty:
+          $ref: '#/components/schemas/Text'
+        DeviceElement:
+          $ref: '#/components/schemas/Text'
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/Text'
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/Text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/Text'
+        DeviceLocation:
+          $ref: '#/components/schemas/Location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/Text'
+        DeviceCountry:
+          $ref: '#/components/schemas/Country'
+        DeviceAddress:
+          $ref: '#/components/schemas/Address'
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Device
+        Deviceoperatingsystemtypevalues:
+          enum:
+            - Android
+            - Ios
+            - Windows
+            - Blackberry
+            - Tizen
+            - Othernational
+            - Otherprivate
+          format: Device
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Deviceidentificationtypevalues:
+          enum:
+            - IMEI
+            - Serialnumber
+            - Secureelementidentification
+            - Othernational
+            - Otherprivate
+          format: Deviceidentification
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Country:
+      type: object
+      format: Country
+      description: 'Country of the location. '
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+    Branch:
+      type: object
+      format: Branch
+      description: 'The name of the branch where the party will collect the device '
+      properties:
+        BranchIdentification:
+          $ref: '#/components/schemas/Identifier'
+        BranchLegalEntityIdentification:
+          $ref: '#/components/schemas/Identifier'
+        BranchAddress:
+          $ref: '#/components/schemas/Address'
+        BranchName:
+          $ref: '#/components/schemas/Name'
+    Bankingproduct:
+      type: object
+      format: Bankingproduct
+      description: 'The product or service to which the Issued Device will be attached '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: Bankingproduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - Commercialdescriptioncodename
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+        Productstatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productstatus
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the associated product instance in the form defined by the IP ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    InternalNotification:
+      type: object
+      description: ''
+      properties:
+        IssuedDeviceReference:
+          $ref: '#/components/schemas/IssuedDevice'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        StatusUpdateDetails:
+          $ref: '#/components/schemas/Text'
+        StatusUpdateResult:
+          $ref: '#/components/schemas/Text'
+        Date:
+          $ref: '#/components/schemas/Datetime'
+    IssuedDeviceState:
+      type: object
+      description: ''
+      properties:
+        InformationFeedProviderReference:
+          $ref: '#/components/schemas/Involvedparty'
+        IssuedDeviceAllocationInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        IssuedDeviceAllocationStatus:
+          $ref: '#/components/schemas/Status'

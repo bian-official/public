@@ -1,0 +1,783 @@
+asyncapi: 3.0.0
+info:
+  title: Intellectual Property Portfolio
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Administer the bank's
+    intellectual property assets
+channels:
+  IntellectualPropertyAdministrativePlan/Created:
+    address: IntellectualPropertyAdministrativePlan/Created
+    messages:
+      IntellectualPropertyAdministrativePlan-created.message:
+        $ref: '#/components/messages/IntellectualPropertyAdministrativePlan'
+    description: ''
+  IntellectualPropertyAdministrativePlan/Updated:
+    address: IntellectualPropertyAdministrativePlan/Updated
+    messages:
+      IntellectualPropertyAdministrativePlan-updated.message:
+        $ref: '#/components/messages/IntellectualPropertyAdministrativePlan'
+    description: ''
+  Maintenance/Created:
+    address: Maintenance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Maintenance'
+    description: ''
+  Maintenance/Updated:
+    address: Maintenance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Maintenance'
+    description: ''
+  Assignment/Created:
+    address: Assignment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+  Assignment/Updated:
+    address: Assignment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+operations:
+  IntellectualPropertyAdministrativePlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/IntellectualPropertyAdministrativePlan~1Created'
+    summary: IntellectualPropertyAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/IntellectualPropertyAdministrativePlan~1Created/messages/IntellectualPropertyAdministrativePlan-created.message
+  IntellectualPropertyAdministrativePlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/IntellectualPropertyAdministrativePlan~1Updated'
+    summary: IntellectualPropertyAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/IntellectualPropertyAdministrativePlan~1Updated/messages/IntellectualPropertyAdministrativePlan-updated.message
+  Maintenance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Maintenance~1Created'
+    summary: Maintenance
+    messages:
+      - $ref: '#/channels/Maintenance~1Created/messages/publish.message'
+  Maintenance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Maintenance~1Updated'
+    summary: Maintenance
+    messages:
+      - $ref: '#/channels/Maintenance~1Updated/messages/publish.message'
+  Assignment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Created'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Created/messages/publish.message'
+  Assignment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Updated'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Updated/messages/publish.message'
+components:
+  messages:
+    IntellectualPropertyAdministrativePlan:
+      name: IntellectualPropertyAdministrativePlan
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Intellectual Property Portfolio. 
+      payload:
+        $ref: '#/components/schemas/IntellectualPropertyAdministrativePlan'
+    Maintenance:
+      name: Maintenance
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Maintenance'
+    Assignment:
+      name: Assignment
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Assignment'
+  schemas:
+    Maintenance:
+      type: object
+      description: ''
+      properties:
+        IntellectualPropertyAssetMaintenanceSchedule:
+          $ref: '#/components/schemas/Schedule'
+        IntellectualPropertyAssetProtectionReference:
+          type: string
+          format: Object
+          description: "Reference to the intellectual property protection mechanism employed (e.g. copyright, trademark or patent reference number) ||\r\n|"
+        IntellectualPropertyAssetRegistrationReference:
+          type: string
+          format: Object
+          description: "Reference to the registration entity for the intellectual property protection mechanism (e.g. U.S. Patent Office) ||\r\n|"
+        IntellectualPropertyAssetMaintenanceTaskRecord:
+          $ref: '#/components/schemas/Task'
+        IntellectualPropertyAssetMaintenanceTaskType:
+          $ref: '#/components/schemas/Text'
+        IntellectualPropertyAssetMaintenanceTaskDescription:
+          $ref: '#/components/schemas/Text'
+        IntellectualPropertyAssetMaintenanceTaskWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        IntellectualPropertyAssetMaintenanceTransaction:
+          $ref: '#/components/schemas/Transaction'
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The schedule for maintenance tasks performed and to be performed (e.g. patent renewals) ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      format: Text
+      description: 'Specifies the reasons for the status. '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Task:
+      type: object
+      format: Task
+      description: "A record of payments and other actions taken to maintain the asset ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "File of consolidated notes, forms and documents for the maintenance task ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'The name of transaction. '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "Reference to associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        Details of any payments made as part of maintenance
+        ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Assignment:
+      type: object
+      format: Assignment
+      description: "A record of assignments of the intellectual property both for internal use and for 3rd party licensing ||\r\n|"
+      properties:
+        IntellectualPropertyAssetAssignmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        IntellectualPropertyAssetAssignmentRecord:
+          $ref: '#/components/schemas/Assignment'
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        SubjectMatter:
+          type: string
+          format: Object
+          description: ''
+        IntellectualPropertyAssetAssignmentType:
+          $ref: '#/components/schemas/Text'
+        IntellectualPropertyAssetAssignmentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        IntellectualPropertyAssetAssignmentTransaction:
+          $ref: '#/components/schemas/Transaction'
+    IntellectualPropertyAdministrativePlan:
+      type: object
+      description: ''
+      properties:
+        IntellectualPropertyAssetReference:
+          $ref: '#/components/schemas/Asset'
+        IntellectualPropertyAssetRecord:
+          $ref: '#/components/schemas/Asset'
+        Assettypevalues:
+          enum:
+            - Assettypevalues
+        IntellectualPropertyAssetDescription:
+          $ref: '#/components/schemas/Text'
+        IntellectualPropertyAssetTitle:
+          type: string
+          format: Object
+          description: "Details of title ownership, including assigned usage rights ||\r\n|"
+        IntellectualPropertyAssetJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        IntellectualPropertyAssetCreator:
+          $ref: '#/components/schemas/Involvedparty'
+        IntellectualPropertyAssetValuation:
+          $ref: '#/components/schemas/AssetValuation'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+        Date:
+          $ref: '#/components/schemas/Datetime'
+    Asset:
+      type: object
+      format: Asset
+      description: >-
+        The details maintained for the intellectual property asset Asset |Asset 
+        (https://www.iso20022.org/standardsrepository/type/Asset)|Standard|ISO20022
+        BM ()
+      properties:
+        AssetTitle:
+          $ref: '#/components/schemas/Text'
+        AssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Assettypevalues:
+          enum:
+            - Assettypevalues
+          format: Asset
+        AssetDescription:
+          $ref: '#/components/schemas/Text'
+        AssetStatus:
+          $ref: '#/components/schemas/Status'
+        AssetDate:
+          $ref: '#/components/schemas/Datetime'
+        AssetClassification:
+          $ref: '#/components/schemas/Text'
+        Assetclassificationtypevalues:
+          enum:
+            - Assetclassificationtypevalues
+          format: Asset
+        Assetsubclassificationtypevalues:
+          enum:
+            - Subassetclass
+            - Timetomaturitybucket
+            - Optiontimetomaturitybucket
+            - Swaptimetomaturitybucket
+            - Underlyinginstrumentidentification
+            - Underlyingbondissuer
+            - Underlyinginterestrate
+            - Underlyingbondterm
+            - Assetclass
+            - Underlyingindexidentification
+            - Interestratetermofcontract
+            - Underlyingreferenceentity
+            - Sovereignandpublictypeissuer
+            - Irdnotionalcurrency1
+            - Fexnotionalcurrency1
+            - Cfdnotionalcurrency1
+            - Fexnotionalcurrency2
+            - Irdnotionalcurrency2
+            - Cfdnotionalcurrency2
+            - Swaptionnotionalcurrency
+            - Creditnotionalcurrency
+            - Commoditynotionalcurrency
+            - Contracttype
+            - Baseproduct
+            - Subproduct
+            - Furthersubproduct
+            - Deliverycashlocation
+            - Deliverysettlementtype
+            - Sizespecificationrelatedtofreights
+            - Specificroutetimecharteraverage
+            - Equityunderlyingtype
+            - Parameter
+            - Inflationindexcodename
+            - ISIN
+            - Underlyingindexcdssubclassidentifi
+            - Underlyingtype
+          format: Asset
+        AssetSubClassification:
+          $ref: '#/components/schemas/Text'
+        Asset:
+          type: string
+          format: Class
+          description: >-
+            An object classified as something of value.
+
+            It is some tangible or intangible thing that the bank has ownership
+            and/or influence over and has one or more inherent uses or purposes
+            that create commercial value
+
+            Comment
+
+            BIAN has defined the likely assets found in any bank and uses this
+            approach to isolate the specific types of asset that are acted on by
+            the ServiceDomains. The role or purpose of each and every
+            ServiceDomain is to apply its specific functional pattern to
+            instances of one type of asset.
+
+            Is the tangible or intangible item that can have associated
+            'replacement' value/worth and purpose/use for which the bank has
+            ownership or some level of control. It is exploited/leveraged in the
+            execution of business through the application of some business
+            behavior/control as effected by a ServiceDomain. Some asset types
+            are obvious for example a machine or building, some are intangible
+            but easily identified such as knowhow, knowledge, relationships,
+            reputation. Some are less obvious - most common is the 'capacity to
+            perform' type which applies to many BIAN Service Domains. For
+            example in the case of product fulfillment and support activities
+            like party authentication the asset is the bank's possession of the
+            capacity to perform these activities the combination of the
+            people/processes/systems to execute if you will...
+
+
+             
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        Details of scope of coverage of the intellectual property asset (e.g.
+        geographic coverage, allowed usage type coverage)
+        Jurisdiction|Jurisdiction
+        (https://www.iso20022.org/standardsrepository/type/Jurisdiction)|Standard|ISO20022
+        BM ()
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '
+    AssetValuation:
+      type: object
+      format: AssetValuation
+      description: >-
+        An indication or description of the commercial value of the intellectual
+        property asset. This can combine a 'replacement' valuation and an
+        licensing/assignment income assessment. The value can be an estimate and
+        include actual realized income CollateralValuation|CollateralValuation
+        (https://www.iso20022.org/standardsrepository/type/CollateralValuation)|Standard|ISO20022
+        BM ()
+      properties:
+        AssetValue:
+          $ref: '#/components/schemas/Value'
+        AssetValueType:
+          $ref: '#/components/schemas/Text'
+        AssetValuationType:
+          $ref: '#/components/schemas/Text'
+        AssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+        AssetValuationRate:
+          $ref: '#/components/schemas/Rate'
+        AssetValuationStatus:
+          $ref: '#/components/schemas/Status'
+        AssetValuationValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AsseValuationAmount:
+          $ref: '#/components/schemas/Amount'
+    Rate:
+      type: object
+      format: Rate
+      description: ' '
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    Amount:
+      type: object
+      format: Amount
+      description: 'Amount at which the asset has been valued at a particular valuation '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             

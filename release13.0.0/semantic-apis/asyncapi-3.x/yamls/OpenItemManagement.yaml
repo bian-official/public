@@ -1,0 +1,684 @@
+asyncapi: 3.0.0
+info:
+  title: Open Item Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    provides a service for handling the resolution of open items against
+    accounts (such as overdue loan payments)
+channels:
+  OpenItemProcedure/Created:
+    address: OpenItemProcedure/Created
+    messages:
+      OpenItemProcedure-created.message:
+        $ref: '#/components/messages/OpenItemProcedure'
+    description: ''
+  OpenItemProcedure/Updated:
+    address: OpenItemProcedure/Updated
+    messages:
+      OpenItemProcedure-updated.message:
+        $ref: '#/components/messages/OpenItemProcedure'
+    description: ''
+  Tracking/Created:
+    address: Tracking/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Tracking'
+    description: ''
+  Tracking/Updated:
+    address: Tracking/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Tracking'
+    description: ''
+  Repayment/Created:
+    address: Repayment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Repayment'
+    description: ''
+  Repayment/Updated:
+    address: Repayment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Repayment'
+    description: ''
+operations:
+  OpenItemProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/OpenItemProcedure~1Created'
+    summary: OpenItemProcedure
+    messages:
+      - $ref: >-
+          #/channels/OpenItemProcedure~1Created/messages/OpenItemProcedure-created.message
+  OpenItemProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/OpenItemProcedure~1Updated'
+    summary: OpenItemProcedure
+    messages:
+      - $ref: >-
+          #/channels/OpenItemProcedure~1Updated/messages/OpenItemProcedure-updated.message
+  Tracking/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Tracking~1Created'
+    summary: Tracking
+    messages:
+      - $ref: '#/channels/Tracking~1Created/messages/publish.message'
+  Tracking/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Tracking~1Updated'
+    summary: Tracking
+    messages:
+      - $ref: '#/channels/Tracking~1Updated/messages/publish.message'
+  Repayment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Repayment~1Created'
+    summary: Repayment
+    messages:
+      - $ref: '#/channels/Repayment~1Created/messages/publish.message'
+  Repayment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Repayment~1Updated'
+    summary: Repayment
+    messages:
+      - $ref: '#/channels/Repayment~1Updated/messages/publish.message'
+components:
+  messages:
+    OpenItemProcedure:
+      name: OpenItemProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Open Item
+        Management. 
+      payload:
+        $ref: '#/components/schemas/OpenItemProcedure'
+    Tracking:
+      name: Tracking
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Tracking'
+    Repayment:
+      name: Repayment
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Repayment'
+  schemas:
+    Tracking:
+      type: object
+      description: ''
+      properties:
+        CustomerBillingProcedureInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        CustomerBillingParty:
+          $ref: '#/components/schemas/Party'
+        CustomerBillingAddress:
+          $ref: '#/components/schemas/Address'
+        CustomerBillingPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        CustomerBillingStatement:
+          $ref: '#/components/schemas/Statement'
+        CustomerBillingAmount:
+          $ref: '#/components/schemas/Amount'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+        Party:
+          type: string
+          format: Class
+          description: >-
+            A party represents an autonomous entity in which a bank has a
+            business interest. It has a legal definition and identity. A party
+            is a Person, Organization, (a proposed definition for BIAN BOM
+            adapted from BIAN Party Working Group) 
+
+
+            Entity involved in an activity. (ISO20022) 
+    Name:
+      type: object
+      format: Name
+      description: 'Name (label) of the location. (ISO20022) '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the range ends. (ISO20022) '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: Decimal point position starts calulating from the right
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: >-
+        The billing period is applicable DateTimePeriod|DateTimePeriod
+        (https://www.iso20022.org/standardsrepository/type/DateTimePeriod)|Standard|ISO20022
+        BM ()
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Status:
+      type: object
+      format: Status
+      description: >-
+        The tracked status (e.g. under construction or repair, inhabited,
+        vacant). 
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Statement:
+      type: object
+      format: Statement
+      description: "The content of the billing statement used in the bill ||\r\n|"
+      properties:
+        Statementtypevalues:
+          enum:
+            - FinancialStatement
+            - AccountStatement
+            - CustomerStatement
+          format: Statement
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The amount of the customer bill CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Repayment:
+      type: object
+      description: ''
+      properties:
+        TransactionPayerReference:
+          $ref: '#/components/schemas/Payer'
+        TransactionPayerProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        TransactionPayerBankReference:
+          $ref: '#/components/schemas/PayerBank'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+        TransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        TransactionCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+    Payer:
+      type: object
+      format: Payer
+      description: "Reference to the payer of the funds ||\r\n|"
+      properties:
+        PayerIdentifier:
+          type: string
+          format: String
+          description: 'Identifier of the payer. '
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the source of the payment funds ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    PayerBank:
+      type: object
+      format: PayerBank
+      description: "Reference to the payers account holding bank ||\r\n|"
+      properties:
+        PayerBankIdentifier:
+          type: string
+          format: String
+          description: 'Identifier of the payer bank. '
+    OpenItemProcedure:
+      type: object
+      description: ''
+      properties:
+        OpenItemType:
+          $ref: '#/components/schemas/OpenItemType'
+        OpenItemDescription:
+          $ref: '#/components/schemas/Text'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        LoanRepaymentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        LoanOutstandingBalance:
+          $ref: '#/components/schemas/Accountbalance'
+        LoanTerminationDate:
+          $ref: '#/components/schemas/Datetime'
+        RepaymentStatement:
+          $ref: '#/components/schemas/Statement'
+    OpenItemType:
+      type: object
+      format: OpenItemType
+      description: "The type of open item, typically an overdue payment ||\r\n|"
+      properties:
+        OpenItemType:
+          type: string
+          format: Class
+          description: >-
+            Classification of Open Items based on the type of payment obligation
+            that is overdues
+
+
+            e.g. loan repayment, fee payment, Interest payment, negative balance
+            ... 
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Payment schedule used for staged payments ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Accountbalance:
+      type: object
+      format: Accountbalance
+      description: >-
+        The outstanding balance Balance|Balance
+        (https://www.iso20022.org/standardsrepository/type/Balance)|Standard|ISO20022
+        BM ()
+      properties:
+        BalanceAmount:
+          $ref: '#/components/schemas/Amount'
+        Balancetypevalues:
+          enum:
+            - OpeningBalance
+            - ClosingBalance
+            - CurrentBalance
+            - AvailableBalance
+            - LedgerBalance
+            - ReserveBalance
+            - FreeBalance
+            - PrincipalBalance
+            - ClosingAvailable
+            - ClosingBooked
+            - ForwardAvailable
+            - Information
+            - InterimAvailable
+            - InterimBooked
+            - OpeningAvailable
+            - OpeningBooked
+            - PreviouslyClosedBooked
+            - Expected
+          format: Accountbalance
+        BalanceValueDate:
+          $ref: '#/components/schemas/Datetime'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: Accountbalance
+        Balancecounterpartytypevalues:
+          enum:
+            - Bilateral
+            - Multilateral
+          format: Accountbalance
+        BalanceCalculationDate:
+          $ref: '#/components/schemas/Datetime'
+        Balancesubtypevalues:
+          enum:
+            - Adjustment
+            - Basecurrency
+            - Blocked
+            - Blockedfunds
+            - Daylightoverdraft
+            - Eligibleassets
+            - Firmcollateralization
+            - Amountsthathavebeenusedtoserveasfi
+            - Securitiesforecast
+            - Netfunding
+            - Intermediate
+            - Localcurrency
+            - Limitrelated
+            - Reservedliquidity
+            - Securitiespending
+            - Payinpayout
+            - Progressiveaverage
+            - Reserve
+            - Selfcollateralization
+            - Amountsthathavebeenusedtoserveasse
+            - Threshold
+          format: Accountbalance

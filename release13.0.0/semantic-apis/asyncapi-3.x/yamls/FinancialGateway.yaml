@@ -1,0 +1,709 @@
+asyncapi: 3.0.0
+info:
+  title: Financial Gateway
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    operates automated message interfaces to secure networks such as SWIFT,
+    TELEX, ACH and Financial Market/Exchange reporting services
+channels:
+  FinancialGatewayOperatingSession/Created:
+    address: FinancialGatewayOperatingSession/Created
+    messages:
+      FinancialGatewayOperatingSession-created.message:
+        $ref: '#/components/messages/FinancialGatewayOperatingSession'
+    description: ''
+  FinancialGatewayOperatingSession/Updated:
+    address: FinancialGatewayOperatingSession/Updated
+    messages:
+      FinancialGatewayOperatingSession-updated.message:
+        $ref: '#/components/messages/FinancialGatewayOperatingSession'
+    description: ''
+  Outbound/Created:
+    address: Outbound/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Outbound'
+    description: ''
+  Outbound/Updated:
+    address: Outbound/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Outbound'
+    description: ''
+  Inbound/Created:
+    address: Inbound/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Inbound'
+    description: ''
+  Inbound/Updated:
+    address: Inbound/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Inbound'
+    description: ''
+operations:
+  FinancialGatewayOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialGatewayOperatingSession~1Created'
+    summary: FinancialGatewayOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/FinancialGatewayOperatingSession~1Created/messages/FinancialGatewayOperatingSession-created.message
+  FinancialGatewayOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/FinancialGatewayOperatingSession~1Updated'
+    summary: FinancialGatewayOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/FinancialGatewayOperatingSession~1Updated/messages/FinancialGatewayOperatingSession-updated.message
+  Outbound/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Outbound~1Created'
+    summary: Outbound
+    messages:
+      - $ref: '#/channels/Outbound~1Created/messages/publish.message'
+  Outbound/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Outbound~1Updated'
+    summary: Outbound
+    messages:
+      - $ref: '#/channels/Outbound~1Updated/messages/publish.message'
+  Inbound/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Inbound~1Created'
+    summary: Inbound
+    messages:
+      - $ref: '#/channels/Inbound~1Created/messages/publish.message'
+  Inbound/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Inbound~1Updated'
+    summary: Inbound
+    messages:
+      - $ref: '#/channels/Inbound~1Updated/messages/publish.message'
+components:
+  messages:
+    FinancialGatewayOperatingSession:
+      name: FinancialGatewayOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Financial
+        Gateway. 
+      payload:
+        $ref: '#/components/schemas/FinancialGatewayOperatingSession'
+    Outbound:
+      name: Outbound
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Outbound'
+    Inbound:
+      name: Inbound
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Inbound'
+  schemas:
+    Outbound:
+      type: object
+      description: ''
+      properties:
+        Messagetypevalues:
+          enum:
+            - FinancialMessage
+            - NonFinancialMessage
+            - InboundMessage
+            - OutboundMessage
+        FinancialGatewayOutboundMessageRecord:
+          $ref: '#/components/schemas/Message'
+        FinancialGatewayOutboundMessageSender:
+          $ref: '#/components/schemas/Involvedparty'
+        FinancialGatewayOutboundMessageReceiver:
+          $ref: '#/components/schemas/Involvedparty'
+        FinancialGatewayOutboundMessageStatus:
+          $ref: '#/components/schemas/Status'
+    Message:
+      type: object
+      format: Message
+      description: "The message content in any suitable format ||\r\n|"
+      properties:
+        Messagetypevalues:
+          enum:
+            - FinancialMessage
+            - NonFinancialMessage
+            - InboundMessage
+            - OutboundMessage
+          format: Message
+        MessageContent:
+          $ref: '#/components/schemas/Text'
+        MessageDeliveryStatus:
+          $ref: '#/components/schemas/Status'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Status:
+      type: object
+      format: Status
+      description: >-
+        Used to track delivery  (e.g. pending, delivered, possible duplicate,
+        error) Status |Status 
+        (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+        BM ()
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Inbound:
+      type: object
+      description: ''
+      properties:
+        Messagetypevalues:
+          enum:
+            - FinancialMessage
+            - NonFinancialMessage
+            - InboundMessage
+            - OutboundMessage
+        FinancialGatewayInboundMessageRecord:
+          $ref: '#/components/schemas/Message'
+        FinancialGatewayInboundMessageReceiver:
+          $ref: '#/components/schemas/Involvedparty'
+        FinancialGatewayInboundMessageStatus:
+          $ref: '#/components/schemas/Status'
+    FinancialGatewayOperatingSession:
+      type: object
+      description: ''
+      properties:
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+        FinancialGatewayServiceSessionStatistics:
+          type: string
+          format: Object
+          description: "Service activity statistics that are maintained during the session ||\r\n|"
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+        FinancialGatewayServiceSessionReport:
+          $ref: '#/components/schemas/Report'
+        FinancialGatewayServiceSessionDate:
+          $ref: '#/components/schemas/Datetime'
+        FinancialGatewayServiceSessionIssueRecord:
+          $ref: '#/components/schemas/SessionIssue'
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        MessageReference:
+          $ref: '#/components/schemas/Message'
+        ProductionIssueType:
+          $ref: '#/components/schemas/Text'
+        ProductionIssueDescription:
+          $ref: '#/components/schemas/Text'
+        ProductionIssueDiagnosis:
+          $ref: '#/components/schemas/Assessment'
+        ProductionIssueResolutionTask:
+          $ref: '#/components/schemas/Task'
+        ProductionIssueRecord:
+          $ref: '#/components/schemas/ProductionIssue'
+        ProductionIssueStatus:
+          $ref: '#/components/schemas/Status'
+    Report:
+      type: object
+      format: Report
+      description: "The session activity report ||\r\n|"
+      properties:
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+          format: Report
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/Text'
+    SessionIssue:
+      type: object
+      format: SessionIssue
+      description: "A record of any production issues arising during the gateway session ||\r\n|"
+      properties:
+        SessionIssue:
+          type: string
+          format: Class
+          description: 'A production problem occurring during a Session. '
+    Assessment:
+      type: object
+      format: Assessment
+      description: >-
+        Evaluation of the event cause and impact assessment
+        Assessment|Assessment
+        (https://www.iso20022.org/standardsrepository/type/Assessment)|Standard|ISO20022
+        BM ()
+      properties:
+        Assessmenttypevalues:
+          enum:
+            - AssetValuation
+            - ProductMatching
+            - Authorization
+            - Authentication
+            - QualityAssurance
+            - Audit
+            - ComplianceCheck
+            - FundingCheck
+            - SuitabilityCheck
+            - PerformanceCheck
+            - ImpactAssessment
+            - RiskAssessment
+            - Rating
+            - UnderwritingAssessment
+            - Qualification
+            - Verification
+            - KYCAssessment
+            - PEPAssessment
+            - AMLAssessment
+          format: Assessment
+        AssessmentMethod:
+          $ref: '#/components/schemas/Text'
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        AssessmentDescription:
+          $ref: '#/components/schemas/Text'
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AssessmentResult:
+          $ref: '#/components/schemas/Text'
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRequiredAdjustment:
+          $ref: '#/components/schemas/Text'
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          $ref: '#/components/schemas/Text'
+        ModelPurpose:
+          $ref: '#/components/schemas/Text'
+        ModelVersion:
+          $ref: '#/components/schemas/Text'
+        ModelName:
+          $ref: '#/components/schemas/Name'
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessment(s). '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Document:
+          type: string
+          format: Class
+          description: >-
+            Something tangible that records something, such as a recording or a
+            photograph, or a writing that can be used to furnish evidence or
+            information (FIBO)
+
+
+            Definition: A physical or digital representation of something
+            meaningful to the audience.
+
+
+            Comment: 
+
+            1.Technical: Manuals, instructions, tutorials, procedures,
+            specifications, etc., that accompany a piece of equipment or
+            software, and provide guidance for its proper use and maintenance.
+
+            2.Trading: Preparation of a set of commercial and financial
+            documents that record or support a business transaction.
+            International trade documentations include air waybill, bill of
+            exchange, bill of lading, certificate of inspection, certificate of
+            insurance, certificate of origin, commercial invoice, and consular
+            invoice.
+
+
+
+            Read more:
+            http://www.businessdictionary.com/definition/documentation.html#ixzz3EQGRGC4W
+             
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    Task:
+      type: object
+      format: Task
+      description: "Description of corrective action proposed and taken ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    ProductionIssue:
+      type: object
+      format: ProductionIssue
+      description: "Details of the issue, response and interested parties logged for reference ||\r\n|"
+      properties:
+        ProductionIssueType:
+          type: string
+          format: String
+          description: The Type of production problem (error)
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: 'Description of the production problem '
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: 'Evaluation of the production problem cause and impact assessment '
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: 'Description of corrective action proposed and taken '
+        ProductionIssueStatus:
+          type: string
+          format: String
+          description: 'The state of resolution of a reported production problem '
