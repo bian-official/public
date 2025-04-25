@@ -1,0 +1,3201 @@
+openapi: 3.0.1
+info:
+  title: Position Keeping
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain maintains a financial
+    transaction log to support production. Reconciled financial transactions are
+    subsequently posted to the accounting systems
+  version: 13.0.0
+servers:
+  - url: ' https://virtserver.swaggerhub.com/BIAN-3/PositionKeeping/12.0.1'
+paths:
+  '/PositionKeeping/Initiate':
+      post:
+        tags:
+          - CR (DDD Aggregate) - FinancialPositionLog
+        summary: (DDD  Service) InCR Initiate a position keeping transaction log
+        description: (DDD  Service) InCR Initiate a position keeping transaction log
+        operationId: FinancialPositionLog/Initiate
+        requestBody:
+          $ref: '#/components/requestBodies/InitiateFinancialPositionLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PositionKeeping/{positionkeepingid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate) - FinancialPositionLog
+        summary: >-
+          (DDD  Service) UpCR Update details for an active financial transaction log,
+          including reflecting an account block
+        description: >-
+          (DDD  Service) UpCR Update details for an active financial transaction log,
+          including reflecting an account block
+        operationId: FinancialPositionLog/Update
+        parameters:
+          - $ref: '#/components/parameters/positionkeepingid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateFinancialPositionLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PositionKeeping/{positionkeepingid}/Control':
+      put:
+        tags:
+          - CR (DDD Aggregate) - FinancialPositionLog
+        summary: (DDD  Service) CoCR Control the processing of the log
+        description: (DDD  Service) CoCR Control the processing of the log
+        operationId: FinancialPositionLog/Control
+        parameters:
+          - $ref: '#/components/parameters/positionkeepingid'
+        requestBody:
+          $ref: '#/components/requestBodies/ControlFinancialPositionLogRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PositionKeeping/{positionkeepingid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - FinancialPositionLog
+        summary: (DDD  Service) ReCR Retrieve information about the log
+        description: (DDD  Service) ReCR Retrieve information about the log
+        operationId: FinancialPositionLog/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/positionkeepingid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveFinancialPositionLogResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PositionKeeping/{positionkeepingid}/FinancialTransactionCapture/{financialtransactioncaptureid}/Update':
+      put:
+        tags:
+          - BQ (DDD Aggregate) - FinancialTransactionCapture
+        summary: (DDD  Service) UpBQ Update details of a captured financial transaction
+        description: (DDD  Service) UpBQ Update details of a captured financial transaction
+        operationId: FinancialTransactionCapture/Update
+        parameters:
+          - $ref: '#/components/parameters/positionkeepingid'
+          - $ref: '#/components/parameters/financialtransactioncaptureid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateFinancialTransactionCaptureRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/UpdateFinancialTransactionCaptureResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PositionKeeping/{positionkeepingid}/FinancialTransactionCapture/{financialtransactioncaptureid}/Capture':
+      put:
+        tags:
+          - BQ (DDD Aggregate) - FinancialTransactionCapture
+        summary: (DDD  Service) CaBQ Capture details of a financial transaction in the log
+        description: (DDD  Service) CaBQ Capture details of a financial transaction in the log
+        operationId: FinancialTransactionCapture/Capture
+        parameters:
+          - $ref: '#/components/parameters/positionkeepingid'
+          - $ref: '#/components/parameters/financialtransactioncaptureid'
+        requestBody:
+          $ref: '#/components/requestBodies/CaptureFinancialTransactionCaptureRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/CaptureFinancialTransactionCaptureResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PositionKeeping/{positionkeepingid}/FinancialTransactionCapture/{financialtransactioncaptureid}/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - FinancialTransactionCapture
+        summary: >-
+          (DDD  Service) ReBQ Retrieve details of financial transactions captured in the
+          log
+        description: >-
+          (DDD  Service) ReBQ Retrieve details of financial transactions captured in the
+          log
+        operationId: FinancialTransactionCapture/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/positionkeepingid'
+          - $ref: '#/components/parameters/financialtransactioncaptureid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveFinancialTransactionCaptureResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    InitiateFinancialPositionLogRequest:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - The product/service for which this is a financial transaction log ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the product or service account holder/customer for the log if appropriate ||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to a counterparty for the log if appropriate (e.g. merchant reference, card network reference) ||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - General description of the interest transaction ||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "(DDD Entity) - The current calculated position ||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "(DDD Entity) - Value of the specific date type ||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    Transactiontypevalues:
+        type: object
+        description: ''
+        properties:
+          Transactiontypevalues:
+              enum:
+                  -  FinancialTransaction
+                  -  BusinessTransaction
+                  -  BankingTransaction
+                  -  AccountingTransaction
+                  -  BookingTransaction
+                  -  AllocationTransaction
+                  -  DeliveryTransaction
+                  -  ProductionTransaction
+              format: Transactiontypevalues
+              type: string
+              description: ">\r\n* `FinancialTransaction` - \r\n* `BusinessTransaction` - \r\n* `BankingTransaction` - \r\n* `AccountingTransaction` - \r\n* `BookingTransaction` - \r\n* `AllocationTransaction` - \r\n* `DeliveryTransaction` - \r\n* `ProductionTransaction` - "
+    ProductAgreement:
+        type: object
+        description: "(DDD Entity) - The product/service for which this is a financial transaction log ProductAgreement ||\r\n|"
+        properties:
+          ProductAgreementType:
+              $ref: '#/components/schemas/Productagreementtypevalues'
+              format: Productagreementtypevalues
+              description: ''
+    Productagreementtypevalues:
+        type: object
+        description: "(DDD Entity) - The product/service for which this is a financial transaction log ProductAgreement ||\r\n|"
+        properties:
+          Productagreementtypevalues:
+              enum:
+                  -  CurrentAccountAgreement
+                  -  SavingsAccountAgreement
+                  -  BrokeredProductAgreement
+                  -  ConsumerLoanAgreement
+                  -  MortgageLoanAgreement
+                  -  DirectDebitServiceAgreement
+                  -  TermDepositAgreement
+              format: Productagreementtypevalues
+              type: string
+              description: ">\r\n* `CurrentAccountAgreement` - \r\n* `SavingsAccountAgreement` - \r\n* `BrokeredProductAgreement` - \r\n* `ConsumerLoanAgreement` - \r\n* `MortgageLoanAgreement` - \r\n* `DirectDebitServiceAgreement` - \r\n* `TermDepositAgreement` - "
+    Involvedparty:
+        type: object
+        description: (DDD Entity) - Reference to the account primary party/owner
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+              format: Party
+              description: (DDD Entity) - Reference to the account primary party/owner
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+              format: Partyrole
+              description: (DDD Entity) - Reference to the account primary party/owner
+    Party:
+        type: object
+        description: '(DDD Entity) -  Party '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: >-
+                (DDD Entity) - Name by which a party is known and which is usually used to
+                identify that party. (ISO20022)
+                 
+          PartyType:
+              $ref: '#/components/schemas/Partytypevalues'
+              format: Partytypevalues
+              description: ''
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+              format: Partyidentification
+              description: '(DDD Entity) -  '
+          PartyLegalStructureType:
+              $ref: '#/components/schemas/Partylegalstructuretypevalues'
+              format: Partylegalstructuretypevalues
+              description: ''
+    Name:
+        type: object
+        description: >-
+          (DDD Entity) - Name by which a party is known and which is usually used to
+          identify that party. (ISO20022)
+           Name 
+        properties:
+          Name:
+              type: string
+              description: ''
+              format: DataType
+    Partytypevalues:
+        type: object
+        description: '(DDD Entity) -  Party '
+        properties:
+          Partytypevalues:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Partytypevalues
+              type: string
+              description: ">\r\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\r\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+    Datetime:
+        type: object
+        description: '(DDD Entity) -  Datetime '
+        properties:
+          DateTimeContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: >-
+                (DDD Entity) - The particular date and time point in the progression of
+                time 
+          TimeZoneCode:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: '(DDD Entity) - The time zone to which the date time refers. '
+          DaylightSavingIndicator:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: '(DDD Entity) -  '
+          DateTimeType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: ''
+          Datetime:
+              type: string
+              description: ''
+              format: DataType
+    Text:
+        type: object
+        description: >-
+          (DDD Entity) - The particular date and time point in the progression of time
+          Text 
+        properties:
+          Text:
+              type: string
+              description: ''
+              format: DataType
+    Datetimetypevalues:
+        type: object
+        description: '(DDD Entity) -  Datetime '
+        properties:
+          Datetimetypevalues:
+              enum:
+                  -  MaturityDate
+                  -  InitiatedDate
+                  -  RequestedDate
+                  -  ExecutedDate
+                  -  OpenDate
+                  -  CloseDate
+                  -  ExpiryDate
+                  -  EffectiveDate
+                  -  CreatingDate
+                  -  ActivationDate
+                  -  DeactivationDate
+                  -  BlockingDate
+                  -  SendingDate
+                  -  ValidFromDate
+                  -  ValidToDate
+                  -  ReceivingDate
+                  -  SigningDate
+                  -  DueDate
+                  -  ValueDate
+                  -  FulfillmentDate
+              format: Datetimetypevalues
+              type: string
+              description: ">\r\n* `MaturityDate` - \r\n* `InitiatedDate` - \r\n* `RequestedDate` - \r\n* `ExecutedDate` - \r\n* `OpenDate` - \r\n* `CloseDate` - \r\n* `ExpiryDate` - \r\n* `EffectiveDate` - \r\n* `CreatingDate` - \r\n* `ActivationDate` - \r\n* `DeactivationDate` - \r\n* `BlockingDate` - \r\n* `SendingDate` - \r\n* `ValidFromDate` - \r\n* `ValidToDate` - \r\n* `ReceivingDate` - \r\n* `SigningDate` - \r\n* `DueDate` - \r\n* `ValueDate` - \r\n* `FulfillmentDate` - "
+    Partyidentification:
+        type: object
+        description: '(DDD Entity) -  Partyidentification '
+        properties:
+          PartyIdentificationType:
+              $ref: '#/components/schemas/Partyidentificationtypevalues'
+              format: Partyidentificationtypevalues
+              description: ''
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+    Partyidentificationtypevalues:
+        type: object
+        description: '(DDD Entity) -  Partyidentification '
+        properties:
+          Partyidentificationtypevalues:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentificationtypevalues
+              type: string
+              description: ">\r\n* `Taxidentificationnumber` - Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` - Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. (ISO20022)\r\n* `Registrationauthorityidentification` - An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. (ISO20022)\r\n* `LEI(LegalEntityIdentifier)` - \r\n* `Alienregistrationnumber` - Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` - Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` - Number assigned to a tax exempt entity.\r\n* `Corporateidentification` - Number assigned to a corporate entity.\r\n* `Driverlicensenumber` - Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` - Number assigned to a foreign investor (other than the alien number).\r\n* `Socialsecuritynumber` - Number assigned by a social security agency.\r\n* `Identitycardnumber` - Number assigned by a national authority to an identity card.\r\n* `Concat` - Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` - National registration identification number. In Singapore this is known as the NRIC."
+    Identifier:
+        type: object
+        description: '(DDD Entity) -  Identifier '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: '(DDD Entity) -  '
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: '(DDD Entity) - Entity that assigns and manages the identification. '
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+    Value:
+        type: object
+        description: '(DDD Entity) -  Value '
+        properties:
+          Value:
+              type: string
+              description: ''
+              format: DataType
+    Partylegalstructuretypevalues:
+        type: object
+        description: '(DDD Entity) -  Party '
+        properties:
+          Partylegalstructuretypevalues:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Partylegalstructuretypevalues
+              type: string
+              description: ">\r\n* `Individual` - \r\n* `CommunityInterestCompany` - \r\n* `CharitableIncorporatedOrganisation` - \r\n* `Co-Operative` - \r\n* `Charity` - \r\n* `GeneralPartnership` - \r\n* `LimitedLiabilityPartnership` - \r\n* `ScottishLimitedPartnership` - \r\n* `LimitedPartnership` - \r\n* `PrivateLimitedCompany` - \r\n* `PublicLimitedCompany` - \r\n* `Sole(SoleTrader)` - "
+    Partyrole:
+        type: object
+        description: '(DDD Entity) -  Partyrole '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: '(DDD Entity) -  '
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: '(DDD Entity) -  '
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) -  '
+          PartyInvolvementType:
+              $ref: '#/components/schemas/Partyinvolvementtypevalues'
+              format: Partyinvolvementtypevalues
+              description: ''
+    Datetimeperiod:
+        type: object
+        description: '(DDD Entity) -  Datetimeperiod '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range starts. (ISO20022) '
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range ends. (ISO20022) '
+    Partyinvolvementtypevalues:
+        type: object
+        description: '(DDD Entity) -  Partyrole '
+        properties:
+          Partyinvolvementtypevalues:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyinvolvementtypevalues
+              type: string
+              description: ">\r\n* `Agreementinvolvement` - \r\n* `Partyinvolvement` - \r\n* `Arrangementinvolvement` - \r\n* `Designspecificationinvolvement` - \r\n* `Relationshipinvolvement` - \r\n* `Locationinvolvement` - \r\n* `Bankguaranteeinvolvement` - "
+    Ratetypevalues:
+        type: object
+        description: ''
+        properties:
+          Ratetypevalues:
+              enum:
+                  -  Fixed
+                  -  Forfeit
+                  -  Variable
+                  -  Open
+                  -  Unknown
+                  -  Nilpayment
+                  -  Additionaltax
+                  -  Charges
+                  -  Cashinlieuofsecurities
+                  -  Gross
+                  -  Cashincentive
+                  -  Net
+                  -  Sollication
+                  -  Stampduty
+                  -  Stockexchangetax
+                  -  Withholdingtax
+                  -  Transfertax
+                  -  Transactiontax
+                  -  Taxdeferred
+                  -  Taxfeeamount
+                  -  Withholdingofforeigntax
+                  -  Withholdingoflocaltax
+                  -  Imputed
+                  -  Precompte
+                  -  Onetiertax
+                  -  Localtax
+                  -  Scheduled
+                  -  Unscheduled
+                  -  Anyandall
+              format: Ratetypevalues
+              type: string
+              description: ">\r\n* `Fixed` - Rate is fixed.\r\n* `Forfeit` - No specific repurchase rate applies to the transaction Repo, only a forfeit.\r\n* `Variable` - Rate is variable.\r\n* `Open` - Rate has not been established.\r\n* `Unknown` - Rate is unknown by the sender or has not been established.\r\n* `Nilpayment` - Rate will not be paid.\r\n* `Additionaltax` - Rate used for additional tax that cannot be categorised.\r\n* `Charges` - Rate used to calculate the amount of the charges/fees that cannot be categorised.\r\n* `Cashinlieuofsecurities` - Rate used to calculate the cash disbursement in lieu of a fractional quantity of, for example, equity.\r\n* `Gross` - Cash dividend per equity before deductions or allowances have been made.\r\n* `Cashincentive` - Rate of the cash premium made available if the securities holder consents or participates to an event, for example, consent fees.\r\n* `Net` - Relates to the netting of settlement instructions.\r\n* `Sollication` - Cash rate made available in an offer in order to encourage participation in the offer.\r\n* `Stampduty` - Financial instrument has not been stamped and/or duly signed.\r\n* `Stockexchangetax` - Rate of stock exchange tax.\r\n* `Withholdingtax` - Relates to a tax refund from the authorities on the associated corporate action event.\r\n* `Transfertax` - Transaction has been generated due to transformation following a corporate action.\r\n* `Transactiontax` - Rate used to calculate the amount of transaction tax.\r\n* `Taxdeferred` - Rate relating to the underlying security for which tax is deferred.\r\n* `Taxfeeamount` - Rate relating to the underlying security which is not taxable.\r\n* `Withholdingofforeigntax` - Rate at which the income will be withheld by the jurisdiction in which the income was originally paid, for which relief at source and/or reclaim may be possible.\r\n* `Withholdingoflocaltax` - Rate at which the income will be withheld by the jurisdiction in which the account owner is located, for which relief at source and/or reclaim may be possible.\r\n* `Imputed` - Imputed tax.\r\n* `Precompte` - Rate is a precompte.\r\n* `Onetiertax` - Rate is a one tier tax.\r\n* `Localtax` - Interest liable for interest down payment tax (proportion of gross interest per unit/interim profits that is not covered by the credit in the interest pool).\r\n* `Scheduled` - Rate of the scheduled payment.\r\n* `Unscheduled` - Rate of the unscheduled payment.\r\n* `Anyandall` - Any and all rate is sought."
+    Limittypevalues:
+        type: object
+        description: ''
+        properties:
+          Limittypevalues:
+              enum:
+                  -  Multilateral
+                  -  Bilateral
+                  -  Netbilateral
+                  -  Indirectbilateral
+                  -  Global
+                  -  Mandatorybilateral
+                  -  Discretionarybilateral
+                  -  Directdebit
+                  -  Singlecustomerdirectdebit
+                  -  Autocollateralisation
+                  -  Unsecuredcredit
+                  -  Externalguarantee
+              format: Limittypevalues
+              type: string
+              description: ">\r\n* `Multilateral` - Limit is a maximum amount value applied to, or by, a participant to a set of counterparties. The multilateral limit is taken into account by the transaction administrator to contain the risk in the system. With the help of the multilateral limit, the direct participant restricts the use of liquidity when clearing payments with all other direct participants for which no bilateral limit is set.\r\n* `Bilateral` - Limit is applied by one party to a specific counterparty, and corresponds to the maximum amount of traffic party setting the limit can send to that counterparty. The limit can be expressed as a debit or a credit limit. With the help of a bilateral limit, the direct participant restricts the use of liquidity when clearing payments with another direct participant.\r\n* `Netbilateral` - Limit is applied by one party to a specific counterparty, and corresponds to the maximum net balance acceptable by the party that is setting the limit. The limit is calculated as an arithmetic sum in value of the bilateral flows exchanged between the two parties. The net bilateral limit can be expressed as a debit or a credit balance.\r\n* `Indirectbilateral` - Limit is a maximum value set by a direct participant with respect to its indirect participant. The limit represents the maximum amount the indirect participant can use to settle its operations.\r\n* `Global` - Maximum value set by either the transaction administrator or by a member for the participation of a member in the system. The global limit may be expressed as a credit or debit maximum value and is taken into account by the transaction administrator when processing transaction inside the system. With the help of the global limit, the direct participant may limit the use of liquidity when clearing specific type of payments.\r\n* `Mandatorybilateral` - Mandatory part of the bilateral limit applied by one party to a specific counterparty, and corresponds to the maximum amount of traffic party setting the limit can send to that counterparty. The limit can be expressed as a debit or a credit limit. With the help of a bilateral limit, the direct participant restricts the use of liquidity when clearing payments with another direct participant.\r\n* `Discretionarybilateral` - Discretionary part of the bilateral limit applied by one party to a specific counterparty, and corresponds to the maximum amount of traffic party setting the limit can send to that counterparty. The limit can be expressed as a debit or a credit limit. With the help of a bilateral limit, the direct participant restricts the use of liquidity when clearing payments with another direct participant.\r\n* `Directdebit` - Limit not to be exceeded for direct debit operations.\r\n* `Singlecustomerdirectdebit` - Single direct debit payment limit not to be exceeded by any single direct debit transaction by a customer.\r\n* `Singlefinancialinstitutiondirectdebit` - Single direct debit payment limit not to be exceeded by any single direct debit transaction initiated by a financial institution.\r\n* `Totaldailycustomerdirectdebit` - Total daily payments limit for customer direct debits not to be exceeded by the total of all direct debit transactions initiated by customers.\r\n* `Totaldailyfinancialinstitutiondirectdebit` - Total daily payments limit for financial institutions direct debits not to be exceeded by the total of all direct debit transactions initiated by financial institutions.\r\n* `Autocollateralisation` - Limit is related to a credit operation that is or can be triggered when a buyer does not have a sufficient amount of money to settle a securities transaction in order to improve its cash position for the next settlement cycle. The credit provided can be secured using securities already held by the buyer (“collateral stocks”) or the securities that are being purchased (“collateral flows”).\r\n* `Unsecuredcredit` - Limit is related to a cap amount granted by a national central bank or a settlement bank, but generally unsecured outside of the market infrastructure.\r\n* `Externalguarantee` - Limit is related to a cap amount granted by a national central bank or a settlement bank."
+    Amounttypevalues:
+        type: object
+        description: ''
+        properties:
+          Amounttypevalues:
+              enum:
+                  -  Principal
+                  -  Actual
+                  -  Estimated
+                  -  Maximum
+                  -  Default
+                  -  Replacement
+                  -  Incremental
+                  -  Decremental
+                  -  Reserved
+                  -  Available
+                  -  Used
+                  -  DuePayable
+                  -  Minimum
+                  -  Open
+                  -  Unknown
+                  -  Fixed
+              format: Amounttypevalues
+              type: string
+              description: ">\r\n* `Principal` - \r\n* `Actual` - Actual amount.\r\n* `Estimated` - Estimated amount (the final amount could be above or below).\r\n* `Maximum` - Maximum amount (the final amount must be less or equal).\r\n* `Default` - Default amount.\r\n* `Replacement` - Replacement amount.\r\n* `Incremental` - Incremental amount for reservation.\r\n* `Decremental` - Decremental amount for reservation.\r\n* `Reserved` - Reserved or updated reserved amount for reservation.\r\n* `Available` - \r\n* `Used` - \r\n* `DuePayable` - \r\n* `Minimum` - \r\n* `Open` - The amount is open.(ISO20022)\r\n* `Unknown` - The amount is unkown.(ISO20022)\r\n* `Fixed` - The amount represents a fixed value.(ISO20022)"
+    Priorityvaluetypes:
+        type: object
+        description: ''
+        properties:
+          Priorityvaluetypes:
+              enum:
+                  -  Urgent
+                  -  High
+                  -  Normal
+                  -  Low
+              format: Priorityvaluetypes
+              type: string
+              description: ">\r\n* `Urgent` - Priority level is urgent (highest priority possible).\r\n* `High` - Priority level is high.\r\n* `Normal` - Priority level is normal.\r\n* `Low` - Priority level is low."
+    DateTime:
+        type: object
+        description: "(DDD Entity) - Value of the specific date type DateTime ||\r\n|"
+        properties:
+          TimeIndication:
+              type: string
+              description: ''
+              format: String
+          TimeIndicationType:
+              type: string
+              description: ''
+              format: String
+    InitiateFinancialPositionLogResponse:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    InitiateFinancialPositionLog:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    UpdateFinancialPositionLogRequest:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - The product/service for which this is a financial transaction log ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the product or service account holder/customer for the log if appropriate ||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to a counterparty for the log if appropriate (e.g. merchant reference, card network reference) ||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - General description of the interest transaction ||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "(DDD Entity) - The current calculated position ||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "(DDD Entity) - Value of the specific date type ||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    UpdateFinancialPositionLogResponse:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    UpdateFinancialPositionLog:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    ControlFinancialPositionLogRequest:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - The product/service for which this is a financial transaction log ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the product or service account holder/customer for the log if appropriate ||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to a counterparty for the log if appropriate (e.g. merchant reference, card network reference) ||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - General description of the interest transaction ||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "(DDD Entity) - The current calculated position ||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "(DDD Entity) - Value of the specific date type ||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    ControlFinancialPositionLogResponse:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    ControlFinancialPositionLog:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    RetrieveFinancialPositionLogRequest:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - The product/service for which this is a financial transaction log ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the product or service account holder/customer for the log if appropriate ||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to a counterparty for the log if appropriate (e.g. merchant reference, card network reference) ||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - General description of the interest transaction ||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "(DDD Entity) - The current calculated position ||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "(DDD Entity) - Value of the specific date type ||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    RetrieveFinancialPositionLogResponse:
+        type: object
+        description: ''
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    RetrieveFinancialPositionLog:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    UpdateFinancialTransactionCaptureRequest:
+        type: object
+        description: ''
+        properties:
+          PostingDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - The description of purpose of the financial transaction ||\r\n|"
+          PostingTransaction:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                ObligationFulfilment|ObligationFulfilment
+                (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+                BM ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    UpdateFinancialTransactionCaptureResponse:
+        type: object
+        description: ''
+        properties:
+          PostingDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          PostingTransaction:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                ObligationFulfilment|ObligationFulfilment
+                (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+                BM ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    UpdateFinancialTransactionCapture:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    CaptureFinancialTransactionCaptureRequest:
+        type: object
+        description: ''
+        properties:
+          PostingDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - The description of purpose of the financial transaction ||\r\n|"
+          PostingTransaction:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                ObligationFulfilment|ObligationFulfilment
+                (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+                BM ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    CaptureFinancialTransactionCaptureResponse:
+        type: object
+        description: ''
+        properties:
+          PostingDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          PostingTransaction:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                ObligationFulfilment|ObligationFulfilment
+                (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+                BM ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    CaptureFinancialTransactionCapture:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    RetrieveFinancialTransactionCaptureRequest:
+        type: object
+        description: ''
+        properties:
+          PostingDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - The description of purpose of the financial transaction ||\r\n|"
+          PostingTransaction:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                ObligationFulfilment|ObligationFulfilment
+                (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+                BM ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    RetrieveFinancialTransactionCaptureResponse:
+        type: object
+        description: ''
+        properties:
+          PostingDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          PostingTransaction:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                ObligationFulfilment|ObligationFulfilment
+                (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+                BM ()
+          PostingValueDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+    RetrieveFinancialTransactionCapture:
+        type: object
+        description: >-
+          (DDD Entity) - Maintain a log of transactions or activity, typically a financial
+          account/journal or a log of activity to support behavioral analysis
+          within Position Keeping. 
+        properties:
+          TransactionLogType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          ProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          CounterpartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          BaseCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          InterestApplicationRecord:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          InterestTransaction:
+              $ref: '#/components/schemas/Interest'
+              format: Interest
+              description: >-
+                Interest|Interest
+                (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+                BM ()
+          TransactionDescription:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          TransactionRateType:
+              $ref: '#/components/schemas/Ratetypevalues'
+              format: Ratetypevalues
+              description: >-
+                RateTypeCode|RateTypeCode
+                (https://www.iso20022.org/standardsrepository/type/RateTypeCode)|Standard|ISO20022
+                BM ()
+          TransactionInterestCharge:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          ManagedPositionLimits:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitType:
+              $ref: '#/components/schemas/Limittypevalues'
+              format: Limittypevalues
+              description: >-
+                LimitTypeCode|LimitTypeCode
+                (https://www.iso20022.org/standardsrepository/type/LimitTypeCode)|Standard|ISO20022
+                BM ()
+          PositionLimitSettings:
+              $ref: '#/components/schemas/Limit'
+              format: Limit
+              description: >-
+                Limit|Limit
+                (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+                (https://www.iso20022.org/)
+          PositionLimitValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: "||\r\n|"
+          AmountBlock:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          AmountBlockType:
+              $ref: '#/components/schemas/Amounttypevalues'
+              format: Amounttypevalues
+              description: >-
+                TypeOfAmountCode|TypeOfAmountCode
+                (https://www.iso20022.org/standardsrepository/type/TypeOfAmountCode)|Standard|ISO20022
+                BM ()
+          Priority:
+              $ref: '#/components/schemas/Priorityvaluetypes'
+              format: Priorityvaluetypes
+              description: >-
+                PriorityCode|PriorityCode
+                (https://www.iso20022.org/standardsrepository/type/PriorityCode)|Standard|ISO20022
+                BM ()
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/DateTime'
+              format: DateTime
+              description: "||\r\n|"
+          InitiationDate:
+              $ref: '#/components/schemas/ISODate'
+              format: ISODate
+              description: >-
+                ISODate|ISODate
+                (https://www.iso20022.org/standardsrepository/type/ISODate)|Standard|ISO20022
+                BM ()
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    CurrencyCode:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Code allocated to a currency, by a maintenance agency, under an
+          international identification scheme as described in the latest edition
+          of the international standard ISO 4217 "Codes for the representation
+          of currencies and funds". Valid currency codes are registered with the
+          ISO 4217 Maintenance Agency, and consist of three contiguous letters.
+    Interest:
+        type: object
+        description: >-
+          (DDD Entity) - A record of applied interest Interest|Interest
+          (https://www.iso20022.org/standardsrepository/type/Interest)|Standard|ISO20022
+          BM ()
+        properties:
+          AccruedInterestAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - Interest amount that has accrued in between coupon payment
+                periods. 
+          InterestCalculation:
+              type: string
+              format: InterestCalculation
+              description: '(DDD Entity) - Calculation parameters used to obtain the interest amount. '
+          Amount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Amount of money representing interest payments. '
+          Rate:
+              type: string
+              format: PercentageRate
+              description: >-
+                (DDD Entity) - The actual interest rate used for the payment of the
+                interest for the specified interest period. 
+          RelatedCashProceedsDefinition:
+              type: string
+              format: CashProceedsDefinition
+              description: '(DDD Entity) - Cash proceeds definition for which an interest is provided. '
+          SecuritiesFinancing:
+              type: string
+              format: SecuritiesFinancing
+              description: '(DDD Entity) - Specifies the financing trade on which this interest apply. '
+          InterestTax:
+              type: string
+              format: Tax
+              description: '(DDD Entity) - Specifies the tax on interest. '
+          CreditDebitIndicator:
+              type: string
+              format: DebitCreditCode
+              description: '(DDD Entity) - Indicates whether the interest is a debit or credit. '
+          CashEntry:
+              type: string
+              format: CashEntry
+              description: '(DDD Entity) - Entry which contains the interest. '
+          PaymentDate:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date of the next interest payment. '
+          RelatedInterestManagement:
+              type: string
+              format: InterestManagement
+              description: >-
+                (DDD Entity) - Management of interest which consists into calculating the
+                interest, requesting its payment or distributing the interest
+                proceeds. 
+          RelatedUndertakingAmount:
+              type: string
+              format: UndertakingAmount
+              description: '(DDD Entity) - Undertaking amount for which an interest is specified. '
+          RelatedDebitCreditFacility:
+              type: string
+              format: DebitCreditFacility
+              description: '(DDD Entity) - Debit and credit facilities on which the interest applies. '
+          SecuritiesSettlement:
+              type: string
+              format: SecuritiesSettlement
+              description: >-
+                (DDD Entity) - Securities settlement process for which an accrued interest
+                is specified. 
+          InterestName:
+              type: string
+              format: GenericIdentification
+              description: '(DDD Entity) - Interest rate expressed as a rate name. '
+          RelatedAssetHolding:
+              type: string
+              format: AssetHolding
+              description: '(DDD Entity) - Asset holding on which interest is paid. '
+          Deposit:
+              type: string
+              format: Deposit
+              description: '(DDD Entity) - Deposit for which an interest is specified. '
+          AccountBalance:
+              type: string
+              format: Balance
+              description: '(DDD Entity) - Balance for which an interest is calculated. '
+          RelatedAccountContract:
+              type: string
+              format: AccountContract
+              description: >-
+                (DDD Entity) - Account contract for which interest parameters are
+                specified. 
+          RelatedNetAssetValueCalculation:
+              type: string
+              format: NetAssetValueCalculation
+              description: >-
+                (DDD Entity) - Net asset value calculation for which an accrued interest is
+                specified. 
+          TypeOfInterest:
+              type: string
+              format: InterestTypeCode
+              description: '(DDD Entity) - Specifies the type of interest associated with a trade. '
+          RelatedPaymentCard:
+              type: string
+              format: PaymentCard
+              description: >-
+                (DDD Entity) - Payment card for which interest on due amounts is
+                specified. 
+    CurrencyAndAmount:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Number of monetary units specified in a currency, where the unit
+          of currency is explicit and compliant with ISO 4217. The decimal
+          separator is a dot.
+
+          Note: A zero amount is considered a positive amount.
+    Limit:
+        type: object
+        description: >-
+          (DDD Entity) - The position definition, associated limit settings and rules
+          Limit|Limit
+          (https://www.iso20022.org/standardsrepository/type/Limit)|Standard|ISO20022
+          (https://www.iso20022.org/)
+        properties:
+          Type:
+              type: string
+              format: LimitTypeCode
+              description: '(DDD Entity) - Nature of the limit. '
+          Amount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Amount of money of the limit, expressed in a currency. '
+          CreditDebitIndicator:
+              type: string
+              format: FloorLimitTypeCode
+              description: '(DDD Entity) - Specifies if a limit is a debit limit or a credit limit. '
+          UsedAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Actual usage of the limit expressed as an amount. '
+          UsedPercentage:
+              type: string
+              format: PercentageRate
+              description: '(DDD Entity) - Actual usage of the limit expressed as a percentage. '
+          Currency:
+              type: string
+              format: CurrencyCode
+              description: '(DDD Entity) - Currency unit used to specify the limit amount. '
+          LimitStatus:
+              type: string
+              format: LimitStatus
+              description: '(DDD Entity) - Current status of the limit. '
+          Percentage:
+              type: string
+              format: PercentageRate
+              description: >-
+                (DDD Entity) - Specifies that the limit is a percentage of a related
+                amount. 
+          RelatedDebitCreditFacility:
+              type: string
+              format: DebitCreditFacility
+              description: >-
+                (DDD Entity) - Overdraft conditions for which limit parameters are
+                specified. 
+          Periodicity:
+              type: string
+              format: FrequencyCode
+              description: >-
+                (DDD Entity) - Specifies the periodicity linked to a limit for example the
+                periodicity can indicate that the limit can be reached daily or
+                monthly. 
+          Quantity:
+              type: string
+              format: DecimalNumber
+              description: '(DDD Entity) - Specifies that the limit is a quantity. '
+          ValidityPeriod:
+              type: string
+              format: DateTimePeriod
+              description: '(DDD Entity) - Period at which the limit is effective. '
+          RelatedPaymentCard:
+              type: string
+              format: PaymentCard
+              description: '(DDD Entity) - Payment card for which a limit is specified. '
+          AvailableAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Remaining amount of money of the limit. '
+    ISODate:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - A particular point in the progression of time in a calendar year
+          expressed in the YYYY-MM-DD format. This representation is defined in
+          "XML Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+          October 2004" which is aligned with ISO 8601.
+    Status:
+        type: object
+        description: >-
+          (DDD Entity) - The status of the log entry (e.g. active, in-suspense etc.) Status
+          |Status 
+          (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+          BM ()
+        properties:
+          StatusReason:
+              type: string
+              format: StatusReason
+              description: '(DDD Entity) - Specifies the reasons for the status. '
+          StatusDateTime:
+              type: string
+              format: ISODateTime
+              description: '(DDD Entity) - Date and time at which the status was assigned. '
+          ValidityTime:
+              type: string
+              format: DateTimePeriod
+              description: '(DDD Entity) - Period of time during which the status is valid. '
+          StatusDescription:
+              type: string
+              format: Max350Text
+              description: '(DDD Entity) - Specifies the state or the condition. '
+          InstructionProcessingStatus:
+              type: string
+              format: StatusCode
+              description: '(DDD Entity) - Status of the processing of an instruction. '
+          PartyRole:
+              type: string
+              format: InvestigationPartyRole
+              description: >-
+                (DDD Entity) - Role played by a party in the context of assigning a
+                status. 
+          SettlementStatus:
+              type: string
+              format: SecuritiesSettlementStatusCode
+              description: '(DDD Entity) - Status of settlement of a transaction. '
+          CancellationProcessingStatus:
+              type: string
+              format: CancellationProcessingStatusCode
+              description: '(DDD Entity) - Specifies the status of a cancellation request. '
+          TransactionProcessingStatus:
+              type: string
+              format: InstructionProcessingStatusCode
+              description: >-
+                (DDD Entity) - Status of processing of a transaction at account servicer
+                level. 
+          ModificationProcessingStatus:
+              type: string
+              format: ModificationProcessingStatusCode
+              description: '(DDD Entity) - Provides the status of a modification request. '
+    ObligationFulfilment:
+        type: object
+        description: >-
+          (DDD Entity) - The logged financial transaction. Note the log can be structured
+          with double entry representations (i.e. capture credit/debit pair)
+          ObligationFulfilment|ObligationFulfilment
+          (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+          BM ()
+        properties:
+          Date:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date and time on which assets become available. '
+          ObligationOffset:
+              type: string
+              format: Obligation
+              description: >-
+                (DDD Entity) - Specifies the obligation which has been offset for instance
+                a payment obligation or a securities delivery. 
+          ResultingObligation:
+              type: string
+              format: Obligation
+              description: >-
+                (DDD Entity) - Specifies the obligation which result from a settlement
+                process, for instance the remaining obligation when the
+                obligations are netted. 
+  responses:
+    InitiateFinancialPositionLogResponse:
+        description: FinancialPositionLogInitiate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiateFinancialPositionLogResponse'
+    UpdateFinancialPositionLogResponse:
+        description: FinancialPositionLogUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateFinancialPositionLogResponse'
+    ControlFinancialPositionLogResponse:
+        description: FinancialPositionLogControl
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ControlFinancialPositionLogResponse'
+    RetrieveFinancialPositionLogResponse:
+        description: FinancialPositionLogRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFinancialPositionLogResponse'
+    UpdateFinancialTransactionCaptureResponse:
+        description: FinancialTransactionCaptureUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateFinancialTransactionCaptureResponse'
+    CaptureFinancialTransactionCaptureResponse:
+        description: FinancialTransactionCaptureCapture
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/CaptureFinancialTransactionCaptureResponse'
+    RetrieveFinancialTransactionCaptureResponse:
+        description: FinancialTransactionCaptureRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFinancialTransactionCaptureResponse'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    positionkeepingid:
+        name: positionkeepingid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    financialtransactioncaptureid:
+        name: financialtransactioncaptureid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    InitiateFinancialPositionLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiateFinancialPositionLogRequest'
+        required: true
+    UpdateFinancialPositionLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateFinancialPositionLogRequest'
+        required: true
+    ControlFinancialPositionLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ControlFinancialPositionLogRequest'
+        required: true
+    RetrieveFinancialPositionLogRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFinancialPositionLogRequest'
+        required: true
+    UpdateFinancialTransactionCaptureRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateFinancialTransactionCaptureRequest'
+        required: true
+    CaptureFinancialTransactionCaptureRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/CaptureFinancialTransactionCaptureRequest'
+        required: true
+    RetrieveFinancialTransactionCaptureRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFinancialTransactionCaptureRequest'
+        required: true
