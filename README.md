@@ -23,6 +23,7 @@ Release 13.0.0:
 3. Release 13.0.0 - BOM extended APIs (Async 3.x) : https://github.com/bian-official/public/tree/main/release13.0.0/semantic-apis/asyncapi-3.x/yamls
 4. Release 13.0.0 - ISO20022 extended APIs and annotated for DDD (Async 3.x): https://github.com/bian-official/public/tree/main/release13.0.0/apis-iso20022_ext-ddd/asyncapi-3.x/yamls
 
+
 Release 12.0.0: 
 1. Release 12.0.0 - BOM extended APIs (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/semantic-apis/oas3/yamls
 2. Release 12.0.0 - ISO20022 extended APIs and annotated for DDD (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/apis-iso20022_ext-ddd/oas3/yamls
@@ -30,9 +31,9 @@ Release 12.0.0:
 4. Release 12.0.0 - ISO20022 extended APIs and annotated for DDD (Async 3.x): https://github.com/bian-official/public/tree/main/release12.0.0/apis-iso20022_ext-ddd/asyncapi-3.x/yamls
 
 Previous Releases: 
-11. Release 11.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release11.0.0/semantic-apis/oas3/yamls
-12. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
-13. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
+1. Release 11.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release11.0.0/semantic-apis/oas3/yamls
+2. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
+3. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
 
 Each API Specification represents a BIAN Service Domain.
 
