@@ -1,0 +1,2873 @@
+openapi: 3.0.1
+info:
+  title: Payment Initiation
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain provides a customer
+    payment service. It captures the payer and payee details and other key
+    properties of the payment and orchestrates the transaction. It provides
+    support for repeating/scheduled payments
+  version: 13.0.0
+servers:
+  - url: ' https://virtserver.swaggerhub.com/BIAN-3/PaymentInitiation/12.0.1'
+paths:
+  '/PaymentInitiation/Initiate':
+      post:
+        tags:
+          - CR (DDD Aggregate) - PaymentInitiationTransaction
+        summary: (DDD  Service) InCR Initiate a payment transaction
+        description: (DDD  Service) InCR Initiate a payment transaction
+        operationId: PaymentInitiationTransaction/Initiate
+        requestBody:
+          $ref: >-
+            #/components/requestBodies/InitiatePaymentInitiationTransactionRequest
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate) - PaymentInitiationTransaction
+        summary: (DDD  Service) UpCR Update details of a payment transaction instruction
+        description: (DDD  Service) UpCR Update details of a payment transaction instruction
+        operationId: PaymentInitiationTransaction/Update
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdatePaymentInitiationTransactionRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - PaymentInitiationTransaction
+        summary: (DDD  Service) ReCR Retrieve details about a payment transaction
+        description: (DDD  Service) ReCR Retrieve details about a payment transaction
+        operationId: PaymentInitiationTransaction/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationid'
+        responses:
+          '200':
+            $ref: >-
+              #/components/responses/RetrievePaymentInitiationTransactionResponse
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/Compliance/{complianceid}/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - Compliance
+        summary: (DDD  Service) ReBQ Retrieve details about a payment transaction compliance check
+        description: (DDD  Service) ReBQ Retrieve details about a payment transaction compliance check
+        operationId: Compliance/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationid'
+          - $ref: '#/components/parameters/complianceid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveComplianceResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/FundingCheck/{fundingcheckid}/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - FundingCheck
+        summary: (DDD  Service) ReBQ Retrieve details about a payment transaction funds available
+        description: (DDD  Service) ReBQ Retrieve details about a payment transaction funds available
+        operationId: FundingCheck/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationid'
+          - $ref: '#/components/parameters/fundingcheckid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveFundingCheckResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/OrderInitiation/{orderinitiationid}/Exchange':
+      put:
+        tags:
+          - BQ (DDD Aggregate) - OrderInitiation
+        summary: >-
+          (DDD  Service) EcBQ Verify or accept the payment transaction (results in a
+          payment order)
+        description: >-
+          (DDD  Service) EcBQ Verify or accept the payment transaction (results in a
+          payment order)
+        operationId: OrderInitiation/Exchange
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationid'
+          - $ref: '#/components/parameters/orderinitiationid'
+        requestBody:
+          $ref: '#/components/requestBodies/ExchangeOrderInitiationRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/ExchangeOrderInitiationResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/PaymentInitiation/{paymentinitiationid}/OrderInitiation/{orderinitiationid}/Retrieve':
+      get:
+        tags:
+          - BQ (DDD Aggregate) - OrderInitiation
+        summary: (DDD  Service) ReBQ Retrieve details about the payment order initiation
+        description: (DDD  Service) ReBQ Retrieve details about the payment order initiation
+        operationId: OrderInitiation/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/paymentinitiationid'
+          - $ref: '#/components/parameters/orderinitiationid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveOrderInitiationResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    InitiatePaymentInitiationTransactionRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference for a customer that uses recurring payments facility ||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer initiating the payment transaction ||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "(DDD Entity) - Reference to the payer ||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "(DDD Entity) - Reference to the payer's bank ||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - Reference to the payer's account (the source of funds) ||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "(DDD Entity) - The target for the payment ||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "(DDD Entity) - Reference to the payee's bank ||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - Reference to the payee's account (the target for the funds) ||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - Details captured for reference and compliance reporting purposes ||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "(DDD Entity) - Payer identification document for OTC payment transactions ||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - The copy of the identification document used ||\r\n|"
+    Transactiontypevalues:
+        type: object
+        description: ''
+        properties:
+          Transactiontypevalues:
+              enum:
+                  -  FinancialTransaction
+                  -  BusinessTransaction
+                  -  BankingTransaction
+                  -  AccountingTransaction
+                  -  BookingTransaction
+                  -  AllocationTransaction
+                  -  DeliveryTransaction
+                  -  ProductionTransaction
+              format: Transactiontypevalues
+              type: string
+              description: ">\r\n* `FinancialTransaction` - \r\n* `BusinessTransaction` - \r\n* `BankingTransaction` - \r\n* `AccountingTransaction` - \r\n* `BookingTransaction` - \r\n* `AllocationTransaction` - \r\n* `DeliveryTransaction` - \r\n* `ProductionTransaction` - "
+    Involvedparty:
+        type: object
+        description: (DDD Entity) - Reference to the account primary party/owner
+        properties:
+          PartyReference:
+              $ref: '#/components/schemas/Party'
+              format: Party
+              description: (DDD Entity) - Reference to the account primary party/owner
+          PartyInvolvement:
+              $ref: '#/components/schemas/Partyrole'
+              format: Partyrole
+              description: (DDD Entity) - Reference to the account primary party/owner
+    Party:
+        type: object
+        description: '(DDD Entity) -  Party '
+        properties:
+          PartyName:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: >-
+                (DDD Entity) - Name by which a party is known and which is usually used to
+                identify that party. (ISO20022)
+                 
+          PartyType:
+              $ref: '#/components/schemas/Partytypevalues'
+              format: Partytypevalues
+              description: ''
+          PartyDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          PartyIdentification:
+              $ref: '#/components/schemas/Partyidentification'
+              format: Partyidentification
+              description: '(DDD Entity) -  '
+          PartyLegalStructureType:
+              $ref: '#/components/schemas/Partylegalstructuretypevalues'
+              format: Partylegalstructuretypevalues
+              description: ''
+    Name:
+        type: object
+        description: >-
+          (DDD Entity) - Name by which a party is known and which is usually used to
+          identify that party. (ISO20022)
+           Name 
+        properties:
+          Name:
+              type: string
+              description: ''
+              format: DataType
+    Partytypevalues:
+        type: object
+        description: '(DDD Entity) -  Party '
+        properties:
+          Partytypevalues:
+              enum:
+                  -  Person
+                  -  Organisation
+              format: Partytypevalues
+              type: string
+              description: ">\r\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\r\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+    Datetime:
+        type: object
+        description: '(DDD Entity) -  Datetime '
+        properties:
+          DateTimeContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: >-
+                (DDD Entity) - The particular date and time point in the progression of
+                time 
+          TimeZoneCode:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: '(DDD Entity) - The time zone to which the date time refers. '
+          DaylightSavingIndicator:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: '(DDD Entity) -  '
+          DateTimeType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: ''
+          Datetime:
+              type: string
+              description: ''
+              format: DataType
+    Text:
+        type: object
+        description: >-
+          (DDD Entity) - The particular date and time point in the progression of time
+          Text 
+        properties:
+          Text:
+              type: string
+              description: ''
+              format: DataType
+    Datetimetypevalues:
+        type: object
+        description: '(DDD Entity) -  Datetime '
+        properties:
+          Datetimetypevalues:
+              enum:
+                  -  MaturityDate
+                  -  InitiatedDate
+                  -  RequestedDate
+                  -  ExecutedDate
+                  -  OpenDate
+                  -  CloseDate
+                  -  ExpiryDate
+                  -  EffectiveDate
+                  -  CreatingDate
+                  -  ActivationDate
+                  -  DeactivationDate
+                  -  BlockingDate
+                  -  SendingDate
+                  -  ValidFromDate
+                  -  ValidToDate
+                  -  ReceivingDate
+                  -  SigningDate
+                  -  DueDate
+                  -  ValueDate
+                  -  FulfillmentDate
+              format: Datetimetypevalues
+              type: string
+              description: ">\r\n* `MaturityDate` - \r\n* `InitiatedDate` - \r\n* `RequestedDate` - \r\n* `ExecutedDate` - \r\n* `OpenDate` - \r\n* `CloseDate` - \r\n* `ExpiryDate` - \r\n* `EffectiveDate` - \r\n* `CreatingDate` - \r\n* `ActivationDate` - \r\n* `DeactivationDate` - \r\n* `BlockingDate` - \r\n* `SendingDate` - \r\n* `ValidFromDate` - \r\n* `ValidToDate` - \r\n* `ReceivingDate` - \r\n* `SigningDate` - \r\n* `DueDate` - \r\n* `ValueDate` - \r\n* `FulfillmentDate` - "
+    Partyidentification:
+        type: object
+        description: '(DDD Entity) -  Partyidentification '
+        properties:
+          PartyIdentificationType:
+              $ref: '#/components/schemas/Partyidentificationtypevalues'
+              format: Partyidentificationtypevalues
+              description: ''
+          PartyIdentification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+    Partyidentificationtypevalues:
+        type: object
+        description: '(DDD Entity) -  Partyidentification '
+        properties:
+          Partyidentificationtypevalues:
+              enum:
+                  -  Taxidentificationnumber
+                  -  Nationalregistrationnumber
+                  -  LEI(LegalEntityIdentifier)
+                  -  Alienregistrationnumber
+                  -  Passportnumber
+                  -  Corporateidentification
+                  -  Driverlicensenumber
+                  -  Socialsecuritynumber
+                  -  Identitycardnumber
+                  -  Concat
+              format: Partyidentificationtypevalues
+              type: string
+              description: ">\r\n* `Taxidentificationnumber` - Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` - Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. (ISO20022)\r\n* `Registrationauthorityidentification` - An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. (ISO20022)\r\n* `LEI(LegalEntityIdentifier)` - \r\n* `Alienregistrationnumber` - Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` - Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` - Number assigned to a tax exempt entity.\r\n* `Corporateidentification` - Number assigned to a corporate entity.\r\n* `Driverlicensenumber` - Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` - Number assigned to a foreign investor (other than the alien number).\r\n* `Socialsecuritynumber` - Number assigned by a social security agency.\r\n* `Identitycardnumber` - Number assigned by a national authority to an identity card.\r\n* `Concat` - Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` - National registration identification number. In Singapore this is known as the NRIC."
+    Identifier:
+        type: object
+        description: '(DDD Entity) -  Identifier '
+        properties:
+          IdentifierValue:
+              $ref: '#/components/schemas/Value'
+              format: Value
+              description: '(DDD Entity) -  '
+          IdentifierIssuingAuthority:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: '(DDD Entity) - Entity that assigns and manages the identification. '
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+    Value:
+        type: object
+        description: '(DDD Entity) -  Value '
+        properties:
+          Value:
+              type: string
+              description: ''
+              format: DataType
+    Partylegalstructuretypevalues:
+        type: object
+        description: '(DDD Entity) -  Party '
+        properties:
+          Partylegalstructuretypevalues:
+              enum:
+                  -  Individual
+                  -  CommunityInterestCompany
+                  -  Co-Operative
+                  -  Charity
+                  -  GeneralPartnership
+                  -  LimitedLiabilityPartnership
+                  -  ScottishLimitedPartnership
+                  -  LimitedPartnership
+                  -  PrivateLimitedCompany
+                  -  PublicLimitedCompany
+                  -  Sole(SoleTrader)
+              format: Partylegalstructuretypevalues
+              type: string
+              description: ">\r\n* `Individual` - \r\n* `CommunityInterestCompany` - \r\n* `CharitableIncorporatedOrganisation` - \r\n* `Co-Operative` - \r\n* `Charity` - \r\n* `GeneralPartnership` - \r\n* `LimitedLiabilityPartnership` - \r\n* `ScottishLimitedPartnership` - \r\n* `LimitedPartnership` - \r\n* `PrivateLimitedCompany` - \r\n* `PublicLimitedCompany` - \r\n* `Sole(SoleTrader)` - "
+    Partyrole:
+        type: object
+        description: '(DDD Entity) -  Partyrole '
+        properties:
+          PartyRoleType:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: '(DDD Entity) -  '
+          PartyRoleName:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: '(DDD Entity) -  '
+          PartyRoleValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) -  '
+          PartyInvolvementType:
+              $ref: '#/components/schemas/Partyinvolvementtypevalues'
+              format: Partyinvolvementtypevalues
+              description: ''
+    Datetimeperiod:
+        type: object
+        description: '(DDD Entity) -  Datetimeperiod '
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range starts. (ISO20022) '
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range ends. (ISO20022) '
+    Partyinvolvementtypevalues:
+        type: object
+        description: '(DDD Entity) -  Partyrole '
+        properties:
+          Partyinvolvementtypevalues:
+              enum:
+                  -  Agreementinvolvement
+                  -  Partyinvolvement
+                  -  Arrangementinvolvement
+                  -  Relationshipinvolvement
+                  -  Locationinvolvement
+                  -  Bankguaranteeinvolvement
+              format: Partyinvolvementtypevalues
+              type: string
+              description: ">\r\n* `Agreementinvolvement` - \r\n* `Partyinvolvement` - \r\n* `Arrangementinvolvement` - \r\n* `Designspecificationinvolvement` - \r\n* `Relationshipinvolvement` - \r\n* `Locationinvolvement` - \r\n* `Bankguaranteeinvolvement` - "
+    Payer:
+        type: object
+        description: "(DDD Entity) - Reference to the payer Payer ||\r\n|"
+        properties:
+          PayerIdentifier:
+              type: string
+              description: ''
+              format: String
+    PayerBank:
+        type: object
+        description: "(DDD Entity) - Reference to the payer's bank PayerBank ||\r\n|"
+        properties:
+          PayerBankIdentifier:
+              type: string
+              description: ''
+              format: String
+    ProductAgreement:
+        type: object
+        description: "(DDD Entity) - Reference to the payer's account (the source of funds) ProductAgreement ||\r\n|"
+        properties:
+          ProductAgreementType:
+              $ref: '#/components/schemas/Productagreementtypevalues'
+              format: Productagreementtypevalues
+              description: ''
+    Productagreementtypevalues:
+        type: object
+        description: "(DDD Entity) - Reference to the payer's account (the source of funds) ProductAgreement ||\r\n|"
+        properties:
+          Productagreementtypevalues:
+              enum:
+                  -  CurrentAccountAgreement
+                  -  SavingsAccountAgreement
+                  -  BrokeredProductAgreement
+                  -  ConsumerLoanAgreement
+                  -  MortgageLoanAgreement
+                  -  DirectDebitServiceAgreement
+                  -  TermDepositAgreement
+              format: Productagreementtypevalues
+              type: string
+              description: ">\r\n* `CurrentAccountAgreement` - \r\n* `SavingsAccountAgreement` - \r\n* `BrokeredProductAgreement` - \r\n* `ConsumerLoanAgreement` - \r\n* `MortgageLoanAgreement` - \r\n* `DirectDebitServiceAgreement` - \r\n* `TermDepositAgreement` - "
+    Payee:
+        type: object
+        description: "(DDD Entity) - The target for the payment Payee ||\r\n|"
+        properties:
+          PayeeIdentifier:
+              type: string
+              description: ''
+              format: String
+    PayeeBank:
+        type: object
+        description: "(DDD Entity) - Reference to the payee's bank PayeeBank ||\r\n|"
+        properties:
+          PayeeBankIdentifier:
+              type: string
+              description: ''
+              format: String
+    Paymentmechanismtypevalues:
+        type: object
+        description: ''
+        properties:
+          Paymentmechanismtypevalues:
+              enum:
+                  -  ACH
+                  -  SWIFT
+              format: Paymentmechanismtypevalues
+              type: string
+              description: ">\r\n* `ACH` - \r\n* `SWIFT` - "
+    DocumentDirectoryEntry:
+        type: object
+        description: "(DDD Entity) - Payer identification document for OTC payment transactions DocumentDirectoryEntry ||\r\n|"
+        properties:
+          DocumentDirectoryEntryIdentification:
+              type: string
+              description: ''
+              format: String
+    InitiatePaymentInitiationTransactionResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    InitiatePaymentInitiationTransaction:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    UpdatePaymentInitiationTransactionRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference for a customer that uses recurring payments facility ||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer initiating the payment transaction ||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "(DDD Entity) - Reference to the payer ||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "(DDD Entity) - Reference to the payer's bank ||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - Reference to the payer's account (the source of funds) ||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "(DDD Entity) - The target for the payment ||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "(DDD Entity) - Reference to the payee's bank ||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - Reference to the payee's account (the target for the funds) ||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - Details captured for reference and compliance reporting purposes ||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "(DDD Entity) - Payer identification document for OTC payment transactions ||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - The copy of the identification document used ||\r\n|"
+    UpdatePaymentInitiationTransactionResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    UpdatePaymentInitiationTransaction:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    RetrievePaymentInitiationTransactionRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference for a customer that uses recurring payments facility ||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer initiating the payment transaction ||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "(DDD Entity) - Reference to the payer ||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "(DDD Entity) - Reference to the payer's bank ||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - Reference to the payer's account (the source of funds) ||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "(DDD Entity) - The target for the payment ||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "(DDD Entity) - Reference to the payee's bank ||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "(DDD Entity) - Reference to the payee's account (the target for the funds) ||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - Details captured for reference and compliance reporting purposes ||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "(DDD Entity) - Payer identification document for OTC payment transactions ||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "(DDD Entity) - The copy of the identification document used ||\r\n|"
+    RetrievePaymentInitiationTransactionResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    RetrievePaymentInitiationTransaction:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    RetrieveComplianceRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionComplianceCheckType:
+              $ref: '#/components/schemas/Compliancechecktypevalues'
+              format: Compliancechecktypevalues
+              description: "||\r\n|"
+          PaymentTransactionComplianceCheckResult:
+              $ref: '#/components/schemas/ComplianceCheck'
+              format: ComplianceCheck
+              description: "(DDD Entity) - The outcome of the compliance check ||\r\n|"
+          PaymentTransactionComplianceTaskResult:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "(DDD Entity) - Details of the overall compliance checking process ||\r\n|"
+    Compliancechecktypevalues:
+        type: object
+        description: ''
+        properties:
+          Compliancechecktypevalues:
+              enum:
+                  -  RegulatoryComplianceCheck
+                  -  LegalComplianceCheck
+                  -  GuidelineComplianceCheck
+              format: Compliancechecktypevalues
+              type: string
+              description: ">\r\n* `RegulatoryComplianceCheck` - \r\n* `LegalComplianceCheck` - \r\n* `GuidelineComplianceCheck` - "
+    ComplianceCheck:
+        type: object
+        description: "(DDD Entity) - The outcome of the compliance check ComplianceCheck ||\r\n|"
+        properties:
+          ComplianceCheckType:
+              type: string
+              description: ''
+              format: String
+    Task:
+        type: object
+        description: "(DDD Entity) - Details of the overall compliance checking process Task ||\r\n|"
+        properties:
+          Task:
+              type: string
+              description: ''
+              format: DataType
+    RetrieveComplianceResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionComplianceCheckType:
+              $ref: '#/components/schemas/Compliancechecktypevalues'
+              format: Compliancechecktypevalues
+              description: "||\r\n|"
+          PaymentTransactionComplianceCheckResult:
+              $ref: '#/components/schemas/ComplianceCheck'
+              format: ComplianceCheck
+              description: "||\r\n|"
+          PaymentTransactionComplianceTaskResult:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "||\r\n|"
+    RetrieveCompliance:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    RetrieveFundingCheckRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionFundingCheckResult:
+              $ref: '#/components/schemas/FundingCheck'
+              format: FundingCheck
+              description: "(DDD Entity) - The outcome of the funds available check ||\r\n|"
+    FundingCheck:
+        type: object
+        description: "(DDD Entity) - The outcome of the funds available check FundingCheck ||\r\n|"
+        properties:
+          FundingCheck:
+              type: string
+              description: ''
+              format: Class
+    RetrieveFundingCheckResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentTransactionFundingCheckResult:
+              $ref: '#/components/schemas/FundingCheck'
+              format: FundingCheck
+              description: "||\r\n|"
+    RetrieveFundingCheck:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    ExchangeOrderInitiationRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentOrderProcedureInstanceReference:
+              $ref: '#/components/schemas/GenericIdentification'
+              format: GenericIdentification
+              description: >-
+                GenericIdentification|GenericIdentification
+                (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022
+                BM ()
+          PaymentOrderProcedureInstanceStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+          OrderInitiationTaskResult:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "(DDD Entity) - Details of the payment order initiation task ||\r\n|"
+    ExchangeOrderInitiationResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentOrderProcedureInstanceReference:
+              $ref: '#/components/schemas/GenericIdentification'
+              format: GenericIdentification
+              description: >-
+                GenericIdentification|GenericIdentification
+                (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022
+                BM ()
+          PaymentOrderProcedureInstanceStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+          OrderInitiationTaskResult:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "||\r\n|"
+    ExchangeOrderInitiation:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    RetrieveOrderInitiationRequest:
+        type: object
+        description: ''
+        properties:
+          PaymentOrderProcedureInstanceReference:
+              $ref: '#/components/schemas/GenericIdentification'
+              format: GenericIdentification
+              description: >-
+                GenericIdentification|GenericIdentification
+                (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022
+                BM ()
+          PaymentOrderProcedureInstanceStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+          OrderInitiationTaskResult:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "(DDD Entity) - Details of the payment order initiation task ||\r\n|"
+    RetrieveOrderInitiationResponse:
+        type: object
+        description: ''
+        properties:
+          PaymentOrderProcedureInstanceReference:
+              $ref: '#/components/schemas/GenericIdentification'
+              format: GenericIdentification
+              description: >-
+                GenericIdentification|GenericIdentification
+                (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022
+                BM ()
+          PaymentOrderProcedureInstanceStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: >-
+                Status |Status 
+                (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+                BM ()
+          OrderInitiationTaskResult:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "||\r\n|"
+    RetrieveOrderInitiation:
+        type: object
+        description: >-
+          (DDD Entity) - Execute a well-bounded financial transaction/task, typically
+          involving largely automated/structured fulfillment processing within
+          Payment Initiation. 
+        properties:
+          PaymentTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "||\r\n|"
+          RecurringPaymentRecord:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          RecurringPaymentCustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          RecurringPaymentReference:
+              $ref: '#/components/schemas/PaymentTerms'
+              format: PaymentTerms
+              description: >-
+                PaymentTerms|PaymentTerms
+                (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+                BM ()
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "||\r\n|"
+          PaymentTransaction:
+              $ref: '#/components/schemas/Payment'
+              format: Payment
+              description: >-
+                Payment|Payment
+                (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+                BM ()
+          PayerReference:
+              $ref: '#/components/schemas/Payer'
+              format: Payer
+              description: "||\r\n|"
+          PayerBankReference:
+              $ref: '#/components/schemas/PayerBank'
+              format: PayerBank
+              description: "||\r\n|"
+          PayerProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          PayeeReference:
+              $ref: '#/components/schemas/Payee'
+              format: Payee
+              description: "||\r\n|"
+          PayeeBankReference:
+              $ref: '#/components/schemas/PayeeBank'
+              format: PayeeBank
+              description: "||\r\n|"
+          PayeeProductInstanceReference:
+              $ref: '#/components/schemas/ProductAgreement'
+              format: ProductAgreement
+              description: "||\r\n|"
+          Amount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                CurrencyAndAmount|CurrencyAndAmount
+                (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+                ()
+          Currency:
+              $ref: '#/components/schemas/CurrencyCode'
+              format: CurrencyCode
+              description: >-
+                CurrencyCode|CurrencyCode
+                (https://www.iso20022.org/standardsrepository/type/CurrencyCode)|Standard|ISO20022
+                BM ()
+          DateType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: "||\r\n|"
+          Date:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                ISODateTime|ISODateTime
+                (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+                BM ()
+          PaymentFeesCharges:
+              $ref: '#/components/schemas/Adjustment'
+              format: Adjustment
+              description: >-
+                Adjustment|Adjustment
+                (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+                BM ()
+          PaymentMechanism:
+              $ref: '#/components/schemas/Paymentmechanismtypevalues'
+              format: Paymentmechanismtypevalues
+              description: "||\r\n|"
+          PaymentPurpose:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+          DocumentDirectoryEntryInstanceReference:
+              $ref: '#/components/schemas/DocumentDirectoryEntry'
+              format: DocumentDirectoryEntry
+              description: "||\r\n|"
+          DocumentContent:
+              $ref: '#/components/schemas/Text'
+              format: Text
+              description: "||\r\n|"
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    PaymentTerms:
+        type: object
+        description: >-
+          (DDD Entity) - Reference used by the customer to identify a past payment
+          transaction PaymentTerms|PaymentTerms
+          (https://www.iso20022.org/standardsrepository/type/PaymentTerms)|Standard|ISO20022
+          BM ()
+        properties:
+          Amount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Specifies that the payment terms apply to an amount. '
+          Percentage:
+              type: string
+              format: PercentageRate
+              description: >-
+                (DDD Entity) - Specifies that the payment conditions apply to a percentage
+                of the amount due. 
+          PaymentPeriod:
+              type: string
+              format: DateTimePeriod
+              description: '(DDD Entity) - Period to which the payment terms apply. '
+          RelatedPaymentObligation:
+              type: string
+              format: PaymentObligation
+              description: '(DDD Entity) - Payment obligation for which payment terms are specified. '
+          PaymentTime:
+              type: string
+              format: PaymentTimeCode
+              description: >-
+                (DDD Entity) - Specifies the time of the payment relative to an event such
+                as product delivery or receipt of invoice.  
+          RelatedPaymentScheduleType:
+              type: string
+              format: RegisteredContract
+              description: >-
+                (DDD Entity) - Related type of the payment schedule provided in the
+                contract. 
+          RelatedLoan:
+              type: string
+              format: Loan
+              description: >-
+                (DDD Entity) - Schedule for the payment of the interests due on the related
+                loan. 
+    Payment:
+        type: object
+        description: >-
+          (DDD Entity) - The details of the payment transaction Payment|Payment
+          (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+          BM ()
+        properties:
+          PaymentObligation:
+              type: string
+              format: PaymentObligation
+              description: '(DDD Entity) - Specifies the obligation which created the payment. '
+          CurrencyOfTransfer:
+              type: string
+              format: CurrencyCode
+              description: >-
+                (DDD Entity) - Specifies the currency of the amount to be transferred which
+                may be different from the currency of the debtor's account. 
+          CreditMethod:
+              type: string
+              format: CreditInstrument
+              description: '(DDD Entity) - Specifies the transfer method to be used for the credit. '
+          Type:
+              type: string
+              format: PaymentTypeCode
+              description: '(DDD Entity) - Type, or nature, of the payment, eg, express payment. '
+          InstructedAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - Amount of money to be moved between the debtor and creditor,
+                before deduction of charges, expressed in the currency as
+                ordered by the initiating party. 
+          Priority:
+              type: string
+              format: PriorityCode
+              description: >-
+                (DDD Entity) - Urgency or order of importance that the originator would
+                like the recipient of the payment  to apply to its processing. 
+          ValueDate:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date on which a payment must be executed '
+          PaymentStatus:
+              type: string
+              format: PaymentStatus
+              description: '(DDD Entity) - Specifies the status of a payment at a specified time. '
+          PartyRole:
+              type: string
+              format: PaymentPartyRole
+              description: >-
+                (DDD Entity) - Specifies each role linked to a payment and played by a
+                party at that step in a payment flow. 
+          TaxOnPayment:
+              type: string
+              format: Tax
+              description: '(DDD Entity) - Payment levy tax. '
+          PaymentExecution:
+              type: string
+              format: PaymentExecution
+              description: '(DDD Entity) - Describes the processes necessary to execute a payment. '
+          PoolingAdjustmentDate:
+              type: string
+              format: ISODate
+              description: >-
+                (DDD Entity) - Date used for the correction of the value date of a cash
+                pool movement that has been posted with a different value date. 
+          EquivalentAmount:
+              type: string
+              format: ImpliedCurrencyAndAmount
+              description: >-
+                (DDD Entity) - Amount of money to be transferred between debtor and
+                creditor, before deduction of charges, expressed in the currency
+                of the debtor's account, and to be transferred in a different
+                currency. 
+          CurrencyExchange:
+              type: string
+              format: CurrencyExchange
+              description: >-
+                (DDD Entity) - Information on the exchange rate and amounts used in the
+                payment 
+          InstructionForCreditorAgent:
+              type: string
+              format: InstructionCode
+              description: >-
+                (DDD Entity) - Further information related to the processing of the payment
+                instruction that may need to be acted upon by the creditor
+                agent. 
+
+                Usage: The instruction can relate to a level of service, can be
+                an instruction to be executed by the creditor's agent, or can be
+                information required by the creditor's agent to process the
+                instruction. 
+          InstructionForDebtorAgent:
+              type: string
+              format: InstructionCode
+              description: >-
+                (DDD Entity) - Further information related to the processing of the payment
+                instruction that may need to be acted upon by the debtor's
+                agent.  
+
+                Usage: The instruction can relate to a level of service, can be
+                an instruction to be executed by the debtor's agent, or can be
+                information required by the debtor's agent to process the
+                instruction. 
+          PaymentRelatedIdentifications:
+              type: string
+              format: PaymentIdentification
+              description: >-
+                (DDD Entity) - Identifications provided to identify a payment at different
+                processing levels. 
+          RelatedInvestigationCase:
+              type: string
+              format: PaymentInvestigationCase
+              description: '(DDD Entity) - Investigation case assigned to the payment. '
+          SettlementTimeRequest:
+              type: string
+              format: SettlementTimeRequest
+              description: >-
+                (DDD Entity) - Information on the requested settlement time of the
+                instruction. 
+          Amount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Amount of the payment. '
+          TradeSettlement:
+              type: string
+              format: CommercialTradeSettlement
+              description: >-
+                (DDD Entity) - Specifies the settlement operation which originates the
+                payment. 
+          StandardSettlementInstructions:
+              type: string
+              format: Max140Text
+              description: '(DDD Entity) - Identifies the standard settlement instructions. '
+          RelatedDebitAuthorisation:
+              type: string
+              format: DebitAuthorisation
+              description: '(DDD Entity) - Payment which is the result of the debit authorisation '
+          RelatedInvestigationCaseResolution:
+              type: string
+              format: PaymentInvestigationCaseResolution
+              description: '(DDD Entity) - Case resolution related to a specific payment. '
+          OriginalPayment:
+              type: string
+              format: Payment
+              description: '(DDD Entity) - Original payment which is returned. '
+          ReturnPayment:
+              type: string
+              format: Payment
+              description: '(DDD Entity) - Payment which offsets an original payment. '
+          RelatedSecuritiesSettlement:
+              type: string
+              format: SecuritiesSettlement
+              description: >-
+                (DDD Entity) - Securities settlement process which is the source of the
+                payment. 
+          InvoiceReconciliation:
+              type: string
+              format: Invoice
+              description: >-
+                (DDD Entity) - Reconciliation of the amounts of an invoice with the amounts
+                included in one or more payments. 
+          PaymentInstrument:
+              type: string
+              format: PaymentInstrumentCode
+              description: '(DDD Entity) - Payment type at the origin of the cash entry eg, a cheque. '
+          Account:
+              type: string
+              format: CashAccount
+              description: '(DDD Entity) - Account debited for the payment. '
+          Adjustments:
+              type: string
+              format: Adjustment
+              description: >-
+                (DDD Entity) - Specifies the charges or the allowance related to a
+                payment. 
+          ContractRegistration:
+              type: string
+              format: RegisteredContract
+              description: '(DDD Entity) - Provides the payment of the registered contract. '
+    CurrencyAndAmount:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Number of monetary units specified in a currency, where the unit
+          of currency is explicit and compliant with ISO 4217. The decimal
+          separator is a dot.
+
+          Note: A zero amount is considered a positive amount.
+    CurrencyCode:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Code allocated to a currency, by a maintenance agency, under an
+          international identification scheme as described in the latest edition
+          of the international standard ISO 4217 "Codes for the representation
+          of currencies and funds". Valid currency codes are registered with the
+          ISO 4217 Maintenance Agency, and consist of three contiguous letters.
+    ISODateTime:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - A particular point in the progression of time defined by a
+          mandatory date and a mandatory time component, expressed in either UTC
+          time format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset
+          format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+          (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+          Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+          October 2004" which is aligned with ISO 8601.
+
+          Note on the time format:
+
+          1) beginning / end of calendar day
+
+          00:00:00  -  the beginning of a calendar day
+
+          24:00:00  -  the end of a calendar day
+
+          2) fractions of second in time format
+
+          Decimal fractions of seconds may be included. In this case, the
+          involved parties shall agree on the maximum number of digits that are
+          allowed.
+    Adjustment:
+        type: object
+        description: >-
+          (DDD Entity) - Processing and exchange fees as appropriate Adjustment|Adjustment
+          (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+          BM ()
+        properties:
+          Amount:
+              type: string
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - Amount of money that results from the application of an
+                adjustment (charges. fees, discount or allowance) to the amount
+                due. 
+          ChargeRate:
+              type: string
+              format: PercentageRate
+              description: >-
+                (DDD Entity) - Rate used to calculate the amount of the adjustment,
+                allowance, charge or fee. 
+          CalculationMethod:
+              type: string
+              format: TaxationBasisCode
+              description: >-
+                (DDD Entity) - Method used to calculate an adjustment (financial
+                adjustment, charge or allowance). 
+          Payment:
+              type: string
+              format: Payment
+              description: >-
+                (DDD Entity) - Specifies the payment resulting from charges due by one
+                party to another or the payment to which adjustements (for
+                instance charges) are applied. 
+          Direction:
+              type: string
+              format: AdjustmentDirectionCode
+              description: >-
+                (DDD Entity) - Specifies whether the adjustment must be subtracted or added
+                to the total amount. 
+          Reason:
+              type: string
+              format: Max4AlphaNumericText
+              description: '(DDD Entity) - Reason for the amount adjustment. '
+          RelatedLineItem:
+              type: string
+              format: LineItem
+              description: >-
+                (DDD Entity) - Specifies the line item on which a financial adjustment took
+                place. 
+          AllowanceChargeIndicator:
+              type: string
+              format: YesNoIndicator
+              description: >-
+                (DDD Entity) - Indication of whether or not this allowance charge is a
+                charge (Indicator is Yes) that should be added or an allowance
+                that should be subtracted (Indicator is No). 
+          Price:
+              type: string
+              format: Price
+              description: '(DDD Entity) - Specifies the price which is adjusted. '
+          ChargeIndicator:
+              type: string
+              format: YesNoIndicator
+              description: >-
+                (DDD Entity) - Indication of whether or not this allowance charge is a
+                charge. 
+          Type:
+              type: string
+              format: AdjustmentTypeCode
+              description: >-
+                (DDD Entity) - Specifies the type of adjustment applied to the amount of
+                goods/services by means of a code. 
+          CollateralManagement:
+              type: string
+              format: CollateralManagement
+              description: '(DDD Entity) - Process which groups the activities related to collateral. '
+          AdjustedBalance:
+              type: string
+              format: Balance
+              description: '(DDD Entity) - Balance for which adjustments are specified. '
+          ChargesPartyRole:
+              type: string
+              format: ChargePartyRole
+              description: '(DDD Entity) - Role played by a party in the context of charges due. '
+          EffectivePeriod:
+              type: string
+              format: DateTimePeriod
+              description: '(DDD Entity) - Period during which the adjustment is applicable. '
+          CurrencyExchange:
+              type: string
+              format: CurrencyExchange
+              description: >-
+                (DDD Entity) - Currency exchange for which adjustments such as fees or
+                commissions are applied. 
+          SecuritiesOrder:
+              type: string
+              format: SecuritiesOrder
+              description: '(DDD Entity) - Order for which adjustments are specified. '
+          Tax:
+              type: string
+              format: Tax
+              description: >-
+                (DDD Entity) - Information on the calculation method resulting in the tax
+                amount included in the charge transfer. The tax is expressed as
+                a fixed amount, or as a percentage of the charge amount, upon
+                which the tax is applied. 
+    GenericIdentification:
+        type: object
+        description: >-
+          (DDD Entity) - The reference to the payment order processing task
+          GenericIdentification|GenericIdentification
+          (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022
+          BM ()
+        properties:
+          Identification:
+              type: string
+              format: Max35Text
+              description: >-
+                (DDD Entity) - Name or number assigned by an entity to enable recognition
+                of that entity, for example account identifier, identification
+                assigned by a provider to identify its customers. 
+          IdentificationForContactPoint:
+              type: string
+              format: ContactPoint
+              description: >-
+                (DDD Entity) - Contact point which uses a generic identification as
+                identification. 
+          IdentificationForAccount:
+              type: string
+              format: AccountIdentification
+              description: >-
+                (DDD Entity) - Account Identification which uses a generic identification
+                as proprietary identification. 
+          RelatedPartyIdentification:
+              type: string
+              format: PartyIdentificationInformation
+              description: '(DDD Entity) - Party identified with a scheme. '
+          IssueDate:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date at which the identification was issued. '
+          ExpiryDate:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date at which the identification expires. '
+          Scheme:
+              type: string
+              format: Scheme
+              description: >-
+                (DDD Entity) - Information regarding an enumerated code list and its
+                owner. 
+          IdentificationForSecuritiesCertificate:
+              type: string
+              format: SecuritiesCertificate
+              description: >-
+                (DDD Entity) - Securities certificate which uses a generic identification
+                as certificate number. 
+          IdentificationForLot:
+              type: string
+              format: LotBreakdown
+              description: >-
+                (DDD Entity) - Lot breakdown which uses a generic identification as lot
+                number. 
+          PartyRole:
+              type: string
+              format: InformationPartyRole
+              description: '(DDD Entity) - Entity that assigns the identification. '
+          IdentificationForCashProceedsIncome:
+              type: string
+              format: CashProceedsDefinition
+              description: >-
+                (DDD Entity) - Cash proceeds definition which uses a generic identification
+                as type of income. 
+          RelatedStatusReason:
+              type: string
+              format: StatusReason
+              description: >-
+                (DDD Entity) - Specifies the status reason for which a data source scheme
+                is specified. 
+          IdentificationForBankTransaction:
+              type: string
+              format: BankTransaction
+              description: >-
+                (DDD Entity) - Bank transaction which uses a generic identification as
+                proprietary identification. 
+          IdentificationForAccountCostReferencePattern:
+              type: string
+              format: AccountIdentification
+              description: >-
+                (DDD Entity) - Account identification for which a cost reference pattern is
+                provided. 
+          Account:
+              type: string
+              format: Account
+              description: '(DDD Entity) - Account for which a type is specified '
+          RelatedSystemIdentification:
+              type: string
+              format: SystemIdentification
+              description: '(DDD Entity) - System identification which uses a generic identification. '
+          IdentificationForInterestName:
+              type: string
+              format: Interest
+              description: '(DDD Entity) - Interest which uses a generic identification as name. '
+          RelatedCashAccountService:
+              type: string
+              format: CashAccountService
+              description: '(DDD Entity) - Cash account service identified in a generic way. '
+          IdentificationForInvestmentFundClass:
+              type: string
+              format: InvestmentFundClass
+              description: >-
+                (DDD Entity) - Investment fund class which uses a generic identification as
+                fund classification. 
+          IdentifiedLocation:
+              type: string
+              format: Location
+              description: '(DDD Entity) - Location for which an identification is provided. '
+          RelatedSecuritiesIdentification:
+              type: string
+              format: SecuritiesIdentification
+              description: >-
+                (DDD Entity) - Securities identification for which generic identification
+                elements and scheme are provided. 
+          IdentifiedDocument:
+              type: string
+              format: Document
+              description: '(DDD Entity) - Document for which an identification is provided. '
+          RelatedPurchaseOrder:
+              type: string
+              format: PurchaseOrder
+              description: '(DDD Entity) - Purchase order for which an identification is provided. '
+          RelatedCertificate:
+              type: string
+              format: RegisteredContract
+              description: >-
+                (DDD Entity) - Related certificate against which all transactions in the
+                scope of the regulatory requirements are registered. 
+    Status:
+        type: object
+        description: >-
+          (DDD Entity) - The returned status of the payment order processing Status
+          |Status 
+          (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+          BM ()
+        properties:
+          StatusReason:
+              type: string
+              format: StatusReason
+              description: '(DDD Entity) - Specifies the reasons for the status. '
+          StatusDateTime:
+              type: string
+              format: ISODateTime
+              description: '(DDD Entity) - Date and time at which the status was assigned. '
+          ValidityTime:
+              type: string
+              format: DateTimePeriod
+              description: '(DDD Entity) - Period of time during which the status is valid. '
+          StatusDescription:
+              type: string
+              format: Max350Text
+              description: '(DDD Entity) - Specifies the state or the condition. '
+          InstructionProcessingStatus:
+              type: string
+              format: StatusCode
+              description: '(DDD Entity) - Status of the processing of an instruction. '
+          PartyRole:
+              type: string
+              format: InvestigationPartyRole
+              description: >-
+                (DDD Entity) - Role played by a party in the context of assigning a
+                status. 
+          SettlementStatus:
+              type: string
+              format: SecuritiesSettlementStatusCode
+              description: '(DDD Entity) - Status of settlement of a transaction. '
+          CancellationProcessingStatus:
+              type: string
+              format: CancellationProcessingStatusCode
+              description: '(DDD Entity) - Specifies the status of a cancellation request. '
+          TransactionProcessingStatus:
+              type: string
+              format: InstructionProcessingStatusCode
+              description: >-
+                (DDD Entity) - Status of processing of a transaction at account servicer
+                level. 
+          ModificationProcessingStatus:
+              type: string
+              format: ModificationProcessingStatusCode
+              description: '(DDD Entity) - Provides the status of a modification request. '
+  responses:
+    InitiatePaymentInitiationTransactionResponse:
+        description: PaymentInitiationTransactionInitiate
+        content:
+          'application/json:':
+            schema:
+              $ref: >-
+                #/components/schemas/InitiatePaymentInitiationTransactionResponse
+    UpdatePaymentInitiationTransactionResponse:
+        description: PaymentInitiationTransactionUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentInitiationTransactionResponse'
+    RetrievePaymentInitiationTransactionResponse:
+        description: PaymentInitiationTransactionRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: >-
+                #/components/schemas/RetrievePaymentInitiationTransactionResponse
+    RetrieveComplianceResponse:
+        description: ComplianceRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveComplianceResponse'
+    RetrieveFundingCheckResponse:
+        description: FundingCheckRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFundingCheckResponse'
+    ExchangeOrderInitiationResponse:
+        description: OrderInitiationExchange
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ExchangeOrderInitiationResponse'
+    RetrieveOrderInitiationResponse:
+        description: OrderInitiationRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveOrderInitiationResponse'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    paymentinitiationid:
+        name: paymentinitiationid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    complianceid:
+        name: complianceid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    fundingcheckid:
+        name: fundingcheckid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+    orderinitiationid:
+        name: orderinitiationid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    InitiatePaymentInitiationTransactionRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/InitiatePaymentInitiationTransactionRequest'
+        required: true
+    UpdatePaymentInitiationTransactionRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentInitiationTransactionRequest'
+        required: true
+    RetrievePaymentInitiationTransactionRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrievePaymentInitiationTransactionRequest'
+        required: true
+    RetrieveComplianceRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveComplianceRequest'
+        required: true
+    RetrieveFundingCheckRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveFundingCheckRequest'
+        required: true
+    ExchangeOrderInitiationRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ExchangeOrderInitiationRequest'
+        required: true
+    RetrieveOrderInitiationRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveOrderInitiationRequest'
+        required: true
