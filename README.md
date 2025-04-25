@@ -20,12 +20,13 @@ The BIAN Portal with access to the Model and APIs can be accessed at : https://p
 BIAN Semantic APIs:
 1. Release 13.0.0 - BOM extended APIs (OAS 3.x) : https://github.com/bian-official/public/tree/main/release13.0.0/semantic-apis/oas3/yamls
 2. Release 13.0.0 - ISO20022 extended APIs and annotated for DDD (OAS 3.x) : https://github.com/bian-official/public/tree/main/release13.0.0/apis-iso20022_ext-ddd/oas3/yamls
-3. Release 13.0.0 - ISO20022 extended APIs and annotated for DDD (Async 3.x): https://github.com/bian-official/public/tree/main/release13.0.0/apis-iso20022_ext-ddd/asyncapi-3.x/yamls
-4. Release 12.0.0 - BOM extended APIs (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/semantic-apis/oas3/yamls
-5. Release 12.0.0 - ISO20022 extended APIs and annotated for DDD (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/apis-iso20022_ext-ddd/oas3/yamls
-6. Release 11.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release11.0.0/semantic-apis/oas3/yamls
-7. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
-8. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
+3. Release 13.0.0 - BOM extended APIs (Async 3.x) : https://github.com/bian-official/public/tree/main/release13.0.0/semantic-apis/asyncapi-3.x/yamls
+4. Release 13.0.0 - ISO20022 extended APIs and annotated for DDD (Async 3.x): https://github.com/bian-official/public/tree/main/release13.0.0/apis-iso20022_ext-ddd/asyncapi-3.x/yamls
+5. Release 12.0.0 - BOM extended APIs (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/semantic-apis/oas3/yamls
+6. Release 12.0.0 - ISO20022 extended APIs and annotated for DDD (OAS 3.x) : https://github.com/bian-official/public/tree/main/release12.0.0/apis-iso20022_ext-ddd/oas3/yamls
+7. Release 11.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release11.0.0/semantic-apis/oas3/yamls
+8. Release 10.0.0 (OAS 3.x) : https://github.com/bian-official/public/tree/main/release10.0.0/semantic-apis/oas3/yamls
+9. Release 9.1.0 (Swagger 2.x) : https://github.com/bian-official/public/tree/main/release9.1/semantic-apis/swaggers
 
 Each API Specification represents a BIAN Service Domain.
 
