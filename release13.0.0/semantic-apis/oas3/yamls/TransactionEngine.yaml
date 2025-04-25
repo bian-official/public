@@ -1,0 +1,889 @@
+openapi: 3.0.1
+info:
+  title: Transaction Engine
+  description: Orchestrate a schedule of payment transaction and reporting activities for the fulfillment of certain long term instruments or structured facilities
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 13.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/TransactionEngine/13.0.0
+paths:
+  /TransactionEngine/Initiate:
+    post:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: InCR Initiate delegated transaction processing for a product instance
+      description: InCR Initiate delegated transaction processing for a product instance
+      operationId: Initiate
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionScheduleFacility'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionScheduleFacility'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Update':
+    put:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: UpCR Update details for an active transaction processing arrangement
+      description: UpCR Update details for an active transaction processing arrangement
+      operationId: Update
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionScheduleFacility'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionScheduleFacility'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Control':
+    put:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: CoCR Control an active transaction processing arrangement
+      description: CoCR Control an active transaction processing arrangement
+      operationId: Control
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionScheduleFacility'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionScheduleFacility'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Exchange':
+    put:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: 'EcCR Accept, reject a proposed action'
+      description: 'EcCR Accept, reject a proposed action'
+      operationId: Exchange
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionScheduleFacility'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionScheduleFacility'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Execute':
+    put:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: ExCR Execute an automated function for a transaction processing arrangement
+      description: ExCR Execute an automated function for a transaction processing arrangement
+      operationId: Execute
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      requestBody:
+        $ref: '#/components/requestBodies/TransactionScheduleFacility'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionScheduleFacility'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/TransactionEngine/{transactionengineid}/Retrieve':
+    get:
+      tags:
+        - CR - TransactionScheduleFacility
+      summary: ReCR Retrieve details about delegated transaction processing for a product instance
+      description: ReCR Retrieve details about delegated transaction processing for a product instance
+      operationId: Retrieve
+      parameters:
+        - $ref: '#/components/parameters/transactionengineid'
+      responses:
+        '200':
+          $ref: '#/components/responses/TransactionScheduleFacility'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    productagreementtypevalues:
+      enum:
+        - CurrentAccountAgreement
+        - SavingsAccountAgreement
+        - BrokeredProductAgreement
+        - ConsumerLoanAgreement
+        - MortgageLoanAgreement
+        - DirectDebitServiceAgreement
+        - TermDepositAgreement
+      type: string
+      description: ">\r\n* `CurrentAccountAgreement` - \r\n* `SavingsAccountAgreement` - \r\n* `BrokeredProductAgreement` - \r\n* `ConsumerLoanAgreement` - \r\n* `MortgageLoanAgreement` - \r\n* `DirectDebitServiceAgreement` - \r\n* `TermDepositAgreement` - \r\n"
+    productagreement:
+      type: object
+      properties:
+        ProductAgreementType:
+          $ref: '#/components/schemas/productagreementtypevalues'
+      description: "Identifies the payment source of the transaction - usually a reference to the parent product instance ||\r\n|"
+    text:
+      type: object
+      properties:
+        Text:
+          type: string
+          description: Text is a character string such as a finite set of characters generally in the form of words of a language. (UN/CEFACT)
+          format: datatype
+      description: "Any necessary details describing the purpose or reference properties of the transaction ||\r\n|"
+    schedule:
+      type: object
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/text'
+      description: "The processing schedule, covering reporting and financial transactions that are to be executed ||\r\n|"
+    task:
+      type: object
+      properties:
+        Task:
+          type: string
+          description: ''
+          format: datatype
+      description: "Details of the outcome or result of the work task ||\r\n|"
+    workproducttypevalues:
+      enum:
+        - Document
+        - WorkingPaper
+        - ActivityLog
+        - Form
+        - File
+        - MeetingSchedule
+        - MeetingMinute
+      type: string
+      description: ">\r\n* `Document` - \r\n* `WorkingPaper` - \r\n* `ActivityLog` - \r\n* `Form` - \r\n* `File` - File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` - \r\n* `MeetingMinute` - \r\n"
+    value:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: "Data or set of data \n\n- A value is the concept of worth in general that is assigned or is determined by measurement, assessment or calculation. (UN/CEFACT)"
+          format: datatype
+      description: ''
+    name:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: 'A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept. (UN/CEFAT)'
+          format: datatype
+      description: "Name by which a party is known and which is usually used to identify that party. (ISO20022)\n"
+    partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\r\n* `Person` - Human entity, as distinguished from a corporate entity (which is sometimes referred to as an 'artificial person'). ISO20022\r\n* `Organisation` - Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022\r\n"
+    datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+      type: string
+      description: "Key dates and times associated with the transaction schedule financial transaction (e.g. initiation date, confirmation date) ||\r\n|"
+    datetime:
+      type: object
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/text'
+        DateTimeType:
+          $ref: '#/components/schemas/datetimetypevalues'
+      description: Value of the date type ISODateTime|ISODateTime (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022 BM ()
+    partyidentificationtypevalues:
+      enum:
+        - Taxidentificationnumber
+        - Nationalregistrationnumber
+        - Registrationauthorityidentification
+        - LEI(LegalEntityIdentifier)
+        - Alienregistrationnumber
+        - Passportnumber
+        - Taxexemptidentificationnumber
+        - Corporateidentification
+        - Driverlicensenumber
+        - Foreigninvestmentidentitynumber
+        - Socialsecuritynumber
+        - Identitycardnumber
+        - Concat
+        - Nationalregistrationidentificationnumber
+      type: string
+      description: ">\r\n* `Taxidentificationnumber` - Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` - Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. (ISO20022)\r\n* `Registrationauthorityidentification` - An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. (ISO20022)\r\n* `LEI(LegalEntityIdentifier)` - \r\n* `Alienregistrationnumber` - Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` - Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` - Number assigned to a tax exempt entity.\r\n* `Corporateidentification` - Number assigned to a corporate entity.\r\n* `Driverlicensenumber` - Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` - Number assigned to a foreign investor (other than the alien number).\r\n* `Socialsecuritynumber` - Number assigned by a social security agency.\r\n* `Identitycardnumber` - Number assigned by a national authority to an identity card.\r\n* `Concat` - Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` - National registration identification number. In Singapore this is known as the NRIC.\r\n"
+    partyidentification:
+      type: object
+      properties:
+        PartyIdentificationType:
+          $ref: '#/components/schemas/partyidentificationtypevalues'
+        PartyIdentification:
+          $ref: '#/components/schemas/identifier'
+      description: ''
+    partylegalstructuretypevalues:
+      enum:
+        - Individual
+        - CommunityInterestCompany
+        - CharitableIncorporatedOrganisation
+        - Co-Operative
+        - Charity
+        - GeneralPartnership
+        - LimitedLiabilityPartnership
+        - ScottishLimitedPartnership
+        - LimitedPartnership
+        - PrivateLimitedCompany
+        - PublicLimitedCompany
+        - Sole(SoleTrader)
+      type: string
+      description: ">\r\n* `Individual` - \r\n* `CommunityInterestCompany` - \r\n* `CharitableIncorporatedOrganisation` - \r\n* `Co-Operative` - \r\n* `Charity` - \r\n* `GeneralPartnership` - \r\n* `LimitedLiabilityPartnership` - \r\n* `ScottishLimitedPartnership` - \r\n* `LimitedPartnership` - \r\n* `PrivateLimitedCompany` - \r\n* `PublicLimitedCompany` - \r\n* `Sole(SoleTrader)` - \r\n"
+    party:
+      type: object
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/name'
+        PartyType:
+          $ref: '#/components/schemas/partytypevalues'
+        PartyDateTime:
+          $ref: '#/components/schemas/datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/partyidentification'
+        PartyLegalStructureType:
+          $ref: '#/components/schemas/partylegalstructuretypevalues'
+      description: ''
+    datetimeperiod:
+      type: object
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/datetime'
+      description: ''
+    partyinvolvementtypevalues:
+      enum:
+        - Agreementinvolvement
+        - Partyinvolvement
+        - Arrangementinvolvement
+        - Designspecificationinvolvement
+        - Relationshipinvolvement
+        - Locationinvolvement
+        - Bankguaranteeinvolvement
+      type: string
+      description: ">\r\n* `Agreementinvolvement` - \r\n* `Partyinvolvement` - \r\n* `Arrangementinvolvement` - \r\n* `Designspecificationinvolvement` - \r\n* `Relationshipinvolvement` - \r\n* `Locationinvolvement` - \r\n* `Bankguaranteeinvolvement` - \r\n"
+    partyrole:
+      type: object
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/text'
+        PartyRoleName:
+          $ref: '#/components/schemas/name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PartyInvolvementType:
+          $ref: '#/components/schemas/partyinvolvementtypevalues'
+      description: ''
+    involvedparty:
+      type: object
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/partyrole'
+      description: Entity that assigns and manages the identification.
+    identifier:
+      type: object
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/datetime'
+      description: Reference to the correspondence generated for the transaction (e.g. confirmation note) GenericIdentification|GenericIdentification (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022 BM ()
+    workproduct:
+      type: object
+      properties:
+        WorkProductType:
+          $ref: '#/components/schemas/workproducttypevalues'
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/identifier'
+      description: "File of consolidated notes, forms and documents for the work task ||\r\n|"
+    documentdirectoryentry:
+      type: object
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          description: Identification allowing the retrieval of a document from a Document Directory
+          format: string
+      description: "Reference to associated documents ||\r\n|"
+    transactiondatetimetypevalues:
+      enum:
+        - ExecutedDate
+        - FulfillmentDate
+        - InitiatedDate
+        - CancelledDate
+        - ApprovedDate
+        - ValueDate
+        - BookingDate
+      type: string
+      description: ">\r\n* `ExecutedDate` - \r\n* `FulfillmentDate` - \r\n* `InitiatedDate` - \r\n* `CancelledDate` - \r\n* `ApprovedDate` - \r\n* `ValueDate` - \r\n* `BookingDate` - \r\n"
+    transactiondatetime:
+      type: object
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/datetime'
+        TransactionDateType:
+          $ref: '#/components/schemas/transactiondatetimetypevalues'
+      description: "The Date that the transaction has occurred or is planned to occur.\nA characteristic of transaction which refers to the LifecycleDate of transaction (e.g., initiated date, executed date, fulfillment date). "
+    transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: "The fee type applied ||\r\n|"
+    status:
+      type: object
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/text'
+        StatusDateTime:
+          $ref: '#/components/schemas/datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/involvedparty'
+      description: ''
+    transactionstatustypevalues:
+      enum:
+        - Initiated
+        - Executed
+        - Cancelled
+        - Confirmed
+        - Suspended
+        - Pending
+        - Completed
+        - Notified
+        - Booked
+        - Rejected
+      type: string
+      description: ">\r\n* `Initiated` - \r\n* `Executed` - \r\n* `Cancelled` - \r\n* `Confirmed` - \r\n* `Suspended` - \r\n* `Pending` - \r\n* `Completed` - \r\n* `Notified` - \r\n* `Booked` - \r\n* `Rejected` - \r\n"
+    transactionstatus:
+      type: object
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/status'
+        TransactionStatusType:
+          $ref: '#/components/schemas/transactionstatustypevalues'
+      description: 'A characteristic of transaction which refers to the LifecycleStatus of transaction (e.g., initiated, executed, confirmed, cancelled, etc.) '
+    transaction:
+      type: object
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/transactiondatetime'
+        TransactionType:
+          $ref: '#/components/schemas/transactiontypevalues'
+        TransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionStatus:
+          $ref: '#/components/schemas/transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/name'
+      description: Details of the financial transactions that are executed on behalf of the fulfillment product instance ObligationFulfilment|ObligationFulfilment (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022 BM ()
+    feetypevalues:
+      enum:
+        - Accountingfee
+        - Adrfee
+        - Advisoryfee
+        - Airwaybillfee
+        - Backendload
+        - Brokeragefee
+        - Clearanceandhandlingatdestination
+        - Clearanceandhandlingatorigin
+        - Collectfreight
+        - Commission
+        - Contingencydeferredsalescharge
+        - Correspondentbankcharge
+        - Custodyfee
+        - Dangerousgoodsfee
+        - Dilutionlevy
+        - Discount
+        - Equalisation
+        - Frontendload
+        - Initial
+        - Insurancepremium
+        - Issuancecancellationfee
+        - Issuancefee
+        - Managementfee
+        - Matchingfees
+        - Miscellaneousfee
+        - Other
+        - Packaging
+        - Partacquis
+        - Penalty
+        - Pickup
+        - Postagecharge
+        - Premium
+        - Publicationfee
+        - Regulatoryfee
+        - Securitycharge
+        - Serviceprovisionfee
+        - Shippingcharge
+        - Signatureservice
+        - Specialconcessions
+        - Speciallyagreedfrontendload
+        - Storageatdestination
+        - Storageatorigin
+        - Switch
+        - Transferfee
+        - Transportcharges
+        - Ucitscommission
+        - ChequeRelatedFee
+      type: string
+      description: ">\r\n* `Accountingfee` - Fee paid for accounting services rendered.\r\n* `Adrfee` - Charge linked to an ADR (American Depositary Receipt).\r\n* `Advisoryfee` - Fee paid for advisory services rendered.\r\n* `Airwaybillfee` - Charge is an airway bill fee.\r\n* `Backendload` - Sales charge paid by the investor when redeeming an investment such as an investment fund.\r\n* `Brokeragefee` - Fee paid to a broker for services provided.\r\n* `Clearanceandhandlingatdestination` - Charge is for clearance and handling of goods at destination.\r\n* `Clearanceandhandlingatorigin` - Charge is for clearance and handling of goods at origin.\r\n* `Collectfreight` - Charge is for the collection of the freight.\r\n* `Commission` - Fee paid for services provided.\r\n* `Contingencydeferredsalescharge` - Deferred sales charge.\r\n* `Correspondentbankcharge` - In investment funds, the charge of the correspondent bank for transferring money.\r\n* `Custodyfee` - Fee paid to a custodian in respect of custodial services.\r\n* `Dangerousgoodsfee` - Charge is for dangerous goods.\r\n* `Dilutionlevy` - In investment funds, a charge payable by the investor covering bid-offer spreads and dealing charges for the underlying investments. The dilution levy is paid to the fund for the benefit of other unit holders.\r\n* `Discount` - Charge that has been reduced from the standard initial charge levied by a fund, eg, during a launch period or as negotiated by a funds supermarket / discount broker.\r\n* `Equalisation` - The part of an investor's subscription amount that is held by the fund in order to pay incentive or performance fees at the end of the fiscal year.\r\n* `Frontendload` - Sales charge paid immediately by the investor when subscribing to an investment such as an investment fund.\r\n* `Initial` - Charge paid at the time of the first subscription.\r\n* `Insurancepremium` - Charge is a premium for insurance.\r\n* `Issuancecancellationfee` - Fee linked to the cancellation of an issuance.\r\n* `Issuancefee` - Charge linked to the issuance of security.\r\n* `Managementfee` - Fee paid to an investment manager for services. The fee usually includes fund administration costs and investor relationship management. Typically, the amount paid is a percentage of the assets under management.\r\n* `Matchingfees` - Fee charged for matching and/or confirmation.\r\n* `Miscellaneousfee` - Miscellaneous fee.\r\n* `Other` - Another type of charge.\r\n* `Packaging` - Charge is for packaging of goods.\r\n* `Partacquis` - Portion of charge that the fund is entitled to receive, that cannot be reduced by an intermediary.\r\n* `Penalty` - Fee charged to the investor for early redemption of the fund.\r\n* `Pickup` - Charge is for pick-up of goods.\r\n* `Postagecharge` - Charge paid for the postage.\r\n* `Premium` - In investment funds, pre-arranged addition to the trade amount based on the published net asset value.\r\n* `Publicationfee` - Fee paid in respect of publications made.\r\n* `Regulatoryfee` - Fee charged by a regulatory authority, eg, Securities and Exchange fees.\r\n* `Securitycharge` - Charge is for security.\r\n* `Serviceprovisionfee` - Fee paid for the provision of financial services.\r\n* `Shippingcharge` - Charge for shipping, including the insurance of securities.\r\n* `Signatureservice` - Charge is for signature services.\r\n* `Specialconcessions` - Charges, drawdown, or other reduction from or in addition to the deal price.\r\n* `Speciallyagreedfrontendload` - Specially agreed front-end load.\r\n* `Storageatdestination` - Charge is for storage of goods at destination.\r\n* `Storageatorigin` - Charge is for storage of goods at origin.\r\n* `Switch` - In investment funds, charge related to a switch transaction.\r\n* `Transferfee` - In investment funds, a fee charged for the transfer of ownership of an investment fund.\r\n* `Transportcharges` - Charge is for transport.\r\n* `Ucitscommission` - Charges paid by the investor to the Fund Company for subscription and redemption orders.\r\n* `ChequeRelatedFee` - \r\n"
+    currencycode:
+      type: object
+      properties:
+        Currencycode:
+          type: string
+          description: "A code identifying a currency according to ISO-4217.\nA currency is a system of money in general use in a particular country.\n\nCode allocated to a currency, by a maintenance agency, under an international identification scheme as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\". Valid currency codes are registered with the ISO 4217 Maintenance Agency, and consist of three contiguous letters. (ISO20022)\n\n"
+          format: datatype
+      description: ''
+    amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+        - DuePayable
+        - Minimum
+        - Open
+        - Unknown
+        - Fixed
+      type: string
+      description: ">\r\n* `Principal` - \r\n* `Actual` - Actual amount.\r\n* `Estimated` - Estimated amount (the final amount could be above or below).\r\n* `Maximum` - Maximum amount (the final amount must be less or equal).\r\n* `Default` - Default amount.\r\n* `Replacement` - Replacement amount.\r\n* `Incremental` - Incremental amount for reservation.\r\n* `Decremental` - Decremental amount for reservation.\r\n* `Reserved` - Reserved or updated reserved amount for reservation.\r\n* `Available` - \r\n* `Used` - \r\n* `DuePayable` - \r\n* `Minimum` - \r\n* `Open` - The amount is open.(ISO20022)\r\n* `Unknown` - The amount is unkown.(ISO20022)\r\n* `Fixed` - The amount represents a fixed value.(ISO20022)\r\n"
+    amount:
+      type: object
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/value'
+        AmountCurrency:
+          $ref: '#/components/schemas/currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/text'
+        AmountType:
+          $ref: '#/components/schemas/amounttypevalues'
+      description: The volume or value of the transaction CurrencyAndAmount|CurrencyAndAmount (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022  ()
+    rate:
+      type: object
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/value'
+        RateUnit:
+          $ref: '#/components/schemas/text'
+        RatePeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/text'
+      description: 'Rate used to calculate the amount of the adjustment, allowance, charge or fee. (ISO20022)'
+    feeplantypevalues:
+      enum:
+        - StandardFeePlan
+        - FinalFeePlan
+      type: string
+      description: ">\r\n* `StandardFeePlan` - \r\n* `FinalFeePlan` - \r\n"
+    goaltypevalues:
+      enum:
+        - Short-TermGoal
+        - Long-TermGoal
+        - BusinessGoal
+        - PerformanceGoal
+        - FinancialGoal
+        - OutcomeGoal
+        - SMARTGoal
+      type: string
+      description: ">\r\n* `Short-TermGoal` - \r\n* `Long-TermGoal` - \r\n* `BusinessGoal` - \r\n* `PerformanceGoal` - \r\n* `FinancialGoal` - \r\n* `OutcomeGoal` - \r\n* `SMARTGoal` - \r\n"
+    goaldatetimetypevalues:
+      enum:
+        - SettingDate
+        - PlanningDate
+        - StartDate
+        - ReviewDate
+        - CompletionDate
+      type: string
+      description: ">\r\n* `SettingDate` - \r\n* `PlanningDate` - \r\n* `StartDate` - \r\n* `ReviewDate` - \r\n* `CompletionDate` - \r\n"
+    goaldatetime:
+      type: object
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/datetime'
+        GoalDateAndTimeType:
+          $ref: '#/components/schemas/goaldatetimetypevalues'
+      description: 'The key dates and times of Goal like Setting Data, Planning Date, Start Date, Review Date, Completion Date.'
+    goalstatustypevalues:
+      enum:
+        - Setting
+        - Planning
+        - Execution
+        - MonitoringAndEvaluation
+        - CompletionOrAchievement
+        - MaintenanceOrSustainment
+        - ClosureOrRenewal
+      type: string
+      description: ">\r\n* `Setting` - \r\n* `Planning` - \r\n* `Execution` - \r\n* `MonitoringAndEvaluation` - \r\n* `CompletionOrAchievement` - \r\n* `MaintenanceOrSustainment` - \r\n* `ClosureOrRenewal` - \r\n"
+    goalstatus:
+      type: object
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/status'
+        GoalStatusType:
+          $ref: '#/components/schemas/goalstatustypevalues'
+      description: 'The lifecycle status of Goal like Goal Setting, Planning, Execution, Monitoring and Evaluation, Completion or Achievement, Maintenance or Sustainment, Closure or Renewal'
+    goal:
+      type: object
+      properties:
+        GoalType:
+          $ref: '#/components/schemas/goaltypevalues'
+        GoalDefinition:
+          $ref: '#/components/schemas/text'
+        GoalName:
+          $ref: '#/components/schemas/name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/goalstatus'
+      description: ''
+    budgettypevalues:
+      enum:
+        - OperatingBudget
+        - FinancialBudget
+        - ResourceBudget
+      type: string
+      description: ">\r\n* `OperatingBudget` - \r\n* `FinancialBudget` - \r\n* `ResourceBudget` - \r\n"
+    budgettype:
+      type: object
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/name'
+        BudgetType:
+          $ref: '#/components/schemas/budgettypevalues'
+      description: A Classification value that specifies the type of Budget
+    budgetarrangement:
+      type: object
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/amount'
+      description: 'An arrangement which is specifying an estimate of costs, revenues, and resources over a specified period, reflecting a reading of future financial conditions and goals. (adapted from Business Dictionary)'
+    plannedaction:
+      type: object
+      properties:
+        PlannedAction:
+          type: string
+          description: 'An action that is arranged in a plan for doing or achieving something '
+          format: class
+      description: 'An action that is arranged in a plan for doing or achieving something '
+    plantypevalues:
+      enum:
+        - AdministrativePlan
+        - ManagementPlan
+        - StratgyPlan
+        - FinancialPlan
+        - DevelopmentPlan
+      type: string
+      description: ">\r\n* `AdministrativePlan` - \r\n* `ManagementPlan` - \r\n* `StratgyPlan` - \r\n* `FinancialPlan` - \r\n* `DevelopmentPlan` - \r\n"
+    plan:
+      type: object
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/goal'
+        PlanBudget:
+          $ref: '#/components/schemas/budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/plannedaction'
+        PlanType:
+          $ref: '#/components/schemas/plantypevalues'
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/text'
+      description: ''
+    feeplan:
+      type: object
+      properties:
+        FeePlanName:
+          $ref: '#/components/schemas/name'
+        FeePlanType:
+          $ref: '#/components/schemas/feeplantypevalues'
+        FeePlan:
+          $ref: '#/components/schemas/plan'
+      description: "An arranged FeeRatePlan\n"
+    debitcreditindicatortvalues:
+      enum:
+        - Debit
+        - Credit
+      type: string
+      description: ">\r\n* `Debit` - Transaction is a debt entry\r\n* `Credit` - Transaction is a credit entry\r\n"
+    adjustmentdirectiontypevalues:
+      enum:
+        - Added
+        - Substracted
+      type: string
+      description: ">\r\n* `Added` - Adjustment amount must be added to the total amount.\r\n* `Substracted` - Adjustment amount must be substracted from the total amount.\r\n"
+    chargebearertypevalues:
+      enum:
+        - Bornebydebtor
+        - Bornebycreditor
+        - Shared
+        - Followingservicelevel
+      type: string
+      description: ">\r\n* `Bornebydebtor` - All transaction charges are to be borne by the debtor.\r\n* `Bornebycreditor` - All transaction charges are to be borne by the creditor.\r\n* `Shared` - In a credit transfer context, means that transaction charges on the sender side are to be borne by the debtor, transaction charges on the receiver side are to be borne by the creditor. In a direct debit context, means that transaction charges on the sender side are to be borne by the creditor, transaction charges on the receiver side are to be borne by the debtor.\r\n* `Followingservicelevel` - Charges are to be applied following the rules agreed in the service level and/or scheme.\r\n"
+    feearrangement:
+      type: object
+      properties:
+        FeeType:
+          $ref: '#/components/schemas/feetypevalues'
+        FeeAmount:
+          $ref: '#/components/schemas/amount'
+        FeeRate:
+          $ref: '#/components/schemas/rate'
+        FeeEffectivePeriod:
+          $ref: '#/components/schemas/datetimeperiod'
+        FeeDueDate:
+          $ref: '#/components/schemas/datetime'
+        FeePlan:
+          $ref: '#/components/schemas/feeplan'
+        FeeCreditDebitIndicator:
+          $ref: '#/components/schemas/debitcreditindicatortvalues'
+        FeeReason:
+          $ref: '#/components/schemas/text'
+        FeeDirection:
+          $ref: '#/components/schemas/adjustmentdirectiontypevalues'
+        FeeBearerType:
+          $ref: '#/components/schemas/chargebearertypevalues'
+      description: The derived fee amount to be charged Adjustment|Adjustment (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022 BM ()
+    financialtransactiontypevalues:
+      enum:
+        - PricingTransaction
+        - FeeTransaction
+        - WithdrawalTransaction
+        - DepositTransaction
+        - PaymentTransaction
+        - ClearingTransaction
+        - SettlementTransaction
+        - Reconciliationtransaction
+        - Updatetransaction
+        - Securitiestransaction
+        - RepaymentTransaction
+      type: string
+      description: "The sub-type of financial transaction ||\r\n|"
+    TransactionScheduleFacility:
+      type: object
+      properties:
+        ProductInstanceReference:
+          $ref: '#/components/schemas/productagreement'
+        ProductandServiceType:
+          $ref: '#/components/schemas/text'
+        TransactionScheduleFulfillmentSchedule:
+          $ref: '#/components/schemas/schedule'
+        TransactionScheduleWorkTaskRecord:
+          $ref: '#/components/schemas/task'
+        TransactionScheduleWorkTaskType:
+          $ref: '#/components/schemas/text'
+        TransactionScheduleWorkTaskDescription:
+          $ref: '#/components/schemas/text'
+        TransactionScheduleWorkTaskWorkProducts:
+          $ref: '#/components/schemas/workproduct'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/documentdirectoryentry'
+        TransactionScheduleWorkTaskResult:
+          $ref: '#/components/schemas/task'
+        TransactionScheduleTaskFeeTransaction:
+          $ref: '#/components/schemas/transaction'
+        TransactionScheduleWorkTaskFeeTransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionScheduleWorkTaskFeeTransactionType:
+          $ref: '#/components/schemas/transactiontypevalues'
+        TransactionScheduleWorkTaskFeeTransactionCharge:
+          $ref: '#/components/schemas/feearrangement'
+        TransactionScheduleFinancialTransaction:
+          $ref: '#/components/schemas/transaction'
+        TransactionScheduleFinancialTransactionProductInstanceReference:
+          $ref: '#/components/schemas/productagreement'
+        TransactionScheduleFinancialTransactionType:
+          $ref: '#/components/schemas/financialtransactiontypevalues'
+        TransactionScheduleFinancialTransactionDescription:
+          $ref: '#/components/schemas/text'
+        TransactionScheduleFinancialTransactionAmount:
+          $ref: '#/components/schemas/amount'
+        CorrespondenceInstanceReference:
+          $ref: '#/components/schemas/identifier'
+        DateType:
+          $ref: '#/components/schemas/datetimetypevalues'
+        Date:
+          $ref: '#/components/schemas/datetime'
+      description: 'Fulfill any scheduled and ad-hoc obligations under a service arrangement, most typically for a financial product or facility within Transaction Engine. '
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TransactionScheduleFacility:
+      description: TransactionScheduleFacility
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionScheduleFacility'
+  parameters:
+    transactionengineid:
+      name: transactionengineid
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+  requestBodies:
+    TransactionScheduleFacility:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TransactionScheduleFacility'
+      required: true
