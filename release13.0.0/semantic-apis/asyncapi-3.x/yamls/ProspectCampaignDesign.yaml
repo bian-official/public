@@ -1,0 +1,617 @@
+asyncapi: 3.0.0
+info:
+  title: Prospect Campaign Design
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Design and refine
+    prospect campaign specifications based on their impact
+channels:
+  ProspectCampaignSpecification/Created:
+    address: ProspectCampaignSpecification/Created
+    messages:
+      ProspectCampaignSpecification-created.message:
+        $ref: '#/components/messages/ProspectCampaignSpecification'
+    description: ''
+  ProspectCampaignSpecification/Updated:
+    address: ProspectCampaignSpecification/Updated
+    messages:
+      ProspectCampaignSpecification-updated.message:
+        $ref: '#/components/messages/ProspectCampaignSpecification'
+    description: ''
+operations:
+  ProspectCampaignSpecification-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ProspectCampaignSpecification~1Created'
+    summary: ProspectCampaignSpecification
+    messages:
+      - $ref: >-
+          #/channels/ProspectCampaignSpecification~1Created/messages/ProspectCampaignSpecification-created.message
+  ProspectCampaignSpecification-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ProspectCampaignSpecification~1Updated'
+    summary: ProspectCampaignSpecification
+    messages:
+      - $ref: >-
+          #/channels/ProspectCampaignSpecification~1Updated/messages/ProspectCampaignSpecification-updated.message
+components:
+  messages:
+    ProspectCampaignSpecification:
+      name: ProspectCampaignSpecification
+      description: >-
+        Create and maintain a design for a procedure, product/service model or
+        other such entity  within Prospect Campaign Design. 
+
+        Example: Create and maintain product designs and analytical models.
+      payload:
+        $ref: '#/components/schemas/ProspectCampaignSpecification'
+  schemas:
+    ProspectCampaignSpecification:
+      type: object
+      description: ''
+      properties:
+        Campaigntypevalues:
+          enum:
+            - MarketingCampaign
+            - SocialCampaign
+            - PoliticalCampaign
+        ProspectCampaignDescription:
+          $ref: '#/components/schemas/Text'
+        ProspectCampaignMetrics:
+          $ref: '#/components/schemas/Metric'
+        ProspectCampaignMetricDefinition:
+          $ref: '#/components/schemas/Text'
+        ProspectCampaignMetricGoal:
+          $ref: '#/components/schemas/Goal'
+        ProspectCampaignSpecification:
+          $ref: '#/components/schemas/Text'
+        ProspectCampaignProductandServiceUsage:
+          type: string
+          format: Object
+          description: "Details how the campaign aligns with selected products and services, including pricing considerations ||\r\n|"
+        ProspectCampaignProductandServiceType:
+          $ref: '#/components/schemas/Text'
+        ProductandServiceCampaignEngagementDescription:
+          $ref: '#/components/schemas/Text'
+        ProductandServiceCampaignTransferPricingArrangement:
+          type: string
+          format: Object
+          description: "Describes how any discounted costs are to be accounted for by the product fulfillment function (e.g. borne by fulfillment business unit, compensated by campaign budget) ||\r\n|"
+        ProspectCampaignExecutionGuidelines:
+          $ref: '#/components/schemas/RuleSet'
+        ProspectCampaignEligibility:
+          $ref: '#/components/schemas/Arrangement'
+        ProspectCampaignQualifications:
+          type: string
+          format: Object
+          description: "Defines any qualifications or credentials required of the bank unit or employees to execute the campaign (e.g. product certified, sign-off authority level) ||\r\n|"
+        ProspectCampaignInteractionGuide:
+          $ref: '#/components/schemas/ProspectCampaignRuleSet'
+        ProspectCampaignConsumables:
+          $ref: '#/components/schemas/ItemInventory'
+        ProspectCampaignConsumableType:
+          $ref: '#/components/schemas/Text'
+        ProspectCampaignConsumableDescription:
+          $ref: '#/components/schemas/Text'
+        ProspectCampaignPerformanceRecord:
+          $ref: '#/components/schemas/ProspectCampaignAssessment'
+        ProspectCampaignProcedureInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ProspectCampaignProcedureSet-up:
+          $ref: '#/components/schemas/Arrangement'
+        ProspectCampaignProcedureVersionNumber:
+          type: string
+          format: Number
+          description: >-
+            The prospect campaign version number used in the event Number|Number
+            (https://www.iso20022.org/standardsrepository/type/Number)|Standard|ISO20022
+            BM ()
+        ProspectCampaignProcedureResult:
+          $ref: '#/components/schemas/ProspectCampaignProcedure'
+    Text:
+      type: object
+      format: Text
+      description: "The specification of the consumable item in whatever form appropriate. Note sourcing/procurement of the item is handled by execution) ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Metric:
+      type: object
+      format: Metric
+      description: "Metrics that are defined to assess the target and actual impact of the campaign ||\r\n|"
+      properties:
+        Metric:
+          type: string
+          format: Class
+          description: >-
+            A metric is a standard or system of measurement that quantifies
+            certain characteristics, properties, or performance of a given
+            entity. 
+    Goal:
+      type: object
+      format: Goal
+      description: "A description of the target performance for the metric that can be defined for different usage scenarios as appropriate ||\r\n|"
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "Reference to the business unit responsible for the campaign execution ||\r\n|"
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        Reference to the prospect campaign execution event
+        GenericIdentification|GenericIdentification
+        (https://www.iso20022.org/standardsrepository/type/GenericIdentification)|Standard|ISO20022
+        BM ()
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Guidelines for the execution of the campaign
+        GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        Details of the deployment set-up/configuration of the campaign for
+        reference Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+        Arrangement:
+          type: string
+          format: Class
+          description: >-
+            An agreed commitment to perform actions that meet obligations under
+            an agreement 
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    ProspectCampaignRuleSet:
+      type: object
+      format: ProspectCampaignRuleSet
+      description: "Provides the structured narrative and any pricing/negotiating frameworks that are used in the execution of the campaign ||\r\n|"
+      properties:
+        ProspectCampaignRuleSet:
+          type: string
+          format: Class
+          description: >-
+            A set of rules to guide and direct the Prospect Campaign. 
+
+
+            For example:
+
+
+            "Execution Guideline": The guideline for the execution of the
+            campaign.
+
+
+            "Eligibility Criteria": The eligibility criteria to be applied to
+            select suitable candidates for the prospect campaign. (Note
+            candidate lists are developed by Campaign Execution)
+
+
+            "Interaction Guide": The guideline that provides the structured
+            narrative and any pricing/negotiating frameworks which are used in
+            the execution of the campaign 
+    ItemInventory:
+      type: object
+      format: ItemInventory
+      description: "Design specification of any consumables that are to be used in the execution of the campaign (e.g. brochures) ||\r\n|"
+      properties:
+        ItemInventoryType:
+          $ref: '#/components/schemas/Text'
+    ProspectCampaignAssessment:
+      type: object
+      format: ProspectCampaignAssessment
+      description: "Maintains a record of the use and impact of prospect campaign versions over the life of the campaign ||\r\n|"
+      properties:
+        ProspectCampaignAssessment:
+          type: string
+          format: Class
+          description: A evaluation to assess the impact of the prospect campaign.
+    ProspectCampaignProcedure:
+      type: object
+      format: ProspectCampaignProcedure
+      description: "The result/impact of the overall prospect campaign event (that can include multiple identified leads/opportunities) ||\r\n|"
+      properties:
+        ProspectCampaignProcedure:
+          type: string
+          format: Class
+          description: >-
+            A procedure to handle the deployment, execution and on-going
+            refinement of a prospect campaign. 

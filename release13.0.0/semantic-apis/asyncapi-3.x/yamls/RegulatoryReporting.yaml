@@ -1,0 +1,770 @@
+asyncapi: 3.0.0
+info:
+  title: Regulatory Reporting
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    administers and orchestrates the tasks required to meet the bank's
+    regulatory reporting obligations
+channels:
+  RegulatoryComplianceAdministrativePlan/Created:
+    address: RegulatoryComplianceAdministrativePlan/Created
+    messages:
+      RegulatoryComplianceAdministrativePlan-created.message:
+        $ref: '#/components/messages/RegulatoryComplianceAdministrativePlan'
+    description: ''
+  RegulatoryComplianceAdministrativePlan/Updated:
+    address: RegulatoryComplianceAdministrativePlan/Updated
+    messages:
+      RegulatoryComplianceAdministrativePlan-updated.message:
+        $ref: '#/components/messages/RegulatoryComplianceAdministrativePlan'
+    description: ''
+  Enquiries/Created:
+    address: Enquiries/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Enquiries'
+    description: ''
+  Enquiries/Updated:
+    address: Enquiries/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Enquiries'
+    description: ''
+  Consolidation/Created:
+    address: Consolidation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Consolidation'
+    description: ''
+  Consolidation/Updated:
+    address: Consolidation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Consolidation'
+    description: ''
+  Authoring/Created:
+    address: Authoring/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Authoring'
+    description: ''
+  Authoring/Updated:
+    address: Authoring/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Authoring'
+    description: ''
+operations:
+  RegulatoryComplianceAdministrativePlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryComplianceAdministrativePlan~1Created'
+    summary: RegulatoryComplianceAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/RegulatoryComplianceAdministrativePlan~1Created/messages/RegulatoryComplianceAdministrativePlan-created.message
+  RegulatoryComplianceAdministrativePlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryComplianceAdministrativePlan~1Updated'
+    summary: RegulatoryComplianceAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/RegulatoryComplianceAdministrativePlan~1Updated/messages/RegulatoryComplianceAdministrativePlan-updated.message
+  Enquiries/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Enquiries~1Created'
+    summary: Enquiries
+    messages:
+      - $ref: '#/channels/Enquiries~1Created/messages/publish.message'
+  Enquiries/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Enquiries~1Updated'
+    summary: Enquiries
+    messages:
+      - $ref: '#/channels/Enquiries~1Updated/messages/publish.message'
+  Consolidation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Consolidation~1Created'
+    summary: Consolidation
+    messages:
+      - $ref: '#/channels/Consolidation~1Created/messages/publish.message'
+  Consolidation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Consolidation~1Updated'
+    summary: Consolidation
+    messages:
+      - $ref: '#/channels/Consolidation~1Updated/messages/publish.message'
+  Authoring/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Authoring~1Created'
+    summary: Authoring
+    messages:
+      - $ref: '#/channels/Authoring~1Created/messages/publish.message'
+  Authoring/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Authoring~1Updated'
+    summary: Authoring
+    messages:
+      - $ref: '#/channels/Authoring~1Updated/messages/publish.message'
+components:
+  messages:
+    RegulatoryComplianceAdministrativePlan:
+      name: RegulatoryComplianceAdministrativePlan
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Regulatory Reporting. 
+      payload:
+        $ref: '#/components/schemas/RegulatoryComplianceAdministrativePlan'
+    Enquiries:
+      name: Enquiries
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Enquiries'
+    Consolidation:
+      name: Consolidation
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Consolidation'
+    Authoring:
+      name: Authoring
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Authoring'
+  schemas:
+    Enquiries:
+      type: object
+      description: ''
+      properties:
+        RegulatoryEnquiry:
+          type: string
+          format: Object
+          description: "The description of the requested information for the regulatory enquiry ||\r\n|"
+        EnquiryBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        EnquiryProductandServiceReference:
+          $ref: '#/components/schemas/BankingProduct'
+        EnquiryCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        EnquiryTransactionRecords:
+          $ref: '#/components/schemas/Text'
+        RegulatoryEnquiryWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        RegulatoryEnquiryResult:
+          type: string
+          format: Object
+          description: "The record or report that is the outcome/result of the enquiry ||\r\n|"
+        RegulatoryEnquiryDocumentReference:
+          $ref: '#/components/schemas/Document'
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "The business unit being assessed for enquiry if appropriate ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    BankingProduct:
+      type: object
+      format: BankingProduct
+      description: >-
+        The instances of products/services being assessed if appropriate
+        Product_x000D_
+
+        |Product
+        (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+        BM ()
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: BankingProduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - Commercialdescriptioncodename
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+        Productstatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productstatus
+    Status:
+      type: object
+      format: Status
+      description: 'Status of the document (e.g. delivered, paid, etc.). ISO20022 '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the enquiry ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    Document:
+      type: object
+      format: Document
+      description: "The document reference for all classified/archived documents from the enquiry Document\__x000D_\n|Document (https://www.iso20022.org/standardsrepository/type/Document)|Standard|ISO20022 BM ()"
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+    Consolidation:
+      type: object
+      description: ''
+      properties:
+        RegulatoryReportTypeContentRequirements:
+          $ref: '#/components/schemas/Text'
+        SourceBusinessUnitorEmployeeReference:
+          $ref: '#/components/schemas/Involvedparty'
+        SourceProductandServiceReference:
+          $ref: '#/components/schemas/BankingProduct'
+        SourceCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        SourceTransactionRecords:
+          $ref: '#/components/schemas/Text'
+    Authoring:
+      type: object
+      description: ''
+      properties:
+        RegulatoryReportTypeComplianceReportingRequirements:
+          $ref: '#/components/schemas/Text'
+        ReportingPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportingBusinessLegalEntityReference:
+          $ref: '#/components/schemas/Organisation'
+        ReportingBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        RegulatoryReportReference:
+          $ref: '#/components/schemas/RegulatoryReport'
+        RegulatoryReport:
+          $ref: '#/components/schemas/RegulatoryReport'
+        RegulatoryReportDocumentReference:
+          $ref: '#/components/schemas/Document'
+    Organisation:
+      type: object
+      format: Organisation
+      description: "Refers to the company group or subsidiary covered by the regulatory report Organisation\__x000D_\n|Organisation\_ (https://www.iso20022.org/standardsrepository/type/Organisation)|Standard|ISO20022 BM ()"
+      properties:
+        OrganisationStructureHierarchy:
+          $ref: '#/components/schemas/Text'
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Organisationidentification'
+        OrganisationSector:
+          $ref: '#/components/schemas/Text'
+        LegalEntityIndicator:
+          type: string
+          format: String
+          description: ''
+        OrganisationDate:
+          $ref: '#/components/schemas/Organisationdatetime'
+        Organisationtypevalues:
+          enum:
+            - LegalEntity
+            - Authority
+            - OrganisationUnit
+            - FinancialInstitution
+            - Charity
+            - GovernmentBody
+          format: Organisation
+        OrganisationName:
+          $ref: '#/components/schemas/Organisationname'
+        Organisationlegalstructuretypevalues:
+          enum:
+            - Corporation
+            - Individual
+            - Supranational
+            - Sovereign
+            - Municipal
+            - Province
+            - State
+            - County
+            - Partnership
+            - Financialinstitution
+            - National
+          format: Organisation
+    Organisationidentification:
+      type: object
+      format: Organisationidentification
+      description: ' '
+      properties:
+        Organisationidentificationtypevalues:
+          enum:
+            - LEI
+            - ELF
+            - MIC
+            - BICFI
+            - Bankpartyidentification
+            - Centralbankidentificationnumber
+            - Clearingidentificationnumber
+            - Certificateofincorporationnumber
+            - Countryidentificationcode
+            - Customernumber
+            - Datauniversalnumberingsystem
+            - Employeridentificationnumber
+            - Gs1glnidentifier
+            - SIREN
+            - SIRET
+            - Taxidentificationnumber
+            - EANGLN
+          format: Organisationidentification
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Organisationdatetime:
+      type: object
+      format: Organisationdatetime
+      description: ' '
+      properties:
+        OrganisatioDate:
+          $ref: '#/components/schemas/Datetime'
+        Organisationdatetimetypevalues:
+          enum:
+            - RegistrationDate
+            - EstablishmentDate
+            - EntityExpirationDate
+          format: Organisationdatetime
+    Organisationname:
+      type: object
+      format: Organisationname
+      description: ' '
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Organisationnametypevalues:
+          enum:
+            - ShortName
+            - TradingName
+            - LegalName
+          format: Organisationname
+    RegulatoryReport:
+      type: object
+      format: RegulatoryReport
+      description: "The regulatory report in any suitable format and media ||\r\n|"
+      properties:
+        RegulatoryReport:
+          type: string
+          format: Class
+          description: >-
+            Information needed due to regulatory and statutory requirements.
+            (ISO20022)
+
+
+            A report required to support operational transparency that
+            demonstrates compliance with some specification, law, policy,
+            restriction, or other rule specified by a regulatory agency. (FIBO)
+
+
+
+             
+    RegulatoryComplianceAdministrativePlan:
+      type: object
+      description: ''
+      properties:
+        RegulatoryAuthorityReference:
+          $ref: '#/components/schemas/RegulatoryAuthority'
+        RegulatoryReportingSchedule:
+          $ref: '#/components/schemas/Schedule'
+        RegulationReference:
+          $ref: '#/components/schemas/Regulation'
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+    RegulatoryAuthority:
+      type: object
+      format: RegulatoryAuthority
+      description: "Reference to the interested regulatory reporting authority ||\r\n|"
+      properties:
+        RegulatoryAuthority:
+          type: string
+          format: Class
+          description: 'An organisation that is alowed to impose regulations '
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The details of all regulatory reporting requirements and scheduled reporting tasks ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Regulation:
+      type: object
+      format: Regulation
+      description: "Reference to the regulation for which content is being collected ||\r\n|"
+      properties:
+        RegulationDefinition:
+          $ref: '#/components/schemas/Text'

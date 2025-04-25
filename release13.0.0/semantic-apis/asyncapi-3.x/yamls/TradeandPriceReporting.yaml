@@ -1,0 +1,713 @@
+asyncapi: 3.0.0
+info:
+  title: Trade and Price Reporting
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This Service Domain
+    operates an automated facility that reports executed market trades to the
+    market place as required by the rules of market participation
+channels:
+  MarketTradeReportingOperatingSession/Created:
+    address: MarketTradeReportingOperatingSession/Created
+    messages:
+      MarketTradeReportingOperatingSession-created.message:
+        $ref: '#/components/messages/MarketTradeReportingOperatingSession'
+    description: ''
+  MarketTradeReportingOperatingSession/Updated:
+    address: MarketTradeReportingOperatingSession/Updated
+    messages:
+      MarketTradeReportingOperatingSession-updated.message:
+        $ref: '#/components/messages/MarketTradeReportingOperatingSession'
+    description: ''
+  TransactionReporting/Created:
+    address: TransactionReporting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TransactionReporting'
+    description: ''
+  TransactionReporting/Updated:
+    address: TransactionReporting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TransactionReporting'
+    description: ''
+  TradeandPriceReportingOutcome/Created:
+    address: TradeandPriceReportingOutcome/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeandPriceReportingOutcome'
+    description: ''
+  TradeandPriceReportingOutcome/Updated:
+    address: TradeandPriceReportingOutcome/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeandPriceReportingOutcome'
+    description: ''
+  MarketTradeReportingOperatingSession/Notify:
+    address: MarketTradeReportingOperatingSession/Notify
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/MarketTradeReportingOperatingSessionNotify'
+  TransactionReporting/Notify:
+    address: TransactionReporting/Notify
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/TransactionReportingNotify'
+operations:
+  MarketTradeReportingOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketTradeReportingOperatingSession~1Created'
+    summary: MarketTradeReportingOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeReportingOperatingSession~1Created/messages/MarketTradeReportingOperatingSession-created.message
+  MarketTradeReportingOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketTradeReportingOperatingSession~1Updated'
+    summary: MarketTradeReportingOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeReportingOperatingSession~1Updated/messages/MarketTradeReportingOperatingSession-updated.message
+  TransactionReporting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TransactionReporting~1Created'
+    summary: TransactionReporting
+    messages:
+      - $ref: '#/channels/TransactionReporting~1Created/messages/publish.message'
+  TransactionReporting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TransactionReporting~1Updated'
+    summary: TransactionReporting
+    messages:
+      - $ref: '#/channels/TransactionReporting~1Updated/messages/publish.message'
+  TradeandPriceReportingOutcome/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeandPriceReportingOutcome~1Created'
+    summary: TradeandPriceReportingOutcome
+    messages:
+      - $ref: >-
+          #/channels/TradeandPriceReportingOutcome~1Created/messages/publish.message
+  TradeandPriceReportingOutcome/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeandPriceReportingOutcome~1Updated'
+    summary: TradeandPriceReportingOutcome
+    messages:
+      - $ref: >-
+          #/channels/TradeandPriceReportingOutcome~1Updated/messages/publish.message
+  MarketTradeReportingOperatingSession/Notify.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/MarketTradeReportingOperatingSession~1Notify'
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeReportingOperatingSession~1Notify/messages/subscribe.message
+  TransactionReporting/Notify.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/TransactionReporting~1Notify'
+    messages:
+      - $ref: '#/channels/TransactionReporting~1Notify/messages/subscribe.message'
+components:
+  messages:
+    MarketTradeReportingOperatingSession:
+      name: MarketTradeReportingOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Trade and
+        Price Reporting. 
+      payload:
+        $ref: '#/components/schemas/MarketTradeReportingOperatingSession'
+    TransactionReporting:
+      name: TransactionReporting
+      description: >-
+        An operational service or function supported within the Transaction
+        Reporting Function for doing Transaction Reporting Function
+      payload:
+        $ref: '#/components/schemas/TransactionReporting'
+    TradeandPriceReportingOutcome:
+      name: TradeandPriceReportingOutcome
+      description: >-
+        An operational service or function supported within the Transaction
+        Reporting Function for doing Transaction Reporting Function
+      payload:
+        $ref: '#/components/schemas/TradeandPriceReportingOutcome'
+    MarketTradeReportingOperatingSessionNotify:
+      name: MarketTradeReportingOperatingSessionNotify
+      payload:
+        $ref: '#/components/schemas/MarketTradeReportingOperatingSessionNotify'
+    TransactionReportingNotify:
+      name: TransactionReportingNotify
+      payload:
+        $ref: '#/components/schemas/TransactionReportingNotify'
+  schemas:
+    TransactionReporting:
+      type: object
+      description: ''
+      properties:
+        Preconditions:
+          $ref: '#/components/schemas/Condition'
+        Schedule:
+          $ref: '#/components/schemas/Schedule'
+        BusinessService:
+          $ref: '#/components/schemas/BusinessService'
+        MarketTradeReportingOperatingSessionReference:
+          $ref: '#/components/schemas/Session'
+        TransactionReportingFunctionReference:
+          $ref: '#/components/schemas/Function'
+        TransactionReportingFunctionType:
+          $ref: '#/components/schemas/Text'
+    Condition:
+      type: object
+      format: Condition
+      description: "The required status/situation and or tasks that need to be completed prior to the invocation of the feature ||\r\n|"
+      properties:
+        ConditionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ConditionName:
+          $ref: '#/components/schemas/Name'
+        ConditionValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ConditionDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ConditionStatus:
+          $ref: '#/components/schemas/Status'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: "The type of Transaction Reporting Function ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    BusinessService:
+      type: object
+      format: BusinessService
+      description: "The Transaction Reporting Function specific Business Service ||\r\n|"
+      properties:
+        Businessservicetypevalues:
+          enum:
+            - Businessservicetypevalues
+          format: BusinessService
+    Session:
+      type: object
+      format: Session
+      description: "Reference to Transaction Reporting Function ||\r\n|"
+      properties:
+        SessionDuration:
+          $ref: '#/components/schemas/Duration'
+        SessionDateTime:
+          $ref: '#/components/schemas/Datetime'
+        SessionStatus:
+          $ref: '#/components/schemas/Status'
+        SessionType:
+          $ref: '#/components/schemas/Sessiontype'
+        SessionScheduel:
+          $ref: '#/components/schemas/Schedule'
+    Duration:
+      type: object
+      format: Duration
+      description: 'The time the session was active '
+      properties:
+        Duration:
+          type: string
+          format: DataType
+          description: >-
+            A duration is the specification of a length of time without a fixed
+            start or end time, expressed in Gregorian calendar time units (Year,
+            Month, Week, Day) and Hours, Minutes or Seconds. (UN/CEFACT) 
+    Sessiontype:
+      type: object
+      format: Sessiontype
+      description: >-
+        Specifies the classification of session like Customer Contact Session,
+        Channel Operating Session, Device Operating Session, etc. 
+      properties:
+        SessionTypeName:
+          $ref: '#/components/schemas/Name'
+        Sessiontypevalues:
+          enum:
+            - ContactHandlingSession
+            - CustomerDialogueSession
+            - ChannelOperatingSession
+            - GatewayOperatingSession
+            - SwitchOperatingSession
+            - DeviceOperatingSession
+            - InterbankTransactionOperatingSessi
+            - CorrespondenceOperatingSession
+            - InteractiveHelpOperatingSession
+            - ACHOperatingSession
+          format: Sessiontype
+    Function:
+      type: object
+      format: Function
+      description: "Reference to Transaction Reporting Function ||\r\n|"
+      properties:
+        Function:
+          type: string
+          format: Class
+          description: >-
+            A kind of action.
+
+
+            Functions as Behaviour Qualifier: The collection of operational
+            services/functions offered by the operational facility. 
+    TradeandPriceReportingOutcome:
+      type: object
+      description: ''
+      properties:
+        TradeandPriceReportingIncident:
+          $ref: '#/components/schemas/Event'
+        TradeandPriceReportingProvision:
+          $ref: '#/components/schemas/Text'
+    Event:
+      type: object
+      format: Event
+      description: " ||\r\n|"
+      properties:
+        EventType:
+          $ref: '#/components/schemas/Text'
+        EventDateTime:
+          $ref: '#/components/schemas/Datetime'
+        EventDescription:
+          $ref: '#/components/schemas/Text'
+        EventSource:
+          type: string
+          format: Object
+          description: ''
+        EventLocation:
+          $ref: '#/components/schemas/Location'
+        EventAction:
+          $ref: '#/components/schemas/Action'
+        EventStatus:
+          $ref: '#/components/schemas/Status'
+        EventValue:
+          $ref: '#/components/schemas/Value'
+        EventValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        EventIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    MarketTradeReportingOperatingSession:
+      type: object
+      description: ''
+      properties:
+        MarketTradeReportingOperatingSessionSchedule:
+          $ref: '#/components/schemas/Schedule'
+        MarketTradeReportingOperatingSessionStatus:
+          $ref: '#/components/schemas/Status'
+        MarketTradeReportingOperatingSessionUsageLog:
+          $ref: '#/components/schemas/Log'
+        MarketTradeReportingOperatingSessionAssociatedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+        MarketTradeReportingOperatingSessionServiceProviderReference:
+          $ref: '#/components/schemas/Involvedparty'
+        MarketTradeReportingOperatingSessionType:
+          $ref: '#/components/schemas/Sessiontype'
+        MarketTradeReportingOperatingSessionServiceProviderSchedule:
+          $ref: '#/components/schemas/Schedule'
+        MarketTradeReportingOperatingSessionServiceType:
+          $ref: '#/components/schemas/Servicetype'
+        MarketTradeReportingOperatingSessionServiceConfiguration:
+          $ref: '#/components/schemas/SystemConfigurationOption'
+        MarketTradeReportingOperatingSessionReference:
+          $ref: '#/components/schemas/Session'
+    Log:
+      type: object
+      format: Log
+      description: "Reference to the log of (usage) ativities/events  of Market Trade Reporting Operating Session ||\r\n|"
+      properties:
+        LogType:
+          $ref: '#/components/schemas/Text'
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Servicetype:
+      type: object
+      format: Servicetype
+      description: "A Classification value that distinguishes between the type of services within Market Trade Reporting Operating Session ||\r\n|"
+      properties:
+        ServiceTypeName:
+          $ref: '#/components/schemas/Name'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Servicetype
+    SystemConfigurationOption:
+      type: object
+      format: SystemConfigurationOption
+      description: "The configuration of Market Trade Reporting Operating Session ||\r\n|"
+      properties:
+        SystemConfigurationOption:
+          type: string
+          format: Class
+          description: >-
+            Options for configuring the system or the function/feature of
+            system.
+             
+    MarketTradeReportingOperatingSessionNotify:
+      type: object
+      description: ''
+      properties:
+        MarketTradeReportingOperatingSessionSchedule:
+          $ref: '#/components/schemas/Schedule'
+        MarketTradeReportingOperatingSessionStatus:
+          $ref: '#/components/schemas/Status'
+        MarketTradeReportingOperatingSessionUsageLog:
+          $ref: '#/components/schemas/Log'
+        MarketTradeReportingOperatingSessionAssociatedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+        MarketTradeReportingOperatingSessionServiceProviderReference:
+          $ref: '#/components/schemas/Involvedparty'
+        MarketTradeReportingOperatingSessionType:
+          $ref: '#/components/schemas/Sessiontype'
+        MarketTradeReportingOperatingSessionServiceProviderSchedule:
+          $ref: '#/components/schemas/Schedule'
+        MarketTradeReportingOperatingSessionServiceType:
+          $ref: '#/components/schemas/Servicetype'
+        MarketTradeReportingOperatingSessionServiceConfiguration:
+          $ref: '#/components/schemas/SystemConfigurationOption'
+        MarketTradeReportingOperatingSessionReference:
+          $ref: '#/components/schemas/Session'
+    TransactionReportingNotify:
+      type: object
+      description: ''
+      properties:
+        Preconditions:
+          $ref: '#/components/schemas/Condition'
+        Schedule:
+          $ref: '#/components/schemas/Schedule'
+        BusinessService:
+          $ref: '#/components/schemas/BusinessService'
+        MarketTradeReportingOperatingSessionReference:
+          $ref: '#/components/schemas/Session'
+        TransactionReportingFunctionReference:
+          $ref: '#/components/schemas/Function'
+        TransactionReportingFunctionType:
+          $ref: '#/components/schemas/Text'

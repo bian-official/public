@@ -1,0 +1,351 @@
+asyncapi: 3.0.0
+info:
+  title: Servicing Order
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles the processing of a customer servicing request as a predefined
+    procedure. A range of standard servicing requests can be supported. The
+    process can include a check of permissions when the request is made by a
+    third party/service provider
+channels:
+  ServicingOrderProcedure/Created:
+    address: ServicingOrderProcedure/Created
+    messages:
+      ServicingOrderProcedure-created.message:
+        $ref: '#/components/messages/ServicingOrderProcedure'
+    description: ''
+  ServicingOrderProcedure/Updated:
+    address: ServicingOrderProcedure/Updated
+    messages:
+      ServicingOrderProcedure-updated.message:
+        $ref: '#/components/messages/ServicingOrderProcedure'
+    description: ''
+operations:
+  ServicingOrderProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingOrderProcedure~1Created'
+    summary: ServicingOrderProcedure
+    messages:
+      - $ref: >-
+          #/channels/ServicingOrderProcedure~1Created/messages/ServicingOrderProcedure-created.message
+  ServicingOrderProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingOrderProcedure~1Updated'
+    summary: ServicingOrderProcedure
+    messages:
+      - $ref: >-
+          #/channels/ServicingOrderProcedure~1Updated/messages/ServicingOrderProcedure-updated.message
+components:
+  messages:
+    ServicingOrderProcedure:
+      name: ServicingOrderProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Servicing
+        Order. 
+      payload:
+        $ref: '#/components/schemas/ServicingOrderProcedure'
+  schemas:
+    ServicingOrderProcedure:
+      type: object
+      description: ''
+      properties:
+        ThirdPartyReference:
+          $ref: '#/components/schemas/Party'
+        ThirdPartyServicingMandateReference:
+          $ref: '#/components/schemas/Text'
+        ThirdPartyServicingMandate:
+          $ref: '#/components/schemas/Text'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerEligibilityAssessmentInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        ServicingOrderType:
+          $ref: '#/components/schemas/Text'
+        ServicingOrderTaskRecord:
+          $ref: '#/components/schemas/Task'
+        ServicingOrderDescription:
+          $ref: '#/components/schemas/Text'
+        Date:
+          $ref: '#/components/schemas/Datetime'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        ServicingOrderWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+        ServicingOrderWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Party:
+          type: string
+          format: Class
+          description: >-
+            A party represents an autonomous entity in which a bank has a
+            business interest. It has a legal definition and identity. A party
+            is a Person, Organization, (a proposed definition for BIAN BOM
+            adapted from BIAN Party Working Group) 
+
+
+            Entity involved in an activity. (ISO20022) 
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        The date and time that the servicing order is processed
+        ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: "Defines the processing tasks and their sequencing followed by the servicing order ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "The customer requesting the servicing order directly or the customer that is being serviced indirectly by the third party ||\r\n|"
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+    Task:
+      type: object
+      format: Task
+      description: "The outcome of the servicing order ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Employees involved in the servicing order ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'

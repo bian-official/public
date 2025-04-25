@@ -1,0 +1,598 @@
+asyncapi: 3.0.0
+info:
+  title: Securities Position Keeping
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains a securities transaction log to support securities investment
+    activity
+channels:
+  SecuritiesPositionLog/Created:
+    address: SecuritiesPositionLog/Created
+    messages:
+      SecuritiesPositionLog-created.message:
+        $ref: '#/components/messages/SecuritiesPositionLog'
+    description: ''
+  SecuritiesPositionLog/Updated:
+    address: SecuritiesPositionLog/Updated
+    messages:
+      SecuritiesPositionLog-updated.message:
+        $ref: '#/components/messages/SecuritiesPositionLog'
+    description: ''
+  SecuritiesTransactionCapture/Created:
+    address: SecuritiesTransactionCapture/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/SecuritiesTransactionCapture'
+    description: ''
+  SecuritiesTransactionCapture/Updated:
+    address: SecuritiesTransactionCapture/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/SecuritiesTransactionCapture'
+    description: ''
+operations:
+  SecuritiesPositionLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesPositionLog~1Created'
+    summary: SecuritiesPositionLog
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesPositionLog~1Created/messages/SecuritiesPositionLog-created.message
+  SecuritiesPositionLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesPositionLog~1Updated'
+    summary: SecuritiesPositionLog
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesPositionLog~1Updated/messages/SecuritiesPositionLog-updated.message
+  SecuritiesTransactionCapture/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesTransactionCapture~1Created'
+    summary: SecuritiesTransactionCapture
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesTransactionCapture~1Created/messages/publish.message
+  SecuritiesTransactionCapture/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/SecuritiesTransactionCapture~1Updated'
+    summary: SecuritiesTransactionCapture
+    messages:
+      - $ref: >-
+          #/channels/SecuritiesTransactionCapture~1Updated/messages/publish.message
+components:
+  messages:
+    SecuritiesPositionLog:
+      name: SecuritiesPositionLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Securities Position Keeping. 
+      payload:
+        $ref: '#/components/schemas/SecuritiesPositionLog'
+    SecuritiesTransactionCapture:
+      name: SecuritiesTransactionCapture
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/SecuritiesTransactionCapture'
+  schemas:
+    SecuritiesTransactionCapture:
+      type: object
+      description: ''
+      properties:
+        SecuritiesPostingType:
+          $ref: '#/components/schemas/Text'
+        SecuritiesPostingTransaction:
+          $ref: '#/components/schemas/Transaction'
+        SecuritiesPostingValueDate:
+          $ref: '#/components/schemas/Datetime'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        The logged securities transaction. Note the log can handle a range of
+        transactions covering bought and sold amounts and securities instrument
+        related transactions such as dividend payments
+        ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'The name of transaction. '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        The date of the securities transaction ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    SecuritiesPositionLog:
+      type: object
+      description: ''
+      properties:
+        SecuritiesTransactionLogType:
+          $ref: '#/components/schemas/Text'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CounterpartyReference:
+          type: string
+          format: Object
+          description: "Reference to a counterparty for the log if appropriate (e.g. merchant reference, corporate reference) ||\r\n|"
+        SecuritiesPositionLogInstrumentProfile:
+          type: string
+          format: Object
+          description: "Details the range of instruments that are tracked by the log (each instrument has its own transaction record/holding position ||\r\n|"
+        SecuritiesPositionLogInstrumentRecord:
+          type: string
+          format: Object
+          description: "Details for an individual tracked instrument type (the log track transactions for multiple securities/instruments) ||\r\n|"
+        SecuritiesInstrumentType:
+          $ref: '#/components/schemas/Text'
+        SecuritiesInstrumentReference:
+          type: string
+          format: Object
+          description: "The specific instrument trading identifier (e.g. NASDAQ Id) ||\r\n|"
+        SecuritiesPositionLimits:
+          type: string
+          format: Object
+          description: "Basic position limits that are maintained as an aspect of the log (these can include securities holdings and related instrument properties such as associated dividends entitlements) ||\r\n|"
+        Limittypevalues:
+          enum:
+            - Multilateral
+            - Bilateral
+            - Netbilateral
+            - Indirectbilateral
+            - Global
+            - Mandatorybilateral
+            - Discretionarybilateral
+            - Directdebit
+            - Singlecustomerdirectdebit
+            - Singlefinancialinstitutiondirectde
+            - Totaldailycustomerdirectdebit
+            - Totaldailyfinancialinstitutiondire
+            - Autocollateralisation
+            - Unsecuredcredit
+            - Externalguarantee
+        SecuritiesPositionLimitSettings:
+          type: string
+          format: Object
+          description: "The position definition, associated limit settings and rules ||\r\n|"
+        SecuritiesPositionLimitValue:
+          $ref: '#/components/schemas/Amount'
+        SecuritiesAmountBlock:
+          type: string
+          format: Object
+          description: "Support for recording blocks on the log position (handling is by the associated investment account fulfillment service domain) ||\r\n|"
+        SecuritiesAmountBlockType:
+          $ref: '#/components/schemas/Text'
+        Priority:
+          type: string
+          format: Object
+          description: "Priority classification for the block ||\r\n|"
+        Amount:
+          $ref: '#/components/schemas/Amount'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+        Date:
+          $ref: '#/components/schemas/Datetime'
+        InitiationDate:
+          $ref: '#/components/schemas/Datetime'
+        Status:
+          $ref: '#/components/schemas/Status'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "The product/service investment account for which this is the securities transaction log ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The amount of the block CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+        Amount:
+          type: string
+          format: DataType
+          description: >-
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+            The decimal seperator is a dot.
+
+
+
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. The decimal
+            separator is a dot. (ISO20022)
+
+            Note: A zero amount is considered a positive amount.
+
+            total number of digits: 18
+
+            number of digits in fractional part: 5
+
+            minInclusive: 0 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
