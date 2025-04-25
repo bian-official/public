@@ -1,0 +1,822 @@
+asyncapi: 3.0.0
+info:
+  title: Asset And Liability Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | The unit overseeing the 
+    banks asset & liability policies and position
+channels:
+  AssetAndLiabilityPortfolioStrategy/Created:
+    address: AssetAndLiabilityPortfolioStrategy/Created
+    messages:
+      AssetAndLiabilityPortfolioStrategy-created.message:
+        $ref: '#/components/messages/AssetAndLiabilityPortfolioStrategy'
+    description: ''
+  AssetAndLiabilityPortfolioStrategy/Updated:
+    address: AssetAndLiabilityPortfolioStrategy/Updated
+    messages:
+      AssetAndLiabilityPortfolioStrategy-updated.message:
+        $ref: '#/components/messages/AssetAndLiabilityPortfolioStrategy'
+    description: ''
+  TransactionAlignment/Created:
+    address: TransactionAlignment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TransactionAlignment'
+    description: ''
+  TransactionAlignment/Updated:
+    address: TransactionAlignment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TransactionAlignment'
+    description: ''
+operations:
+  AssetAndLiabilityPortfolioStrategy-created:
+    action: receive
+    channel:
+      $ref: '#/channels/AssetAndLiabilityPortfolioStrategy~1Created'
+    summary: AssetAndLiabilityPortfolioStrategy
+    messages:
+      - $ref: >-
+          #/channels/AssetAndLiabilityPortfolioStrategy~1Created/messages/AssetAndLiabilityPortfolioStrategy-created.message
+  AssetAndLiabilityPortfolioStrategy-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/AssetAndLiabilityPortfolioStrategy~1Updated'
+    summary: AssetAndLiabilityPortfolioStrategy
+    messages:
+      - $ref: >-
+          #/channels/AssetAndLiabilityPortfolioStrategy~1Updated/messages/AssetAndLiabilityPortfolioStrategy-updated.message
+  TransactionAlignment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TransactionAlignment~1Created'
+    summary: TransactionAlignment
+    messages:
+      - $ref: '#/channels/TransactionAlignment~1Created/messages/publish.message'
+  TransactionAlignment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TransactionAlignment~1Updated'
+    summary: TransactionAlignment
+    messages:
+      - $ref: '#/channels/TransactionAlignment~1Updated/messages/publish.message'
+components:
+  messages:
+    AssetAndLiabilityPortfolioStrategy:
+      name: AssetAndLiabilityPortfolioStrategy
+      description: >-
+        Define the policies, goals & objectives and strategies for an
+        organizational entity or unit  within Asset And Liability Management. 
+
+        Example: Direct a division of the enterprise.
+      payload:
+        $ref: '#/components/schemas/AssetAndLiabilityPortfolioStrategy'
+    TransactionAlignment:
+      name: TransactionAlignment
+      description: >-
+        A collection of goals and objectives for the enterprise and its main
+        divisions
+
+
+        Example: Increase marketshare
+      payload:
+        $ref: '#/components/schemas/TransactionAlignment'
+  schemas:
+    TransactionAlignment:
+      type: object
+      description: ''
+      properties:
+        BusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        ProposedTransactionOriginatorReference:
+          type: string
+          format: Object
+          description: "Identifies the source or originator of the transaction ||\r\n|"
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+        ProposedTransactionDescription:
+          $ref: '#/components/schemas/Text'
+        ProposedTransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        ProposedTransactionRiskAssessment:
+          $ref: '#/components/schemas/Assessment'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        CorrespondenceInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+        Date:
+          $ref: '#/components/schemas/Datetime'
+        AssetAndLiabilityAlignmentAssessment:
+          $ref: '#/components/schemas/Assessment'
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Business unit responsible for proposing the major transaction ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The overall volume or value of the transaction included projected cash
+        flows over the intended duration CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Assessment:
+      type: object
+      format: Assessment
+      description: >-
+        The decision as to whether the transaction is approved within policy
+        including any required changes as may be needed to comply
+        Assessment|Assessment
+        (https://www.iso20022.org/standardsrepository/type/Assessment)|Standard|ISO20022
+        BM ()
+      properties:
+        Assessmenttypevalues:
+          enum:
+            - AssetValuation
+            - ProductMatching
+            - Authorization
+            - Authentication
+            - QualityAssurance
+            - Audit
+            - ComplianceCheck
+            - FundingCheck
+            - SuitabilityCheck
+            - PerformanceCheck
+            - ImpactAssessment
+            - RiskAssessment
+            - Rating
+            - UnderwritingAssessment
+            - Qualification
+            - Verification
+            - KYCAssessment
+            - PEPAssessment
+            - AMLAssessment
+          format: Assessment
+        AssessmentMethod:
+          $ref: '#/components/schemas/Text'
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        AssessmentDescription:
+          $ref: '#/components/schemas/Text'
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AssessmentResult:
+          $ref: '#/components/schemas/Text'
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRequiredAdjustment:
+          $ref: '#/components/schemas/Text'
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          $ref: '#/components/schemas/Text'
+        ModelPurpose:
+          $ref: '#/components/schemas/Text'
+        ModelVersion:
+          $ref: '#/components/schemas/Text'
+        ModelName:
+          $ref: '#/components/schemas/Name'
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        An identifier that allows to uniquely refer to an instance of a
+        Document. 
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessment(s). '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Document:
+          type: string
+          format: Class
+          description: >-
+            Something tangible that records something, such as a recording or a
+            photograph, or a writing that can be used to furnish evidence or
+            information (FIBO)
+
+
+            Definition: A physical or digital representation of something
+            meaningful to the audience.
+
+
+            Comment: 
+
+            1.Technical: Manuals, instructions, tutorials, procedures,
+            specifications, etc., that accompany a piece of equipment or
+            software, and provide guidance for its proper use and maintenance.
+
+            2.Trading: Preparation of a set of commercial and financial
+            documents that record or support a business transaction.
+            International trade documentations include air waybill, bill of
+            exchange, bill of lading, certificate of inspection, certificate of
+            insurance, certificate of origin, commercial invoice, and consular
+            invoice.
+
+
+
+            Read more:
+            http://www.businessdictionary.com/definition/documentation.html#ixzz3EQGRGC4W
+             
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "Reference to associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    AssetAndLiabilityPortfolioStrategy:
+      type: object
+      description: ''
+      properties:
+        AssetAndLiabilityBalanceSheet:
+          $ref: '#/components/schemas/FinancialStatement'
+        AssetAndLiabilityMaturityLadder:
+          type: string
+          format: Object
+          description: "An analysis of expected cash flows related to the book of business (used for long and short term liquidity management) ||\r\n|"
+        AssetAndLiabilityCapitalAllocation:
+          $ref: '#/components/schemas/Allocation'
+        AssetAndLiabilityPolicyGoalRecord:
+          $ref: '#/components/schemas/Goal'
+        Policytypevalues:
+          enum:
+            - SecurityPolicy
+            - AdministrativePolicy
+            - SocialPolicy
+            - RegulatoryPolicy
+        AssetAndLiabilityPolicyTypeDefinition:
+          $ref: '#/components/schemas/Text'
+        AssetAndLiabilityPolicyTypeGoals:
+          $ref: '#/components/schemas/Goal'
+        AssetAndLiabilityPolicyTypePosition:
+          $ref: '#/components/schemas/Position'
+        AssetAndLiabilityPolicyTypeSensitivityAssessment:
+          $ref: '#/components/schemas/Assessment'
+    FinancialStatement:
+      type: object
+      format: FinancialStatement
+      description: "The consolidated book of the bank's loans and deposits ||\r\n|"
+      properties:
+        Financialstatementtypevalues:
+          enum:
+            - IncomeStatement
+            - BalanceSheet
+            - CashFlowsStatement
+            - DebtStatement
+            - AssetStatement
+            - AssetAndLiabilityStatement
+          format: FinancialStatement
+    Allocation:
+      type: object
+      format: Allocation
+      description: >-
+        An analysis of available bank capital covering the required allocations
+        Allocation|Allocation
+        (https://www.iso20022.org/standardsrepository/type/Allocation)|Standard|ISO20022
+        BM ()
+      properties:
+        AllocationAmount:
+          $ref: '#/components/schemas/Amount'
+        AllocationDuration:
+          $ref: '#/components/schemas/Duration'
+        AllocationDirection:
+          $ref: '#/components/schemas/Text'
+        AllocationStatus:
+          $ref: '#/components/schemas/Status'
+        AllocationDescription:
+          $ref: '#/components/schemas/Text'
+    Duration:
+      type: object
+      format: Duration
+      description: 'duration for which the allocation is enforced '
+      properties:
+        Duration:
+          type: string
+          format: DataType
+          description: >-
+            A duration is the specification of a length of time without a fixed
+            start or end time, expressed in Gregorian calendar time units (Year,
+            Month, Week, Day) and Hours, Minutes or Seconds. (UN/CEFACT) 
+    Goal:
+      type: object
+      format: Goal
+      description: "Defines the target thresholds for the bank's asset and liability position for the specific dimension. These can be adjusted to influence transaction activity to remain within the bank's intended asset and liability risk profile ||\r\n|"
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+        Goal:
+          type: string
+          format: Class
+          description: >-
+            A goal represents a high-level statement of intent, direction, or
+            desired end state for an organization and its stakeholders.
+            (ArchiMate 3.1)
+
+
+            An observable and measurable end result having one or more
+            objectives to be achieved within a more or less fixed timeframe.
+
+
+            Read more: http://www.businessdictionary.com/definition/goal.html 
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Position:
+      type: object
+      format: Position
+      description: >-
+        A consolidated assessment of the bank's current and projected position
+        for the policy type dimension Position |Position 
+        (https://www.iso20022.org/standardsrepository/type/Position)|Standard|ISO20022
+        BM ()
+      properties:
+        PositionValue:
+          $ref: '#/components/schemas/Value'
+        PositionQuantity:
+          type: string
+          format: Number
+          description: ''
+        PositionDate:
+          $ref: '#/components/schemas/Datetime'
+        PositionAmount:
+          $ref: '#/components/schemas/Amount'

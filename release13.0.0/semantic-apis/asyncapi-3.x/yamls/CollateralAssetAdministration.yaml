@@ -1,0 +1,1149 @@
+asyncapi: 3.0.0
+info:
+  title: Collateral Asset Administration
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains the status of a customers collateral assets, including scheduled
+    and ad-hoc valuations and confirmation of the correct completion of
+    scheduled maintenance tasks.
+channels:
+  CollateralAssetAdministrativePlan/Created:
+    address: CollateralAssetAdministrativePlan/Created
+    messages:
+      CollateralAssetAdministrativePlan-created.message:
+        $ref: '#/components/messages/CollateralAssetAdministrativePlan'
+    description: ''
+  CollateralAssetAdministrativePlan/Updated:
+    address: CollateralAssetAdministrativePlan/Updated
+    messages:
+      CollateralAssetAdministrativePlan-updated.message:
+        $ref: '#/components/messages/CollateralAssetAdministrativePlan'
+    description: ''
+  Maintenance/Created:
+    address: Maintenance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Maintenance'
+    description: ''
+  Maintenance/Updated:
+    address: Maintenance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Maintenance'
+    description: ''
+  Valuation/Created:
+    address: Valuation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Valuation'
+    description: ''
+  Valuation/Updated:
+    address: Valuation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Valuation'
+    description: ''
+operations:
+  CollateralAssetAdministrativePlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CollateralAssetAdministrativePlan~1Created'
+    summary: CollateralAssetAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/CollateralAssetAdministrativePlan~1Created/messages/CollateralAssetAdministrativePlan-created.message
+  CollateralAssetAdministrativePlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CollateralAssetAdministrativePlan~1Updated'
+    summary: CollateralAssetAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/CollateralAssetAdministrativePlan~1Updated/messages/CollateralAssetAdministrativePlan-updated.message
+  Maintenance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Maintenance~1Created'
+    summary: Maintenance
+    messages:
+      - $ref: '#/channels/Maintenance~1Created/messages/publish.message'
+  Maintenance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Maintenance~1Updated'
+    summary: Maintenance
+    messages:
+      - $ref: '#/channels/Maintenance~1Updated/messages/publish.message'
+  Valuation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Valuation~1Created'
+    summary: Valuation
+    messages:
+      - $ref: '#/channels/Valuation~1Created/messages/publish.message'
+  Valuation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Valuation~1Updated'
+    summary: Valuation
+    messages:
+      - $ref: '#/channels/Valuation~1Updated/messages/publish.message'
+components:
+  messages:
+    CollateralAssetAdministrativePlan:
+      name: CollateralAssetAdministrativePlan
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Collateral Asset Administration. 
+      payload:
+        $ref: '#/components/schemas/CollateralAssetAdministrativePlan'
+    Maintenance:
+      name: Maintenance
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Maintenance'
+    Valuation:
+      name: Valuation
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Valuation'
+  schemas:
+    Maintenance:
+      type: object
+      description: ''
+      properties:
+        CollateralAssetMaintenanceTaskType:
+          $ref: '#/components/schemas/Text'
+        CollateralAssetMaintenanceServiceProviderReference(3rdpartyserviceprovider):
+          $ref: '#/components/schemas/Text'
+        CollateralAssetVerificationandComplianceRecord:
+          $ref: '#/components/schemas/Assessment'
+        CollateralAssetMaintenanceSafekeepingFees:
+          $ref: '#/components/schemas/FeeArrangement'
+    Text:
+      type: object
+      format: Text
+      description: 'Reason for the amount adjustment (fee).  '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Assessment:
+      type: object
+      format: Assessment
+      description: >-
+        A record of the verification checks performed against the schedule
+        Assessment|Assessment
+        (https://www.iso20022.org/standardsrepository/type/Assessment)|Standard|ISO20022
+        BM ()
+      properties:
+        Assessmenttypevalues:
+          enum:
+            - AssetValuation
+            - ProductMatching
+            - Authorization
+            - Authentication
+            - QualityAssurance
+            - Audit
+            - ComplianceCheck
+            - FundingCheck
+            - SuitabilityCheck
+            - PerformanceCheck
+            - ImpactAssessment
+            - RiskAssessment
+            - Rating
+            - UnderwritingAssessment
+            - Qualification
+            - Verification
+            - KYCAssessment
+            - PEPAssessment
+            - AMLAssessment
+          format: Assessment
+        AssessmentMethod:
+          $ref: '#/components/schemas/Text'
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        AssessmentDescription:
+          $ref: '#/components/schemas/Text'
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AssessmentResult:
+          $ref: '#/components/schemas/Text'
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRequiredAdjustment:
+          $ref: '#/components/schemas/Text'
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          $ref: '#/components/schemas/Text'
+        ModelPurpose:
+          $ref: '#/components/schemas/Text'
+        ModelVersion:
+          $ref: '#/components/schemas/Text'
+        ModelName:
+          $ref: '#/components/schemas/Name'
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessment(s). '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Document:
+          type: string
+          format: Class
+          description: >-
+            Something tangible that records something, such as a recording or a
+            photograph, or a writing that can be used to furnish evidence or
+            information (FIBO)
+
+
+            Definition: A physical or digital representation of something
+            meaningful to the audience.
+
+
+            Comment: 
+
+            1.Technical: Manuals, instructions, tutorials, procedures,
+            specifications, etc., that accompany a piece of equipment or
+            software, and provide guidance for its proper use and maintenance.
+
+            2.Trading: Preparation of a set of commercial and financial
+            documents that record or support a business transaction.
+            International trade documentations include air waybill, bill of
+            exchange, bill of lading, certificate of inspection, certificate of
+            insurance, certificate of origin, commercial invoice, and consular
+            invoice.
+
+
+
+            Read more:
+            http://www.businessdictionary.com/definition/documentation.html#ixzz3EQGRGC4W
+             
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    FeeArrangement:
+      type: object
+      format: FeeArrangement
+      description: >-
+        Record of any fees incurred in the collateral asset maintenance (e.g.
+        3rd party fees) Adjustment|Adjustment
+        (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+        BM ()
+      properties:
+        Feetypevalues:
+          enum:
+            - Accountingfee
+            - Adrfee
+            - Advisoryfee
+            - Airwaybillfee
+            - Backendload
+            - Brokeragefee
+            - Clearanceandhandlingatdestination
+            - Clearanceandhandlingatorigin
+            - Collectfreight
+            - Commission
+            - Contingencydeferredsalescharge
+            - Correspondentbankcharge
+            - Custodyfee
+            - Dangerousgoodsfee
+            - Dilutionlevy
+            - Discount
+            - Equalisation
+            - Frontendload
+            - Initial
+            - Insurancepremium
+            - Issuancecancellationfee
+            - Issuancefee
+            - Managementfee
+            - Matchingfees
+            - Miscellaneousfee
+            - Other
+            - Packaging
+            - Partacquis
+            - Penalty
+            - Pickup
+            - Postagecharge
+            - Premium
+            - Publicationfee
+            - Regulatoryfee
+            - Securitycharge
+            - Serviceprovisionfee
+            - Shippingcharge
+            - Signatureservice
+            - Specialconcessions
+            - Speciallyagreedfrontendload
+            - Storageatdestination
+            - Storageatorigin
+            - Switch
+            - Transferfee
+            - Transportcharges
+            - Ucitscommission
+            - ChequeRelatedFee
+          format: FeeArrangement
+        FeeAmount:
+          $ref: '#/components/schemas/Amount'
+        FeeRate:
+          $ref: '#/components/schemas/Rate'
+        FeeEffectivePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        FeeDueDate:
+          $ref: '#/components/schemas/Datetime'
+        FeePlan:
+          $ref: '#/components/schemas/Feeplan'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: FeeArrangement
+        FeeReason:
+          $ref: '#/components/schemas/Text'
+        Adjustmentdirectiontypevalues:
+          enum:
+            - Added
+            - Substracted
+          format: FeeArrangement
+        Chargebearertypevalues:
+          enum:
+            - Bornebydebtor
+            - Bornebycreditor
+            - Shared
+            - Followingservicelevel
+          format: FeeArrangement
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+        Amount:
+          type: string
+          format: DataType
+          description: >-
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+            The decimal seperator is a dot.
+
+
+
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. The decimal
+            separator is a dot. (ISO20022)
+
+            Note: A zero amount is considered a positive amount.
+
+            total number of digits: 18
+
+            number of digits in fractional part: 5
+
+            minInclusive: 0 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Rate:
+      type: object
+      format: Rate
+      description: >-
+        Rate used to calculate the amount of the adjustment, allowance, charge
+        or fee. (ISO20022) 
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    Feeplan:
+      type: object
+      format: Feeplan
+      description: An arranged FeeRatePlan
+      properties:
+        FeePlanName:
+          $ref: '#/components/schemas/Name'
+        Feeplantypevalues:
+          enum:
+            - StandardFeePlan
+            - FinalFeePlan
+          format: Feeplan
+        FeePlan:
+          $ref: '#/components/schemas/Plan'
+    Plan:
+      type: object
+      format: Plan
+      description: ' '
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/Goal'
+        PlanBudget:
+          $ref: '#/components/schemas/Budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/Plannedaction'
+        Plantypevalues:
+          enum:
+            - AdministrativePlan
+            - ManagementPlan
+            - StratgyPlan
+            - FinancialPlan
+            - DevelopmentPlan
+          format: Plan
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/Text'
+    Goal:
+      type: object
+      format: Goal
+      description: ' '
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Budgetarrangement:
+      type: object
+      format: Budgetarrangement
+      description: >-
+        An arrangement which is specifying an estimate of costs, revenues, and
+        resources over a specified period, reflecting a reading of future
+        financial conditions and goals. (adapted from Business Dictionary) 
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/Budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/Amount'
+    Budgettype:
+      type: object
+      format: Budgettype
+      description: 'A Classification value that specifies the type of Budget '
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/Name'
+        Budgettypevalues:
+          enum:
+            - OperatingBudget
+            - FinancialBudget
+            - ResourceBudget
+          format: Budgettype
+    Plannedaction:
+      type: object
+      format: Plannedaction
+      description: 'An action that is arranged in a plan for doing or achieving something  '
+      properties:
+        PlannedAction:
+          type: string
+          format: Class
+          description: >-
+            An action that is arranged in a plan for doing or achieving
+            something  
+    Valuation:
+      type: object
+      description: ''
+      properties:
+        Assetvaluationtypevalues:
+          enum:
+            - Assetvaluationtypevalues
+        CollateralAssetValuationServiceReference:
+          $ref: '#/components/schemas/Service'
+        CollateralAssetLoantoValueRatio:
+          type: string
+          format: Object
+          description: "The applied loan to value ratio used in determining collateral value ||\r\n|"
+        CollateralAssetValuation:
+          $ref: '#/components/schemas/CollateralAssetValuation'
+        CollateralAssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+    Service:
+      type: object
+      format: Service
+      description: "Reference to 3rd party valuation service provider (e.g. property, art specialist) ||\r\n|"
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+        ServiceDescription:
+          $ref: '#/components/schemas/Text'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+          format: Service
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+    Feature:
+      type: object
+      format: Feature
+      description: >-
+        A characteristic of service which refers 1) mainly to the function or
+        condition of service. 2) to non-functional features like quality and
+        security 
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    CollateralAssetValuation:
+      type: object
+      format: CollateralAssetValuation
+      description: >-
+        The result of a valuation CollateralValuation |CollateralValuation 
+        (https://www.iso20022.org/standardsrepository/type/CollateralValuation)|Standard|ISO20022
+        BM ()
+      properties:
+        CollateralAssetValuationStatus:
+          $ref: '#/components/schemas/Status'
+        CollateralAssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+        CollateralAssetValuationAmount:
+          $ref: '#/components/schemas/Amount'
+        CollateralAssetValuationCurrency:
+          $ref: '#/components/schemas/Currencycode'
+    CollateralAssetAdministrativePlan:
+      type: object
+      description: ''
+      properties:
+        CollateralAssetReference:
+          $ref: '#/components/schemas/CollateralAsset'
+        CollateralAssetRecord:
+          $ref: '#/components/schemas/CollateralAsset'
+        Assettypevalues:
+          enum:
+            - Assettypevalues
+        CollateralAssetProperties:
+          $ref: '#/components/schemas/Feature'
+        CollateralAssetDescription:
+          $ref: '#/components/schemas/Text'
+        CollateralAssetTitle:
+          $ref: '#/components/schemas/Text'
+        CollateralAssetOwnership:
+          $ref: '#/components/schemas/Involvedparty'
+        CollateralAssetInterestedParties:
+          $ref: '#/components/schemas/Involvedparty'
+        CollateralAssetLocation:
+          $ref: '#/components/schemas/Address'
+        CollateralAssetJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        CollateralAssetDocumentReference:
+          $ref: '#/components/schemas/Document'
+        Documenttypevalues:
+          enum:
+            - FinancialDocument
+            - CommercialDocument
+            - BusinessDocument
+        CollateralAssetInsuranceReference:
+          type: string
+          format: Object
+          description: "Details of insurance arrangements covering the asset, including duration and renewal ||\r\n|"
+        CollateralAssetPledgedDate:
+          $ref: '#/components/schemas/Datetime'
+        CollateralAssetValuationHistory:
+          $ref: '#/components/schemas/CollateralAssetValuation'
+        CollateralAssetValuationSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CollateralAssetMaintenanceSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CollateralAssetStatus:
+          $ref: '#/components/schemas/Status'
+    CollateralAsset:
+      type: object
+      format: CollateralAsset
+      description: >-
+        The details maintained for the asset Collateral |Collateral 
+        (https://www.iso20022.org/standardsrepository/type/Collateral)|Standard|ISO20022
+        BM ()
+      properties:
+        CollateralAssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Collateraltypevalues:
+          enum:
+            - Letterofcredit
+            - Cash
+            - Securities
+            - Physicalentities
+            - Insurance
+            - Stockcertificate
+            - Bond
+            - Bankguarantee
+            - Other
+            - Commodity
+            - Automobile
+            - Industrialvehicle
+            - Commercialtruck
+            - Railvehicle
+            - Nauticalcommercialvehicle
+            - Nauticalleisurevehicle
+            - Aeroplane
+            - Machinetool
+            - Industrialequipment
+            - Officeequipment
+            - Itequipment
+            - Medicalequipment
+            - Energyrelatedequipment
+            - Commercialbuilding
+          format: CollateralAsset
+        Collateralassetstatustypevalues:
+          enum:
+            - Offered
+            - UnderAssessment
+            - Transferred
+            - Allocated
+            - FreeForAllocation
+            - AllocatedToAnotherLoan
+            - IssuedForExecution
+          format: CollateralAsset
+        CollateralAsset:
+          type: string
+          format: Class
+          description: >-
+            Asset provided by a debtor as security for a payment or repayment of
+            an obligation.
+
+
+
+            Financial collateral is an asset provided by a borrower to a lender.
+
+
+            The term collateral refers to an asset that a lender accepts as
+            security for a loan.
+            https://www.investopedia.com/terms/c/collateral.asp 
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        The jurisdiction that governs title and access to the asset
+        Jurisdiction|Jurisdiction
+        (https://www.iso20022.org/standardsrepository/type/Jurisdiction)|Standard|ISO20022
+        BM ()
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '

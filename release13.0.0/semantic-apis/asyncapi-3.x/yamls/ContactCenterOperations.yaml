@@ -1,0 +1,746 @@
+asyncapi: 3.0.0
+info:
+  title: Contact Center Operations
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Administer the day to day
+    activity in the contact center allocate positions and track staff
+    availability and performance
+channels:
+  ContactCenterAdministrativePlan/Created:
+    address: ContactCenterAdministrativePlan/Created
+    messages:
+      ContactCenterAdministrativePlan-created.message:
+        $ref: '#/components/messages/ContactCenterAdministrativePlan'
+    description: ''
+  ContactCenterAdministrativePlan/Updated:
+    address: ContactCenterAdministrativePlan/Updated
+    messages:
+      ContactCenterAdministrativePlan-updated.message:
+        $ref: '#/components/messages/ContactCenterAdministrativePlan'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Assignment/Created:
+    address: Assignment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+  Assignment/Updated:
+    address: Assignment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+  PeakLoad/Created:
+    address: PeakLoad/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PeakLoad'
+    description: ''
+  PeakLoad/Updated:
+    address: PeakLoad/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/PeakLoad'
+    description: ''
+operations:
+  ContactCenterAdministrativePlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ContactCenterAdministrativePlan~1Created'
+    summary: ContactCenterAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/ContactCenterAdministrativePlan~1Created/messages/ContactCenterAdministrativePlan-created.message
+  ContactCenterAdministrativePlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ContactCenterAdministrativePlan~1Updated'
+    summary: ContactCenterAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/ContactCenterAdministrativePlan~1Updated/messages/ContactCenterAdministrativePlan-updated.message
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+  Assignment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Created'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Created/messages/publish.message'
+  Assignment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Updated'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Updated/messages/publish.message'
+  PeakLoad/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PeakLoad~1Created'
+    summary: PeakLoad
+    messages:
+      - $ref: '#/channels/PeakLoad~1Created/messages/publish.message'
+  PeakLoad/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/PeakLoad~1Updated'
+    summary: PeakLoad
+    messages:
+      - $ref: '#/channels/PeakLoad~1Updated/messages/publish.message'
+components:
+  messages:
+    ContactCenterAdministrativePlan:
+      name: ContactCenterAdministrativePlan
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Contact Center Operations. 
+      payload:
+        $ref: '#/components/schemas/ContactCenterAdministrativePlan'
+    Troubleshooting:
+      name: Troubleshooting
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+    Assignment:
+      name: Assignment
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Assignment'
+    PeakLoad:
+      name: PeakLoad
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/PeakLoad'
+  schemas:
+    Troubleshooting:
+      type: object
+      description: ''
+      properties:
+        ContactCenterProductionIssueRecord:
+          $ref: '#/components/schemas/ProductionIssue'
+        ContactCenterIssueAnalysisAndRecommendedResponse:
+          type: string
+          format: Object
+          description: "A record of the root cause analysis for recurring issues and suggested remedial action ||\r\n|"
+    ProductionIssue:
+      type: object
+      format: ProductionIssue
+      description: "A record of any production issues arising during the session (see Advanced Voice Channel Operations for detailed content) ||\r\n|"
+      properties:
+        ProductionIssueType:
+          type: string
+          format: String
+          description: The Type of production problem (error)
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: 'Description of the production problem '
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: 'Evaluation of the production problem cause and impact assessment '
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: 'Description of corrective action proposed and taken '
+        ProductionIssueStatus:
+          type: string
+          format: String
+          description: 'The state of resolution of a reported production problem '
+    Assignment:
+      type: object
+      description: ''
+      properties:
+        AssignmentCustomerServicingRepresentative:
+          $ref: '#/components/schemas/Involvedparty'
+        AssignmentCustomerServicingPositionReference:
+          $ref: '#/components/schemas/Position'
+        AssignmentCustomerServicingPositionProfile:
+          $ref: '#/components/schemas/Profile'
+        AssignmentCustomerServicingPositionSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CustomerContactSessionProcedureInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+    Position:
+      type: object
+      format: Position
+      description: >-
+        Reference to the assigned servicing position/desk within the contact
+        center Position |Position 
+        (https://www.iso20022.org/standardsrepository/type/Position)|Standard|ISO20022
+        BM ()
+      properties:
+        PositionValue:
+          $ref: '#/components/schemas/Value'
+        PositionQuantity:
+          type: string
+          format: Number
+          description: ''
+        PositionDate:
+          $ref: '#/components/schemas/Datetime'
+        PositionAmount:
+          $ref: '#/components/schemas/Amount'
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Profile:
+      type: object
+      format: Profile
+      description: "Details any specific properties for the assigned servicing position (e.g. type of product/service covered, required qualifications/certifications/experience) ||\r\n|"
+      properties:
+        Profile:
+          type: string
+          format: Class
+          description: >-
+            A brief description of the characteristics of something or someone.
+            (Business Dictionary) 
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Planned and actual servicing activity at the position during the session (records inbound contact details and allows for pre-assigned servicing actions e.g. outbound customer contacts for issue resolution/sales) ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    PeakLoad:
+      type: object
+      description: ''
+      properties:
+        ContactCenterServiceStatistics:
+          type: string
+          format: Object
+          description: "Tracked activity and performance statistics used to manage the contact center resource assignments and menu configuration ||\r\n|"
+        ContactCenterServiceStatisticType:
+          $ref: '#/components/schemas/Text'
+        PeakLoadResponseTask:
+          $ref: '#/components/schemas/Task'
+        PeakLoadResponseTaskType:
+          $ref: '#/components/schemas/Text'
+        PeakLoadResponseDescription:
+          $ref: '#/components/schemas/Text'
+    Task:
+      type: object
+      format: Task
+      description: "The task undertaken to address a detected peak load condition ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    ContactCenterAdministrativePlan:
+      type: object
+      description: ''
+      properties:
+        ContactCenterServiceOperatingConfiguration:
+          $ref: '#/components/schemas/Arrangement'
+        CustomerServicingRepresentativeAllocationSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CustomerServicingRepresentativeReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerServicingRepresentativeRecord:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerServicingRepresentativeQualificationProfile:
+          $ref: '#/components/schemas/Profile'
+        CustomerServicingRepresentativeLocation:
+          $ref: '#/components/schemas/Address'
+        CustomerServicingRepresentativeAvailabilitySchedule:
+          $ref: '#/components/schemas/Schedule'
+        CustomerServicingRepresentativeStatus:
+          $ref: '#/components/schemas/Status'
+        CustomerServicingRepresentativeAssignmentRecord:
+          $ref: '#/components/schemas/Assignment'
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        The default contact center operational configuration as defined by
+        Contact Center Management (Note this can include some latitude for
+        position assignment changes to be made during day to day operations by
+        this service domain) Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Status:
+      type: object
+      format: Status
+      description: >-
+        Tracks the current status indicating availability for assignment to a
+        servicing position (where  the representative will coordinate with
+        contact routing for customer contacts) Status |Status 
+        (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+        BM ()
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'

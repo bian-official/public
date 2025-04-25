@@ -1,0 +1,947 @@
+asyncapi: 3.0.0
+info:
+  title: Channel Activity History
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domains
+    consolidates and captures customer channel usage activity to support channel
+    activity analysis and also can be referenced for customer access
+    authorization and routing decisions
+channels:
+  ChannelActivityLog/Created:
+    address: ChannelActivityLog/Created
+    messages:
+      ChannelActivityLog-created.message:
+        $ref: '#/components/messages/ChannelActivityLog'
+    description: ''
+  ChannelActivityLog/Updated:
+    address: ChannelActivityLog/Updated
+    messages:
+      ChannelActivityLog-updated.message:
+        $ref: '#/components/messages/ChannelActivityLog'
+    description: ''
+  Event/Created:
+    address: Event/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Event'
+    description: ''
+  Event/Updated:
+    address: Event/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Event'
+    description: ''
+operations:
+  ChannelActivityLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ChannelActivityLog~1Created'
+    summary: ChannelActivityLog
+    messages:
+      - $ref: >-
+          #/channels/ChannelActivityLog~1Created/messages/ChannelActivityLog-created.message
+  ChannelActivityLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ChannelActivityLog~1Updated'
+    summary: ChannelActivityLog
+    messages:
+      - $ref: >-
+          #/channels/ChannelActivityLog~1Updated/messages/ChannelActivityLog-updated.message
+  Event/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Event~1Created'
+    summary: Event
+    messages:
+      - $ref: '#/channels/Event~1Created/messages/publish.message'
+  Event/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Event~1Updated'
+    summary: Event
+    messages:
+      - $ref: '#/channels/Event~1Updated/messages/publish.message'
+components:
+  messages:
+    ChannelActivityLog:
+      name: ChannelActivityLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Channel Activity History. 
+      payload:
+        $ref: '#/components/schemas/ChannelActivityLog'
+    Event:
+      name: Event
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/Event'
+  schemas:
+    Event:
+      type: object
+      description: ''
+      properties:
+        EmployeeReference:
+          $ref: '#/components/schemas/Employee'
+        ProductReference:
+          $ref: '#/components/schemas/BankingProduct'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        CustomerContactRecordReference:
+          $ref: '#/components/schemas/CustomerContact'
+        CustomerContactRecord:
+          $ref: '#/components/schemas/CustomerContact'
+        CustomerContactRecordCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerContactRecordContactDevice:
+          $ref: '#/components/schemas/Device'
+        CustomerContactRecordAuthenticationStatus:
+          $ref: '#/components/schemas/Status'
+        CustomerContactRecordRoutingSelectionStatus:
+          $ref: '#/components/schemas/Status'
+        CustomerContactRecordMenuSelection:
+          $ref: '#/components/schemas/Text'
+        CustomerContactRecordServicingRequest:
+          $ref: '#/components/schemas/Instruction'
+        CustomerContactRecordServicingEventHistory:
+          $ref: '#/components/schemas/Text'
+        CustomerContactRecordServicingPositionReference:
+          $ref: '#/components/schemas/Position'
+        CustomerContactRecordServicingResourceReference:
+          $ref: '#/components/schemas/ServicingResource'
+        CustomerContactRecordActivityRecord:
+          $ref: '#/components/schemas/CustomerEventLog'
+        CustomerSessionDialogueReference:
+          $ref: '#/components/schemas/CustomerDialogueSession'
+        CustomerSessionDialogueRecord:
+          $ref: '#/components/schemas/CustomerDialogueSession'
+        CustomerContactRecordDuration:
+          $ref: '#/components/schemas/Duration'
+        CustomerContactActivityRecord:
+          $ref: '#/components/schemas/CustomerContact'
+        CustomerContactResult:
+          $ref: '#/components/schemas/CustomerContact'
+        ChannelActivityHistoryReportReference:
+          $ref: '#/components/schemas/Report'
+        ChannelActivityHistoryReportFromto:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ChannelActivityHistoryReport:
+          $ref: '#/components/schemas/Report'
+        TransactionAuthorizationResult:
+          $ref: '#/components/schemas/TransactionAuthorization'
+    Employee:
+      type: object
+      format: Employee
+      description: "The servicing resource for assisted customer exchanges ||\r\n|"
+      properties:
+        Employee:
+          type: string
+          format: Class
+          description: 'Party who is employed by an employer.  '
+    BankingProduct:
+      type: object
+      format: BankingProduct
+      description: >-
+        The type of product involved Product_x000D_
+
+        |Product
+        (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+        BM ()
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: BankingProduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - Commercialdescriptioncodename
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: >-
+        The estimated (book) value of the property at the location rental and
+        purchase as appropriate. 
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Regulatory authority of the country. (ISO20022) '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+        Productstatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productstatus
+    Status:
+      type: object
+      format: Status
+      description: |-
+        The life cycle stage of a device
+        e.g. active, defect
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the specific product accessed by the proposed transaction ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    CustomerContact:
+      type: object
+      format: CustomerContact
+      description: "The interim result of the contact (subject to transaction approval) ||\r\n|"
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Location:
+      type: object
+      format: Location
+      description: 'Geographical location of the device. '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Address:
+      type: object
+      format: Address
+      description: >-
+        The address associated with the device like Internet Protocol address,
+        email Address 
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Schedule:
+      type: object
+      format: Schedule
+      description: 'The schedule of past and planned customer contacts '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Device:
+      type: object
+      format: Device
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+          format: Device
+        DeviceProperty:
+          $ref: '#/components/schemas/Text'
+        DeviceElement:
+          $ref: '#/components/schemas/Text'
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/Text'
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/Text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/Text'
+        DeviceLocation:
+          $ref: '#/components/schemas/Location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/Text'
+        DeviceCountry:
+          $ref: '#/components/schemas/Country'
+        DeviceAddress:
+          $ref: '#/components/schemas/Address'
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Device
+        Deviceoperatingsystemtypevalues:
+          enum:
+            - Android
+            - Ios
+            - Windows
+            - Blackberry
+            - Tizen
+            - Othernational
+            - Otherprivate
+          format: Device
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Deviceidentificationtypevalues:
+          enum:
+            - IMEI
+            - Serialnumber
+            - Secureelementidentification
+            - Othernational
+            - Otherprivate
+          format: Deviceidentification
+    Country:
+      type: object
+      format: Country
+      description: 'Country of the location. '
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+    Instruction:
+      type: object
+      format: Instruction
+      description: "The customer may provide details of servicing resource request when initiating or during contact ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/Instructionidentification'
+        Instructiontypevalues:
+          enum:
+            - PaymentInstruction
+            - DeliveryOrder
+            - InformationRequest
+            - ExchangeInstruction
+            - AllocationInstruction
+            - MaintenanceInstruction
+          format: Instruction
+        InstructionResult:
+          $ref: '#/components/schemas/Text'
+        InstructionDescription:
+          $ref: '#/components/schemas/Text'
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/Text'
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+        Instructiondatetimetypevalues:
+          enum:
+            - DueDate
+            - ExecutionDate
+            - FulfillmentDate
+          format: Instructiondatetime
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction (e.g., requested, executed, fulfilled, etc.);  
+      properties:
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Instructionstatus
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Instructionidentificationtypevalues:
+          enum:
+            - OrderNumber
+            - InstructionNumber
+          format: Instructionidentification
+    Log:
+      type: object
+      format: Log
+      description: ' '
+      properties:
+        LogType:
+          $ref: '#/components/schemas/Text'
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Position:
+      type: object
+      format: Position
+      description: >-
+        Reference to the servicing position can be where an inbound contact is
+        routed, or the source of an outbound contact request Position |Position 
+        (https://www.iso20022.org/standardsrepository/type/Position)|Standard|ISO20022
+        BM ()
+      properties:
+        PositionValue:
+          $ref: '#/components/schemas/Value'
+        PositionQuantity:
+          type: string
+          format: Number
+          description: ''
+        PositionDate:
+          $ref: '#/components/schemas/Datetime'
+        PositionAmount:
+          $ref: '#/components/schemas/Amount'
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    ServicingResource:
+      type: object
+      format: ServicingResource
+      description: "Reference to the servicing resource can be to handle an inbound contact or the source of an outbound contact request ||\r\n|"
+      properties:
+        ServicingResource:
+          type: string
+          format: Class
+          description: 'A resource that is required for servicing a customer.  '
+    CustomerEventLog:
+      type: object
+      format: CustomerEventLog
+      description: "Records the actions performed during contact, including all dialogue sessions ||\r\n|"
+      properties:
+        CustomerEventLog:
+          type: string
+          format: Class
+          description: 'A record of the customer''s events. '
+    CustomerDialogueSession:
+      type: object
+      format: CustomerDialogueSession
+      description: "The session dialogue log of actions is returned to SD-Contact Handler and added to the contact record ||\r\n|"
+      properties:
+        CustomerContactReference:
+          $ref: '#/components/schemas/Customercontact'
+        SessionDialogueContent:
+          $ref: '#/components/schemas/Text'
+    Customercontact:
+      type: object
+      format: Customercontact
+      description: 'Reference to the customer Contact the ContactDialogueSession is part of '
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Duration:
+      type: object
+      format: Duration
+      description: >-
+        Records the start and end date times for the contact Duration|Duration
+        (https://www.iso20022.org/standardsrepository/type/duration)|Standard|ISO20022
+        BM ()
+      properties:
+        Duration:
+          type: string
+          format: DataType
+          description: >-
+            A duration is the specification of a length of time without a fixed
+            start or end time, expressed in Gregorian calendar time units (Year,
+            Month, Week, Day) and Hours, Minutes or Seconds. (UN/CEFACT) 
+    Report:
+      type: object
+      format: Report
+      description: "The content of the report extracting recent channel activity records to support the transaction authorization decision ||\r\n|"
+      properties:
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+          format: Report
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/Text'
+    TransactionAuthorization:
+      type: object
+      format: TransactionAuthorization
+      description: "Indicates success or failure or required increased authentication level to be acquired for authorization ||\r\n|"
+      properties:
+        TransactionAuthorization:
+          type: string
+          format: Class
+          description: ''
+    ChannelActivityLog:
+      type: object
+      description: ''
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        Date:
+          $ref: '#/components/schemas/Datetime'

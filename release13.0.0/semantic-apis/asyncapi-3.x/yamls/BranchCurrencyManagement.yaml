@@ -1,0 +1,969 @@
+asyncapi: 3.0.0
+info:
+  title: Branch Currency Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Track cash inventory,
+    project demand and ensure all cash is accounted for within the branch
+channels:
+  BranchCashAllocation/Created:
+    address: BranchCashAllocation/Created
+    messages:
+      BranchCashAllocation-created.message:
+        $ref: '#/components/messages/BranchCashAllocation'
+    description: ''
+  BranchCashAllocation/Updated:
+    address: BranchCashAllocation/Updated
+    messages:
+      BranchCashAllocation-updated.message:
+        $ref: '#/components/messages/BranchCashAllocation'
+    description: ''
+  InventoryAllocation/Created:
+    address: InventoryAllocation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InventoryAllocation'
+    description: ''
+  InventoryAllocation/Updated:
+    address: InventoryAllocation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InventoryAllocation'
+    description: ''
+  BranchCurrencyManagementOutcome/Created:
+    address: BranchCurrencyManagementOutcome/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BranchCurrencyManagementOutcome'
+    description: ''
+  BranchCurrencyManagementOutcome/Updated:
+    address: BranchCurrencyManagementOutcome/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BranchCurrencyManagementOutcome'
+    description: ''
+operations:
+  BranchCashAllocation-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BranchCashAllocation~1Created'
+    summary: BranchCashAllocation
+    messages:
+      - $ref: >-
+          #/channels/BranchCashAllocation~1Created/messages/BranchCashAllocation-created.message
+  BranchCashAllocation-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BranchCashAllocation~1Updated'
+    summary: BranchCashAllocation
+    messages:
+      - $ref: >-
+          #/channels/BranchCashAllocation~1Updated/messages/BranchCashAllocation-updated.message
+  InventoryAllocation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InventoryAllocation~1Created'
+    summary: InventoryAllocation
+    messages:
+      - $ref: '#/channels/InventoryAllocation~1Created/messages/publish.message'
+  InventoryAllocation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InventoryAllocation~1Updated'
+    summary: InventoryAllocation
+    messages:
+      - $ref: '#/channels/InventoryAllocation~1Updated/messages/publish.message'
+  BranchCurrencyManagementOutcome/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BranchCurrencyManagementOutcome~1Created'
+    summary: BranchCurrencyManagementOutcome
+    messages:
+      - $ref: >-
+          #/channels/BranchCurrencyManagementOutcome~1Created/messages/publish.message
+  BranchCurrencyManagementOutcome/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BranchCurrencyManagementOutcome~1Updated'
+    summary: BranchCurrencyManagementOutcome
+    messages:
+      - $ref: >-
+          #/channels/BranchCurrencyManagementOutcome~1Updated/messages/publish.message
+components:
+  messages:
+    BranchCashAllocation:
+      name: BranchCashAllocation
+      description: >-
+        Maintain an inventory or holding of some resource and make
+        assignments/allocations as requested  within Branch Currency
+        Management. 
+
+        Example: Track the inventory and administer the distribution of central
+        cash holdings throughout the branch & ATM network.
+      payload:
+        $ref: '#/components/schemas/BranchCashAllocation'
+    InventoryAllocation:
+      name: InventoryAllocation
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      payload:
+        $ref: '#/components/schemas/InventoryAllocation'
+    BranchCurrencyManagementOutcome:
+      name: BranchCurrencyManagementOutcome
+      description: >-
+        Set of rules for the purpose of deciding if or if not something is
+        applicable
+
+
+        Examples:- Staff assignment, Facility allocation.
+      payload:
+        $ref: '#/components/schemas/BranchCurrencyManagementOutcome'
+  schemas:
+    InventoryAllocation:
+      type: object
+      description: ''
+      properties:
+        Preconditions:
+          $ref: '#/components/schemas/Condition'
+        AllocationSchedule:
+          $ref: '#/components/schemas/Schedule'
+        BusinessService:
+          $ref: '#/components/schemas/BusinessService'
+    Condition:
+      type: object
+      format: Condition
+      description: "The required status/situation before the allocation can be made ||\r\n|"
+      properties:
+        ConditionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ConditionName:
+          $ref: '#/components/schemas/Name'
+        ConditionValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ConditionDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ConditionStatus:
+          $ref: '#/components/schemas/Status'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'The name of Condition '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: 'Refers to the lifecycle of a Condition '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The schedule and timing of allocation decisions ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    BusinessService:
+      type: object
+      format: BusinessService
+      description: "The Inventory Allocation specific  Business Service ||\r\n|"
+      properties:
+        Businessservicetypevalues:
+          enum:
+            - Businessservicetypevalues
+          format: BusinessService
+    BranchCurrencyManagementOutcome:
+      type: object
+      description: ''
+      properties:
+        BranchCurrencyManagementAllocation:
+          type: string
+          format: Object
+          description: ''
+        BranchCurrencyManagementWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: " ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    BranchCashAllocation:
+      type: object
+      description: ''
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+        BranchCashAllocationSelectedOption:
+          $ref: '#/components/schemas/Feature'
+        BranchCashAllocation<SubjectArea>Type:
+          $ref: '#/components/schemas/Text'
+        BranchCashAllocationDescription:
+          $ref: '#/components/schemas/Text'
+        BranchCashAllocationRequest:
+          $ref: '#/components/schemas/Instruction'
+        BranchCashAllocationSchedule:
+          $ref: '#/components/schemas/Schedule'
+        BranchCashAllocationStatus:
+          $ref: '#/components/schemas/Status'
+        BranchCashAllocationReference:
+          $ref: '#/components/schemas/CashAllocation'
+        BranchCashAllocationCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        BranchCashAllocationCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        BranchCashAllocationRegulationReference:
+          $ref: '#/components/schemas/Regulation'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+        BranchCashAllocationJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+        BranchCashAllocationBookingLocation:
+          $ref: '#/components/schemas/Address'
+        Accounttypevalues:
+          enum:
+            - DebitAccount
+            - CreditAccount
+            - VostroAcount
+            - NostroAccount
+            - PaymentAccount
+            - SettlementAccount
+            - SavingAccount
+            - CurrentAccount
+            - CashAccount
+            - LoanAccount
+            - IndividualAccount
+            - JointAccount
+            - LiquidationAccount
+            - ProvisionAccount
+            - PartnershipAccount
+            - InvestmentAccount
+        BranchCashAllocationAccountReference:
+          $ref: '#/components/schemas/Account'
+        BranchCashAllocationInstance:
+          $ref: '#/components/schemas/CashAllocation'
+    Feature:
+      type: object
+      format: Feature
+      description: "A selected optional business service for which resources are allocated ||\r\n|"
+      properties:
+        Featuretypevalues:
+          enum:
+            - FeeFeature
+            - InterestFeature
+            - WithdrawalFeature
+            - DepositFeature
+            - SweepFeature
+            - LienFeature
+            - PaymentFeature
+            - RepaymentFeature
+            - LimitFeature
+            - OverdraftFeature
+            - StatementFeature
+            - CurrencyExchangeFeature
+            - PriceFeature
+          format: Feature
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+        FeatureDescription:
+          $ref: '#/components/schemas/Text'
+    Instruction:
+      type: object
+      format: Instruction
+      description: "Request to allocate BranchCash ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/Instructionidentification'
+        Instructiontypevalues:
+          enum:
+            - PaymentInstruction
+            - DeliveryOrder
+            - InformationRequest
+            - ExchangeInstruction
+            - AllocationInstruction
+            - MaintenanceInstruction
+          format: Instruction
+        InstructionResult:
+          $ref: '#/components/schemas/Text'
+        InstructionDescription:
+          $ref: '#/components/schemas/Text'
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/Text'
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+        Instructiondatetimetypevalues:
+          enum:
+            - DueDate
+            - ExecutionDate
+            - FulfillmentDate
+          format: Instructiondatetime
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction (e.g., requested, executed, fulfilled, etc.);  
+      properties:
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Instructionstatus
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Instructionidentificationtypevalues:
+          enum:
+            - OrderNumber
+            - InstructionNumber
+          format: Instructionidentification
+    Log:
+      type: object
+      format: Log
+      description: ' '
+      properties:
+        LogType:
+          $ref: '#/components/schemas/Text'
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+    CashAllocation:
+      type: object
+      format: CashAllocation
+      description: "Reference to Branch Cash Allocation Instance ||\r\n|"
+      properties:
+        CashAllocation:
+          type: string
+          format: Class
+          description: 'The allocation of cash '
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Regulation:
+      type: object
+      format: Regulation
+      description: "Reference to the regulation which is defined for Branch Cash Allocation ||\r\n|"
+      properties:
+        RegulationDefinition:
+          $ref: '#/components/schemas/Text'
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        Reference to the jurisdiction that is assigned to Branch Cash Allocation
+        in case of legal dispute. Jurisdiction|Jurisdiction
+        (https://www.iso20022.org/standardsrepository/type/Jurisdiction)|Standard|ISO20022
+        BM ()
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Account:
+      type: object
+      format: Account
+      description: >-
+        Reference to the account which is linked to Branch Cash Allocation
+        Account|Account 
+        (https://www.iso20022.org/standardsrepository/type/Account)|Standard|ISO20022
+        BM ()
+      properties:
+        AccountStatus:
+          $ref: '#/components/schemas/Accountstatus'
+        AccountIdentification:
+          $ref: '#/components/schemas/Accountidentification'
+        AccountDate:
+          $ref: '#/components/schemas/Accountdatetime'
+        Accounttypevalues:
+          enum:
+            - DebitAccount
+            - CreditAccount
+            - VostroAcount
+            - NostroAccount
+            - PaymentAccount
+            - SettlementAccount
+            - SavingAccount
+            - CurrentAccount
+            - CashAccount
+            - LoanAccount
+            - IndividualAccount
+            - JointAccount
+            - LiquidationAccount
+            - ProvisionAccount
+            - PartnershipAccount
+            - InvestmentAccount
+          format: Account
+        AccountPurpose:
+          $ref: '#/components/schemas/Text'
+        AccountBalance:
+          $ref: '#/components/schemas/Accountbalance'
+        AccountCurrency:
+          $ref: '#/components/schemas/Accountcurrency'
+        AccountDescription:
+          $ref: '#/components/schemas/Text'
+        AccountName:
+          $ref: '#/components/schemas/Name'
+    Accountstatus:
+      type: object
+      format: Accountstatus
+      description: >-
+        A characteristic of account which refers to the LifecycleStatus of
+        account like opened, closed, blocked, etc.
+
+
+        Specifies the current state of an account. (ISO20022) 
+      properties:
+        AccountStatus:
+          $ref: '#/components/schemas/Status'
+        Accountstatustypevalues:
+          enum:
+            - Enabled
+            - Disabled
+            - Deleted
+            - Proforma
+            - Pending
+          format: Accountstatus
+    Accountidentification:
+      type: object
+      format: Accountidentification
+      description: 'The identifier of account like Account Number. '
+      properties:
+        Accountidentificationtypevalues:
+          enum:
+            - BBAN
+            - IBAN
+            - UPIC
+            - AccountNumber
+            - PAN
+            - Paym
+            - Wallet
+            - SortCodeAndAccountNumber
+          format: Accountidentification
+        AccountIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Accountdatetime:
+      type: object
+      format: Accountdatetime
+      description: >-
+        A characteristic of account which refers to LifecycleDate of account
+        (e.g., ClosingDate, OpeningDate, LiveDate, etc.)  
+      properties:
+        Accountdatetimetypevalues:
+          enum:
+            - OpeningDate
+            - ClosingDate
+            - BlockingDate
+            - MaturityDate
+            - LiveDate
+            - RenewalDate
+          format: Accountdatetime
+        AccountDate:
+          $ref: '#/components/schemas/Datetime'
+    Accountbalance:
+      type: object
+      format: Accountbalance
+      description: >-
+        The state of the obligations managed on the account, the result of all
+        entries on the account.
+
+
+        Numerical representation of the net increases and decreases in an
+        account at a specific point in time. (ISO20022)
+
+
+        Banking: Amount available in an account for withdrawal or use.
+
+        Read more: http://www.businessdictionary.com/definition/balance.html
+
+
+        Bookkeeping: Difference between the debit and credit sides of an
+        account.
+
+        Read more: http://www.businessdictionary.com/definition/balance.html 
+      properties:
+        BalanceAmount:
+          $ref: '#/components/schemas/Amount'
+        Balancetypevalues:
+          enum:
+            - OpeningBalance
+            - ClosingBalance
+            - CurrentBalance
+            - AvailableBalance
+            - LedgerBalance
+            - ReserveBalance
+            - FreeBalance
+            - PrincipalBalance
+            - ClosingAvailable
+            - ClosingBooked
+            - ForwardAvailable
+            - Information
+            - InterimAvailable
+            - InterimBooked
+            - OpeningAvailable
+            - OpeningBooked
+            - PreviouslyClosedBooked
+            - Expected
+          format: Accountbalance
+        BalanceValueDate:
+          $ref: '#/components/schemas/Datetime'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: Accountbalance
+        Balancecounterpartytypevalues:
+          enum:
+            - Bilateral
+            - Multilateral
+          format: Accountbalance
+        BalanceCalculationDate:
+          $ref: '#/components/schemas/Datetime'
+        Balancesubtypevalues:
+          enum:
+            - Adjustment
+            - Basecurrency
+            - Blocked
+            - Blockedfunds
+            - Daylightoverdraft
+            - Eligibleassets
+            - Firmcollateralization
+            - Amountsthathavebeenusedtoserveasfi
+            - Securitiesforecast
+            - Netfunding
+            - Intermediate
+            - Localcurrency
+            - Limitrelated
+            - Reservedliquidity
+            - Securitiespending
+            - Payinpayout
+            - Progressiveaverage
+            - Reserve
+            - Selfcollateralization
+            - Amountsthathavebeenusedtoserveasse
+            - Threshold
+          format: Accountbalance
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Accountcurrency:
+      type: object
+      format: Accountcurrency
+      description: ' '
+      properties:
+        Currencytypevalues:
+          enum:
+            - BaseCurrency
+            - ReportingCurrency
+            - SecondaryCurrency
+            - TransferCurrency
+          format: Accountcurrency
+        AccountCurrency:
+          $ref: '#/components/schemas/Currencycode'

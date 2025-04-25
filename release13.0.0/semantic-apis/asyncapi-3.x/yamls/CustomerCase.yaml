@@ -1,0 +1,1042 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Case
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    handles the initiation, tracking, resolution and reporting on customer cases
+    (issues that typically require corrective response to some financial
+    transaction)
+channels:
+  CustomerCaseProcedure/Created:
+    address: CustomerCaseProcedure/Created
+    messages:
+      CustomerCaseProcedure-created.message:
+        $ref: '#/components/messages/CustomerCaseProcedure'
+    description: ''
+  CustomerCaseProcedure/Updated:
+    address: CustomerCaseProcedure/Updated
+    messages:
+      CustomerCaseProcedure-updated.message:
+        $ref: '#/components/messages/CustomerCaseProcedure'
+    description: ''
+  Analysis/Created:
+    address: Analysis/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Analysis'
+    description: ''
+  Analysis/Updated:
+    address: Analysis/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Analysis'
+    description: ''
+  Resolution/Created:
+    address: Resolution/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Resolution'
+    description: ''
+  Resolution/Updated:
+    address: Resolution/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Resolution'
+    description: ''
+  Determination/Created:
+    address: Determination/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Determination'
+    description: ''
+  Determination/Updated:
+    address: Determination/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Determination'
+    description: ''
+operations:
+  CustomerCaseProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerCaseProcedure~1Created'
+    summary: CustomerCaseProcedure
+    messages:
+      - $ref: >-
+          #/channels/CustomerCaseProcedure~1Created/messages/CustomerCaseProcedure-created.message
+  CustomerCaseProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerCaseProcedure~1Updated'
+    summary: CustomerCaseProcedure
+    messages:
+      - $ref: >-
+          #/channels/CustomerCaseProcedure~1Updated/messages/CustomerCaseProcedure-updated.message
+  Analysis/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Analysis~1Created'
+    summary: Analysis
+    messages:
+      - $ref: '#/channels/Analysis~1Created/messages/publish.message'
+  Analysis/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Analysis~1Updated'
+    summary: Analysis
+    messages:
+      - $ref: '#/channels/Analysis~1Updated/messages/publish.message'
+  Resolution/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Resolution~1Created'
+    summary: Resolution
+    messages:
+      - $ref: '#/channels/Resolution~1Created/messages/publish.message'
+  Resolution/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Resolution~1Updated'
+    summary: Resolution
+    messages:
+      - $ref: '#/channels/Resolution~1Updated/messages/publish.message'
+  Determination/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Determination~1Created'
+    summary: Determination
+    messages:
+      - $ref: '#/channels/Determination~1Created/messages/publish.message'
+  Determination/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Determination~1Updated'
+    summary: Determination
+    messages:
+      - $ref: '#/channels/Determination~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerCaseProcedure:
+      name: CustomerCaseProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Customer
+        Case. 
+      payload:
+        $ref: '#/components/schemas/CustomerCaseProcedure'
+    Analysis:
+      name: Analysis
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Analysis'
+    Resolution:
+      name: Resolution
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Resolution'
+    Determination:
+      name: Determination
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Determination'
+  schemas:
+    Analysis:
+      type: object
+      description: ''
+      properties:
+        CustomerContactRecord:
+          $ref: '#/components/schemas/CustomerContact'
+        CaseAnalysisWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+        CaseAnalysisWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+    CustomerContact:
+      type: object
+      format: CustomerContact
+      description: "The contact record contains all details of the initial case submission ||\r\n|"
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Location:
+      type: object
+      format: Location
+      description: 'Geographical location of the device. '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Status:
+      type: object
+      format: Status
+      description: |-
+        The life cycle stage of a device
+        e.g. active, defect
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Address:
+      type: object
+      format: Address
+      description: >-
+        The address associated with the device like Internet Protocol address,
+        email Address 
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Schedule:
+      type: object
+      format: Schedule
+      description: 'The schedule of past and planned customer contacts '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Device:
+      type: object
+      format: Device
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+          format: Device
+        DeviceProperty:
+          $ref: '#/components/schemas/Text'
+        DeviceElement:
+          $ref: '#/components/schemas/Text'
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/Text'
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/Text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/Text'
+        DeviceLocation:
+          $ref: '#/components/schemas/Location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/Text'
+        DeviceCountry:
+          $ref: '#/components/schemas/Country'
+        DeviceAddress:
+          $ref: '#/components/schemas/Address'
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Device
+        Deviceoperatingsystemtypevalues:
+          enum:
+            - Android
+            - Ios
+            - Windows
+            - Blackberry
+            - Tizen
+            - Othernational
+            - Otherprivate
+          format: Device
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Deviceidentificationtypevalues:
+          enum:
+            - IMEI
+            - Serialnumber
+            - Secureelementidentification
+            - Othernational
+            - Otherprivate
+          format: Deviceidentification
+    Country:
+      type: object
+      format: Country
+      description: 'Country of the location. '
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    Task:
+      type: object
+      format: Task
+      description: "The outcome of the case root cause analysis ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Resolution:
+      type: object
+      description: ''
+      properties:
+        CorrespondenceInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        CorrespondenceContent:
+          $ref: '#/components/schemas/Text'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        DocumentContent:
+          $ref: '#/components/schemas/Text'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        PaymentOrderReference:
+          $ref: '#/components/schemas/PaymentInstruction'
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "The document reference for associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Business unit responsible for the customer case resolution actions ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    PaymentInstruction:
+      type: object
+      format: PaymentInstruction
+      description: >-
+        Reference to the resolution payment order when financial adjustments are
+        required to resolve the customer case Payment|Payment
+        (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+        BM ()
+      properties:
+        PaymentInstructionDirectionType:
+          $ref: '#/components/schemas/Text'
+        Paymenttypevalues:
+          enum:
+            - Cashtransaction
+            - Domesticpayment
+            - Domestichighvaluepayment
+            - Domesticprioritypayment
+            - Crossborderpayment
+            - Crossborderprioritypayment
+            - Crossborderhighvaluepayment
+            - Thirdcurrencypayment
+            - Thirdcurrencyhighvaluepayment
+            - Thirdcurrencyprioritypayment
+            - Tradesettlementpayment
+            - Foreignexchange
+            - Equivalentamount
+            - Loan
+            - Loanrepayment
+            - Securities
+            - Lockbox
+            - Dividend
+            - Crossedcheque
+            - Opencheque
+            - Ordercheque
+            - Circularcheque
+            - Travellerscheques
+            - Bankdraft
+            - Cashletter
+            - Documentarycredit
+            - Billofexchange
+            - Collection
+            - Cashmanagementtransfer
+            - Sweepaccount
+            - Topaccount
+            - Zerobalanceaccount
+            - Standingfacilities
+            - Swiftpayservicelevelcredit
+            - Priorityservicelevelcredit
+            - Standardservicelevelcredit
+            - Liquiditytransfer
+            - Advancepayment
+            - Valuedateadjustment
+            - Dvpgross
+            - Dvpnet
+            - Netting
+            - Limitpayment
+            - Backup
+            - Expresspayment
+            - Centralbankoperation
+            - Clspayment
+            - Eurodomesticpayment
+            - Agriculturaltransfer
+            - Alimonypayment
+            - Balanceretail
+            - Bonuspayment.
+            - Brokeragefee
+            - Capitalbuilding
+            - Charitypayment
+            - Childbenefit
+            - Commercialcredit
+            - Commission
+            - Commoditytransfer
+            - Costs
+            - Copyright
+            - Governmentpayment
+            - Instalmenthirepurchaseagreement
+            - Insurancepremium
+            - Intracompanypayment
+            - Interest
+            - Licensefee
+            - Metals
+            - Pensionpayment
+            - Purchasesaleofgoods
+            - Refund
+            - Rent
+            - Royalties
+            - Purchasesaleofservices
+            - Salarypayment
+            - Socialsecuritybenefit
+            - Standingorder
+            - Subscription
+            - Treasurystatepayment
+            - Unemploymentdisabilitybenefit
+            - Valueaddedtaxpayment
+            - Withholdingtax
+            - Taxpayment
+            - Miscellaneous
+            - Overnightdeposit
+            - Marginallending
+            - Other
+            - Upfront
+            - Unwind
+            - Principalexchange
+          format: PaymentInstruction
+        PaymentInstructionRequestedMechanism:
+          $ref: '#/components/schemas/Text'
+        PaymentInstructionProcessingValidityTime:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Priorityvaluetypes:
+          enum:
+            - Urgent
+            - High
+            - Normal
+            - Low
+          format: PaymentInstruction
+        Clearingchanneltypevalues:
+          enum:
+            - Realtimegrosssettlementsystem
+            - Realtimenetsettlementsystem
+            - Masspaymentnetsystem
+            - Booktransfer
+          format: PaymentInstruction
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: PaymentInstruction
+        PaymentInstructionStatus:
+          $ref: '#/components/schemas/Paymentinstructionstatus'
+        PaymentInstructionAmount:
+          $ref: '#/components/schemas/Amount'
+        PaymentInstructionDatetime:
+          $ref: '#/components/schemas/Paymentdatetime'
+    Paymentinstructionstatus:
+      type: object
+      format: Paymentinstructionstatus
+      description: ' '
+      properties:
+        PaymentInstructionStatus:
+          $ref: '#/components/schemas/Status'
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Paymentinstructionstatus
+    Amount:
+      type: object
+      format: Amount
+      description: 'Amount of the payment (requested to be paid) '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Paymentdatetime:
+      type: object
+      format: Paymentdatetime
+      description: ' '
+      properties:
+        PaymentDate:
+          $ref: '#/components/schemas/Datetime'
+        Paymentdatetimetypevalues:
+          enum:
+            - RequestedExecutionDate
+            - AcceptanceDate
+            - CreationDate
+            - ValueDate
+            - DueDate
+            - ExpiryDate
+          format: Paymentdatetime
+    Determination:
+      type: object
+      description: ''
+      properties:
+        CustomerAgreementInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        CustomerAgreement:
+          $ref: '#/components/schemas/CustomerAgreement'
+        CaseDeterminationWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+        CaseDeterminationWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+    CustomerAgreement:
+      type: object
+      format: CustomerAgreement
+      description: "The agreement is accessed to support the determination of the resolution approach ||\r\n|"
+      properties:
+        CustomerAgreement:
+          type: string
+          format: Class
+          description: 'An agreement between a bank and its customer.  '
+    CustomerCaseProcedure:
+      type: object
+      description: ''
+      properties:
+        Casetypevalues:
+          enum:
+            - Card
+            - Loan
+            - Fraud
+            - Payment
+            - Market
+            - Security
+            - Other
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerContactRecordReference:
+          $ref: '#/components/schemas/CustomerContact'
+        ProductTransactionReference:
+          $ref: '#/components/schemas/Transaction'
+        ProductTransactionRecord:
+          $ref: '#/components/schemas/Transaction'
+        CaseLocation:
+          $ref: '#/components/schemas/Address'
+        Date:
+          $ref: '#/components/schemas/Datetime'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        CustomerCaseResolutionSchedule:
+          $ref: '#/components/schemas/Schedule'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to a specific product instance associated with the case ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        The complete transaction record for transactions associated with the
+        case (detailed attribute breakdown not included)
+        ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+        Transaction:
+          type: string
+          format: Class
+          description: >-
+            A planned or performed action in the context of concluding an
+            agreement or fulfilling an arrangement
+
+
+            Act to do something. 
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus

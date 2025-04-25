@@ -1,0 +1,1186 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Billing
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domains
+    provides a central service to compose, issue and track customer billing and
+    invoices
+channels:
+  CustomerBillingProcedure/Created:
+    address: CustomerBillingProcedure/Created
+    messages:
+      CustomerBillingProcedure-created.message:
+        $ref: '#/components/messages/CustomerBillingProcedure'
+    description: ''
+  CustomerBillingProcedure/Updated:
+    address: CustomerBillingProcedure/Updated
+    messages:
+      CustomerBillingProcedure-updated.message:
+        $ref: '#/components/messages/CustomerBillingProcedure'
+    description: ''
+  Payment/Created:
+    address: Payment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Payment'
+    description: ''
+  Payment/Updated:
+    address: Payment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Payment'
+    description: ''
+  Invoicing/Created:
+    address: Invoicing/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Invoicing'
+    description: ''
+  Invoicing/Updated:
+    address: Invoicing/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Invoicing'
+    description: ''
+  TrackingandReminders/Created:
+    address: TrackingandReminders/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrackingandReminders'
+    description: ''
+  TrackingandReminders/Updated:
+    address: TrackingandReminders/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TrackingandReminders'
+    description: ''
+operations:
+  CustomerBillingProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerBillingProcedure~1Created'
+    summary: CustomerBillingProcedure
+    messages:
+      - $ref: >-
+          #/channels/CustomerBillingProcedure~1Created/messages/CustomerBillingProcedure-created.message
+  CustomerBillingProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerBillingProcedure~1Updated'
+    summary: CustomerBillingProcedure
+    messages:
+      - $ref: >-
+          #/channels/CustomerBillingProcedure~1Updated/messages/CustomerBillingProcedure-updated.message
+  Payment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Payment~1Created'
+    summary: Payment
+    messages:
+      - $ref: '#/channels/Payment~1Created/messages/publish.message'
+  Payment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Payment~1Updated'
+    summary: Payment
+    messages:
+      - $ref: '#/channels/Payment~1Updated/messages/publish.message'
+  Invoicing/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Invoicing~1Created'
+    summary: Invoicing
+    messages:
+      - $ref: '#/channels/Invoicing~1Created/messages/publish.message'
+  Invoicing/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Invoicing~1Updated'
+    summary: Invoicing
+    messages:
+      - $ref: '#/channels/Invoicing~1Updated/messages/publish.message'
+  TrackingandReminders/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrackingandReminders~1Created'
+    summary: TrackingandReminders
+    messages:
+      - $ref: '#/channels/TrackingandReminders~1Created/messages/publish.message'
+  TrackingandReminders/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TrackingandReminders~1Updated'
+    summary: TrackingandReminders
+    messages:
+      - $ref: '#/channels/TrackingandReminders~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerBillingProcedure:
+      name: CustomerBillingProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Customer
+        Billing. 
+      payload:
+        $ref: '#/components/schemas/CustomerBillingProcedure'
+    Payment:
+      name: Payment
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Payment'
+    Invoicing:
+      name: Invoicing
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/Invoicing'
+    TrackingandReminders:
+      name: TrackingandReminders
+      description: |-
+        The main worsteps to be followed in th eexecution of the procedure
+        Examples:- Invoice generation
+      payload:
+        $ref: '#/components/schemas/TrackingandReminders'
+  schemas:
+    Payment:
+      type: object
+      description: ''
+      properties:
+        PaymentTransactionReference:
+          $ref: '#/components/schemas/PaymentTransaction'
+        PaymentTransaction:
+          $ref: '#/components/schemas/PaymentTransaction'
+    PaymentTransaction:
+      type: object
+      format: PaymentTransaction
+      description: >-
+        The payment transaction details Payment|Payment
+        (https://www.iso20022.org/standardsrepository/type/Payment)|Standard|ISO20022
+        BM ()
+      properties:
+        Paymenttypevalues:
+          enum:
+            - Cashtransaction
+            - Domesticpayment
+            - Domestichighvaluepayment
+            - Domesticprioritypayment
+            - Crossborderpayment
+            - Crossborderprioritypayment
+            - Crossborderhighvaluepayment
+            - Thirdcurrencypayment
+            - Thirdcurrencyhighvaluepayment
+            - Thirdcurrencyprioritypayment
+            - Tradesettlementpayment
+            - Foreignexchange
+            - Equivalentamount
+            - Loan
+            - Loanrepayment
+            - Securities
+            - Lockbox
+            - Dividend
+            - Crossedcheque
+            - Opencheque
+            - Ordercheque
+            - Circularcheque
+            - Travellerscheques
+            - Bankdraft
+            - Cashletter
+            - Documentarycredit
+            - Billofexchange
+            - Collection
+            - Cashmanagementtransfer
+            - Sweepaccount
+            - Topaccount
+            - Zerobalanceaccount
+            - Standingfacilities
+            - Swiftpayservicelevelcredit
+            - Priorityservicelevelcredit
+            - Standardservicelevelcredit
+            - Liquiditytransfer
+            - Advancepayment
+            - Valuedateadjustment
+            - Dvpgross
+            - Dvpnet
+            - Netting
+            - Limitpayment
+            - Backup
+            - Expresspayment
+            - Centralbankoperation
+            - Clspayment
+            - Eurodomesticpayment
+            - Agriculturaltransfer
+            - Alimonypayment
+            - Balanceretail
+            - Bonuspayment.
+            - Brokeragefee
+            - Capitalbuilding
+            - Charitypayment
+            - Childbenefit
+            - Commercialcredit
+            - Commission
+            - Commoditytransfer
+            - Costs
+            - Copyright
+            - Governmentpayment
+            - Instalmenthirepurchaseagreement
+            - Insurancepremium
+            - Intracompanypayment
+            - Interest
+            - Licensefee
+            - Metals
+            - Pensionpayment
+            - Purchasesaleofgoods
+            - Refund
+            - Rent
+            - Royalties
+            - Purchasesaleofservices
+            - Salarypayment
+            - Socialsecuritybenefit
+            - Standingorder
+            - Subscription
+            - Treasurystatepayment
+            - Unemploymentdisabilitybenefit
+            - Valueaddedtaxpayment
+            - Withholdingtax
+            - Taxpayment
+            - Miscellaneous
+            - Overnightdeposit
+            - Marginallending
+            - Other
+            - Upfront
+            - Unwind
+            - Principalexchange
+          format: PaymentTransaction
+        PaymentTransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        PaymentTransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        PaymentTransactionUsedMechanism:
+          $ref: '#/components/schemas/Text'
+        PaymentTransactionDatetime:
+          $ref: '#/components/schemas/Paymentdatetime'
+        Paymentpurposevalues:
+          enum:
+            - Salarypayment
+            - Treasurypayment
+            - Advancepayment
+            - Agriculturaltransfer
+            - Alimonypayment
+            - Childbenefit
+            - Unemploymentdisabilitybenefit
+            - Bonuspayment.
+            - Cashmanagementtransfer
+            - Capitalbuilding
+            - Charitypayment
+            - Collectionpayment
+            - Commoditytransfer
+            - Commercialpayment
+            - Commission
+            - Costs
+            - Copyright
+            - Dividend
+            - Foreignexchange
+            - Purchasesaleofgoods
+            - Governmentpayment
+            - Instalmenthirepurchaseagreement
+            - Intracompanypayment
+            - Insurancepremium
+            - Interest
+            - Licensefee
+            - Loan
+            - Loanrepayment
+            - Netting
+            - Payroll
+            - Pensionpayment
+            - Refund
+            - Rent
+            - Royalties
+            - Purchasesaleofservices
+            - Securities
+            - Socialsecuritybenefit
+            - Subscription
+            - Taxpayment
+            - Valueaddedtaxpayment
+            - Consumerthirdpartyconsolidatedpaym
+            - Debitcollectionpayment
+            - Supplierpayment
+            - Hedging
+            - Multipleservicetypes
+            - Nototherwisespecified
+            - Cardpayment
+            - Creditcardbill
+            - Ferry
+            - Air
+            - Bus
+            - Railway
+            - Convalescentcarefacility
+            - Dentalservices
+            - Anesthesiaservices
+            - Homehealthcare
+            - Hospitalcare
+            - Intermediatecarefacility
+            - Longtermcarefacility
+            - Medicalservices
+            - Visioncare
+            - Durablemedicaleequipment
+            - Cabletvbill
+            - Electricitybill
+            - Gasbill
+            - Telephonebill
+            - Othertelecomrelatedbill
+            - Waterbill
+            - Study
+            - Pricepayment
+            - Installment
+            - Recurringinstallmentpayment
+            - Openingfee
+            - Cancellationfee
+            - Governmentinsurance
+            - Insurancepremiumcar
+            - Laborinsurance
+            - Lifeinsurance
+            - Propertyinsurance
+            - Healthinsurance
+            - Carloanprincipalrepayment
+            - Housingloanrepayment
+            - Companysocialloanpaymenttobank
+            - Estatetax
+            - Housingtax
+            - Incometax
+            - Netincometax
+            - Businessexpenses
+            - Trustfund
+            - Networkcharge
+            - Networkcommunication
+            - Receiptpayment
+            - Paymentterms
+            - Other
+            - Withholding
+          format: PaymentTransaction
+        PaymentTransactionStatus:
+          $ref: '#/components/schemas/Paymenttransactionstatus'
+        PaymentTransactionAppliedFeeAmount:
+          $ref: '#/components/schemas/Amount'
+        Currencytypevalues:
+          enum:
+            - BaseCurrency
+            - ReportingCurrency
+            - SecondaryCurrency
+            - TransferCurrency
+          format: PaymentTransaction
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: PaymentTransaction
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+        Amount:
+          type: string
+          format: DataType
+          description: >-
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+            The decimal seperator is a dot.
+
+
+
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. The decimal
+            separator is a dot. (ISO20022)
+
+            Note: A zero amount is considered a positive amount.
+
+            total number of digits: 18
+
+            number of digits in fractional part: 5
+
+            minInclusive: 0 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Text:
+      type: object
+      format: Text
+      description: 'Specifies the reasons for the status. '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the status was assigned. '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Paymentdatetime:
+      type: object
+      format: Paymentdatetime
+      description: ' '
+      properties:
+        PaymentDate:
+          $ref: '#/components/schemas/Datetime'
+        Paymentdatetimetypevalues:
+          enum:
+            - RequestedExecutionDate
+            - AcceptanceDate
+            - CreationDate
+            - ValueDate
+            - DueDate
+            - ExpiryDate
+          format: Paymentdatetime
+    Paymenttransactionstatus:
+      type: object
+      format: Paymenttransactionstatus
+      description: >-
+        Specifies the status of a payment transaction at a specified time.
+        Elements
+      properties:
+        PaymentTransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Paymenttransactionstatustypevalues:
+          enum:
+            - Acceptedtechnicalvalidation
+            - Received
+            - Partiallyaccepted
+            - Rejected
+            - Pending
+            - Acceptedcustomerprofile
+            - Acceptedsettlementinprocess
+            - Acceptedsettlementcompleted
+            - Accepted
+            - Acceptedcancellationrequest
+            - Rejectedcancellationrequest
+            - Acceptedwithchange
+            - Partiallyacceptedcancellationreque
+            - Pendingcancellationrequest
+            - Acceptedcreditsettlementcompleted
+            - Paymentcancelled
+            - Nocancellationprocess
+          format: Paymenttransactionstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Invoicing:
+      type: object
+      description: ''
+      properties:
+        CustomerInvoiceRecord:
+          $ref: '#/components/schemas/Invoice'
+        InvoiceDate:
+          $ref: '#/components/schemas/Datetime'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        CorrespondenceInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        Invoice:
+          $ref: '#/components/schemas/Invoice'
+        InvoicingWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+    Invoice:
+      type: object
+      format: Invoice
+      description: >-
+        The content of the invoice (in any suitable media of format)
+        Invoice|Invoice
+        (https://www.iso20022.org/standardsrepository/type/Invoice)|Standard|ISO20022
+        BM ()
+      properties:
+        InvoiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        InvoiceType:
+          $ref: '#/components/schemas/Text'
+        InvoiceDueDate:
+          $ref: '#/components/schemas/Datetime'
+        InvoicePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        InvoiceAssignedDocument:
+          $ref: '#/components/schemas/Document'
+        InvoiceAdress:
+          $ref: '#/components/schemas/Address'
+        InvoiceAmount:
+          $ref: '#/components/schemas/Amount'
+        InvoiceStatus:
+          $ref: '#/components/schemas/Status'
+        CreditDebitNoteAmount:
+          $ref: '#/components/schemas/Amount'
+        TotalTaxAmount:
+          $ref: '#/components/schemas/Amount'
+        TotalInvoiceAmount:
+          $ref: '#/components/schemas/Amount'
+        InvoiceCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        TotalCharge:
+          $ref: '#/components/schemas/Amount'
+        TotalPrepaidAmount:
+          $ref: '#/components/schemas/Amount'
+        TotalNetAmount:
+          $ref: '#/components/schemas/Amount'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: Invoice
+        RemittedAmount:
+          $ref: '#/components/schemas/Amount'
+        InvoiceIssueDate:
+          $ref: '#/components/schemas/Datetime'
+    Document:
+      type: object
+      format: Document
+      description: ' '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "The document reference for the sent invoice ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the analysis (for future reference) ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    TrackingandReminders:
+      type: object
+      description: ''
+      properties:
+        CustomerReminderContactRecord:
+          $ref: '#/components/schemas/CustomerContact'
+        ContactMessage:
+          $ref: '#/components/schemas/Message'
+        ContactDate:
+          $ref: '#/components/schemas/Datetime'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        TrackingandRemindersResult:
+          $ref: '#/components/schemas/Text'
+        TrackingandRemindersWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+    CustomerContact:
+      type: object
+      format: CustomerContact
+      description: "Reference to an outbound contact established with the customer ||\r\n|"
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Schedule:
+      type: object
+      format: Schedule
+      description: 'The schedule of past and planned customer contacts '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Device:
+      type: object
+      format: Device
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+          format: Device
+        DeviceProperty:
+          $ref: '#/components/schemas/Text'
+        DeviceElement:
+          $ref: '#/components/schemas/Text'
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/Text'
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/Text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/Text'
+        DeviceLocation:
+          $ref: '#/components/schemas/Location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/Text'
+        DeviceCountry:
+          $ref: '#/components/schemas/Country'
+        DeviceAddress:
+          $ref: '#/components/schemas/Address'
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Device
+        Deviceoperatingsystemtypevalues:
+          enum:
+            - Android
+            - Ios
+            - Windows
+            - Blackberry
+            - Tizen
+            - Othernational
+            - Otherprivate
+          format: Device
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Deviceidentificationtypevalues:
+          enum:
+            - IMEI
+            - Serialnumber
+            - Secureelementidentification
+            - Othernational
+            - Otherprivate
+          format: Deviceidentification
+    Country:
+      type: object
+      format: Country
+      description: 'Country of the location. '
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+    Message:
+      type: object
+      format: Message
+      description: "Content of the reminder message ||\r\n|"
+      properties:
+        Messagetypevalues:
+          enum:
+            - FinancialMessage
+            - NonFinancialMessage
+            - InboundMessage
+            - OutboundMessage
+          format: Message
+        MessageContent:
+          $ref: '#/components/schemas/Text'
+        MessageDeliveryStatus:
+          $ref: '#/components/schemas/Status'
+    CustomerBillingProcedure:
+      type: object
+      description: ''
+      properties:
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+        CustomerBillingTransactionDescription:
+          $ref: '#/components/schemas/Text'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        CustomerAgreementReference:
+          $ref: '#/components/schemas/CustomerAgreement'
+        CustomerBillingProductandServiceActionDescription:
+          $ref: '#/components/schemas/Text'
+        CustomerBillingParty:
+          $ref: '#/components/schemas/Party'
+        CustomerBillingAddress:
+          $ref: '#/components/schemas/Address'
+        CustomerBillingPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        CustomerBillingStatement:
+          $ref: '#/components/schemas/Statement'
+        CustomerBillingAmount:
+          $ref: '#/components/schemas/Amount'
+        CustomerBillingPaymentDueDate:
+          $ref: '#/components/schemas/Datetime'
+        CustomerBillingPaymentDetails:
+          $ref: '#/components/schemas/Text'
+        CustomerBillingPaymentSchedule:
+          $ref: '#/components/schemas/Schedule'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "The product instance associated with the charge ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    CustomerAgreement:
+      type: object
+      format: CustomerAgreement
+      description: "The agreement covering the product arrangement (referenced for any specific billing terms and conditions) ||\r\n|"
+      properties:
+        CustomerAgreement:
+          type: string
+          format: Class
+          description: 'An agreement between a bank and its customer.  '
+    Statement:
+      type: object
+      format: Statement
+      description: "The itemized breakdown of the charges with references ||\r\n|"
+      properties:
+        Statementtypevalues:
+          enum:
+            - FinancialStatement
+            - AccountStatement
+            - CustomerStatement
+          format: Statement

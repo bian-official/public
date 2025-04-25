@@ -1,0 +1,705 @@
+asyncapi: 3.0.0
+info:
+  title: Business Unit Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Track and report on
+    business unit activity and financial performance
+channels:
+  BusinessUnitManagementPlan/Created:
+    address: BusinessUnitManagementPlan/Created
+    messages:
+      BusinessUnitManagementPlan-created.message:
+        $ref: '#/components/messages/BusinessUnitManagementPlan'
+    description: ''
+  BusinessUnitManagementPlan/Updated:
+    address: BusinessUnitManagementPlan/Updated
+    messages:
+      BusinessUnitManagementPlan-updated.message:
+        $ref: '#/components/messages/BusinessUnitManagementPlan'
+    description: ''
+  Performance/Created:
+    address: Performance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+  Performance/Updated:
+    address: Performance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+operations:
+  BusinessUnitManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BusinessUnitManagementPlan~1Created'
+    summary: BusinessUnitManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BusinessUnitManagementPlan~1Created/messages/BusinessUnitManagementPlan-created.message
+  BusinessUnitManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BusinessUnitManagementPlan~1Updated'
+    summary: BusinessUnitManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BusinessUnitManagementPlan~1Updated/messages/BusinessUnitManagementPlan-updated.message
+  Performance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Created'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Created/messages/publish.message'
+  Performance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Updated'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Updated/messages/publish.message'
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+components:
+  messages:
+    BusinessUnitManagementPlan:
+      name: BusinessUnitManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Business Unit Management.
+      payload:
+        $ref: '#/components/schemas/BusinessUnitManagementPlan'
+    Performance:
+      name: Performance
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Performance'
+    Troubleshooting:
+      name: Troubleshooting
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+  schemas:
+    Performance:
+      type: object
+      description: ''
+      properties:
+        BusinessUnitResourceUtilization:
+          type: string
+          format: Object
+          description: "Record of the business unit employee target and actual utilization/productivity ||\r\n|"
+        BusinessUnitOutputWorkProjections:
+          type: string
+          format: Object
+          description: "Estimated projected business unit product/service delivery and work volume targets as appropriate for the type of unit ||\r\n|"
+        BusinessUnitPerformanceStatistics:
+          type: string
+          format: Object
+          description: "Tracked business unit activity and performance statistics used to manage the business unit ||\r\n|"
+        BusinessUnitPerformanceStatisticType:
+          $ref: '#/components/schemas/Text'
+        BusinessUnitPerformanceStatisticValue:
+          $ref: '#/components/schemas/Amount'
+        BusinessUnitPerformanceStatisticInterpretation:
+          type: string
+          format: Object
+          description: "Narrative that might explain any divergence from expected performance/delivery ||\r\n|"
+        BusinessUnitPerformanceStatisticRecommendation:
+          type: string
+          format: Object
+          description: "Proposed operational changes/recommendations arising from the performance tracking and analysis ||\r\n|"
+    Text:
+      type: object
+      format: Text
+      description: Decimal point position starts calulating from the right
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The statistical analysis that can include historical and trended views
+        of the activity CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Troubleshooting:
+      type: object
+      description: ''
+      properties:
+        BusinessUnitProductionIssueRecord:
+          $ref: '#/components/schemas/ProductionIssue'
+        BusinessUnitIssueAnalysisAndRecommendedResponse:
+          type: string
+          format: Object
+          description: "A record of the root cause analysis for recurring issues and suggested remedial action that can be internal to the unit or recommended to service providers and subscribers as appropriate ||\r\n|"
+    ProductionIssue:
+      type: object
+      format: ProductionIssue
+      description: "A record of any production issues arising during the session (see Advanced Voice Channel Operations for detailed content) ||\r\n|"
+      properties:
+        ProductionIssueType:
+          type: string
+          format: String
+          description: The Type of production problem (error)
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: 'Description of the production problem '
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: 'Evaluation of the production problem cause and impact assessment '
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: 'Description of corrective action proposed and taken '
+        ProductionIssueStatus:
+          type: string
+          format: String
+          description: 'The state of resolution of a reported production problem '
+    BusinessUnitManagementPlan:
+      type: object
+      description: ''
+      properties:
+        BusinessUnitManagementPlanPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        BusinessUnitUsagePoliciesAndGuidelines:
+          $ref: '#/components/schemas/RuleSet'
+        BusinessUnitPerformanceGoals:
+          $ref: '#/components/schemas/Goal'
+        BusinessUnitOperatingSchedule:
+          $ref: '#/components/schemas/Schedule'
+        BusinessUnitOperatingOrganization:
+          $ref: '#/components/schemas/Organisation'
+        BusinessUnitResourcePlan:
+          $ref: '#/components/schemas/BusinessUnitResourcePlan'
+        BusinessUnitTrainingPlan:
+          $ref: '#/components/schemas/BusinessUnitTrainingPlan'
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        The policies and guidelines for business unit employees and service
+        users GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Goal:
+      type: object
+      format: Goal
+      description: "The target and actual business unit performance goals that are tracked by business unit management ||\r\n|"
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The target and actual business unit operating schedule recording planned and actual business activity ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Organisation:
+      type: object
+      format: Organisation
+      description: "The assigned roles and responsibilities and associated work/delivery responsibilities for the staff making up the business unit Organisation\__x000D_\n|Organisation\_ (https://www.iso20022.org/standardsrepository/type/Organisation)|Standard|ISO20022 BM ()"
+      properties:
+        OrganisationStructureHierarchy:
+          $ref: '#/components/schemas/Text'
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Organisationidentification'
+        OrganisationSector:
+          $ref: '#/components/schemas/Text'
+        LegalEntityIndicator:
+          type: string
+          format: String
+          description: ''
+        OrganisationDate:
+          $ref: '#/components/schemas/Organisationdatetime'
+        Organisationtypevalues:
+          enum:
+            - LegalEntity
+            - Authority
+            - OrganisationUnit
+            - FinancialInstitution
+            - Charity
+            - GovernmentBody
+          format: Organisation
+        OrganisationName:
+          $ref: '#/components/schemas/Organisationname'
+        Organisationlegalstructuretypevalues:
+          enum:
+            - Corporation
+            - Individual
+            - Supranational
+            - Sovereign
+            - Municipal
+            - Province
+            - State
+            - County
+            - Partnership
+            - Financialinstitution
+            - National
+          format: Organisation
+    Organisationidentification:
+      type: object
+      format: Organisationidentification
+      description: ' '
+      properties:
+        Organisationidentificationtypevalues:
+          enum:
+            - LEI
+            - ELF
+            - MIC
+            - BICFI
+            - Bankpartyidentification
+            - Centralbankidentificationnumber
+            - Clearingidentificationnumber
+            - Certificateofincorporationnumber
+            - Countryidentificationcode
+            - Customernumber
+            - Datauniversalnumberingsystem
+            - Employeridentificationnumber
+            - Gs1glnidentifier
+            - SIREN
+            - SIRET
+            - Taxidentificationnumber
+            - EANGLN
+          format: Organisationidentification
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Organisationdatetime:
+      type: object
+      format: Organisationdatetime
+      description: ' '
+      properties:
+        OrganisatioDate:
+          $ref: '#/components/schemas/Datetime'
+        Organisationdatetimetypevalues:
+          enum:
+            - RegistrationDate
+            - EstablishmentDate
+            - EntityExpirationDate
+          format: Organisationdatetime
+    Organisationname:
+      type: object
+      format: Organisationname
+      description: ' '
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Organisationnametypevalues:
+          enum:
+            - ShortName
+            - TradingName
+            - LegalName
+          format: Organisationname
+    BusinessUnitResourcePlan:
+      type: object
+      format: BusinessUnitResourcePlan
+      description: "Details the number and skill profile of the business unit staff (target and actual) ||\r\n|"
+      properties:
+        BusinessUnitResourcePlan:
+          type: string
+          format: Class
+          description: >-
+            Details the number and skill profile of the business unit staff
+            (target and actual)
+             
+    BusinessUnitTrainingPlan:
+      type: object
+      format: BusinessUnitTrainingPlan
+      description: "Details of staff training and certification as appropriate ||\r\n|"
+      properties:
+        BusinessUnitTrainingPlan:
+          type: string
+          format: Class
+          description: Details of staff training and certification as appropriate

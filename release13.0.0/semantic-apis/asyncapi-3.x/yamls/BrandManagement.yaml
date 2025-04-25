@@ -1,0 +1,451 @@
+asyncapi: 3.0.0
+info:
+  title: Brand Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Respond to events that
+    potentially damage the brand or provide an opportunity to
+    strengthen/leverage brand awareness
+channels:
+  BrandManagementPlan/Created:
+    address: BrandManagementPlan/Created
+    messages:
+      BrandManagementPlan-created.message:
+        $ref: '#/components/messages/BrandManagementPlan'
+    description: ''
+  BrandManagementPlan/Updated:
+    address: BrandManagementPlan/Updated
+    messages:
+      BrandManagementPlan-updated.message:
+        $ref: '#/components/messages/BrandManagementPlan'
+    description: ''
+  BrandAdvice/Created:
+    address: BrandAdvice/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BrandAdvice'
+    description: ''
+  BrandAdvice/Updated:
+    address: BrandAdvice/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BrandAdvice'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+operations:
+  BrandManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandManagementPlan~1Created'
+    summary: BrandManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BrandManagementPlan~1Created/messages/BrandManagementPlan-created.message
+  BrandManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandManagementPlan~1Updated'
+    summary: BrandManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BrandManagementPlan~1Updated/messages/BrandManagementPlan-updated.message
+  BrandAdvice/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandAdvice~1Created'
+    summary: BrandAdvice
+    messages:
+      - $ref: '#/channels/BrandAdvice~1Created/messages/publish.message'
+  BrandAdvice/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandAdvice~1Updated'
+    summary: BrandAdvice
+    messages:
+      - $ref: '#/channels/BrandAdvice~1Updated/messages/publish.message'
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+components:
+  messages:
+    BrandManagementPlan:
+      name: BrandManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brand Management.
+      payload:
+        $ref: '#/components/schemas/BrandManagementPlan'
+    BrandAdvice:
+      name: BrandAdvice
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/BrandAdvice'
+    Troubleshooting:
+      name: Troubleshooting
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+  schemas:
+    BrandAdvice:
+      type: object
+      description: ''
+      properties:
+        BrandAdviceWorkTaskType:
+          $ref: '#/components/schemas/Text'
+        BrandAdviceWorkTask:
+          $ref: '#/components/schemas/Task'
+        BrandAdviceWorkTaskWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        BrandAdviceWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+        BrandAdviceWorkTaskDateandTime:
+          $ref: '#/components/schemas/DateTime'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Task:
+      type: object
+      format: Task
+      description: "Details of the outcome or result of the work task capturing any use of brand that might requires tracking ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "File of consolidated notes, evaluations and recommendations for the work task ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+    DateTime:
+      type: object
+      format: DateTime
+      description: "The date-time associated with the delivery of brand advice task ||\r\n|"
+      properties:
+        TimeIndication:
+          type: string
+          format: String
+          description: >-
+            Expression of the point in time
+
+            is expressed according to "TimeIndicationType" e.g. period, day,
+            more detailed indication
+        TimeIndicationType:
+          type: string
+          format: String
+          description: ''
+    Troubleshooting:
+      type: object
+      description: ''
+      properties:
+        BrandImpactEventType:
+          $ref: '#/components/schemas/Text'
+        BrandImpactTroubleshootingTask:
+          $ref: '#/components/schemas/Task'
+        BrandImpactEventDescription:
+          $ref: '#/components/schemas/Text'
+        BrandImpactEventResponseSchedule:
+          $ref: '#/components/schemas/Schedule'
+        BrandImpactEventResponseAction:
+          $ref: '#/components/schemas/Action'
+        BrandImpactEventWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        BrandImpactEventWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+        BrandImpactEventWorkTaskDateandTime:
+          $ref: '#/components/schemas/DateTime'
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Schedule of actions taken to mitigate the event (plan and actual) ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Action:
+      type: object
+      format: Action
+      description: "Actions taken to mitigate the event (e.g. press release, other communications, corrective/compensatory actions ||\r\n|"
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    BrandManagementPlan:
+      type: object
+      description: ''
+      properties:
+        BrandDefinition:
+          $ref: '#/components/schemas/Text'
+        BrandValueAssessment:
+          $ref: '#/components/schemas/BrandValueAssessment'
+        BrandUsage:
+          type: string
+          format: Object
+          description: "An inventory of situations where the brand is incorporated or exposed in business development activity these situations may require on-going exposure monitoring or assessment ||\r\n|"
+        BrandDevelopmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+    BrandValueAssessment:
+      type: object
+      format: BrandValueAssessment
+      description: "An analysis of the brand value based on comparative market research ||\r\n|"
+      properties:
+        BrandValueAssessment:
+          type: string
+          format: Class
+          description: 'An analysis of the brand value based on comparative market research '

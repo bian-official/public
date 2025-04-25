@@ -1,0 +1,1024 @@
+asyncapi: 3.0.0
+info:
+  title: Corporate Tax Advisory
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | A fee or commission based
+    product providing tax specific assessments, advice and guidance for
+    corporate customers
+channels:
+  CorporateTaxAdvisoryFacility/Created:
+    address: CorporateTaxAdvisoryFacility/Created
+    messages:
+      CorporateTaxAdvisoryFacility-created.message:
+        $ref: '#/components/messages/CorporateTaxAdvisoryFacility'
+    description: ''
+  CorporateTaxAdvisoryFacility/Updated:
+    address: CorporateTaxAdvisoryFacility/Updated
+    messages:
+      CorporateTaxAdvisoryFacility-updated.message:
+        $ref: '#/components/messages/CorporateTaxAdvisoryFacility'
+    description: ''
+  ServiceFee/Created:
+    address: ServiceFee/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ServiceFee'
+    description: ''
+  ServiceFee/Updated:
+    address: ServiceFee/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ServiceFee'
+    description: ''
+  TaxOptimization/Created:
+    address: TaxOptimization/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TaxOptimization'
+    description: ''
+  TaxOptimization/Updated:
+    address: TaxOptimization/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TaxOptimization'
+    description: ''
+operations:
+  CorporateTaxAdvisoryFacility-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CorporateTaxAdvisoryFacility~1Created'
+    summary: CorporateTaxAdvisoryFacility
+    messages:
+      - $ref: >-
+          #/channels/CorporateTaxAdvisoryFacility~1Created/messages/CorporateTaxAdvisoryFacility-created.message
+  CorporateTaxAdvisoryFacility-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CorporateTaxAdvisoryFacility~1Updated'
+    summary: CorporateTaxAdvisoryFacility
+    messages:
+      - $ref: >-
+          #/channels/CorporateTaxAdvisoryFacility~1Updated/messages/CorporateTaxAdvisoryFacility-updated.message
+  ServiceFee/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ServiceFee~1Created'
+    summary: ServiceFee
+    messages:
+      - $ref: '#/channels/ServiceFee~1Created/messages/publish.message'
+  ServiceFee/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ServiceFee~1Updated'
+    summary: ServiceFee
+    messages:
+      - $ref: '#/channels/ServiceFee~1Updated/messages/publish.message'
+  TaxOptimization/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TaxOptimization~1Created'
+    summary: TaxOptimization
+    messages:
+      - $ref: '#/channels/TaxOptimization~1Created/messages/publish.message'
+  TaxOptimization/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TaxOptimization~1Updated'
+    summary: TaxOptimization
+    messages:
+      - $ref: '#/channels/TaxOptimization~1Updated/messages/publish.message'
+components:
+  messages:
+    CorporateTaxAdvisoryFacility:
+      name: CorporateTaxAdvisoryFacility
+      description: >-
+        Fulfill any scheduled and ad-hoc obligations under a service
+        arrangement, most typically for a financial product or facility within
+        Corporate Tax Advisory. 
+      payload:
+        $ref: '#/components/schemas/CorporateTaxAdvisoryFacility'
+    ServiceFee:
+      name: ServiceFee
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/ServiceFee'
+    TaxOptimization:
+      name: TaxOptimization
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/TaxOptimization'
+  schemas:
+    ServiceFee:
+      type: object
+      description: ''
+      properties:
+        FeeApplicationRecord:
+          type: string
+          format: String
+          description: "The record of applied fees for the specialist advice ||\r\n|"
+        FeeTransaction:
+          $ref: '#/components/schemas/FeeTransaction'
+        FeeTransactionDescription:
+          $ref: '#/components/schemas/Text'
+        FeeTransactionType:
+          $ref: '#/components/schemas/FeeTransaction'
+        FeeTransactionCharge:
+          $ref: '#/components/schemas/FeeArrangement'
+    FeeTransaction:
+      type: object
+      format: FeeTransaction
+      description: >-
+        The fee type applied Charges|Charges
+        (https://www.iso20022.org/standardsrepository/type/Charges)|Standard|ISO20022
+        BM ()
+      properties:
+        Feetypevalues:
+          enum:
+            - Accountingfee
+            - Adrfee
+            - Advisoryfee
+            - Airwaybillfee
+            - Backendload
+            - Brokeragefee
+            - Clearanceandhandlingatdestination
+            - Clearanceandhandlingatorigin
+            - Collectfreight
+            - Commission
+            - Contingencydeferredsalescharge
+            - Correspondentbankcharge
+            - Custodyfee
+            - Dangerousgoodsfee
+            - Dilutionlevy
+            - Discount
+            - Equalisation
+            - Frontendload
+            - Initial
+            - Insurancepremium
+            - Issuancecancellationfee
+            - Issuancefee
+            - Managementfee
+            - Matchingfees
+            - Miscellaneousfee
+            - Other
+            - Packaging
+            - Partacquis
+            - Penalty
+            - Pickup
+            - Postagecharge
+            - Premium
+            - Publicationfee
+            - Regulatoryfee
+            - Securitycharge
+            - Serviceprovisionfee
+            - Shippingcharge
+            - Signatureservice
+            - Specialconcessions
+            - Speciallyagreedfrontendload
+            - Storageatdestination
+            - Storageatorigin
+            - Switch
+            - Transferfee
+            - Transportcharges
+            - Ucitscommission
+            - ChequeRelatedFee
+          format: FeeTransaction
+        AccruedFeeAmount:
+          $ref: '#/components/schemas/Amount'
+        AppliedFeeAmount:
+          $ref: '#/components/schemas/Amount'
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+        Amount:
+          type: string
+          format: DataType
+          description: >-
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. (UN/CEFACT)
+
+
+            The decimal seperator is a dot.
+
+
+
+            Number of monetary units specified in a currency, where the unit of
+            currency is explicit and compliant with ISO 4217. The decimal
+            separator is a dot. (ISO20022)
+
+            Note: A zero amount is considered a positive amount.
+
+            total number of digits: 18
+
+            number of digits in fractional part: 5
+
+            minInclusive: 0 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Text:
+      type: object
+      format: Text
+      description: 'Reason for the amount adjustment (fee).  '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    FeeArrangement:
+      type: object
+      format: FeeArrangement
+      description: >-
+        The derived fee amount to be charged Adjustment|Adjustment
+        (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+        BM ()
+      properties:
+        Feetypevalues:
+          enum:
+            - Accountingfee
+            - Adrfee
+            - Advisoryfee
+            - Airwaybillfee
+            - Backendload
+            - Brokeragefee
+            - Clearanceandhandlingatdestination
+            - Clearanceandhandlingatorigin
+            - Collectfreight
+            - Commission
+            - Contingencydeferredsalescharge
+            - Correspondentbankcharge
+            - Custodyfee
+            - Dangerousgoodsfee
+            - Dilutionlevy
+            - Discount
+            - Equalisation
+            - Frontendload
+            - Initial
+            - Insurancepremium
+            - Issuancecancellationfee
+            - Issuancefee
+            - Managementfee
+            - Matchingfees
+            - Miscellaneousfee
+            - Other
+            - Packaging
+            - Partacquis
+            - Penalty
+            - Pickup
+            - Postagecharge
+            - Premium
+            - Publicationfee
+            - Regulatoryfee
+            - Securitycharge
+            - Serviceprovisionfee
+            - Shippingcharge
+            - Signatureservice
+            - Specialconcessions
+            - Speciallyagreedfrontendload
+            - Storageatdestination
+            - Storageatorigin
+            - Switch
+            - Transferfee
+            - Transportcharges
+            - Ucitscommission
+            - ChequeRelatedFee
+          format: FeeArrangement
+        FeeAmount:
+          $ref: '#/components/schemas/Amount'
+        FeeRate:
+          $ref: '#/components/schemas/Rate'
+        FeeEffectivePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        FeeDueDate:
+          $ref: '#/components/schemas/Datetime'
+        FeePlan:
+          $ref: '#/components/schemas/Feeplan'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: FeeArrangement
+        FeeReason:
+          $ref: '#/components/schemas/Text'
+        Adjustmentdirectiontypevalues:
+          enum:
+            - Added
+            - Substracted
+          format: FeeArrangement
+        Chargebearertypevalues:
+          enum:
+            - Bornebydebtor
+            - Bornebycreditor
+            - Shared
+            - Followingservicelevel
+          format: FeeArrangement
+    Rate:
+      type: object
+      format: Rate
+      description: >-
+        Rate used to calculate the amount of the adjustment, allowance, charge
+        or fee. (ISO20022) 
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Feeplan:
+      type: object
+      format: Feeplan
+      description: An arranged FeeRatePlan
+      properties:
+        FeePlanName:
+          $ref: '#/components/schemas/Name'
+        Feeplantypevalues:
+          enum:
+            - StandardFeePlan
+            - FinalFeePlan
+          format: Feeplan
+        FeePlan:
+          $ref: '#/components/schemas/Plan'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Plan:
+      type: object
+      format: Plan
+      description: ' '
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/Goal'
+        PlanBudget:
+          $ref: '#/components/schemas/Budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/Plannedaction'
+        Plantypevalues:
+          enum:
+            - AdministrativePlan
+            - ManagementPlan
+            - StratgyPlan
+            - FinancialPlan
+            - DevelopmentPlan
+          format: Plan
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/Text'
+    Goal:
+      type: object
+      format: Goal
+      description: ' '
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Budgetarrangement:
+      type: object
+      format: Budgetarrangement
+      description: >-
+        An arrangement which is specifying an estimate of costs, revenues, and
+        resources over a specified period, reflecting a reading of future
+        financial conditions and goals. (adapted from Business Dictionary) 
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/Budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/Amount'
+    Budgettype:
+      type: object
+      format: Budgettype
+      description: 'A Classification value that specifies the type of Budget '
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/Name'
+        Budgettypevalues:
+          enum:
+            - OperatingBudget
+            - FinancialBudget
+            - ResourceBudget
+          format: Budgettype
+    Plannedaction:
+      type: object
+      format: Plannedaction
+      description: 'An action that is arranged in a plan for doing or achieving something  '
+      properties:
+        PlannedAction:
+          type: string
+          format: Class
+          description: >-
+            An action that is arranged in a plan for doing or achieving
+            something  
+    TaxOptimization:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceReference:
+          $ref: '#/components/schemas/BankingProduct'
+        SpecialistSupportTask:
+          $ref: '#/components/schemas/Task'
+        SpecialistEmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        SpecialistAdviceDescription:
+          $ref: '#/components/schemas/Text'
+        SpecialistAdviceCharge:
+          $ref: '#/components/schemas/FeeArrangement'
+        TaxOptimizationGuidanceAdviceResult:
+          $ref: '#/components/schemas/Text'
+    BankingProduct:
+      type: object
+      format: BankingProduct
+      description: >-
+        Reference to the corporate tax advisory service (used to access guidance
+        materials) Product_x000D_
+
+        |Product
+        (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+        BM ()
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: BankingProduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - Commercialdescriptioncodename
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+        Productstatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productstatus
+    Task:
+      type: object
+      format: Task
+      description: "A record of engaging a product tax specialist to liaise with the customer ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    CorporateTaxAdvisoryFacility:
+      type: object
+      description: ''
+      properties:
+        ProductInstanceReference:
+          $ref: '#/components/schemas/LoanAgreement'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        BankBranchLocationReference:
+          $ref: '#/components/schemas/BranchLocation'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CorporateTaxAdvisoryWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        CorporateTaxAdviceSessionSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CorporateTaxAdviceConsolidationRecord:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+        Date:
+          $ref: '#/components/schemas/Datetime'
+    LoanAgreement:
+      type: object
+      format: LoanAgreement
+      description: >-
+        Reference to the collection of advisory service sessions underlying the
+        service Loan|Loan
+        (https://www.iso20022.org/standardsrepository/type/Loan)|Standard|ISO20022
+        ()
+      properties:
+        LoanTermAndCondition:
+          $ref: '#/components/schemas/Condition'
+    Condition:
+      type: object
+      format: Condition
+      description: >-
+        Term and condition to govern the use of loan product and the loan
+        agreement in general. 
+      properties:
+        ConditionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        ConditionName:
+          $ref: '#/components/schemas/Name'
+        ConditionValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ConditionDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ConditionStatus:
+          $ref: '#/components/schemas/Status'
+    BranchLocation:
+      type: object
+      format: BranchLocation
+      description: "Bank branch associated with the customer account/relationship for booking purposes ||\r\n|"
+      properties:
+        BranchReference:
+          $ref: '#/components/schemas/Branch'
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+    Branch:
+      type: object
+      format: Branch
+      description: ' '
+      properties:
+        BranchIdentification:
+          $ref: '#/components/schemas/Identifier'
+        BranchLegalEntityIdentification:
+          $ref: '#/components/schemas/Identifier'
+        BranchAddress:
+          $ref: '#/components/schemas/Address'
+        BranchName:
+          $ref: '#/components/schemas/Name'
+    Address:
+      type: object
+      format: Address
+      description: ' '
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "File of consolidated notes, forms and documents for the advisory sessions ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "The document reference for associated documents such as disclosures and acceptance records ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Target and actual dates for tasks performed (includes any specialist sessions) ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'

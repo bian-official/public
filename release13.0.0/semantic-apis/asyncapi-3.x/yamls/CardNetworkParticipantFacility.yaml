@@ -1,0 +1,1016 @@
+asyncapi: 3.0.0
+info:
+  title: Card Network Participant Facility
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    orchestrates the activities related to the inclusion of new Acquirers and
+    Issuers in the Card Network, their terms and conditions and their status.
+channels:
+  CardNetworkParticipantFacility/Created:
+    address: CardNetworkParticipantFacility/Created
+    messages:
+      CardNetworkParticipantFacility-created.message:
+        $ref: '#/components/messages/CardNetworkParticipantFacility'
+    description: ''
+  CardNetworkParticipantFacility/Updated:
+    address: CardNetworkParticipantFacility/Updated
+    messages:
+      CardNetworkParticipantFacility-updated.message:
+        $ref: '#/components/messages/CardNetworkParticipantFacility'
+    description: ''
+  ParticipantAccount/Created:
+    address: ParticipantAccount/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ParticipantAccount'
+    description: ''
+  ParticipantAccount/Updated:
+    address: ParticipantAccount/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ParticipantAccount'
+    description: ''
+  ParticipantService/Created:
+    address: ParticipantService/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ParticipantService'
+    description: ''
+  ParticipantService/Updated:
+    address: ParticipantService/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ParticipantService'
+    description: ''
+operations:
+  CardNetworkParticipantFacility-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CardNetworkParticipantFacility~1Created'
+    summary: CardNetworkParticipantFacility
+    messages:
+      - $ref: >-
+          #/channels/CardNetworkParticipantFacility~1Created/messages/CardNetworkParticipantFacility-created.message
+  CardNetworkParticipantFacility-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CardNetworkParticipantFacility~1Updated'
+    summary: CardNetworkParticipantFacility
+    messages:
+      - $ref: >-
+          #/channels/CardNetworkParticipantFacility~1Updated/messages/CardNetworkParticipantFacility-updated.message
+  ParticipantAccount/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ParticipantAccount~1Created'
+    summary: ParticipantAccount
+    messages:
+      - $ref: '#/channels/ParticipantAccount~1Created/messages/publish.message'
+  ParticipantAccount/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ParticipantAccount~1Updated'
+    summary: ParticipantAccount
+    messages:
+      - $ref: '#/channels/ParticipantAccount~1Updated/messages/publish.message'
+  ParticipantService/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ParticipantService~1Created'
+    summary: ParticipantService
+    messages:
+      - $ref: '#/channels/ParticipantService~1Created/messages/publish.message'
+  ParticipantService/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ParticipantService~1Updated'
+    summary: ParticipantService
+    messages:
+      - $ref: '#/channels/ParticipantService~1Updated/messages/publish.message'
+components:
+  messages:
+    CardNetworkParticipantFacility:
+      name: CardNetworkParticipantFacility
+      description: >-
+        Fulfill any scheduled and ad-hoc obligations under a service
+        arrangement, most typically for a financial product or facility within
+        Card Network Participant Facility. 
+      payload:
+        $ref: '#/components/schemas/CardNetworkParticipantFacility'
+    ParticipantAccount:
+      name: ParticipantAccount
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/ParticipantAccount'
+    ParticipantService:
+      name: ParticipantService
+      description: The product features/services available with a financical facility
+      payload:
+        $ref: '#/components/schemas/ParticipantService'
+  schemas:
+    ParticipantAccount:
+      type: object
+      description: ''
+      properties:
+        ParticipantAccountPostingTransaction:
+          $ref: '#/components/schemas/Transaction'
+        NetworkParticipantFacilityAccountPostingPurpose:
+          $ref: '#/components/schemas/Text'
+        NetworkParticipantFacilityAccountPostingAmount:
+          $ref: '#/components/schemas/Amount'
+        NetworkParticipantFacilityAccountPostingValueDate:
+          $ref: '#/components/schemas/Datetime'
+        NetworkParticipantFacilityAccountPostingResult:
+          $ref: '#/components/schemas/Text'
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        Reference to the posting transaction against the network participant
+        account ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'The name of transaction. '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        The value date for the posting ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: "Confirmation of the posting action ||\r\n|"
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        Posted amount  (probably captured as a credit/debit pair)
+        CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    ParticipantService:
+      type: object
+      description: ''
+      properties:
+        ParticipantServiceRecord:
+          $ref: '#/components/schemas/CardNetworkParticpantService'
+        Servicetypevalues:
+          enum:
+            - ITService
+            - AdministrativeService
+            - SystemService
+            - FinancialService
+            - InformationService
+            - BusinessService
+        NetworkParticipantServiceCharge:
+          $ref: '#/components/schemas/FeeArrangement'
+        NetworkParticipantServiceDateandTime:
+          type: string
+          format: ''
+          description: >-
+            Key dates and times associated with the provision of the service
+            (e.g. initiation of service fulfillment) |||
+        NetworkParticipantNetworkServiceRequestWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+        NetworkParticipantNetworkServiceRequestResult:
+          $ref: '#/components/schemas/Text'
+    CardNetworkParticpantService:
+      type: object
+      format: CardNetworkParticpantService
+      description: "Reference to the service request made by the network participant ||\r\n|"
+      properties:
+        NetworkParticipantServiceType:
+          type: string
+          format: String
+          description: >-
+            The type of Network Participant Service  (e.g. merchant alert,
+            chargeback arbitration, chargeback reduction) 
+        NetworkParticipantServiceCharge:
+          type: string
+          format: String
+          description: >-
+            Details of service charge levied against the Network Participant
+            Facility. 
+        NetworkParticipantServiceDate/Time:
+          type: string
+          format: String
+          description: >-
+            Key dates and times associated with the provision of the service
+            (e.g. initiation of service fulfillment) 
+    FeeArrangement:
+      type: object
+      format: FeeArrangement
+      description: >-
+        Details of service charge levied against the Network Participant
+        Facility Adjustment|Adjustment
+        (https://www.iso20022.org/standardsrepository/type/Adjustment)|Standard|ISO20022
+        BM ()
+      properties:
+        Feetypevalues:
+          enum:
+            - Accountingfee
+            - Adrfee
+            - Advisoryfee
+            - Airwaybillfee
+            - Backendload
+            - Brokeragefee
+            - Clearanceandhandlingatdestination
+            - Clearanceandhandlingatorigin
+            - Collectfreight
+            - Commission
+            - Contingencydeferredsalescharge
+            - Correspondentbankcharge
+            - Custodyfee
+            - Dangerousgoodsfee
+            - Dilutionlevy
+            - Discount
+            - Equalisation
+            - Frontendload
+            - Initial
+            - Insurancepremium
+            - Issuancecancellationfee
+            - Issuancefee
+            - Managementfee
+            - Matchingfees
+            - Miscellaneousfee
+            - Other
+            - Packaging
+            - Partacquis
+            - Penalty
+            - Pickup
+            - Postagecharge
+            - Premium
+            - Publicationfee
+            - Regulatoryfee
+            - Securitycharge
+            - Serviceprovisionfee
+            - Shippingcharge
+            - Signatureservice
+            - Specialconcessions
+            - Speciallyagreedfrontendload
+            - Storageatdestination
+            - Storageatorigin
+            - Switch
+            - Transferfee
+            - Transportcharges
+            - Ucitscommission
+            - ChequeRelatedFee
+          format: FeeArrangement
+        FeeAmount:
+          $ref: '#/components/schemas/Amount'
+        FeeRate:
+          $ref: '#/components/schemas/Rate'
+        FeeEffectivePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        FeeDueDate:
+          $ref: '#/components/schemas/Datetime'
+        FeePlan:
+          $ref: '#/components/schemas/Feeplan'
+        Debitcreditindicatortvalues:
+          enum:
+            - Debit
+            - Credit
+          format: FeeArrangement
+        FeeReason:
+          $ref: '#/components/schemas/Text'
+        Adjustmentdirectiontypevalues:
+          enum:
+            - Added
+            - Substracted
+          format: FeeArrangement
+        Chargebearertypevalues:
+          enum:
+            - Bornebydebtor
+            - Bornebycreditor
+            - Shared
+            - Followingservicelevel
+          format: FeeArrangement
+    Rate:
+      type: object
+      format: Rate
+      description: >-
+        Rate used to calculate the amount of the adjustment, allowance, charge
+        or fee. (ISO20022) 
+      properties:
+        RateValue:
+          $ref: '#/components/schemas/Value'
+        RateUnit:
+          $ref: '#/components/schemas/Text'
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        RateCapitalUnit:
+          $ref: '#/components/schemas/Text'
+    Feeplan:
+      type: object
+      format: Feeplan
+      description: An arranged FeeRatePlan
+      properties:
+        FeePlanName:
+          $ref: '#/components/schemas/Name'
+        Feeplantypevalues:
+          enum:
+            - StandardFeePlan
+            - FinalFeePlan
+          format: Feeplan
+        FeePlan:
+          $ref: '#/components/schemas/Plan'
+    Plan:
+      type: object
+      format: Plan
+      description: ' '
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/Goal'
+        PlanBudget:
+          $ref: '#/components/schemas/Budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/Plannedaction'
+        Plantypevalues:
+          enum:
+            - AdministrativePlan
+            - ManagementPlan
+            - StratgyPlan
+            - FinancialPlan
+            - DevelopmentPlan
+          format: Plan
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/Text'
+    Goal:
+      type: object
+      format: Goal
+      description: ' '
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Budgetarrangement:
+      type: object
+      format: Budgetarrangement
+      description: >-
+        An arrangement which is specifying an estimate of costs, revenues, and
+        resources over a specified period, reflecting a reading of future
+        financial conditions and goals. (adapted from Business Dictionary) 
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/Budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/Amount'
+    Budgettype:
+      type: object
+      format: Budgettype
+      description: 'A Classification value that specifies the type of Budget '
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/Name'
+        Budgettypevalues:
+          enum:
+            - OperatingBudget
+            - FinancialBudget
+            - ResourceBudget
+          format: Budgettype
+    Plannedaction:
+      type: object
+      format: Plannedaction
+      description: 'An action that is arranged in a plan for doing or achieving something  '
+      properties:
+        PlannedAction:
+          type: string
+          format: Class
+          description: >-
+            An action that is arranged in a plan for doing or achieving
+            something  
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the network service delivery (includes charges, service activity log and results etc.) ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    CardNetworkParticipantFacility:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceReference:
+          $ref: '#/components/schemas/BankingProduct'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        FacilityTerms:
+          $ref: '#/components/schemas/Arrangement'
+        ParticipantAcquirerBankReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ParticipantAcquirerBankClearingandSettlementTerms:
+          $ref: '#/components/schemas/CardClearingArrangement'
+        ParticipantAcquirerBankServiceSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ParticipantIssuerBankReference:
+          $ref: '#/components/schemas/Involvedparty'
+        ParticipantIssuerBankClearingandSettlementTerms:
+          $ref: '#/components/schemas/CardClearingArrangement'
+        ParticipantIssuerBankServiceSchedule:
+          $ref: '#/components/schemas/Schedule'
+    BankingProduct:
+      type: object
+      format: BankingProduct
+      description: >-
+        Reference to the participant facility product instance Product_x000D_
+
+        |Product
+        (https://www.iso20022.org/standardsrepository/type/Product)|Standard|ISO20022
+        BM ()
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+        Bankingproducttypevalues:
+          enum:
+            - LoanProduct
+            - CurrentAccountProduct
+            - SavingAccountProduct
+            - BrokeredProduct
+            - TermDepositProduct
+          format: BankingProduct
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+        ProductPriority:
+          $ref: '#/components/schemas/Text'
+        ProductDescription:
+          $ref: '#/components/schemas/Text'
+        ProductVersion:
+          $ref: '#/components/schemas/Text'
+        ProductName:
+          $ref: '#/components/schemas/Name'
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Productidentificationtypevalues:
+          enum:
+            - ISINCode
+            - PackageCode
+            - Buyersitemnumber
+            - Commercialdescriptioncodename
+            - EAN
+            - Harmonizedtariffcodename
+            - Manufacturersitemnumber
+            - Modelnumber
+            - Partnumber
+            - Quotacategory
+            - Stylenumber
+            - Suppliersitemnumber
+            - Universalproductcode
+          format: Productidentification
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product (e.g., initiated, announced,
+        active, obsolete, withdrawn). 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+        Productstatustypevalues:
+          enum:
+            - Initiated
+            - Announced
+            - Sold
+            - Obsolete
+            - Active
+          format: Productstatus
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        The operational configuration terms/options that govern the participant
+        facility arrangement Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    CardClearingArrangement:
+      type: object
+      format: CardClearingArrangement
+      description: "Defines the card clearing fees/terms in force ||\r\n|"
+      properties:
+        CardClearingArrangement:
+          type: string
+          format: Class
+          description: >-
+            An arrangement (obligation and right) defined for doing the clearing
+            of a card based transaction or a batch of card based transactions.
+             
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Defines the tasks and processing schedule for the participant) ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+        Schedule:
+          type: string
+          format: DataType
+          description: >-
+            Defined sequence of planned tasks/actions or a timetable of
+            available services
+
+
+            A schedule is a time based series of something 

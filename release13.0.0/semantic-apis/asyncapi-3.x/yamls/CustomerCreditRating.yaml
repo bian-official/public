@@ -1,0 +1,778 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Credit Rating
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    maintains and administers the bank's credit assessment for customers based
+    on consolidated internal data and optionally by referencing external credit
+    agency reports
+channels:
+  CustomerCreditRatingState/Created:
+    address: CustomerCreditRatingState/Created
+    messages:
+      CustomerCreditRatingState-created.message:
+        $ref: '#/components/messages/CustomerCreditRatingState'
+    description: ''
+  CustomerCreditRatingState/Updated:
+    address: CustomerCreditRatingState/Updated
+    messages:
+      CustomerCreditRatingState-updated.message:
+        $ref: '#/components/messages/CustomerCreditRatingState'
+    description: ''
+  Alerts/Created:
+    address: Alerts/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Alerts'
+    description: ''
+  Alerts/Updated:
+    address: Alerts/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Alerts'
+    description: ''
+  InternalReporting/Created:
+    address: InternalReporting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalReporting'
+    description: ''
+  InternalReporting/Updated:
+    address: InternalReporting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/InternalReporting'
+    description: ''
+  ExternalReporting/Created:
+    address: ExternalReporting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ExternalReporting'
+    description: ''
+  ExternalReporting/Updated:
+    address: ExternalReporting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ExternalReporting'
+    description: ''
+operations:
+  CustomerCreditRatingState-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerCreditRatingState~1Created'
+    summary: CustomerCreditRatingState
+    messages:
+      - $ref: >-
+          #/channels/CustomerCreditRatingState~1Created/messages/CustomerCreditRatingState-created.message
+  CustomerCreditRatingState-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerCreditRatingState~1Updated'
+    summary: CustomerCreditRatingState
+    messages:
+      - $ref: >-
+          #/channels/CustomerCreditRatingState~1Updated/messages/CustomerCreditRatingState-updated.message
+  Alerts/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Alerts~1Created'
+    summary: Alerts
+    messages:
+      - $ref: '#/channels/Alerts~1Created/messages/publish.message'
+  Alerts/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Alerts~1Updated'
+    summary: Alerts
+    messages:
+      - $ref: '#/channels/Alerts~1Updated/messages/publish.message'
+  InternalReporting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalReporting~1Created'
+    summary: InternalReporting
+    messages:
+      - $ref: '#/channels/InternalReporting~1Created/messages/publish.message'
+  InternalReporting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/InternalReporting~1Updated'
+    summary: InternalReporting
+    messages:
+      - $ref: '#/channels/InternalReporting~1Updated/messages/publish.message'
+  ExternalReporting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ExternalReporting~1Created'
+    summary: ExternalReporting
+    messages:
+      - $ref: '#/channels/ExternalReporting~1Created/messages/publish.message'
+  ExternalReporting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ExternalReporting~1Updated'
+    summary: ExternalReporting
+    messages:
+      - $ref: '#/channels/ExternalReporting~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerCreditRatingState:
+      name: CustomerCreditRatingState
+      description: >-
+        Monitor and define the status/rating of some entity within Customer
+        Credit Rating. 
+      payload:
+        $ref: '#/components/schemas/CustomerCreditRatingState'
+    Alerts:
+      name: Alerts
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/Alerts'
+    InternalReporting:
+      name: InternalReporting
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/InternalReporting'
+    ExternalReporting:
+      name: ExternalReporting
+      description: >-
+        A collection of information feeds/measures that can be used to track the
+        status of one or more items/entitites
+
+
+        Examples:- Composite position, Customer alert
+      payload:
+        $ref: '#/components/schemas/ExternalReporting'
+  schemas:
+    Alerts:
+      type: object
+      description: ''
+      properties:
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        CustomerCreditAlertType:
+          $ref: '#/components/schemas/Text'
+        CustomerCreditAlertDescription:
+          $ref: '#/components/schemas/Text'
+        Date:
+          $ref: '#/components/schemas/Datetime'
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "The product/service instance that generated the alert ||\r\n|"
+      properties:
+        Productagreementtypevalues:
+          enum:
+            - CurrentAccountAgreement
+            - SavingsAccountAgreement
+            - BrokeredProductAgreement
+            - ConsumerLoanAgreement
+            - MortgageLoanAgreement
+            - DirectDebitServiceAgreement
+            - TermDepositAgreement
+          format: ProductAgreement
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "The individual source of the alert if not automated by production ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        The date and time of the notification ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+    InternalReporting:
+      type: object
+      description: ''
+      properties:
+        ProductandServiceActivityReportReference:
+          $ref: '#/components/schemas/Report'
+        ProductandServiceActivityReportSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ProductandServiceActivityReport:
+          $ref: '#/components/schemas/Report'
+    Report:
+      type: object
+      format: Report
+      description: "The report data file/report of customer production activity ||\r\n|"
+      properties:
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+          format: Report
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/Text'
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The schedule for the upload of the data file/report ||\r\n|"
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    ExternalReporting:
+      type: object
+      description: ''
+      properties:
+        RatingAgencyReportSchedule:
+          $ref: '#/components/schemas/Schedule'
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+        Referencetotheratingagencycreditreport:
+          $ref: '#/components/schemas/Text'
+        RatingAgencyCreditReport:
+          $ref: '#/components/schemas/Report'
+        RatingAgencyCreditReportDate:
+          $ref: '#/components/schemas/Datetime'
+    CustomerCreditRatingState:
+      type: object
+      description: ''
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        CustomerCreditRatingStatusType:
+          $ref: '#/components/schemas/Text'
+        CustomerCreditRatingSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CustomerCreditRatingAssessmentRecord:
+          $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+        AssessmentCustomerBehaviorModelReference:
+          $ref: '#/components/schemas/CustomerBehaviorModel'
+        Assessmenttypevalues:
+          enum:
+            - AssetValuation
+            - ProductMatching
+            - Authorization
+            - Authentication
+            - QualityAssurance
+            - Audit
+            - ComplianceCheck
+            - FundingCheck
+            - SuitabilityCheck
+            - PerformanceCheck
+            - ImpactAssessment
+            - RiskAssessment
+            - Rating
+            - UnderwritingAssessment
+            - Qualification
+            - Verification
+            - KYCAssessment
+            - PEPAssessment
+            - AMLAssessment
+        CreditRatingAssessmentDate:
+          $ref: '#/components/schemas/Datetime'
+        CreditRatingAssessmentWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+        CreditRatingAssessmentResult:
+          $ref: '#/components/schemas/Assessment'
+        CustomerCreditRatingRecord:
+          $ref: '#/components/schemas/CustomerRating'
+        CustomerCreditRatingState:
+          type: string
+          format: Object
+          description: "Is the current credit rating or score (typically a ranking value e.g. 1-10) ||\r\n|"
+        CustomerCreditRatingAssessment:
+          $ref: '#/components/schemas/CustomerCreditRatingAssessment'
+        CustomerCreditRatingNarrative:
+          type: string
+          format: Object
+          description: "A structured report outlining basis for the credit rating ||\r\n|"
+        CustomerCreditRatingDate:
+          $ref: '#/components/schemas/Datetime'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        An identifier that allows to uniquely refer to an instance of a
+        Document. 
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    CustomerCreditRatingAssessment:
+      type: object
+      format: CustomerCreditRatingAssessment
+      description: "Any underlying analysis records and results that support the credit rating ||\r\n|"
+      properties:
+        CreditRatingAssessmentType:
+          type: string
+          format: ''
+          description: ''
+        CustomerCreditRatingAssessment:
+          type: string
+          format: Class
+          description: 'An evaluation of the credit rating for a customer.  '
+    CustomerBehaviorModel:
+      type: object
+      format: CustomerBehaviorModel
+      description: "Reference to the customer behavior model(s) used to develop any underlying analysis for determining the credit state ||\r\n|"
+      properties:
+        Customerbehaviormodeltypevalues:
+          enum:
+            - DemographicModel
+            - PsychographicModel
+            - GeographicModel
+            - SocioeconomicModel
+            - SituationalModel
+            - CulturalModel
+            - Usage-BasedModel
+            - Benefit-SoughtModel
+            - HybridModel
+          format: CustomerBehaviorModel
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+      properties:
+        Workproducttypevalues:
+          enum:
+            - Document
+            - WorkingPaper
+            - ActivityLog
+            - Form
+            - File
+            - MeetingSchedule
+            - MeetingMinute
+          format: Workproduct
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+    Assessment:
+      type: object
+      format: Assessment
+      description: >-
+        The resulting report from the credit rating assessment
+        Assessment|Assessment
+        (https://www.iso20022.org/standardsrepository/type/Assessment)|Standard|ISO20022
+        BM ()
+      properties:
+        Assessmenttypevalues:
+          enum:
+            - AssetValuation
+            - ProductMatching
+            - Authorization
+            - Authentication
+            - QualityAssurance
+            - Audit
+            - ComplianceCheck
+            - FundingCheck
+            - SuitabilityCheck
+            - PerformanceCheck
+            - ImpactAssessment
+            - RiskAssessment
+            - Rating
+            - UnderwritingAssessment
+            - Qualification
+            - Verification
+            - KYCAssessment
+            - PEPAssessment
+            - AMLAssessment
+          format: Assessment
+        AssessmentMethod:
+          $ref: '#/components/schemas/Text'
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        AssessmentDescription:
+          $ref: '#/components/schemas/Text'
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AssessmentResult:
+          $ref: '#/components/schemas/Text'
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRequiredAdjustment:
+          $ref: '#/components/schemas/Text'
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          $ref: '#/components/schemas/Text'
+        ModelPurpose:
+          $ref: '#/components/schemas/Text'
+        ModelVersion:
+          $ref: '#/components/schemas/Text'
+        ModelName:
+          $ref: '#/components/schemas/Name'
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessment(s). '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Document:
+          type: string
+          format: Class
+          description: >-
+            Something tangible that records something, such as a recording or a
+            photograph, or a writing that can be used to furnish evidence or
+            information (FIBO)
+
+
+            Definition: A physical or digital representation of something
+            meaningful to the audience.
+
+
+            Comment: 
+
+            1.Technical: Manuals, instructions, tutorials, procedures,
+            specifications, etc., that accompany a piece of equipment or
+            software, and provide guidance for its proper use and maintenance.
+
+            2.Trading: Preparation of a set of commercial and financial
+            documents that record or support a business transaction.
+            International trade documentations include air waybill, bill of
+            exchange, bill of lading, certificate of inspection, certificate of
+            insurance, certificate of origin, commercial invoice, and consular
+            invoice.
+
+
+
+            Read more:
+            http://www.businessdictionary.com/definition/documentation.html#ixzz3EQGRGC4W
+             
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
+    CustomerRating:
+      type: object
+      format: CustomerRating
+      description: "A record of the customers credit state ||\r\n|"
+      properties:
+        Customerratingtypevalues:
+          enum:
+            - CustomerProfitabilityRating
+            - CustomerCreditRating
+            - CustomerRiskRating
+          format: CustomerRating
+        CustomerRatingValue:
+          $ref: '#/components/schemas/Value'
+        CustomerRatingDescription:
+          $ref: '#/components/schemas/Text'
+        CustomerRatingValueDate:
+          $ref: '#/components/schemas/Datetime'
+        CustomerRatingValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'

@@ -1,0 +1,867 @@
+asyncapi: 3.0.0
+info:
+  title: Consumer Investments
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Handle the consumer
+    front-end trading requests. These will typically be blocked/netted for
+    market execution
+channels:
+  ConsumerSecuritiesOrderTransaction/Created:
+    address: ConsumerSecuritiesOrderTransaction/Created
+    messages:
+      ConsumerSecuritiesOrderTransaction-created.message:
+        $ref: '#/components/messages/ConsumerSecuritiesOrderTransaction'
+    description: ''
+  ConsumerSecuritiesOrderTransaction/Updated:
+    address: ConsumerSecuritiesOrderTransaction/Updated
+    messages:
+      ConsumerSecuritiesOrderTransaction-updated.message:
+        $ref: '#/components/messages/ConsumerSecuritiesOrderTransaction'
+    description: ''
+  FundingCheck/Created:
+    address: FundingCheck/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FundingCheck'
+    description: ''
+  FundingCheck/Updated:
+    address: FundingCheck/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FundingCheck'
+    description: ''
+  OrderInitiation/Created:
+    address: OrderInitiation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/OrderInitiation'
+    description: ''
+  OrderInitiation/Updated:
+    address: OrderInitiation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/OrderInitiation'
+    description: ''
+  Compliance/Created:
+    address: Compliance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Compliance'
+    description: ''
+  Compliance/Updated:
+    address: Compliance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Compliance'
+    description: ''
+  Quote/Created:
+    address: Quote/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Quote'
+    description: ''
+  Quote/Updated:
+    address: Quote/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Quote'
+    description: ''
+operations:
+  ConsumerSecuritiesOrderTransaction-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ConsumerSecuritiesOrderTransaction~1Created'
+    summary: ConsumerSecuritiesOrderTransaction
+    messages:
+      - $ref: >-
+          #/channels/ConsumerSecuritiesOrderTransaction~1Created/messages/ConsumerSecuritiesOrderTransaction-created.message
+  ConsumerSecuritiesOrderTransaction-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ConsumerSecuritiesOrderTransaction~1Updated'
+    summary: ConsumerSecuritiesOrderTransaction
+    messages:
+      - $ref: >-
+          #/channels/ConsumerSecuritiesOrderTransaction~1Updated/messages/ConsumerSecuritiesOrderTransaction-updated.message
+  FundingCheck/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FundingCheck~1Created'
+    summary: FundingCheck
+    messages:
+      - $ref: '#/channels/FundingCheck~1Created/messages/publish.message'
+  FundingCheck/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/FundingCheck~1Updated'
+    summary: FundingCheck
+    messages:
+      - $ref: '#/channels/FundingCheck~1Updated/messages/publish.message'
+  OrderInitiation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/OrderInitiation~1Created'
+    summary: OrderInitiation
+    messages:
+      - $ref: '#/channels/OrderInitiation~1Created/messages/publish.message'
+  OrderInitiation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/OrderInitiation~1Updated'
+    summary: OrderInitiation
+    messages:
+      - $ref: '#/channels/OrderInitiation~1Updated/messages/publish.message'
+  Compliance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Compliance~1Created'
+    summary: Compliance
+    messages:
+      - $ref: '#/channels/Compliance~1Created/messages/publish.message'
+  Compliance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Compliance~1Updated'
+    summary: Compliance
+    messages:
+      - $ref: '#/channels/Compliance~1Updated/messages/publish.message'
+  Quote/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Quote~1Created'
+    summary: Quote
+    messages:
+      - $ref: '#/channels/Quote~1Created/messages/publish.message'
+  Quote/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Quote~1Updated'
+    summary: Quote
+    messages:
+      - $ref: '#/channels/Quote~1Updated/messages/publish.message'
+components:
+  messages:
+    ConsumerSecuritiesOrderTransaction:
+      name: ConsumerSecuritiesOrderTransaction
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Consumer
+        Investments. 
+      payload:
+        $ref: '#/components/schemas/ConsumerSecuritiesOrderTransaction'
+    FundingCheck:
+      name: FundingCheck
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/FundingCheck'
+    OrderInitiation:
+      name: OrderInitiation
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/OrderInitiation'
+    Compliance:
+      name: Compliance
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Compliance'
+    Quote:
+      name: Quote
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Quote'
+  schemas:
+    FundingCheck:
+      type: object
+      format: FundingCheck
+      description: "The outcome of the funds available check ||\r\n|"
+      properties:
+        ConsumerSecuritiesOrderTransactionFundingCheckResult:
+          $ref: '#/components/schemas/FundingCheck'
+        FundingCheck:
+          type: string
+          format: Class
+          description: 'An assessment to check the fund is available '
+    OrderInitiation:
+      type: object
+      description: ''
+      properties:
+        ConsumerSecuritiesOrderTransactionInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        ConsumerSecuritiesOrderTransactionInstanceStatus:
+          $ref: '#/components/schemas/Status'
+        ConsumerSecuritiesOrderInitiationTaskResult:
+          $ref: '#/components/schemas/Task'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Entity that assigns and manages the identification. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: >-
+        The returned status of the customer securities order Status |Status 
+        (https://www.iso20022.org/standardsrepository/type/Status)|Standard|ISO20022
+        BM ()
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Task:
+      type: object
+      format: Task
+      description: "Details of the market order initiation task ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Compliance:
+      type: object
+      description: ''
+      properties:
+        Compliancechecktypevalues:
+          enum:
+            - RegulatoryComplianceCheck
+            - LegalComplianceCheck
+            - GuidelineComplianceCheck
+        ConsumerSecuritiesOrderTransactionComplianceCheckResult:
+          $ref: '#/components/schemas/ComplianceCheck'
+        ConsumerSecuritiesOrderTransactionComplianceTaskResult:
+          $ref: '#/components/schemas/Task'
+    ComplianceCheck:
+      type: object
+      format: ComplianceCheck
+      description: "The outcome of the compliance check ||\r\n|"
+      properties:
+        ComplianceCheckType:
+          type: string
+          format: String
+          description: ''
+    Quote:
+      type: object
+      description: ''
+      properties:
+        SecuritiesPrice:
+          $ref: '#/components/schemas/Arrangement'
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        The prevailing bank buy/sell quote for the security
+        Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    ConsumerSecuritiesOrderTransaction:
+      type: object
+      description: ''
+      properties:
+        Instructiontypevalues:
+          enum:
+            - PaymentInstruction
+            - DeliveryOrder
+            - InformationRequest
+            - ExchangeInstruction
+            - AllocationInstruction
+            - MaintenanceInstruction
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+        InvestmentPortfolioInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        ConsumerSecuritiesOrderProcessingInstruction:
+          $ref: '#/components/schemas/Instruction'
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+        CorrespondenceInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        ConsumerSecuritiesOrderTransaction:
+          $ref: '#/components/schemas/Transaction'
+        InvestmentAccountArrangementInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        CurrentAccountArrangementInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+        MarketOrderType:
+          $ref: '#/components/schemas/Text'
+        Securitytypevalues:
+          enum:
+            - Equity
+            - Warrant
+            - Entitlement
+        Amount:
+          $ref: '#/components/schemas/Amount'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+        Date:
+          $ref: '#/components/schemas/Datetime'
+    Instruction:
+      type: object
+      format: Instruction
+      description: "Any customer specific processing preferences or requirements ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+        InstructionIdentifier:
+          $ref: '#/components/schemas/Instructionidentification'
+        Instructiontypevalues:
+          enum:
+            - PaymentInstruction
+            - DeliveryOrder
+            - InformationRequest
+            - ExchangeInstruction
+            - AllocationInstruction
+            - MaintenanceInstruction
+          format: Instruction
+        InstructionResult:
+          $ref: '#/components/schemas/Text'
+        InstructionDescription:
+          $ref: '#/components/schemas/Text'
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+        InstructionPurpose:
+          $ref: '#/components/schemas/Text'
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+        Instructiondatetimetypevalues:
+          enum:
+            - DueDate
+            - ExecutionDate
+            - FulfillmentDate
+          format: Instructiondatetime
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction (e.g., requested, executed, fulfilled, etc.);  
+      properties:
+        Instructionstatustypevalues:
+          enum:
+            - Pendingprocessing
+            - Acknowledgedaccepted
+            - Rejected
+            - Accepted
+            - Completed
+            - Notreceived
+            - Cancelled
+            - Beingcancelled
+            - Receivedbyissuerorregistrar
+            - Pending
+            - Standinginstruction
+            - Queued
+            - Cancelledbysubcustodian
+            - Forwarded
+          format: Instructionstatus
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Instructionidentificationtypevalues:
+          enum:
+            - OrderNumber
+            - InstructionNumber
+          format: Instructionidentification
+    Log:
+      type: object
+      format: Log
+      description: ' '
+      properties:
+        LogType:
+          $ref: '#/components/schemas/Text'
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "The document reference for the order confirmation notice ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        The details of the market order transaction captured for the consumer
+        securities trade ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The volume of shares to be bought or sold
+        CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             

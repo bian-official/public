@@ -1,0 +1,819 @@
+asyncapi: 3.0.0
+info:
+  title: Advanced Voice Services Operations
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    operates the telephone channel infrastructure, including the IVR and any
+    other automated devices as appropriate. This includes handling default
+    routing rules and intra-day/session adjustments to deal with peak load or
+    other operational variations
+channels:
+  VoiceChannelOperatingSession/Created:
+    address: VoiceChannelOperatingSession/Created
+    messages:
+      VoiceChannelOperatingSession-created.message:
+        $ref: '#/components/messages/VoiceChannelOperatingSession'
+    description: ''
+  VoiceChannelOperatingSession/Updated:
+    address: VoiceChannelOperatingSession/Updated
+    messages:
+      VoiceChannelOperatingSession-updated.message:
+        $ref: '#/components/messages/VoiceChannelOperatingSession'
+    description: ''
+  Outbound/Created:
+    address: Outbound/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Outbound'
+    description: ''
+  Outbound/Updated:
+    address: Outbound/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Outbound'
+    description: ''
+  Inbound/Created:
+    address: Inbound/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Inbound'
+    description: ''
+  Inbound/Updated:
+    address: Inbound/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Inbound'
+    description: ''
+operations:
+  VoiceChannelOperatingSession-created:
+    action: receive
+    channel:
+      $ref: '#/channels/VoiceChannelOperatingSession~1Created'
+    summary: VoiceChannelOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/VoiceChannelOperatingSession~1Created/messages/VoiceChannelOperatingSession-created.message
+  VoiceChannelOperatingSession-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/VoiceChannelOperatingSession~1Updated'
+    summary: VoiceChannelOperatingSession
+    messages:
+      - $ref: >-
+          #/channels/VoiceChannelOperatingSession~1Updated/messages/VoiceChannelOperatingSession-updated.message
+  Outbound/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Outbound~1Created'
+    summary: Outbound
+    messages:
+      - $ref: '#/channels/Outbound~1Created/messages/publish.message'
+  Outbound/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Outbound~1Updated'
+    summary: Outbound
+    messages:
+      - $ref: '#/channels/Outbound~1Updated/messages/publish.message'
+  Inbound/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Inbound~1Created'
+    summary: Inbound
+    messages:
+      - $ref: '#/channels/Inbound~1Created/messages/publish.message'
+  Inbound/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Inbound~1Updated'
+    summary: Inbound
+    messages:
+      - $ref: '#/channels/Inbound~1Updated/messages/publish.message'
+components:
+  messages:
+    VoiceChannelOperatingSession:
+      name: VoiceChannelOperatingSession
+      description: >-
+        Operate equipment and/or a largely automated facility within Advanced
+        Voice Services Operations. 
+      payload:
+        $ref: '#/components/schemas/VoiceChannelOperatingSession'
+    Outbound:
+      name: Outbound
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Outbound'
+    Inbound:
+      name: Inbound
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/Inbound'
+  schemas:
+    Outbound:
+      type: object
+      description: ''
+      properties:
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        CustomerContactRecordReference:
+          $ref: '#/components/schemas/CustomerContact'
+        CustomerSessionDialogueRecord:
+          $ref: '#/components/schemas/CustomerDialogueSession'
+        VChannelCustomerDeviceReference:
+          $ref: '#/components/schemas/Device'
+        VChannelOutboundConnectionStartTime:
+          $ref: '#/components/schemas/Datetime'
+        VChannelOutboundConnectionDuration:
+          $ref: '#/components/schemas/Duration'
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "The source of the outbound connection request ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    CustomerContact:
+      type: object
+      format: CustomerContact
+      description: "Reference to the customer contact record used accessing outbound channel ||\r\n|"
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        Detail used for statistics ISODateTime|ISODateTime
+        (https://www.iso20022.org/standardsrepository/type/ISODateTime)|Standard|ISO20022
+        BM ()
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          $ref: '#/components/schemas/Text'
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+        Geographicalareatypevalues:
+          enum:
+            - Continent
+            - Country
+            - State
+            - District
+            - Province
+            - Town
+            - City
+            - Region
+          format: Location
+        LocationZoningType:
+          $ref: '#/components/schemas/Text'
+        LocationNeighborhoodType:
+          $ref: '#/components/schemas/Text'
+        LocationConstructionType:
+          $ref: '#/components/schemas/Text'
+        LocationOccupancyType:
+          $ref: '#/components/schemas/Text'
+        LocationValue:
+          $ref: '#/components/schemas/Value'
+        LocationCapacity:
+          $ref: '#/components/schemas/Text'
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+        LocationAddress:
+          $ref: '#/components/schemas/Address'
+        Location:
+          type: string
+          format: Class
+          description: >-
+            The definition of an addressable space/position both in real and
+            virtual environments with associated uses and entitlements 
+        LocationName:
+          $ref: '#/components/schemas/Name'
+        LocationTimeZone:
+          $ref: '#/components/schemas/Text'
+    Status:
+      type: object
+      format: Status
+      description: >-
+        The tracked status (e.g. under construction or repair, inhabited,
+        vacant). 
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Regulatory authority of the country. (ISO20022) '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: 'Name (label) of the location. (ISO20022) '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: >-
+        The estimated (book) value of the property at the location rental and
+        purchase as appropriate. 
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Address:
+      type: object
+      format: Address
+      description: >-
+        The address associated with the device like Internet Protocol address,
+        email Address 
+      properties:
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Address
+        LocationReference:
+          $ref: '#/components/schemas/Location'
+        Address:
+          type: string
+          format: Class
+          description: >-
+            A specific designation or description of a location, typically used
+            for specifying the location or destination of something or someone 
+    Schedule:
+      type: object
+      format: Schedule
+      description: 'The schedule of past and planned customer contacts '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Device:
+      type: object
+      format: Device
+      description: "The target device being accessed ||\r\n|"
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+        Devicetypevalues:
+          enum:
+            - Securecardreader
+            - Nonsecurecardreader
+            - Mobile
+            - Tablet
+            - Personalcomputer
+            - Othernational
+            - Otherprivate
+            - Wearable
+            - Vehicle
+            - Embedded
+            - Keyfob
+            - Jewellery
+            - Sticker
+            - Gamingdevice
+            - Watch
+            - Unknown
+            - BiometricDevice
+          format: Device
+        DeviceProperty:
+          $ref: '#/components/schemas/Text'
+        DeviceElement:
+          $ref: '#/components/schemas/Text'
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DeviceDescription:
+          $ref: '#/components/schemas/Text'
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+        DeviceLanguage:
+          $ref: '#/components/schemas/Text'
+        DevicePhoneNumber:
+          $ref: '#/components/schemas/Text'
+        DeviceLocation:
+          $ref: '#/components/schemas/Location'
+        DeviceManufacturer:
+          $ref: '#/components/schemas/Text'
+        DeviceCountry:
+          $ref: '#/components/schemas/Country'
+        DeviceAddress:
+          $ref: '#/components/schemas/Address'
+        Addresstypevalues:
+          enum:
+            - PostalAddress
+            - GeolocationAddress
+            - LatitudeAddress
+            - LongitudeAddress
+            - ElectronicAddress
+          format: Device
+        Deviceoperatingsystemtypevalues:
+          enum:
+            - Android
+            - Ios
+            - Windows
+            - Blackberry
+            - Tizen
+            - Othernational
+            - Otherprivate
+          format: Device
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+        Deviceidentificationtypevalues:
+          enum:
+            - IMEI
+            - Serialnumber
+            - Secureelementidentification
+            - Othernational
+            - Otherprivate
+          format: Deviceidentification
+    Country:
+      type: object
+      format: Country
+      description: 'Country of the location. '
+      properties:
+        NationalRegulatoryAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+    CustomerDialogueSession:
+      type: object
+      format: CustomerDialogueSession
+      description: "The record used to handle the contact (see Service Domain-Contact Handler for complete definition) ||\r\n|"
+      properties:
+        CustomerContactReference:
+          $ref: '#/components/schemas/Customercontact'
+        SessionDialogueContent:
+          $ref: '#/components/schemas/Text'
+    Customercontact:
+      type: object
+      format: Customercontact
+      description: 'Reference to the customer Contact the ContactDialogueSession is part of '
+      properties:
+        ContactType:
+          $ref: '#/components/schemas/Text'
+        ContactDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ContactLocation:
+          $ref: '#/components/schemas/Location'
+        ContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+        ContactResult:
+          $ref: '#/components/schemas/Text'
+        ContactPurpose:
+          $ref: '#/components/schemas/Text'
+        ContactDevice:
+          $ref: '#/components/schemas/Device'
+        ContactIndicator:
+          $ref: '#/components/schemas/Text'
+        ContactContent:
+          $ref: '#/components/schemas/Text'
+    Duration:
+      type: object
+      format: Duration
+      description: >-
+        Detail used for statistics Duration|Duration
+        (https://www.iso20022.org/standardsrepository/type/duration)|Standard|ISO20022
+        BM ()
+      properties:
+        Duration:
+          type: string
+          format: DataType
+          description: >-
+            A duration is the specification of a length of time without a fixed
+            start or end time, expressed in Gregorian calendar time units (Year,
+            Month, Week, Day) and Hours, Minutes or Seconds. (UN/CEFACT) 
+    Inbound:
+      type: object
+      description: ''
+      properties:
+        VChannelDeviceReference:
+          $ref: '#/components/schemas/Device'
+        VChannelDevicePropertyValue:
+          $ref: '#/components/schemas/Amount'
+        VChannelInboundConnectionStartTime:
+          $ref: '#/components/schemas/Datetime'
+        VChannelInboundConnectionDuration:
+          $ref: '#/components/schemas/Duration'
+        VChannelInboundConnectionContactReference:
+          type: string
+          format: Object
+          description: "Internal reference retuned by Service Domain-Contact Handler for routing ||\r\n|"
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        Property of the device that can be used in identification ( e.g. ANI
+        phone number) CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    VoiceChannelOperatingSession:
+      type: object
+      description: ''
+      properties:
+        AdvancedVoiceServicesOperationsServiceMenu:
+          type: string
+          format: Object
+          description: "Service Domain attribute referenced during the session covering the menu options ||\r\n|"
+        VChannelServiceSessionStatistics:
+          type: string
+          format: Object
+          description: "Service activity statistics that are maintained during the session ||\r\n|"
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+        VChannelServiceSessionReport:
+          $ref: '#/components/schemas/Report'
+        VChannelProductionIssueRecord:
+          $ref: '#/components/schemas/ProductionIssue'
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        CustomerContactRecordReference:
+          $ref: '#/components/schemas/CustomerContact'
+        ProductionIssueType:
+          $ref: '#/components/schemas/Text'
+        ProductionIssueDescription:
+          $ref: '#/components/schemas/Text'
+        ProductionIssueDiagnosis:
+          type: string
+          format: Object
+          description: "Evaluation of the event cause and impact assessment ||\r\n|"
+        ProductionIssueResolutionTask:
+          $ref: '#/components/schemas/Task'
+        ProductionIssueStatus:
+          $ref: '#/components/schemas/Status'
+    Report:
+      type: object
+      format: Report
+      description: "The session activity report ||\r\n|"
+      properties:
+        Reporttypevalues:
+          enum:
+            - FinancialReport
+            - BusinessReport
+            - ManagementReport
+            - Statement
+            - MaintenanceReport
+            - RegulatoryReport
+            - TaxReport
+            - AnalysisReport
+          format: Report
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ReportFormat:
+          $ref: '#/components/schemas/Text'
+    ProductionIssue:
+      type: object
+      format: ProductionIssue
+      description: "A record of any production issues arising during the session ||\r\n|"
+      properties:
+        ProductionIssueType:
+          type: string
+          format: String
+          description: The Type of production problem (error)
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: 'Description of the production problem '
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: 'Evaluation of the production problem cause and impact assessment '
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: 'Description of corrective action proposed and taken '
+        ProductionIssueStatus:
+          type: string
+          format: String
+          description: 'The state of resolution of a reported production problem '
+    Task:
+      type: object
+      format: Task
+      description: "Description of corrective action proposed and taken ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''

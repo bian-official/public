@@ -1,0 +1,784 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Case Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | Track and assess case
+    load and resolution activity allocate resources as necessary to optimize
+    case resolution performance
+channels:
+  CustomerCaseManagementPlan/Created:
+    address: CustomerCaseManagementPlan/Created
+    messages:
+      CustomerCaseManagementPlan-created.message:
+        $ref: '#/components/messages/CustomerCaseManagementPlan'
+    description: ''
+  CustomerCaseManagementPlan/Updated:
+    address: CustomerCaseManagementPlan/Updated
+    messages:
+      CustomerCaseManagementPlan-updated.message:
+        $ref: '#/components/messages/CustomerCaseManagementPlan'
+    description: ''
+  Performance/Created:
+    address: Performance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+  Performance/Updated:
+    address: Performance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+  Rules/Created:
+    address: Rules/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Rules'
+    description: ''
+  Rules/Updated:
+    address: Rules/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Rules'
+    description: ''
+operations:
+  CustomerCaseManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerCaseManagementPlan~1Created'
+    summary: CustomerCaseManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/CustomerCaseManagementPlan~1Created/messages/CustomerCaseManagementPlan-created.message
+  CustomerCaseManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerCaseManagementPlan~1Updated'
+    summary: CustomerCaseManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/CustomerCaseManagementPlan~1Updated/messages/CustomerCaseManagementPlan-updated.message
+  Performance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Created'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Created/messages/publish.message'
+  Performance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Updated'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Updated/messages/publish.message'
+  Rules/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Rules~1Created'
+    summary: Rules
+    messages:
+      - $ref: '#/channels/Rules~1Created/messages/publish.message'
+  Rules/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Rules~1Updated'
+    summary: Rules
+    messages:
+      - $ref: '#/channels/Rules~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerCaseManagementPlan:
+      name: CustomerCaseManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Customer Case Management.
+      payload:
+        $ref: '#/components/schemas/CustomerCaseManagementPlan'
+    Performance:
+      name: Performance
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Performance'
+    Rules:
+      name: Rules
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Rules'
+  schemas:
+    Performance:
+      type: object
+      description: ''
+      properties:
+        CustomerCaseResourceUtilization:
+          type: string
+          format: Object
+          description: "Record of the customer case resolution resource utilization (target and actual) ||\r\n|"
+        CustomerCaseLoadingProjections:
+          type: string
+          format: Object
+          description: "Estimated projected customer case resource requirements and utilization and loading based on historical patterns and anticipated activity ||\r\n|"
+        CustomerCaseResolutionServiceStatistics:
+          type: string
+          format: Object
+          description: "Tracked activity and performance statistics used to manage the case resolution business function ||\r\n|"
+        CustomerCaseServiceStatisticType:
+          $ref: '#/components/schemas/Text'
+        CustomerCaseServiceStatisticValue:
+          $ref: '#/components/schemas/Amount'
+        CustomerCaseServiceStatisticInterpretation:
+          type: string
+          format: Object
+          description: "The evaluation of the root cause or comparative assessments of the analysis ||\r\n|"
+        CustomerCaseServiceStatisticRecommendation:
+          type: string
+          format: Object
+          description: "Service/configuration amendment recommendations arising from the statistical analysis ||\r\n|"
+    Text:
+      type: object
+      format: Text
+      description: Decimal point position starts calulating from the right
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The statistical analysis that can include historical and trended views
+        of the activity CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Rules:
+      type: object
+      description: ''
+      properties:
+        CustomerCaseDecisionCriterion:
+          $ref: '#/components/schemas/RuleSet'
+        CustomerCaseDecisionCriterionDefinition:
+          $ref: '#/components/schemas/Text'
+        CustomerCaseDecisionCriterionRules:
+          $ref: '#/components/schemas/RuleSet'
+        CustomerCaseDecisionCriterionAnalysis:
+          $ref: '#/components/schemas/Analysis'
+        CustomerCaseDecisionCriterionHistory:
+          type: string
+          format: Object
+          description: "Sample case examples that apply the criterion that are used to evaluate the impact and re-calibrate the associated rules as appropriate ||\r\n|"
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        Specific rules, thresholds and parameter values to be applied in case
+        evaluation for the criterion GovernanceRules|GovernanceRules
+        (https://www.iso20022.org/standardsrepository/type/GovernanceRules)|Standard|ISO20022
+        BM ()
+      properties:
+        RuleSetDefinition:
+          $ref: '#/components/schemas/Text'
+        RuleSetInterpretation:
+          $ref: '#/components/schemas/Text'
+        Rulesettypevalues:
+          enum:
+            - Policy
+            - Regulation
+            - Law
+            - Guideline
+            - Criterion
+            - Standard
+          format: RuleSet
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: 'Party who plays a  specific role in the context of assigning a status. '
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'The period covered by the analysis (from to date time) '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+    Analysis:
+      type: object
+      format: Analysis
+      description: "Record of the sensitivity/tuning evaluations and adjustments made to the rule settings for the criterion ||\r\n|"
+      properties:
+        Analysistypevalues:
+          enum:
+            - PerformanceAnalysis
+            - ActivityAnalysis
+            - RevenueAnalysis
+            - CostAnalysis
+            - PredictiveAnalysis
+            - BehavioralAnalysis
+            - ProfitabilityAnalysis
+            - CompetitiveAnalysis
+            - CohortAnalysis
+            - SegmentAnalysis
+            - SWOTAnalysis
+            - Benchmarking
+            - PositioningAnalysis
+            - ScenarioAnalysis
+            - IntelligenceGathering
+            - Profiling
+          format: Analysis
+        AnalysisResult:
+          $ref: '#/components/schemas/Text'
+        AnalysisPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        AnalysisDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AnalysisSpecification:
+          $ref: '#/components/schemas/Text'
+        AnalysisSchedule:
+          $ref: '#/components/schemas/Schedule'
+    Schedule:
+      type: object
+      format: Schedule
+      description: 'The schedule and timing of the analysis performed using the algorithm '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    CustomerCaseManagementPlan:
+      type: object
+      description: ''
+      properties:
+        CustomerCaseManagementPlanPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        CustomerCasePoliciesAndGuidelines:
+          $ref: '#/components/schemas/RuleSet'
+        CustomerCaseServicePerformanceGoals:
+          $ref: '#/components/schemas/Goal'
+        CustomerCaseServiceSchedule:
+          $ref: '#/components/schemas/Schedule'
+        CustomerCaseServiceOperatingConfiguration:
+          $ref: '#/components/schemas/Arrangement'
+        CustomerCaseResourcePlan:
+          $ref: '#/components/schemas/Plan'
+        CustomerCaseTrainingPlan:
+          $ref: '#/components/schemas/Plan'
+    Goal:
+      type: object
+      format: Goal
+      description: ' '
+      properties:
+        Goaltypevalues:
+          enum:
+            - Short-TermGoal
+            - Long-TermGoal
+            - BusinessGoal
+            - PerformanceGoal
+            - FinancialGoal
+            - OutcomeGoal
+            - SMARTGoal
+          format: Goal
+        GoalDefinition:
+          $ref: '#/components/schemas/Text'
+        GoalName:
+          $ref: '#/components/schemas/Name'
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+        Goal:
+          type: string
+          format: Class
+          description: >-
+            A goal represents a high-level statement of intent, direction, or
+            desired end state for an organization and its stakeholders.
+            (ArchiMate 3.1)
+
+
+            An observable and measurable end result having one or more
+            objectives to be achieved within a more or less fixed timeframe.
+
+
+            Read more: http://www.businessdictionary.com/definition/goal.html 
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        Goaldatetimetypevalues:
+          enum:
+            - SettingDate
+            - PlanningDate
+            - StartDate
+            - ReviewDate
+            - CompletionDate
+          format: Goaldatetime
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+        Goalstatustypevalues:
+          enum:
+            - Setting
+            - Planning
+            - Execution
+            - MonitoringAndEvaluation
+            - CompletionOrAchievement
+            - MaintenanceOrSustainment
+            - ClosureOrRenewal
+          format: Goalstatus
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        The set-up/organization for the customer case business function (covers
+        operational and management/oversight roles and responsibilities)
+        Obligation|Obligation
+        (https://www.iso20022.org/standardsrepository/type/Obligation)|Standard|ISO20022
+        BM ()
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+        Arrangementtypevalues:
+          enum:
+            - SweepArrangement
+            - WithdrawalArrangement
+            - DepositArrangement
+            - InterestArrangement
+            - FeeArrangement
+            - LienArrangement
+            - InformationArrangement
+            - PaymentArrangement
+            - EntitlementArrangement
+            - PeriodArrangement
+            - CollateralArrangement
+            - LimitArrangement
+            - AccessArrangement
+            - CardPaymentArrangement
+            - StandingOrderArrangement
+            - OverdraftArrangement
+            - RepaymentArrangement
+            - StatementArrangement
+            - CreditTransferArrangement
+            - ProductAndServiceArrangement
+            - FactoringArrangement
+            - RolloverArrangement
+            - RestructuringArrangement
+            - InsuranceArrangement
+            - CollectionArrangement
+            - UnderwritingArrangement
+            - TerminationArrangement
+            - MaturityArrangement
+          format: Arrangement
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Actiontypevalues:
+          enum:
+            - Initiate
+            - Execute
+            - Create
+            - Transfer
+            - Pay
+            - Deliver
+            - Apply
+            - Calculate
+          format: Action
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement (e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc.) 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+        Arrangementstatustypevalues:
+          enum:
+            - Requested
+            - Proposed
+            - Offered
+            - Accepted
+            - Cancelled
+            - Fulfilled
+            - Terminated
+          format: Arrangementstatus
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing (as action) something. 
+    Plan:
+      type: object
+      format: Plan
+      description: "Details of staff training and certification activity (planned and actual) ||\r\n|"
+      properties:
+        PlanGoal:
+          $ref: '#/components/schemas/Goal'
+        PlanBudget:
+          $ref: '#/components/schemas/Budgetarrangement'
+        PlannedAction:
+          $ref: '#/components/schemas/Plannedaction'
+        Plantypevalues:
+          enum:
+            - AdministrativePlan
+            - ManagementPlan
+            - StratgyPlan
+            - FinancialPlan
+            - DevelopmentPlan
+          format: Plan
+        PlanValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        PlanDescription:
+          $ref: '#/components/schemas/Text'
+        Plan:
+          type: string
+          format: Class
+          description: >-
+            A method for doing or achieving something, usually involving a
+            series of actions or stages, or something you have arranged to do.
+            (Cambridge Dictionary)
+
+
+            A plan is a set of intended actions, through which one intends to
+            achieve a goal.
+
+
+            "Course of action" is a synonym for Plan.  
+    Budgetarrangement:
+      type: object
+      format: Budgetarrangement
+      description: >-
+        An arrangement which is specifying an estimate of costs, revenues, and
+        resources over a specified period, reflecting a reading of future
+        financial conditions and goals. (adapted from Business Dictionary) 
+      properties:
+        BudgetType:
+          $ref: '#/components/schemas/Budgettype'
+        BudgetAmount:
+          $ref: '#/components/schemas/Amount'
+    Budgettype:
+      type: object
+      format: Budgettype
+      description: 'A Classification value that specifies the type of Budget '
+      properties:
+        BudgetTypeName:
+          $ref: '#/components/schemas/Name'
+        Budgettypevalues:
+          enum:
+            - OperatingBudget
+            - FinancialBudget
+            - ResourceBudget
+          format: Budgettype
+    Plannedaction:
+      type: object
+      format: Plannedaction
+      description: 'An action that is arranged in a plan for doing or achieving something  '
+      properties:
+        PlannedAction:
+          type: string
+          format: Class
+          description: >-
+            An action that is arranged in a plan for doing or achieving
+            something  

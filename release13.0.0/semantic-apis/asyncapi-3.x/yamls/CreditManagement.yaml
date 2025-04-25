@@ -1,0 +1,672 @@
+asyncapi: 3.0.0
+info:
+  title: Credit Management
+  version: 13.0.0
+  description: >-
+    BIAN Service Domain (expanded with the BIAN BOM) | This service domain
+    provides a bank-wide/oversight function to qualify credit pricing for
+    offered products and services to reflect the bank's appetite to write the
+    business. This decision can override the standard product pricing procedure
+channels:
+  CreditPricingAssessment/Created:
+    address: CreditPricingAssessment/Created
+    messages:
+      CreditPricingAssessment-created.message:
+        $ref: '#/components/messages/CreditPricingAssessment'
+    description: ''
+  CreditPricingAssessment/Updated:
+    address: CreditPricingAssessment/Updated
+    messages:
+      CreditPricingAssessment-updated.message:
+        $ref: '#/components/messages/CreditPricingAssessment'
+    description: ''
+operations:
+  CreditPricingAssessment-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CreditPricingAssessment~1Created'
+    summary: CreditPricingAssessment
+    messages:
+      - $ref: >-
+          #/channels/CreditPricingAssessment~1Created/messages/CreditPricingAssessment-created.message
+  CreditPricingAssessment-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CreditPricingAssessment~1Updated'
+    summary: CreditPricingAssessment
+    messages:
+      - $ref: >-
+          #/channels/CreditPricingAssessment~1Updated/messages/CreditPricingAssessment-updated.message
+components:
+  messages:
+    CreditPricingAssessment:
+      name: CreditPricingAssessment
+      description: >-
+        To test or assess an entity, possibly against some formal qualification
+        or certification requirement within Credit Management. 
+      payload:
+        $ref: '#/components/schemas/CreditPricingAssessment'
+  schemas:
+    CreditPricingAssessment:
+      type: object
+      description: ''
+      properties:
+        BusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+        SectorReference:
+          type: string
+          format: Object
+          description: "The sector where the proposed transaction would be booked ||\r\n|"
+        Producttypevalues:
+          enum:
+            - BankingProduct
+            - InsuranceProduct
+        ProposedTransactionReference:
+          $ref: '#/components/schemas/Transaction'
+        ProposedTransactionRecord:
+          $ref: '#/components/schemas/Transaction'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+        ProposedTransactionAmount:
+          $ref: '#/components/schemas/Amount'
+        ProposedTransactionRecordDate:
+          $ref: '#/components/schemas/Datetime'
+        ProposedTransactionBookingEntity:
+          $ref: '#/components/schemas/Involvedparty'
+        ProposedTransactionCreditPricingAssessment:
+          $ref: '#/components/schemas/Assessment'
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Business unit submitting the proposed transaction for review ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "The booking entity within the bank that the proposed transaction would impact ||\r\n|"
+      properties:
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+        Involvedparty:
+          type: string
+          format: DataType
+          description: 'Party who plays a specific role  '
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+        Partytypevalues:
+          enum:
+            - Person
+            - Organisation
+          format: Party
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+        Partylegalstructuretypevalues:
+          enum:
+            - Individual
+            - CommunityInterestCompany
+            - CharitableIncorporatedOrganisation
+            - Co-Operative
+            - Charity
+            - GeneralPartnership
+            - LimitedLiabilityPartnership
+            - ScottishLimitedPartnership
+            - LimitedPartnership
+            - PrivateLimitedCompany
+            - PublicLimitedCompany
+            - Sole(SoleTrader)
+          format: Party
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. (UN/CEFAT) 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          $ref: '#/components/schemas/Text'
+        TimeZoneCode:
+          $ref: '#/components/schemas/Text'
+        DaylightSavingIndicator:
+          $ref: '#/components/schemas/Text'
+        Datetimetypevalues:
+          enum:
+            - MaturityDate
+            - InitiatedDate
+            - RequestedDate
+            - ExecutedDate
+            - OpenDate
+            - CloseDate
+            - ExpiryDate
+            - EffectiveDate
+            - CreatingDate
+            - ActivationDate
+            - DeactivationDate
+            - BlockingDate
+            - SendingDate
+            - ValidFromDate
+            - ValidToDate
+            - ReceivingDate
+            - SigningDate
+            - DueDate
+            - ValueDate
+            - FulfillmentDate
+          format: Datetime
+        Datetime:
+          type: string
+          format: DataType
+          description: >-
+            A date time identifies a date and time of day to various common
+            resolutions: year, month, week, day, hour, minute, second, and
+            fraction of second. (UN/CEFACT)
+
+
+            A particular point in the progression of time defined by a mandatory
+            date and a mandatory time component, expressed in either UTC time
+            format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset format
+            (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+            (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+            Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+            October 2004" which is aligned with ISO 8601. (ISO20022)
+
+            Note on the time format:
+
+            1) beginning / end of calendar day
+
+            00:00:00  -  the beginning of a calendar day
+
+            24:00:00  -  the end of a calendar day
+
+            2) fractions of second in time format
+
+            Decimal fractions of seconds may be included. In this case, the
+            involved parties shall agree on the maximum number of digits that
+            are allowed. 
+    Text:
+      type: object
+      format: Text
+      description: ' '
+      properties:
+        Text:
+          type: string
+          format: DataType
+          description: >-
+            Text is a character string such as a finite set of characters
+            generally in the form of words of a language. (UN/CEFACT) 
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        Partyidentificationtypevalues:
+          enum:
+            - Taxidentificationnumber
+            - Nationalregistrationnumber
+            - Registrationauthorityidentificatio
+            - LEI(LegalEntityIdentifier)
+            - Alienregistrationnumber
+            - Passportnumber
+            - Taxexemptidentificationnumber
+            - Corporateidentification
+            - Driverlicensenumber
+            - Foreigninvestmentidentitynumber
+            - Socialsecuritynumber
+            - Identitycardnumber
+            - Concat
+            - Nationalregistrationidentification
+          format: Partyidentification
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        An identifier that allows to uniquely refer to an instance of a
+        Document. 
+      properties:
+        IdentifierValue:
+          $ref: '#/components/schemas/Value'
+        IdentifierIssuingAuthority:
+          $ref: '#/components/schemas/Involvedparty'
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+        Identifier:
+          type: string
+          format: DataType
+          description: >-
+            An identifier is a character string used to uniquely identify one
+            instance of an object within an identification scheme that is
+            managed by an agency. (UN/CEFAT) 
+    Value:
+      type: object
+      format: Value
+      description: ' '
+      properties:
+        Value:
+          type: string
+          format: DataType
+          description: >-
+            Data or set of data 
+
+
+            A value is the concept of worth in general that is assigned or is
+            determined by measurement, assessment or calculation. (UN/CEFACT) 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          $ref: '#/components/schemas/Text'
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Partyinvolvementtypevalues:
+          enum:
+            - Agreementinvolvement
+            - Partyinvolvement
+            - Arrangementinvolvement
+            - Designspecificationinvolvement
+            - Relationshipinvolvement
+            - Locationinvolvement
+            - Bankguaranteeinvolvement
+          format: Partyrole
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+        Datetimeperiod:
+          type: string
+          format: DataType
+          description: >-
+            Time span defined by a start date and time, and an end date and
+            time. (ISO20022) 
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        Key details of the proposed transaction
+        ObligationFulfilment|ObligationFulfilment
+        (https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)|Standard|ISO20022
+        BM ()
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+        Transactiontypevalues:
+          enum:
+            - FinancialTransaction
+            - BusinessTransaction
+            - BankingTransaction
+            - AccountingTransaction
+            - BookingTransaction
+            - AllocationTransaction
+            - DeliveryTransaction
+            - ProductionTransaction
+          format: Transaction
+        TransactionDescription:
+          $ref: '#/components/schemas/Text'
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+        Transaction:
+          type: string
+          format: Class
+          description: >-
+            A planned or performed action in the context of concluding an
+            agreement or fulfilling an arrangement
+
+
+            Act to do something. 
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction (e.g., initiated date, executed date, fulfillment date).  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+        Transactiondatetimetypevalues:
+          enum:
+            - ExecutedDate
+            - FulfillmentDate
+            - InitiatedDate
+            - CancelledDate
+            - ApprovedDate
+            - ValueDate
+            - BookingDate
+          format: Transactiondatetime
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction (e.g., initiated, executed, confirmed, cancelled, etc.)  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+        Transactionstatustypevalues:
+          enum:
+            - Initiated
+            - Executed
+            - Cancelled
+            - Confirmed
+            - Suspended
+            - Pending
+            - Completed
+            - Notified
+            - Booked
+            - Rejected
+          format: Transactionstatus
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          $ref: '#/components/schemas/Text'
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        StatusInvolvedParty:
+          $ref: '#/components/schemas/Involvedparty'
+        Status:
+          type: string
+          format: DataType
+          description: >-
+            A characteristic that describe the object by referring to a state
+            transition in its lifecycle. 
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The financial structure of the proposed transaction
+        CurrencyAndAmount|CurrencyAndAmount
+        (https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)|Standard|ISO20022 
+        ()
+      properties:
+        AmountValue:
+          $ref: '#/components/schemas/Value'
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+        DecimalPointPosition:
+          $ref: '#/components/schemas/Text'
+        Amounttypevalues:
+          enum:
+            - Principal
+            - Actual
+            - Estimated
+            - Maximum
+            - Default
+            - Replacement
+            - Incremental
+            - Decremental
+            - Reserved
+            - Available
+            - Used
+            - DuePayable
+            - Minimum
+            - Open
+            - Unknown
+            - Fixed
+          format: Amount
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. (ISO20022)
+
+             
+    Assessment:
+      type: object
+      format: Assessment
+      description: >-
+        Details of the credit pricing assessment, permitting or adjusting terms
+        as necessary Assessment|Assessment
+        (https://www.iso20022.org/standardsrepository/type/Assessment)|Standard|ISO20022
+        BM ()
+      properties:
+        Assessmenttypevalues:
+          enum:
+            - AssetValuation
+            - ProductMatching
+            - Authorization
+            - Authentication
+            - QualityAssurance
+            - Audit
+            - ComplianceCheck
+            - FundingCheck
+            - SuitabilityCheck
+            - PerformanceCheck
+            - ImpactAssessment
+            - RiskAssessment
+            - Rating
+            - UnderwritingAssessment
+            - Qualification
+            - Verification
+            - KYCAssessment
+            - PEPAssessment
+            - AMLAssessment
+          format: Assessment
+        AssessmentMethod:
+          $ref: '#/components/schemas/Text'
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+        AssessmentDescription:
+          $ref: '#/components/schemas/Text'
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        AssessmentResult:
+          $ref: '#/components/schemas/Text'
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+        AssessmentRequiredAdjustment:
+          $ref: '#/components/schemas/Text'
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          $ref: '#/components/schemas/Text'
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          $ref: '#/components/schemas/Text'
+        ModelPurpose:
+          $ref: '#/components/schemas/Text'
+        ModelVersion:
+          $ref: '#/components/schemas/Text'
+        ModelName:
+          $ref: '#/components/schemas/Name'
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessment(s). '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        Financialdocumenttypevalues:
+          enum:
+            - Meteredserviceinvoice
+            - Creditnoterelatedtofinancialadjust
+            - Debitnoterelatedtofinancialadjustm
+            - Commercialinvoice
+            - Creditnote
+            - Debitnote
+            - Hireinvoice
+            - Selfbilledinvoice
+            - Remittanceadvicemessage
+            - Relatedpaymentinstruction
+            - Commercialcontract
+            - Foreignexchangedealreference
+            - Statementofaccount
+            - Dispatchadvice
+            - Purchaseorder
+            - Structuredcommunicationreference
+            - Billoflading
+            - Voucher
+            - Accountreceivableopenitem
+            - Tradeservicesutilitytransaction
+            - Cashierreceipt
+            - Customerreceipt
+            - Journal
+            - Salereceipt
+          format: Document
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+        Documentdatetimetypevalues:
+          enum:
+            - CreationDate
+            - CapturingDate
+            - VersionDate
+            - ValueDate
+            - IssueDate
+          format: Document
+        DocumentPurpose:
+          $ref: '#/components/schemas/Text'
+        DocumentFormat:
+          $ref: '#/components/schemas/Text'
+        DocumentSubject:
+          $ref: '#/components/schemas/Text'
+        DocumentDescription:
+          $ref: '#/components/schemas/Text'
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+        Document:
+          type: string
+          format: Class
+          description: >-
+            Something tangible that records something, such as a recording or a
+            photograph, or a writing that can be used to furnish evidence or
+            information (FIBO)
+
+
+            Definition: A physical or digital representation of something
+            meaningful to the audience.
+
+
+            Comment: 
+
+            1.Technical: Manuals, instructions, tutorials, procedures,
+            specifications, etc., that accompany a piece of equipment or
+            software, and provide guidance for its proper use and maintenance.
+
+            2.Trading: Preparation of a set of commercial and financial
+            documents that record or support a business transaction.
+            International trade documentations include air waybill, bill of
+            exchange, bill of lading, certificate of inspection, certificate of
+            insurance, certificate of origin, commercial invoice, and consular
+            invoice.
+
+
+
+            Read more:
+            http://www.businessdictionary.com/definition/documentation.html#ixzz3EQGRGC4W
+             
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. (ISO20022) '
+      properties:
+        DateContent:
+          $ref: '#/components/schemas/Text'
