@@ -1,0 +1,323 @@
+openapi: 3.0.1
+info:
+  title: Funeral Policy
+  description: 'The Funeral Policy Service Domain handles the general product maintenance, premium payments and initiates claims processing.'
+  contact:
+    name: BIAN
+    url: https://bian.org
+  version: 14.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/B154/BIAN/FuneralPolicy/14.0.0
+paths: { }
+components:
+  schemas:
+    HTTPError:
+      type: object
+      properties:
+        status_code:
+          type: string
+          format: string
+        status:
+          type: string
+          format: string
+        message:
+          type: string
+          format: string
+      description: Status Attributes
+    ClaimInitiation:
+      type: object
+      properties:
+        FuneralPolicyFacilityIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Funeral Policy Facility
+          format: Text
+          x-unique: true
+          x-default: true
+        ClaimInitiationIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Claim Initiation BQ
+          format: Text
+          x-unique: true
+          x-default: true
+        ClaimInitiationService:
+          type: string
+          description: Detaills of Claim Initiation Service (features)
+          format: Service
+        ClaimInitiationServiceArrangement:
+          type: string
+          description: Details of Claim Initiation Service Arrangement (configurations)
+          format: ClaimArrangement
+        ClaimInitiationInstruction:
+          type: string
+          description: Details of the instruction requesting fulfillment of the Claim Initiation arrangement
+          format: Instruction
+        ClaimInitiationTransaction:
+          type: string
+          description: Details of the transaction resulting from the fulfillment of the Claim Initiation arrangement
+          format: Transaction
+        ClaimInitiationInvolvementReference:
+          type: string
+          description: Reference to the party who plays a specific role in the Claim Initiation arrangement
+          format: Involvedparty
+        ClaimInitiationArrangementAccount:
+          type: string
+          description: Details of the account linked to the Claim Initiation arrangement
+          format: Account
+      description: ''
+    Payment:
+      type: object
+      properties:
+        FuneralPolicyFacilityIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Funeral Policy Facility
+          format: Identifier
+          x-unique: true
+          x-default: true
+        PaymentIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Payment arrangement
+          format: Identifier
+          x-unique: true
+          x-default: true
+        CustomerReference:
+          type: string
+          description: Reference to authorized party with ability to initiate payments from the source account
+          format: Text
+        PayeeReference:
+          type: string
+          description: Reference to a party that receives an amount of money from the debtor.
+          format: Text
+        PayeeName:
+          type: string
+          description: The name of the recipient of the payment.
+          format: Name
+        PayeeAccountIdentification:
+          type: string
+          description: The bank account number (or IBAN) of the payee where funds will be deposited.
+          format: Accountidentification
+          x-unique: true
+          x-default: true
+        PaymentAmountandCurrency:
+          type: string
+          description: "The monetary value to be transferred from the customers current account to the payee\n\nPayment Amount and Currency refers to the monetary value of a payment and the specific currency in which it is denominated.\n\n- Payment Amount  the numeric value of the transaction being transferred.\n\n- Currency (CCY)  the 3-letter ISO code that specifies the type of money (e.g., USD, EUR, GBP) in which the amount is expressed."
+          format: Amount
+        PaymentExecutionDate:
+          type: string
+          description: The immediate or future date on which the payment should be executed.
+          format: Datetime
+        PaymentFrequency:
+          type: string
+          description: The interval at which the payment repeats.
+          format: Frequency
+        PaymentEndDate:
+          type: string
+          description: The date until which the recurrence should continue.
+          format: Datetime
+        PaymentStatus:
+          type: string
+          description: 'WHERE the payment currently is in its lifecycle (scheduled, processing, completed, failed).'
+          format: Status
+        PayeeBankReference:
+          type: string
+          description: Reference to a financial institution servicing an account for the payee.
+          format: Text
+        PaymentMethod:
+          type: string
+          description: "Describes the channel or mechanism by which money is transferred from the customers current account to the payee.\n\nBANK_TRANSFER\": Direct transfer between bank accounts (ACH, SEPA, RTGS, NEFT, etc.).\n\"STANDING_ORDER\": Automated recurring transfer (e.g., rent, subscriptions).\n\"DIRECT_DEBIT\" : Payment initiated by the payee, but authorized by the customer.\n\"CHEQUE\": Payment executed via cheque issuance (less common in APIs)."
+          format: Paymentmethodtypevalues
+        PaymentDescription:
+          type: string
+          description: A narrative or description attached to the payment.
+          format: Text
+        PaymentSchedule:
+          type: string
+          description: 'Processing schedule for repeating payments for standing orders (e.g. start date, end, period, number/cycles). Note this triggers an internal execution call as necessary. '
+          format: Schedule
+        InstructedPaymentReference:
+          type: string
+          description: Reference to the instructed payment
+          format: Text
+        ExecutedTransactionReference:
+          type: string
+          description: Reference to the executed payment
+          format: Text
+      description: ''
+    Administration:
+      type: object
+      properties:
+        FuneralPolicyFacilityIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Funeral Policy Facility
+          format: Text
+          x-unique: true
+          x-default: true
+        AdministrationIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Administration BQ
+          format: Text
+          x-unique: true
+          x-default: true
+        AdministrationService:
+          type: string
+          description: Detaills of Administration Service (features)
+          format: Service
+        AdministrationServiceArrangement:
+          type: string
+          description: Details of Administration Service Arrangement (configurations)
+          format: Arrangement
+        AdministrationInstruction:
+          type: string
+          description: Details of the instruction requesting fulfillment of the Administration arrangement
+          format: Instruction
+        AdministrationTransaction:
+          type: string
+          description: Details of the transaction resulting from the fulfillment of the Administration arrangement
+          format: Transaction
+        AdministrationInvolvementReference:
+          type: string
+          description: Reference to the party who plays a specific role in the Administration arrangement
+          format: Involvedparty
+        AdministrationArrangementAccount:
+          type: string
+          description: Details of the account linked to the Administration arrangement
+          format: Account
+      description: ''
+    Billing:
+      type: object
+      properties:
+        InvoiceNumber:
+          type: string
+          description: Contains the invoice number.
+          format: Identifier
+        SellerReference:
+          type: string
+          description: Reference to Supplier or the provider of the goods or services.
+          format: Involvedparty
+        BuyerReference:
+          type: string
+          description: Reference to Buyer or company buying the goods or services.
+          format: Involvedparty
+        InvoiceEffectiveDate:
+          type: string
+          description: Effective billing date.
+          format: Datetime
+        InvoiceCreationDate:
+          type: string
+          description: Contains the date and time the electronic invoice was created.
+          format: Datetime
+        InvoiceAmount:
+          type: string
+          description: "Amount of invoice.\n\nISO20022 has defined different type of amount for an invoice:\n\n- InvoiceTotalAmount: Total amount of the invoice, being the sum of total invoice lines amounts, total invoice additional amounts (allowances and charges) and total tax amounts.\n\n- InvoiceTaxAmount: Sum of all tax amounts related to the invoice. It is derived from the association between line item and tax.\n\n- InvoicePrepaidAmount: Monetary value of the total prepaid amount being reported for this settlement.\n\n- InvoiceNetAmount: Total amount after taxes, adjustments and charges\n"
+          format: Amount
+        InvoiceCurrency:
+          type: string
+          description: Code specifying the currency of the invoice.
+          format: Currencycode
+        InvoiceAddress:
+          type: string
+          description: The address used to send the invoice to.
+          format: Address
+        InvoicePeriodCovered:
+          type: string
+          description: Specifies the period covered by an invoice for instance for recurring services.
+          format: Datetimeperiod
+        InvoiceLineItem:
+          type: string
+          description: Unit of information  showing the related  provision of products and/or services and monetary summations reported as a discrete line item.
+          format: InvoiceLine
+        FuneralPolicyFacilityIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Funeral Policy Facility
+          format: Text
+          x-unique: true
+          x-default: true
+        BillingIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Billing BQ
+          format: Text
+          x-unique: true
+          x-default: true
+      description: ''
+    FuneralPolicyFacility:
+      type: object
+      properties:
+        FuneralPolicyFacilityIdentification:
+          type: string
+          description: A unique reference to an item or an occurrence of Funeral Policy Facility
+          format: Text
+          x-unique: true
+          x-default: true
+        FuneralPolicyNumber:
+          type: string
+          description: Unique identifier for the insurance agreement.
+          format: Identifier
+        PolicyHolderReference:
+          type: string
+          description: Reference to the person or entity that owns the policy and pays the premium.
+          format: Involvedparty
+        InsuredPersonsReference:
+          type: string
+          description: 'Reference to the individual(s) whose lives are covered by the policy, may include the policyholder, spouse, children, or extended family.'
+          format: Involvedparty
+        BeneficiaryorNomineeReference:
+          type: string
+          description: Reference to the person(s) entitled to receive the benefit upon the death of the insured.
+          format: Involvedparty
+        PolicyCoverageType:
+          type: string
+          description: 'Defines whether it’s an individual, family, or group funeral plan.'
+          format: Text
+        PolicyTerm:
+          type: string
+          description: The duration for which the policy is valid (may be whole life or renewable annually).
+          format: Duration
+        PolicyEffectiveDate:
+          type: string
+          description: The date when coverage begins.
+          format: Datetime
+        PolicyStatus:
+          type: string
+          description: 'Current state of the agreement (active, lapsed, cancelled, reinstated).'
+          format: Agreementstatus
+        GoverningLaworJurisdiction:
+          type: string
+          description: Legal framework under which the policy is administered.
+          format: Jurisdiction
+      description: ''
+  responses:
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+      description: TooManyRequests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+      description: InternalServerError
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HTTPError'
