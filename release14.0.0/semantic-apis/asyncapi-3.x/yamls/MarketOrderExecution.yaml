@@ -1,0 +1,1155 @@
+asyncapi: 3.0.0
+info:
+  title: Market Order Execution
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | The Market Order Execution
+    Service Domain is responsible for the booking of securities transactions
+    e.g. resulting from market orders or some types of corporate actions on
+    investment accounts, so in terms of security name plus quantity.
+channels:
+  MarketTradeTransaction/Created:
+    address: MarketTradeTransaction/Created
+    messages:
+      MarketTradeTransaction-created.message:
+        $ref: '#/components/messages/MarketTradeTransaction'
+    description: ''
+  MarketTradeTransaction/Updated:
+    address: MarketTradeTransaction/Updated
+    messages:
+      MarketTradeTransaction-updated.message:
+        $ref: '#/components/messages/MarketTradeTransaction'
+    description: ''
+  Quote/Created:
+    address: Quote/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Quote'
+    description: ''
+  Quote/Updated:
+    address: Quote/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Quote'
+    description: ''
+  TradeInitiation/Created:
+    address: TradeInitiation/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeInitiation'
+    description: ''
+  TradeInitiation/Updated:
+    address: TradeInitiation/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/TradeInitiation'
+    description: ''
+  Position/Created:
+    address: Position/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Position'
+    description: ''
+  Position/Updated:
+    address: Position/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Position'
+    description: ''
+operations:
+  MarketTradeTransaction-created:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketTradeTransaction~1Created'
+    summary: MarketTradeTransaction
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeTransaction~1Created/messages/MarketTradeTransaction-created.message
+  MarketTradeTransaction-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/MarketTradeTransaction~1Updated'
+    summary: MarketTradeTransaction
+    messages:
+      - $ref: >-
+          #/channels/MarketTradeTransaction~1Updated/messages/MarketTradeTransaction-updated.message
+  Quote/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Quote~1Created'
+    summary: Quote
+    messages:
+      - $ref: '#/channels/Quote~1Created/messages/publish.message'
+  Quote/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Quote~1Updated'
+    summary: Quote
+    messages:
+      - $ref: '#/channels/Quote~1Updated/messages/publish.message'
+  TradeInitiation/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeInitiation~1Created'
+    summary: TradeInitiation
+    messages:
+      - $ref: '#/channels/TradeInitiation~1Created/messages/publish.message'
+  TradeInitiation/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/TradeInitiation~1Updated'
+    summary: TradeInitiation
+    messages:
+      - $ref: '#/channels/TradeInitiation~1Updated/messages/publish.message'
+  Position/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Position~1Created'
+    summary: Position
+    messages:
+      - $ref: '#/channels/Position~1Created/messages/publish.message'
+  Position/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Position~1Updated'
+    summary: Position
+    messages:
+      - $ref: '#/channels/Position~1Updated/messages/publish.message'
+components:
+  messages:
+    MarketTradeTransaction:
+      name: MarketTradeTransaction
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Market Order
+        Execution. 
+      payload:
+        $ref: '#/components/schemas/MarketTradeTransaction'
+    Quote:
+      name: Quote
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Quote'
+    TradeInitiation:
+      name: TradeInitiation
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/TradeInitiation'
+    Position:
+      name: Position
+      description: The sub-tasks involved in the execution of the financial transaction
+      payload:
+        $ref: '#/components/schemas/Position'
+  schemas:
+    Quote:
+      type: object
+      format: Quote
+      description: "The buy/sell quote by trade type and volume as appropriate ||\r\n|"
+      properties:
+        QuoteSecurityType:
+          $ref: '#/components/schemas/Securitytypevalues'
+          format: Quote
+          description: ">\r\n* `Equity` Financial instrument that represents a title of ownership in a company. That is, the shareholder is entitled to a part of the company's profit usually by payment of a dividend and to voting rights, if any. Each company issues generally different classes of shares, for example, ordinary or common shares, which have no guaranteed amount of dividend but carry voting rights, or preferred shares, which receive dividends before ordinary shares but have no voting right. ISO20022\r\n* `Warrant` Financial instrument that gives the holder the right to purchase shares or bonds at a given price within a specified time. ISO20022\r\n* `Entitlement` Financial instrument providing the holder the privilege to subscribe to or to receive specific assets on terms specified. ISO20022"
+        QuoteType:
+          type: string
+          format: String
+          description: "The type of quote being provided e.g. current market, bank committed ||\r\n|"
+        Price:
+          type: string
+          format: ''
+          description: ''
+        PriceType:
+          $ref: '#/components/schemas/Pricetypevalues'
+          format: Quote
+          description: ">\r\n* `Average` Price is an average execution price.\r\n* `Averageoverride` Price is an override of the average price.\r\n* `Combined` Price is composed of the combined expenses used in the UK market.\r\n* `Grossofall` Price is a gross execution price. The price is an all inclusive price, ie, including all charges, fees, and taxes.\r\n* `Limit` Price is the limit price of a limit order, eg, a customer might put in a limit order to sell financial instruments at 67 or to buy at 60.\r\n* `Net` Price is a net price, ie, net only of local broker's commission, local fees and local taxes.\r\n* `Netdisclosed` Price is net to the disclosed client.\r\n* `Netofall` Price is a net price, ie, net of all charges, fees and taxes.\r\n* `Netundisclosed` Price is net to the client undisclosed used in the UK market.\r\n* `Notionalgross` Price is notional gross used in the UK market.\r\n* `Parvalue` Price is equal to the nominal or face value of the instrument.\r\n* `Roundedaverage` Price is a rounded average price.\r\n* `Stop` Price is a stop price used in an order to buy. The order becomes a market order when the financial instrument trades at or above the stop price after the order is submitted. In an order to sell the order becomes a market order when the financial instrument trades at or below the stop price.\r\n* `Bid` Price is the calculated bid price of a dual-priced fund offer-bid prices, that is, the selling price of the units for the investor.\r\n* `Offer` Price is the calculated offer price of a dual-priced investment fund offer-bid prices, that is, the buying price of the units for an investor.\r\n* `Netassetvalue` Price is the net asset value per unit that is used either as a transacting price for a single-priced investment fund class, or as a notional price for the calculation of other prices.\r\n* `Creation` Price is the calculated creation price of a dual-priced investment fund creation-cancellation prices and the highest possible buying price of the units before the initial charge. The actual buying or offer price, which includes charges, will be higher.\r\n* `Cancellation` Price is the calculated cancellation price of a dual-priced investment fund creation-cancellation price, and the lowest possible valuation of the units on any one-day. The actual selling or bid price is usually higher.\r\n* `Interim` Price is the non-official interim price given to an investor before the executed price.\r\n* `Swing` Price is the calculated net asset value price of a single-priced investment fund. The price is adjusted to take into account the dealing costs due to individual large deals, or due to a significant imbalance in volumes of subscriptions vs redemptions, as an alternative to dilution levy.\r\n* `Other` Price is another type of price, which is not explicitly defined.\r\n* `Mid` Price is the average price between the bid and offer prices.\r\n* `Reinvestment` Price is the price used when reinvesting units after distribution.\r\n* `Switch` Price is the price used when transferring units between products.\r\n* `Dailydividendrate` Price is the net income of a financial instrument, calculated on each dealing day, and divided by all the units outstanding on that day.\r\n* `Market` Price is the current market price.\r\n* `Indicative` Price is the estimated indicative price.\r\n* `Actual` True offer price.\r\n* `Nonadjustedunpublished` The original NAV before the price of the investment fund was swung.\r\n* `Guaranteed` Price is a guaranteed price.\r\n* `Estimatednav` Price is an estimated net asset value per unit.\r\n* `Grossassetvalue` Price is the gross asset value per unit and includes the performance fee per share. It is used as the transacting price for a fund with equalisation. GAVL price minus the NAVL price  -  performance fee.\r\n* `Estimatedgav` Price is the estimated gross asset value per unit and includes the performance fee per share. It is used as the transacting price for a fund with equalisation. GAVL price minus the NAVL price  -  performance fee.\r\n* `Sidepocketnav` Price is the estimated net asset value for the side pocket.\r\n* `Ask` Offer. Price for which seller is willing to sell item.\r\n* `Auction` Price selected as a crossing of an auction.\r\n* `Calculated` Price is calculated.\r\n* `Clean` Paid without accumulated interest.\r\n* `Dirty` Paid with accumulated interest.\r\n* `Draw` Price selected as a result of a lottery/tiebreaker.\r\n* `Fairvalue` Estimate of the potential market price.\r\n* `Indicativepaid` Reduced and partial execution based on high bids and ask orders.\r\n* `Kassa` Official declared price.\r\n* `Paid` Price at which the trade was done.\r\n* `Redemptionnav` Net Asset Value NAV applicable to redemptions.\r\n* `Settlement` Price used for the settlement of futures and options.\r\n* `Spread` The difference between bid and ask.\r\n* `Subscriptionnav` Net Asset Value NAV applicable to subscriptions.\r\n* `Tax` Price for tax declaration purpose.\r\n* `Taxableincomepersharecalculated` Specifies whether the fund calculates a taxable interest per share TIS."
+        QuotedRate:
+          $ref: '#/components/schemas/Rate'
+          description: 'Exchange rate specified in a quote. ISO20022 '
+        QuoteStatus:
+          $ref: '#/components/schemas/Quotestatusvalue'
+          format: Quote
+          description: ">\r\n* `Accepted` Indicates that the quote is accepted for further negotiation.\r\n* `Cancelsymbol` Indicates that all quotes are cancelled for a financial instrument's symbol.\r\n* `Cancelsecurity` Indicates that all quotes are cancelled for a specific security.\r\n* `Cancelunderlying` Indicates that all quotes are cancelled for an underlying financial instrument.\r\n* `Cancelall` Indicates that all quotes are cancelled.\r\n* `Rejected` Indicates that the quote is not accepted.\r\n* `Removedfrommarket` Indicates that all quotes are removed from the market.\r\n* `Expired` Indicates that the quote is not valid anymore.\r\n* `Query` Indicates that the quote is being requested.\r\n* `Quotenotfound` Indicates that no quote can be computed or communicated.\r\n* `Pending` Indicates that the quote is being processed.\r\n* `Pass` Indicates that the counterparty is not interested in the transaction.\r\n* `Lockedmarketwarning` Warning due to a situation of locked market.\r\n* `Crossmarketwarning` Warning due to a situation of cross market.\r\n* `Canceledduetolockmarket` Indicates that the quote is canceled due to a situation of locked market.\r\n* `Canceledduetocrossmarket` Indicates that the quote is canceled due to a situation of cross market."
+    Rate:
+      type: object
+      format: Rate
+      description: 'Exchange rate specified in a quote. ISO20022 '
+      properties:
+        RateValue:
+          type: string
+          format: String
+          description: ' '
+        RateUnit:
+          type: string
+          format: String
+          description: >-
+            The unit of measure like Percentage or BPS
+
+
+            Basis points BPS refers to a common unit of measure for interest
+            rates and other percentages in finance. 
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        RateCapitalUnit:
+          type: string
+          format: String
+          description: ' '
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'Date and time at which the range ends. ISO20022 '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    TradeInitiation:
+      type: object
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        WholesaleTradeReference:
+          type: string
+          format: Object
+          description: "If the market trade is not executed against the bank position, but directly in the wholesale market, this refers to the actual wholesale trading record ||\r\n|"
+        MarketTradeTransactionInstanceProcessingStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The tracked and returned processing status of the market trade e.g.
+            pending, partially complete, complete Status |Status 
+            https://www.iso20022.org/standardsrepository/type/Status|Standard|ISO20022
+            BM 
+        MarketTradeInitiationTaskResult:
+          $ref: '#/components/schemas/Task'
+          description: "Details of the market trade initiation task ||\r\n|"
+    Status:
+      type: object
+      format: Status
+      description: >-
+        Status tracking for the wholesale trade Status |Status 
+        https://www.iso20022.org/standardsrepository/type/Status|Standard|ISO20022
+        BM 
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: >-
+        Reference to a Party who plays a  specific role in the context of
+        assigning a status. 
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Task:
+      type: object
+      format: Task
+      description: "Details of the market trade initiation task ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Position:
+      type: object
+      format: Position
+      description: The sub-tasks involved in the execution of the financial transaction
+      properties:
+        BankSecurityPositionSecurityType:
+          $ref: '#/components/schemas/Securitytypevalues'
+          format: Position
+          description: ">\r\n* `Equity` Financial instrument that represents a title of ownership in a company. That is, the shareholder is entitled to a part of the company's profit usually by payment of a dividend and to voting rights, if any. Each company issues generally different classes of shares, for example, ordinary or common shares, which have no guaranteed amount of dividend but carry voting rights, or preferred shares, which receive dividends before ordinary shares but have no voting right. ISO20022\r\n* `Warrant` Financial instrument that gives the holder the right to purchase shares or bonds at a given price within a specified time. ISO20022\r\n* `Entitlement` Financial instrument providing the holder the privilege to subscribe to or to receive specific assets on terms specified. ISO20022"
+        PositionMarketOrderTradeInitiationInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to market trades impacting the position during the current
+            trading period GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        BankSecurityPositionSecurityPAndLRecord:
+          type: string
+          format: Object
+          description: "The consolidated record of trading activity against the position during the trading period, including the derived position P&L ||\r\n|"
+        WholesaleTrade:
+          type: string
+          format: Object
+          description: "The record of trades made in the wholesale markets by the bank to manage its net security position. Note for larger market orders/trades there may be a corresponding wholesale transaction as appropriate ||\r\n|"
+        WholesaleTradeSecurityType:
+          $ref: '#/components/schemas/Securitytypevalues'
+          format: Position
+          description: ">\r\n* `Equity` Financial instrument that represents a title of ownership in a company. That is, the shareholder is entitled to a part of the company's profit usually by payment of a dividend and to voting rights, if any. Each company issues generally different classes of shares, for example, ordinary or common shares, which have no guaranteed amount of dividend but carry voting rights, or preferred shares, which receive dividends before ordinary shares but have no voting right. ISO20022\r\n* `Warrant` Financial instrument that gives the holder the right to purchase shares or bonds at a given price within a specified time. ISO20022\r\n* `Entitlement` Financial instrument providing the holder the privilege to subscribe to or to receive specific assets on terms specified. ISO20022"
+        WholesaleTradeVolume:
+          type: string
+          format: Object
+          description: "The volume of share bought/sold ||\r\n|"
+        WholesaleTradePrice:
+          type: string
+          format: Object
+          description: "The security and cash flow details of the trade ||\r\n|"
+        WholesaleTradeClearingandSettlementTerms:
+          $ref: '#/components/schemas/Arrangement'
+          description: >-
+            The terms covering the clearing and settlement of the trade
+            Obligation|Obligation
+            https://www.iso20022.org/standardsrepository/type/Obligation|Standard|ISO20022
+            BM 
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+          description: "The document reference for the trade confirmation notice ||\r\n|"
+        CorrespondenceInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to the correspondence generated for the trade confirmation
+            GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        WholesaleTradeStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            Status tracking for the wholesale trade Status |Status 
+            https://www.iso20022.org/standardsrepository/type/Status|Standard|ISO20022
+            BM 
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        Reference to the correspondence generated for the trade confirmation
+        GenericIdentification|GenericIdentification
+        https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+        BM 
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        The terms covering the clearing and settlement of the trade
+        Obligation|Obligation
+        https://www.iso20022.org/standardsrepository/type/Obligation|Standard|ISO20022
+        BM 
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+          description: >-
+            A characteristic of arrangement which refers to the LifecycleStatus
+            of arrangement e.g., requested, proposed, offered, accepted,
+            cancelled, terminated, fulfilled, etc. 
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+          description: ''
+        Arrangementtype:
+          $ref: '#/components/schemas/Arrangementtypevalues'
+          format: Arrangement
+          description: ">\r\n* `SweepArrangement` An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\r\n* `WithdrawalArrangement` An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \r\n* `DepositArrangement` An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \r\n* `InterestArrangement` An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\r\n* `FeeArrangement` An arrangement into which is promised to apply a charge for services rendered. \r\n* `LienArrangement` An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \r\n* `InformationArrangement` An arrangement concerning the information the bank will provide about the agreement/account\r\n* `PaymentArrangement` An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \r\n* `EntitlementArrangement` Right or obligation linked to the involvement of a party in an agreement\r\n* `PeriodArrangement` \r\n* `CollateralArrangement` An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \r\n* `LimitArrangement` An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \r\n* `AccessArrangement` An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\r\n* `CardPaymentArrangement` An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \r\n* `StandingOrderArrangement` An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \r\n* `OverdraftArrangement` An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \r\n* `RepaymentArrangement` An arrangement into which is promised for paying back money previously borrowed from a lender. \r\n* `StatementArrangement` An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \r\n* `CreditTransferArrangement` An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \r\n* `ProductAndServiceArrangement` \r\n* `FactoringArrangement` \r\n* `RolloverArrangement` Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \r\n* `RestructuringArrangement` \r\n* `InsuranceArrangement` \r\n* `CollectionArrangement` An arrangement into which is promised to collect past-due debts from borrowers\r\n* `UnderwritingArrangement` A contractual agreement between parties that commits the underwriter to assuming risk.\r\n* `TerminationArrangement` \r\n* `MaturityArrangement` \r\n* `AdministrativeArrangement` "
+        ArrangementIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/Actiontypevalues'
+          format: Action
+          description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+        EventType:
+          type: string
+          format: String
+          description: ' '
+        EventDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        EventDescription:
+          type: string
+          format: String
+          description: ' '
+        EventSource:
+          type: string
+          format: Object
+          description: ''
+        EventLocation:
+          $ref: '#/components/schemas/Location'
+          description: ''
+        EventAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        EventStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        EventValue:
+          type: string
+          format: String
+          description: ' '
+        EventValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        EventIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          type: string
+          format: String
+          description: >-
+            A description of the property, particularly if it has landmark
+            characteristics. 
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key dates associated with the directory entry e.g. open date,
+            refresh date. 
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The tracked status e.g. under construction or repair, inhabited,
+            vacant. 
+        LocationType:
+          $ref: '#/components/schemas/Geographicalareatypevalues'
+          format: Location
+          description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+        LocationZoningType:
+          type: string
+          format: String
+          description: >-
+            The planning or zoning status e.g. residential, commercial,
+            industrial. 
+        LocationNeighborhoodType:
+          type: string
+          format: String
+          description: >-
+            The general purpose and neighborhood of the property  e.g.
+            residential, industrial, commercial. 
+        LocationConstructionType:
+          type: string
+          format: String
+          description: >-
+            The construction approach for a property at the location e.g. era
+            and architecture as might be used in valuation. 
+        LocationOccupancyType:
+          type: string
+          format: String
+          description: >-
+            The type of occupancy e.g. residency, business, retail,
+            entertainment. 
+        LocationValue:
+          type: string
+          format: String
+          description: >-
+            The estimated book value of the property at the location - rental
+            and purchase as appropriate. 
+        LocationCapacity:
+          type: string
+          format: String
+          description: >-
+            An indication of the size or scale of the property where appropriate
+            e.g. 4 bedroom, 600 seat auditorium, 40 cover restaurant. 
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        LocationAddress:
+          type: string
+          format: String
+          description: 'Reference to the address of location '
+        LocationName:
+          $ref: '#/components/schemas/Name'
+          description: 'Name label of the location. ISO20022 '
+        LocationTimeZone:
+          type: string
+          format: String
+          description: 'Local time zone. '
+    Name:
+      type: object
+      format: Name
+      description: 'Name label of the location. ISO20022 '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc. 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        ArrangementStatusType:
+          $ref: '#/components/schemas/Arrangementstatustypevalues'
+          format: Arrangementstatus
+          description: ">\r\n* `Requested` \r\n* `Proposed` \r\n* `Offered` \r\n* `Accepted` \r\n* `Cancelled` \r\n* `Fulfilled` \r\n* `Terminated` "
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing as action something. 
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "The document reference for the trade confirmation notice ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+        DirectoryEntryDateType:
+          $ref: '#/components/schemas/Directoryentrydatetypevalues'
+          format: DocumentDirectoryEntry
+          description: ">\r\n* `OpenDate` \r\n* `RefreshDate` "
+        DirectoryEntryDate:
+          $ref: '#/components/schemas/Date'
+          description: ''
+        DirectoryEntryStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: ' '
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ' '
+    MarketTradeTransaction:
+      type: object
+      description: >-
+        Execute a well-bounded financial transaction/task, typically involving
+        largely automated/structured fulfillment processing within Market Order
+        Execution. 
+      properties:
+        MarketOrderTransactionInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to the market order that is to be executed in the markets
+            GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the account primary party/owner for the market order ||\r\n|"
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "The employee/business unit placing the market order ||\r\n|"
+        CustomerMarketOrderProcessingInstruction:
+          $ref: '#/components/schemas/Instruction'
+          description: "Any customer specific processing preferences or requirements ||\r\n|"
+        MarketOrderTransaction:
+          $ref: '#/components/schemas/MarketOrderTransaction'
+          description: "The details of the market order transaction ||\r\n|"
+        InvestmentAccountArrangementInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to the underlying investment account supporting the
+            transaction GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        CurrentAccountArrangementInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to the underlying cash account supporting the transaction
+            GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        MarketOrderType:
+          type: string
+          format: String
+          description: "The type of market order e.g. Day Order. Order on Open/Close, Fill or Kill, Limit Order ||\r\n|"
+        SecurityType:
+          $ref: '#/components/schemas/Securitytypevalues'
+          description: ">\r\n* `Equity` Financial instrument that represents a title of ownership in a company. That is, the shareholder is entitled to a part of the company's profit usually by payment of a dividend and to voting rights, if any. Each company issues generally different classes of shares, for example, ordinary or common shares, which have no guaranteed amount of dividend but carry voting rights, or preferred shares, which receive dividends before ordinary shares but have no voting right. ISO20022\r\n* `Warrant` Financial instrument that gives the holder the right to purchase shares or bonds at a given price within a specified time. ISO20022\r\n* `Entitlement` Financial instrument providing the holder the privilege to subscribe to or to receive specific assets on terms specified. ISO20022"
+        Amount:
+          $ref: '#/components/schemas/Amount'
+          description: >-
+            The volume of shares to be bought or sold. This can include
+            different amount types quoted/committed, traded etc.
+            CurrencyAndAmount|CurrencyAndAmount
+            https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount|Standard|ISO20022 
+        DateType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+        Date:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Value of the specific date type ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+        MarketOrderTradeInitiationInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to the associated market trade if the order is executed in
+            the market directly GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+    Instruction:
+      type: object
+      format: Instruction
+      description: "Any customer specific processing preferences or requirements ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+          description: ''
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+          description: >-
+            A characteristic of instruction which refers to the LifecycleStatus
+            of instruction e.g., requested, executed, fulfilled, etc.;  
+        InstructionIdentification:
+          $ref: '#/components/schemas/Instructionidentification'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of an
+            Instruction.
+             
+        InstructionType:
+          $ref: '#/components/schemas/Instructiontypevalues'
+          format: Instruction
+          description: ">\r\n* `PaymentInstruction` \r\n* `DeliveryOrder` \r\n* `InformationRequest` \r\n* `ExchangeInstruction` \r\n* `AllocationInstruction` \r\n* `MaintenanceInstruction` "
+        InstructionResult:
+          type: string
+          format: String
+          description: ' '
+        InstructionDescription:
+          type: string
+          format: String
+          description: ' '
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+          description: ''
+        InstructionPurpose:
+          type: string
+          format: String
+          description: ' '
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        InstructionDateType:
+          $ref: '#/components/schemas/Instructiondatetimetypevalues'
+          format: Instructiondatetime
+          description: ">\r\n* `DueDate` \r\n* `ExecutionDate` \r\n* `FulfillmentDate` "
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction e.g., requested, executed, fulfilled, etc.;  
+      properties:
+        InstructionStatusType:
+          $ref: '#/components/schemas/Instructionstatustypevalues'
+          format: Instructionstatus
+          description: ">\r\n* `Pendingprocessing` Processing of the instruction is pending.\r\n* `Acknowledgedaccepted` Instruction has been acknowledged and accepted and is validated for further processing.\r\n* `Rejected` Instruction has been rejected.\r\n* `Accepted` Instruction has been accepted and is validated for further processing.\r\n* `Completed` Processing has been completed.\r\n* `Notreceived` No instruction has been received to be used in a reminder.\r\n* `Cancelled` Instruction has been cancelled.\r\n* `Beingcancelled` Cancel request is being processed.\r\n* `Receivedbyissuerorregistrar` Instruction has been received by Issuer.\r\n* `Pending` Instruction is pending.\r\n* `Standinginstruction` Standing instruction is applied.\r\n* `Queued` Instruction is queued.\r\n* `Cancelledbysubcustodian` Instruction has been cancelled by the agent, for example, due to an event deadline extension.\r\n* `Forwarded` Accepted and sent along the chain."
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        InstructionIdentificationType:
+          $ref: '#/components/schemas/Instructionidentificationtypevalues'
+          format: Instructionidentification
+          description: ">\r\n* `OrderNumber` \r\n* `InstructionNumber` "
+    Log:
+      type: object
+      format: Log
+      description: ' '
+      properties:
+        LogType:
+          type: string
+          format: String
+          description: ' '
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Key dates associated with the log e.g. start time. '
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    MarketOrderTransaction:
+      type: object
+      format: MarketOrderTransaction
+      description: "The details of the market order transaction ||\r\n|"
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of a
+            transaction. 
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+          description: >-
+            The Date that the transaction has occurred or is planned to occur.
+
+            A characteristic of transaction which refers to the LifecycleDate of
+            transaction e.g., initiated date, executed date, fulfillment date.  
+        TransactionType:
+          $ref: '#/components/schemas/Transactiontypevalues'
+          format: MarketOrderTransaction
+          description: ">\r\n* `FinancialTransaction` \r\n* `BusinessTransaction` \r\n* `BankingTransaction` \r\n* `AccountingTransaction` \r\n* `BookingTransaction` \r\n* `AllocationTransaction` \r\n* `DeliveryTransaction` \r\n* `ProductionTransaction` "
+        TransactionDescription:
+          type: string
+          format: String
+          description: 'A detailed explanation or commentary of transaction. '
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+          description: >-
+            A characteristic of transaction which refers to the LifecycleStatus
+            of transaction e.g., initiated, executed, confirmed, cancelled,
+            etc.  
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+          description: 'The name of transaction. '
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction e.g., initiated date, executed date, fulfillment date.  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        TransactionDateType:
+          $ref: '#/components/schemas/Transactiondatetimetypevalues'
+          format: Transactiondatetime
+          description: ">\r\n* `ExecutedDate` \r\n* `FulfillmentDate` \r\n* `InitiatedDate` \r\n* `CancelledDate` \r\n* `ApprovedDate` \r\n* `ValueDate` \r\n* `BookingDate` "
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction e.g., initiated, executed, confirmed, cancelled, etc.  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        TransactionStatusType:
+          $ref: '#/components/schemas/Transactionstatustypevalues'
+          format: Transactionstatus
+          description: ">\r\n* `Initiated` \r\n* `Executed` \r\n* `Cancelled` \r\n* `Confirmed` \r\n* `Suspended` \r\n* `Pending` \r\n* `Completed` \r\n* `Notified` \r\n* `Booked` \r\n* `Rejected` "
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The volume of shares to be bought or sold. This can include different
+        amount types quoted/committed, traded etc.
+        CurrencyAndAmount|CurrencyAndAmount
+        https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount|Standard|ISO20022 
+      properties:
+        AmountValue:
+          type: string
+          format: String
+          description: ' '
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+          description: ''
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        AmountType:
+          $ref: '#/components/schemas/Amounttypevalues'
+          format: Amount
+          description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. ISO20022
+
+             
+    Securitytypevalues:
+      enum:
+        - Equity
+        - Warrant
+        - Entitlement
+      type: string
+      description: ">\r\n* `Equity` Financial instrument that represents a title of ownership in a company. That is, the shareholder is entitled to a part of the company's profit usually by payment of a dividend and to voting rights, if any. Each company issues generally different classes of shares, for example, ordinary or common shares, which have no guaranteed amount of dividend but carry voting rights, or preferred shares, which receive dividends before ordinary shares but have no voting right. ISO20022\r\n* `Warrant` Financial instrument that gives the holder the right to purchase shares or bonds at a given price within a specified time. ISO20022\r\n* `Entitlement` Financial instrument providing the holder the privilege to subscribe to or to receive specific assets on terms specified. ISO20022"
+    Pricetypevalues:
+      enum:
+        - Average
+        - Averageoverride
+        - Combined
+        - Grossofall
+        - Limit
+        - Net
+        - Netdisclosed
+        - Netofall
+        - Netundisclosed
+        - Notionalgross
+        - Parvalue
+        - Roundedaverage
+        - Stop
+        - Bid
+        - Offer
+        - Netassetvalue
+        - Creation
+        - Cancellation
+        - Interim
+        - Swing
+        - Other
+        - Mid
+        - Reinvestment
+        - Switch
+        - Dailydividendrate
+        - Market
+        - Indicative
+        - Actual
+        - Nonadjustedunpublished
+        - Guaranteed
+        - Estimatednav
+        - Grossassetvalue
+        - Estimatedgav
+        - Sidepocketnav
+        - Ask
+        - Auction
+        - Calculated
+        - Clean
+        - Dirty
+        - Draw
+        - Fairvalue
+        - Indicativepaid
+        - Kassa
+        - Paid
+        - Redemptionnav
+        - Settlement
+        - Spread
+        - Subscriptionnav
+        - Tax
+        - Taxableincomepersharecalculated
+      type: string
+      description: ">\r\n* `Average` Price is an average execution price.\r\n* `Averageoverride` Price is an override of the average price.\r\n* `Combined` Price is composed of the combined expenses used in the UK market.\r\n* `Grossofall` Price is a gross execution price. The price is an all inclusive price, ie, including all charges, fees, and taxes.\r\n* `Limit` Price is the limit price of a limit order, eg, a customer might put in a limit order to sell financial instruments at 67 or to buy at 60.\r\n* `Net` Price is a net price, ie, net only of local broker's commission, local fees and local taxes.\r\n* `Netdisclosed` Price is net to the disclosed client.\r\n* `Netofall` Price is a net price, ie, net of all charges, fees and taxes.\r\n* `Netundisclosed` Price is net to the client undisclosed used in the UK market.\r\n* `Notionalgross` Price is notional gross used in the UK market.\r\n* `Parvalue` Price is equal to the nominal or face value of the instrument.\r\n* `Roundedaverage` Price is a rounded average price.\r\n* `Stop` Price is a stop price used in an order to buy. The order becomes a market order when the financial instrument trades at or above the stop price after the order is submitted. In an order to sell the order becomes a market order when the financial instrument trades at or below the stop price.\r\n* `Bid` Price is the calculated bid price of a dual-priced fund offer-bid prices, that is, the selling price of the units for the investor.\r\n* `Offer` Price is the calculated offer price of a dual-priced investment fund offer-bid prices, that is, the buying price of the units for an investor.\r\n* `Netassetvalue` Price is the net asset value per unit that is used either as a transacting price for a single-priced investment fund class, or as a notional price for the calculation of other prices.\r\n* `Creation` Price is the calculated creation price of a dual-priced investment fund creation-cancellation prices and the highest possible buying price of the units before the initial charge. The actual buying or offer price, which includes charges, will be higher.\r\n* `Cancellation` Price is the calculated cancellation price of a dual-priced investment fund creation-cancellation price, and the lowest possible valuation of the units on any one-day. The actual selling or bid price is usually higher.\r\n* `Interim` Price is the non-official interim price given to an investor before the executed price.\r\n* `Swing` Price is the calculated net asset value price of a single-priced investment fund. The price is adjusted to take into account the dealing costs due to individual large deals, or due to a significant imbalance in volumes of subscriptions vs redemptions, as an alternative to dilution levy.\r\n* `Other` Price is another type of price, which is not explicitly defined.\r\n* `Mid` Price is the average price between the bid and offer prices.\r\n* `Reinvestment` Price is the price used when reinvesting units after distribution.\r\n* `Switch` Price is the price used when transferring units between products.\r\n* `Dailydividendrate` Price is the net income of a financial instrument, calculated on each dealing day, and divided by all the units outstanding on that day.\r\n* `Market` Price is the current market price.\r\n* `Indicative` Price is the estimated indicative price.\r\n* `Actual` True offer price.\r\n* `Nonadjustedunpublished` The original NAV before the price of the investment fund was swung.\r\n* `Guaranteed` Price is a guaranteed price.\r\n* `Estimatednav` Price is an estimated net asset value per unit.\r\n* `Grossassetvalue` Price is the gross asset value per unit and includes the performance fee per share. It is used as the transacting price for a fund with equalisation. GAVL price minus the NAVL price  -  performance fee.\r\n* `Estimatedgav` Price is the estimated gross asset value per unit and includes the performance fee per share. It is used as the transacting price for a fund with equalisation. GAVL price minus the NAVL price  -  performance fee.\r\n* `Sidepocketnav` Price is the estimated net asset value for the side pocket.\r\n* `Ask` Offer. Price for which seller is willing to sell item.\r\n* `Auction` Price selected as a crossing of an auction.\r\n* `Calculated` Price is calculated.\r\n* `Clean` Paid without accumulated interest.\r\n* `Dirty` Paid with accumulated interest.\r\n* `Draw` Price selected as a result of a lottery/tiebreaker.\r\n* `Fairvalue` Estimate of the potential market price.\r\n* `Indicativepaid` Reduced and partial execution based on high bids and ask orders.\r\n* `Kassa` Official declared price.\r\n* `Paid` Price at which the trade was done.\r\n* `Redemptionnav` Net Asset Value NAV applicable to redemptions.\r\n* `Settlement` Price used for the settlement of futures and options.\r\n* `Spread` The difference between bid and ask.\r\n* `Subscriptionnav` Net Asset Value NAV applicable to subscriptions.\r\n* `Tax` Price for tax declaration purpose.\r\n* `Taxableincomepersharecalculated` Specifies whether the fund calculates a taxable interest per share TIS."
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Quotestatusvalue:
+      enum:
+        - Accepted
+        - Cancelsymbol
+        - Cancelsecurity
+        - Cancelunderlying
+        - Cancelall
+        - Rejected
+        - Removedfrommarket
+        - Expired
+        - Query
+        - Quotenotfound
+        - Pending
+        - Pass
+        - Lockedmarketwarning
+        - Crossmarketwarning
+        - Canceledduetolockmarket
+        - Canceledduetocrossmarket
+      type: string
+      description: ">\r\n* `Accepted` Indicates that the quote is accepted for further negotiation.\r\n* `Cancelsymbol` Indicates that all quotes are cancelled for a financial instrument's symbol.\r\n* `Cancelsecurity` Indicates that all quotes are cancelled for a specific security.\r\n* `Cancelunderlying` Indicates that all quotes are cancelled for an underlying financial instrument.\r\n* `Cancelall` Indicates that all quotes are cancelled.\r\n* `Rejected` Indicates that the quote is not accepted.\r\n* `Removedfrommarket` Indicates that all quotes are removed from the market.\r\n* `Expired` Indicates that the quote is not valid anymore.\r\n* `Query` Indicates that the quote is being requested.\r\n* `Quotenotfound` Indicates that no quote can be computed or communicated.\r\n* `Pending` Indicates that the quote is being processed.\r\n* `Pass` Indicates that the counterparty is not interested in the transaction.\r\n* `Lockedmarketwarning` Warning due to a situation of locked market.\r\n* `Crossmarketwarning` Warning due to a situation of cross market.\r\n* `Canceledduetolockmarket` Indicates that the quote is canceled due to a situation of locked market.\r\n* `Canceledduetocrossmarket` Indicates that the quote is canceled due to a situation of cross market."
+    Actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+    Geographicalareatypevalues:
+      enum:
+        - Continent
+        - Country
+        - State
+        - District
+        - Province
+        - Town
+        - City
+        - Region
+      type: string
+      description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+    Arrangementstatustypevalues:
+      enum:
+        - Requested
+        - Proposed
+        - Offered
+        - Accepted
+        - Cancelled
+        - Fulfilled
+        - Terminated
+      type: string
+      description: ">\r\n* `Requested` \r\n* `Proposed` \r\n* `Offered` \r\n* `Accepted` \r\n* `Cancelled` \r\n* `Fulfilled` \r\n* `Terminated` "
+    Arrangementtypevalues:
+      enum:
+        - SweepArrangement
+        - WithdrawalArrangement
+        - DepositArrangement
+        - InterestArrangement
+        - FeeArrangement
+        - LienArrangement
+        - InformationArrangement
+        - PaymentArrangement
+        - EntitlementArrangement
+        - PeriodArrangement
+        - CollateralArrangement
+        - LimitArrangement
+        - AccessArrangement
+        - CardPaymentArrangement
+        - StandingOrderArrangement
+        - OverdraftArrangement
+        - RepaymentArrangement
+        - StatementArrangement
+        - CreditTransferArrangement
+        - ProductAndServiceArrangement
+        - FactoringArrangement
+        - RolloverArrangement
+        - RestructuringArrangement
+        - InsuranceArrangement
+        - CollectionArrangement
+        - UnderwritingArrangement
+        - TerminationArrangement
+        - MaturityArrangement
+        - AdministrativeArrangement
+      type: string
+      description: ">\r\n* `SweepArrangement` An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\r\n* `WithdrawalArrangement` An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \r\n* `DepositArrangement` An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \r\n* `InterestArrangement` An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\r\n* `FeeArrangement` An arrangement into which is promised to apply a charge for services rendered. \r\n* `LienArrangement` An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \r\n* `InformationArrangement` An arrangement concerning the information the bank will provide about the agreement/account\r\n* `PaymentArrangement` An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \r\n* `EntitlementArrangement` Right or obligation linked to the involvement of a party in an agreement\r\n* `PeriodArrangement` \r\n* `CollateralArrangement` An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \r\n* `LimitArrangement` An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \r\n* `AccessArrangement` An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\r\n* `CardPaymentArrangement` An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \r\n* `StandingOrderArrangement` An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \r\n* `OverdraftArrangement` An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \r\n* `RepaymentArrangement` An arrangement into which is promised for paying back money previously borrowed from a lender. \r\n* `StatementArrangement` An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \r\n* `CreditTransferArrangement` An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \r\n* `ProductAndServiceArrangement` \r\n* `FactoringArrangement` \r\n* `RolloverArrangement` Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \r\n* `RestructuringArrangement` \r\n* `InsuranceArrangement` \r\n* `CollectionArrangement` An arrangement into which is promised to collect past-due debts from borrowers\r\n* `UnderwritingArrangement` A contractual agreement between parties that commits the underwriter to assuming risk.\r\n* `TerminationArrangement` \r\n* `MaturityArrangement` \r\n* `AdministrativeArrangement` "
+    Directoryentrydatetypevalues:
+      enum:
+        - OpenDate
+        - RefreshDate
+      type: string
+      description: ">\r\n* `OpenDate` \r\n* `RefreshDate` "
+    Instructiondatetimetypevalues:
+      enum:
+        - DueDate
+        - ExecutionDate
+        - FulfillmentDate
+      type: string
+      description: ">\r\n* `DueDate` \r\n* `ExecutionDate` \r\n* `FulfillmentDate` "
+    Instructionstatustypevalues:
+      enum:
+        - Pendingprocessing
+        - Acknowledgedaccepted
+        - Rejected
+        - Accepted
+        - Completed
+        - Notreceived
+        - Cancelled
+        - Beingcancelled
+        - Receivedbyissuerorregistrar
+        - Pending
+        - Standinginstruction
+        - Queued
+        - Cancelledbysubcustodian
+        - Forwarded
+      type: string
+      description: ">\r\n* `Pendingprocessing` Processing of the instruction is pending.\r\n* `Acknowledgedaccepted` Instruction has been acknowledged and accepted and is validated for further processing.\r\n* `Rejected` Instruction has been rejected.\r\n* `Accepted` Instruction has been accepted and is validated for further processing.\r\n* `Completed` Processing has been completed.\r\n* `Notreceived` No instruction has been received to be used in a reminder.\r\n* `Cancelled` Instruction has been cancelled.\r\n* `Beingcancelled` Cancel request is being processed.\r\n* `Receivedbyissuerorregistrar` Instruction has been received by Issuer.\r\n* `Pending` Instruction is pending.\r\n* `Standinginstruction` Standing instruction is applied.\r\n* `Queued` Instruction is queued.\r\n* `Cancelledbysubcustodian` Instruction has been cancelled by the agent, for example, due to an event deadline extension.\r\n* `Forwarded` Accepted and sent along the chain."
+    Instructionidentificationtypevalues:
+      enum:
+        - OrderNumber
+        - InstructionNumber
+      type: string
+      description: ">\r\n* `OrderNumber` \r\n* `InstructionNumber` "
+    Instructiontypevalues:
+      enum:
+        - PaymentInstruction
+        - DeliveryOrder
+        - InformationRequest
+        - ExchangeInstruction
+        - AllocationInstruction
+        - MaintenanceInstruction
+      type: string
+      description: ">\r\n* `PaymentInstruction` \r\n* `DeliveryOrder` \r\n* `InformationRequest` \r\n* `ExchangeInstruction` \r\n* `AllocationInstruction` \r\n* `MaintenanceInstruction` "
+    Transactiondatetimetypevalues:
+      enum:
+        - ExecutedDate
+        - FulfillmentDate
+        - InitiatedDate
+        - CancelledDate
+        - ApprovedDate
+        - ValueDate
+        - BookingDate
+      type: string
+      description: ">\r\n* `ExecutedDate` \r\n* `FulfillmentDate` \r\n* `InitiatedDate` \r\n* `CancelledDate` \r\n* `ApprovedDate` \r\n* `ValueDate` \r\n* `BookingDate` "
+    Transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: ">\r\n* `FinancialTransaction` \r\n* `BusinessTransaction` \r\n* `BankingTransaction` \r\n* `AccountingTransaction` \r\n* `BookingTransaction` \r\n* `AllocationTransaction` \r\n* `DeliveryTransaction` \r\n* `ProductionTransaction` "
+    Transactionstatustypevalues:
+      enum:
+        - Initiated
+        - Executed
+        - Cancelled
+        - Confirmed
+        - Suspended
+        - Pending
+        - Completed
+        - Notified
+        - Booked
+        - Rejected
+      type: string
+      description: ">\r\n* `Initiated` \r\n* `Executed` \r\n* `Cancelled` \r\n* `Confirmed` \r\n* `Suspended` \r\n* `Pending` \r\n* `Completed` \r\n* `Notified` \r\n* `Booked` \r\n* `Rejected` "
+    Amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+        - DuePayable
+        - Minimum
+        - Open
+        - Unknown
+        - Fixed
+      type: string
+      description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
