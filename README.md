@@ -18,7 +18,7 @@ The BIAN Portal with access to the Model and APIs can be accessed at : https://p
 **Download - BIAN Sematic APIs**
 
 Release 14.0.0:
-1. Release 14.0.0 - BOM extended APIs (OAS 3.x) : https://github.com/bian-official/public/tree/main/release14.0.0/semantic-apis/oas3 /yamls
+1. Release 14.0.0 - BOM extended APIs (OAS 3.x) : https://github.com/bian-official/public/tree/main/release14.0.0/semantic-apis/oas3%20/yamls
 2. Release 14.0.0 - ISO20022 extended APIs and annotated for DDD (OAS 3.x) : https://github.com/bian-official/public/tree/main/release14.0.0/apis-iso20022_ext-ddd/oas3/yamls
 3. Release 14.0.0 - BOM extended APIs (Async 3.x) : https://github.com/bian-official/public/tree/main/release14.0.0/semantic-apis/asyncapi-3.x/yamls
 4. Release 14.0.0 - ISO20022 extended APIs and annotated for DDD (Async 3.x): https://github.com/bian-official/public/tree/main/release14.0.0/apis-iso20022_ext-ddd/asyncapi-3.x/yamls
