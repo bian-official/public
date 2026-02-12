@@ -1,0 +1,507 @@
+openapi: 3.0.1
+info:
+  title: Service Provider Operations
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This Service Domain handles the range of
+    operational actions used in production interactions with an external service
+    provider.
+  version: 14.0.0
+servers:
+  - url: ' https://virtserver.swaggerhub.com/BIAN-3/ServiceProviderOperations/12.0.1'
+paths:
+  '/ServiceProviderOperations/{serviceprovideroperationsid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - ServiceProviderRegistrationOperatingSession
+        summary: (DDD  Service) Retrieve Service Provider Registration Operating Session
+        description: (DDD  Service) Retrieve Service Provider Registration Operating Session
+        operationId: ServiceProviderRegistrationOperatingSession/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/serviceprovideroperationsid'
+        responses:
+          '200':
+            $ref: >-
+              #/components/responses/RetrieveServiceProviderRegistrationOperatingSessionResponse
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    RetrieveServiceProviderRegistrationOperatingSession:
+        type: object
+        description: (DDD Entity) - Retrieve Service Provider Registration Operating Session
+        properties:
+          ServiceProviderRegistrationReference:
+              $ref: '#/components/schemas/ServiceProviderRegistration'
+              format: ServiceProviderRegistration
+              description: "(DDD Entity) - \r\n "
+          ServiceProviderRegistrationOperatingSessionReference:
+              $ref: '#/components/schemas/GenericIdentification'
+              format: GenericIdentification
+              description: |-
+                (DDD Entity) - An unique reference to an item or an occurrence of <CR>
+                 GenericIdentification|GenericIdentification ([https://www.iso20022.org/standardsrepository/type/GenericIdentification)](https://www.iso20022.org/standardsrepository/type/GenericIdentification))|Standard|ISO20022 BM ()
+          ServiceProviderReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - \r\n "
+          TPPReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - \r\n "
+    ServiceProviderRegistration:
+        type: object
+        description: "\r\n"
+        properties:
+          Identification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+              x-unique: true
+              x-default: true
+          Method:
+              type: string
+              description: ' '
+              format: String
+          Status:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: '(DDD Entity) -  '
+          Datetime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          InvolvedParty:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: '(DDD Entity) -  '
+          ValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) -  '
+          SessionDuration:
+              $ref: '#/components/schemas/Duration'
+              format: Duration
+              description: '(DDD Entity) - The time the session was active '
+          SessionDateAndTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Key dates and times for the session '
+          SessionStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: '(DDD Entity) -  '
+          SessionType:
+              $ref: '#/components/schemas/Sessiontype'
+              format: Sessiontype
+              description: >-
+                (DDD Entity) - Specifies the classification of session like Customer
+                Contact Session, Channel Operating Session, Device Operating
+                Session, etc. 
+          SessionScheduel:
+              $ref: '#/components/schemas/Schedule'
+              format: Schedule
+              description: '(DDD Entity) -  '
+          SessionIdentification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: >-
+                (DDD Entity) - A unique identifier assigned to each Session to distinguish
+                it from all other sessions. 
+    Identifier:
+        type: object
+        description: ''
+        properties:
+          IdentifierValue:
+              type: string
+              description: >-
+                tThe actual unique code or number (e.g., passport number,
+                drivers license number). 
+              format: String
+          IdentifierIssuerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: >-
+                (DDD Entity) - Reference to an entity that assigns and manages the
+                identification.
+
+                tReference to the organization or agency that issued the
+                identifier (e.g., DMV, Passport Office). 
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - The date when the identifier became valid. '
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+        type: object
+        description: (DDD Entity) - Reference to the account primary party/owner
+        properties:
+          PartyReference:
+              type: string
+              description: 'Reference to a Party who plays a specific role '
+              format: String
+          InvolvementReference:
+              type: string
+              description: 'Reference to a specific Role that is played by a Party '
+              format: String
+    Datetime:
+        type: object
+        description: The date when the identifier became valid.
+        properties:
+          DateTimeContent:
+              type: string
+              description: 'The particular date and time point in the progression of time '
+              format: String
+          TimeZoneCode:
+              type: string
+              description: 'The time zone to which the date time refers. '
+              format: String
+          DaylightSavingIndicator:
+              type: string
+              description: ' '
+              format: String
+          DateTimeType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: '(DDD Entity) -  '
+    Datetimetypevalues:
+        type: object
+        description: The date when the identifier became valid.
+        properties:
+          Datetimetypevalues:
+              enum:
+                  -  MaturityDate
+                  -  InitiatedDate
+                  -  RequestedDate
+                  -  ExecutedDate
+                  -  OpenDate
+                  -  CloseDate
+                  -  ExpiryDate
+                  -  EffectiveDate
+                  -  CreatingDate
+                  -  ActivationDate
+                  -  DeactivationDate
+                  -  BlockingDate
+                  -  SendingDate
+                  -  ValidFromDate
+                  -  ValidToDate
+                  -  ReceivingDate
+                  -  SigningDate
+                  -  DueDate
+                  -  ValueDate
+                  -  FulfillmentDate
+                  -  EntryDate
+              type: string
+              format: Datetimetypevalues
+              description: ">\r\n* `MaturityDate` - \r\n* `InitiatedDate` - \r\n* `RequestedDate` - \r\n* `ExecutedDate` - \r\n* `OpenDate` - \r\n* `CloseDate` - \r\n* `ExpiryDate` - \r\n* `EffectiveDate` - \r\n* `CreatingDate` - \r\n* `ActivationDate` - \r\n* `DeactivationDate` - \r\n* `BlockingDate` - \r\n* `SendingDate` - \r\n* `ValidFromDate` - \r\n* `ValidToDate` - \r\n* `ReceivingDate` - \r\n* `SigningDate` - \r\n* `DueDate` - \r\n* `ValueDate` - \r\n* `FulfillmentDate` - \r\n* `EntryDate` - "
+    Status:
+        type: object
+        description: ''
+        properties:
+          StatusReason:
+              type: string
+              description: 'Specifies the reasons for the status. '
+              format: String
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the status was assigned. '
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) - Period of time during which the status is valid. '
+          StatusInvolvedPartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: >-
+                (DDD Entity) - Reference to a Party who plays a  specific role in the
+                context of assigning a status. 
+    Datetimeperiod:
+        type: object
+        description: Period of time during which the status is valid.
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range starts. (ISO20022) '
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range ends. (ISO20022) '
+    Duration:
+        type: object
+        description: The time the session was active
+        properties:
+          Duration:
+              type: string
+              description: >-
+                (DDD Entity) - A duration is the specification of a length of time without
+                a fixed start or end time, expressed in Gregorian calendar time
+                units (Year, Month, Week, Day) and Hours, Minutes or Seconds.
+                (UN/CEFACT) 
+              format: DataType
+    Sessiontype:
+        type: object
+        description: >-
+          Specifies the classification of session like Customer Contact Session,
+          Channel Operating Session, Device Operating Session, etc.
+        properties:
+          SessionTypeName:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: '(DDD Entity) -  '
+          SessionType:
+              $ref: '#/components/schemas/Sessiontypevalues'
+              format: Sessiontypevalues
+              description: '(DDD Entity) -  '
+    Name:
+        type: object
+        description: ''
+        properties:
+          Name:
+              type: string
+              description: >-
+                (DDD Entity) - A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+              format: DataType
+    Sessiontypevalues:
+        type: object
+        description: >-
+          Specifies the classification of session like Customer Contact Session,
+          Channel Operating Session, Device Operating Session, etc.
+        properties:
+          Sessiontypevalues:
+              enum:
+                  -  ContactHandlingSession
+                  -  CustomerDialogueSession
+                  -  ChannelOperatingSession
+                  -  GatewayOperatingSession
+                  -  SwitchOperatingSession
+                  -  DeviceOperatingSession
+                  -  ACHOperatingSession
+              type: string
+              format: Sessiontypevalues
+              description: ">\r\n* `ContactHandlingSession` - \r\n* `CustomerDialogueSession` - \r\n* `ChannelOperatingSession` - \r\n* `GatewayOperatingSession` - \r\n* `SwitchOperatingSession` - \r\n* `DeviceOperatingSession` - \r\n* `InterbankTransactionOperatingSession` - \r\n* `CorrespondenceOperatingSession` - \r\n* `InteractiveHelpOperatingSession` - \r\n* `ACHOperatingSession` - "
+    Schedule:
+        type: object
+        description: ''
+        properties:
+          ScheduleType:
+              type: string
+              description: ' '
+              format: String
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    GenericIdentification:
+        type: object
+        description: |-
+          (DDD Entity) - An unique reference to an item or an occurrence of <CR>
+           GenericIdentification|GenericIdentification ([https://www.iso20022.org/standardsrepository/type/GenericIdentification)](https://www.iso20022.org/standardsrepository/type/GenericIdentification))|Standard|ISO20022 BM ()
+        properties:
+          Identification:
+              type: string
+              format: Max35Text
+              description: >-
+                (DDD Entity) - Name or number assigned by an entity to enable recognition
+                of that entity, for example account identifier, identification
+                assigned by a provider to identify its customers. 
+          IdentificationForContactPoint:
+              type: string
+              format: ContactPoint
+              description: >-
+                (DDD Entity) - Contact point which uses a generic identification as
+                identification. 
+          IdentificationForAccount:
+              type: string
+              format: AccountIdentification
+              description: >-
+                (DDD Entity) - Account Identification which uses a generic identification
+                as proprietary identification. 
+          RelatedPartyIdentification:
+              type: string
+              format: PartyIdentificationInformation
+              description: '(DDD Entity) - Party identified with a scheme. '
+          IssueDate:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date at which the identification was issued. '
+          ExpiryDate:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date at which the identification expires. '
+          Scheme:
+              type: string
+              format: Scheme
+              description: >-
+                (DDD Entity) - Information regarding an enumerated code list and its
+                owner. 
+          IdentificationForSecuritiesCertificate:
+              type: string
+              format: SecuritiesCertificate
+              description: >-
+                (DDD Entity) - Securities certificate which uses a generic identification
+                as certificate number. 
+          IdentificationForLot:
+              type: string
+              format: LotBreakdown
+              description: >-
+                (DDD Entity) - Lot breakdown which uses a generic identification as lot
+                number. 
+          PartyRole:
+              type: string
+              format: InformationPartyRole
+              description: '(DDD Entity) - Entity that assigns the identification. '
+          IdentificationForCashProceedsIncome:
+              type: string
+              format: CashProceedsDefinition
+              description: >-
+                (DDD Entity) - Cash proceeds definition which uses a generic identification
+                as type of income. 
+          RelatedStatusReason:
+              type: string
+              format: StatusReason
+              description: >-
+                (DDD Entity) - Specifies the status reason for which a data source scheme
+                is specified. 
+          IdentificationForBankTransaction:
+              type: string
+              format: BankTransaction
+              description: >-
+                (DDD Entity) - Bank transaction which uses a generic identification as
+                proprietary identification. 
+          IdentificationForAccountCostReferencePattern:
+              type: string
+              format: AccountIdentification
+              description: >-
+                (DDD Entity) - Account identification for which a cost reference pattern is
+                provided. 
+          Account:
+              type: string
+              format: Account
+              description: '(DDD Entity) - Account for which a type is specified '
+          RelatedSystemIdentification:
+              type: string
+              format: SystemIdentification
+              description: '(DDD Entity) - System identification which uses a generic identification. '
+          IdentificationForInterestName:
+              type: string
+              format: Interest
+              description: '(DDD Entity) - Interest which uses a generic identification as name. '
+          RelatedCashAccountService:
+              type: string
+              format: CashAccountService
+              description: '(DDD Entity) - Cash account service identified in a generic way. '
+          IdentificationForInvestmentFundClass:
+              type: string
+              format: InvestmentFundClass
+              description: >-
+                (DDD Entity) - Investment fund class which uses a generic identification as
+                fund classification. 
+          IdentifiedLocation:
+              type: string
+              format: Location
+              description: '(DDD Entity) - Location for which an identification is provided. '
+          RelatedSecuritiesIdentification:
+              type: string
+              format: SecuritiesIdentification
+              description: >-
+                (DDD Entity) - Securities identification for which generic identification
+                elements and scheme are provided. 
+          IdentifiedDocument:
+              type: string
+              format: Document
+              description: '(DDD Entity) - Document for which an identification is provided. '
+          RelatedPurchaseOrder:
+              type: string
+              format: PurchaseOrder
+              description: '(DDD Entity) - Purchase order for which an identification is provided. '
+          RelatedCertificate:
+              type: string
+              format: RegisteredContract
+              description: >-
+                (DDD Entity) - Related certificate against which all transactions in the
+                scope of the regulatory requirements are registered. 
+  responses:
+    RetrieveServiceProviderRegistrationOperatingSessionResponse:
+        description: ServiceProviderRegistrationOperatingSessionRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: >-
+                #/components/schemas/RetrieveServiceProviderRegistrationOperatingSession
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    serviceprovideroperationsid:
+        name: serviceprovideroperationsid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    RetrieveServiceProviderRegistrationOperatingSessionRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: >-
+                #/components/schemas/RetrieveServiceProviderRegistrationOperatingSession
+        required: true
