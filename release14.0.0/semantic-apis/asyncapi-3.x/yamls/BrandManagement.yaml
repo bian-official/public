@@ -1,0 +1,730 @@
+asyncapi: 3.0.0
+info:
+  title: Brand Management
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | Respond to events that
+    potentially damage the brand or provide an opportunity to
+    strengthen/leverage brand awareness
+channels:
+  BrandManagementPlan/Created:
+    address: BrandManagementPlan/Created
+    messages:
+      BrandManagementPlan-created.message:
+        $ref: '#/components/messages/BrandManagementPlan'
+    description: ''
+  BrandManagementPlan/Updated:
+    address: BrandManagementPlan/Updated
+    messages:
+      BrandManagementPlan-updated.message:
+        $ref: '#/components/messages/BrandManagementPlan'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  BrandAdvice/Created:
+    address: BrandAdvice/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BrandAdvice'
+    description: ''
+  BrandAdvice/Updated:
+    address: BrandAdvice/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/BrandAdvice'
+    description: ''
+operations:
+  BrandManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandManagementPlan~1Created'
+    summary: BrandManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BrandManagementPlan~1Created/messages/BrandManagementPlan-created.message
+  BrandManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandManagementPlan~1Updated'
+    summary: BrandManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BrandManagementPlan~1Updated/messages/BrandManagementPlan-updated.message
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+  BrandAdvice/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandAdvice~1Created'
+    summary: BrandAdvice
+    messages:
+      - $ref: '#/channels/BrandAdvice~1Created/messages/publish.message'
+  BrandAdvice/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/BrandAdvice~1Updated'
+    summary: BrandAdvice
+    messages:
+      - $ref: '#/channels/BrandAdvice~1Updated/messages/publish.message'
+components:
+  messages:
+    BrandManagementPlan:
+      name: BrandManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brand Management.
+      payload:
+        $ref: '#/components/schemas/BrandManagementPlan'
+    Troubleshooting:
+      name: Troubleshooting
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+    BrandAdvice:
+      name: BrandAdvice
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/BrandAdvice'
+  schemas:
+    Troubleshooting:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:-Relationship development, Troubleshooting
+      properties:
+        BrandImpactEventType:
+          type: string
+          format: String
+          description: "The type of event that threatens the brand e.g. production issue, legal issue, employee action, marketing conflict ||\r\n|"
+        BrandImpactTroubleshootingTask:
+          $ref: '#/components/schemas/Task'
+          description: "The structured task/work plan followed to address the issue ||\r\n|"
+        BrandImpactEventDescription:
+          type: string
+          format: String
+          description: "Detailed description of the event and situation leading to the brand exposure ||\r\n|"
+        BrandImpactEventResponseSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: "Schedule of actions taken to mitigate the event plan and actual ||\r\n|"
+        BrandImpactEventResponseAction:
+          $ref: '#/components/schemas/Action'
+          description: "Actions taken to mitigate the event e.g. press release, other communications, corrective/compensatory actions ||\r\n|"
+        BrandImpactEventWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+          description: "File of consolidated notes, assessments, interview notes etc. and recommendations arising from the work ||\r\n|"
+        BrandImpactEventWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+          description: "Details of the outcome or result of the work task assessing any lasting impact and evaluating the effectiveness of any mitigating actions ||\r\n|"
+        BrandImpactEventWorkTaskDateandTime:
+          $ref: '#/components/schemas/DateTime'
+          description: "Key dates associated with the troubleshooting activity ||\r\n|"
+    Task:
+      type: object
+      format: Task
+      description: "Details of the outcome or result of the work task capturing any use of brand that might requires tracking ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Schedule:
+      type: object
+      format: Schedule
+      description: "Schedule of actions taken to mitigate the event plan and actual ||\r\n|"
+      properties:
+        ScheduleType:
+          type: string
+          format: String
+          description: ' '
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/Actiontypevalues'
+          format: Action
+          description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+        EventType:
+          type: string
+          format: String
+          description: ' '
+        EventDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        EventDescription:
+          type: string
+          format: String
+          description: ' '
+        EventSource:
+          type: string
+          format: Object
+          description: ''
+        EventLocation:
+          $ref: '#/components/schemas/Location'
+          description: ''
+        EventAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        EventStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        EventValue:
+          type: string
+          format: String
+          description: ' '
+        EventValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        EventIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Datetime:
+      type: object
+      format: Datetime
+      description: 'The date when the identifier expires or is no longer valid. '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          type: string
+          format: String
+          description: >-
+            A description of the property, particularly if it has landmark
+            characteristics. 
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key dates associated with the directory entry e.g. open date,
+            refresh date. 
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The tracked status e.g. under construction or repair, inhabited,
+            vacant. 
+        LocationType:
+          $ref: '#/components/schemas/Geographicalareatypevalues'
+          format: Location
+          description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+        LocationZoningType:
+          type: string
+          format: String
+          description: >-
+            The planning or zoning status e.g. residential, commercial,
+            industrial. 
+        LocationNeighborhoodType:
+          type: string
+          format: String
+          description: >-
+            The general purpose and neighborhood of the property  e.g.
+            residential, industrial, commercial. 
+        LocationConstructionType:
+          type: string
+          format: String
+          description: >-
+            The construction approach for a property at the location e.g. era
+            and architecture as might be used in valuation. 
+        LocationOccupancyType:
+          type: string
+          format: String
+          description: >-
+            The type of occupancy e.g. residency, business, retail,
+            entertainment. 
+        LocationValue:
+          type: string
+          format: String
+          description: >-
+            The estimated book value of the property at the location - rental
+            and purchase as appropriate. 
+        LocationCapacity:
+          type: string
+          format: String
+          description: >-
+            An indication of the size or scale of the property where appropriate
+            e.g. 4 bedroom, 600 seat auditorium, 40 cover restaurant. 
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        LocationAddress:
+          type: string
+          format: String
+          description: 'Reference to the address of location '
+        LocationName:
+          $ref: '#/components/schemas/Name'
+          description: 'Name label of the location. ISO20022 '
+        LocationTimeZone:
+          type: string
+          format: String
+          description: 'Local time zone. '
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: >-
+        Reference to an entity that assigns and manages the identification.
+
+        tReference to the organization or agency that issued the identifier
+        e.g., DMV, Passport Office. 
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Name:
+      type: object
+      format: Name
+      description: 'Name label of the location. ISO20022 '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "File of consolidated notes, evaluations and recommendations for the work task ||\r\n|"
+      properties:
+        WorkProductType:
+          $ref: '#/components/schemas/Workproducttypevalues'
+          format: Workproduct
+          description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    DateTime:
+      type: object
+      format: DateTime
+      description: "The date-time associated with the delivery of brand advice task ||\r\n|"
+      properties:
+        TimeIndication:
+          type: string
+          format: String
+          description: >-
+            Expression of the point in time
+
+            is expressed according to "TimeIndicationType" e.g. period, day,
+            more detailed indication
+        TimeIndicationType:
+          type: string
+          format: String
+          description: ''
+    BrandAdvice:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:-Relationship development, Troubleshooting
+      properties:
+        BrandAdviceWorkTaskType:
+          type: string
+          format: String
+          description: "The type of work task e.g. assess brand exposure, incorporate brand in design ||\r\n|"
+        BrandAdviceWorkTask:
+          $ref: '#/components/schemas/Task'
+          description: "The make-up of the advice task performed, includes schedule of meetings/working sessions and provision of guidance materials ||\r\n|"
+        BrandAdviceWorkTaskWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+          description: "File of consolidated notes, evaluations and recommendations for the work task ||\r\n|"
+        BrandAdviceWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+          description: "Details of the outcome or result of the work task capturing any use of brand that might requires tracking ||\r\n|"
+        BrandAdviceWorkTaskDateandTime:
+          $ref: '#/components/schemas/DateTime'
+          description: "The date-time associated with the delivery of brand advice task ||\r\n|"
+    BrandManagementPlan:
+      type: object
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brand Management.
+      properties:
+        BrandDefinition:
+          type: string
+          format: String
+          description: "Definition of the brand, including how it is to be represented in different media and contexts ||\r\n|"
+        BrandValueAssessment:
+          $ref: '#/components/schemas/BrandValueAssessment'
+          description: "An analysis of the brand value based on comparative market research ||\r\n|"
+        BrandUsage:
+          type: string
+          format: Object
+          description: "An inventory of situations where the brand is incorporated or exposed in business development activity these situations may require on-going exposure monitoring or assessment ||\r\n|"
+        BrandDevelopmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: "Schedule of any brand development related activities, includes usage and exposure tracking and impact analysis activities ||\r\n|"
+    BrandValueAssessment:
+      type: object
+      format: BrandValueAssessment
+      description: "An analysis of the brand value based on comparative market research ||\r\n|"
+      properties:
+        AssessmentType:
+          $ref: '#/components/schemas/Assessmenttypevalues'
+          format: BrandValueAssessment
+          description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying:1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories:something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:-2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+        AssessmentMethod:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: ''
+        AssessmentDescription:
+          type: string
+          format: String
+          description: ' '
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+          description: ''
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        AssessmentResult:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+          description: >-
+            Document that provides background or corroborating information
+            regarding an assessments. 
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+          description: 'Document that represents the result of an assessments. '
+        AssessmentRequiredAdjustment:
+          type: string
+          format: String
+          description: 'Change that the assessment reveals is needed. '
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+          description: ''
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+          description: 'Date when the assessment expires. ISO20022 '
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        AssessmentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          type: string
+          format: String
+          description: 'The type or category of model   '
+        ModelPurpose:
+          type: string
+          format: String
+          description: >-
+            A description of the model that clarifies the intended
+            analysis/insights provided 
+        ModelVersion:
+          type: string
+          format: String
+          description: ' '
+        ModelName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessments. '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of a
+            Document. 
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        DocumentType:
+          $ref: '#/components/schemas/Financialdocumenttypevalues'
+          format: Document
+          description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+          description: 'Status of the document e.g. delivered, paid, etc.. ISO20022 '
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/Documentdatetimetypevalues'
+          format: Document
+          description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
+        DocumentPurpose:
+          type: string
+          format: String
+          description: 'Specifies the function of the document. ISO20022 '
+        DocumentFormat:
+          type: string
+          format: String
+          description: ' '
+        DocumentSubject:
+          type: string
+          format: String
+          description: ' '
+        DocumentDescription:
+          type: string
+          format: String
+          description: ' '
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. ISO20022 '
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ' '
+    Actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Geographicalareatypevalues:
+      enum:
+        - Continent
+        - Country
+        - State
+        - District
+        - Province
+        - Town
+        - City
+        - Region
+      type: string
+      description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+    Workproducttypevalues:
+      enum:
+        - Document
+        - WorkingPaper
+        - ActivityLog
+        - Form
+        - File
+        - MeetingSchedule
+        - MeetingMinute
+      type: string
+      description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+    Assessmenttypevalues:
+      enum:
+        - Valuation
+        - Matching
+        - Authorization
+        - Authentication
+        - QualityAssurance
+        - Audit
+        - ComplianceCheck
+        - FundingCheck
+        - SuitabilityCheck
+        - PerformanceCheck
+        - ImpactAssessment
+        - RiskAssessment
+        - Rating
+        - UnderwritingAssessment
+        - Qualification
+        - Verification
+        - KYCAssessment
+        - PEPAssessment
+        - AMLAssessment
+        - EligibilityCheck
+        - ExternalAgencyCheck
+        - EntitlementCheck
+      type: string
+      description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying: 1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories: something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+    Financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjust
+        - Debitnoterelatedtofinancialadjustm
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+    Documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "

@@ -1,0 +1,1622 @@
+asyncapi: 3.0.0
+info:
+  title: Channel Activity History
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | This service domains
+    consolidates and captures customer channel usage activity to support channel
+    activity analysis and also can be referenced for customer access
+    authorization and routing decisions
+channels:
+  ChannelActivityLog/Created:
+    address: ChannelActivityLog/Created
+    messages:
+      ChannelActivityLog-created.message:
+        $ref: '#/components/messages/ChannelActivityLog'
+    description: ''
+  ChannelActivityLog/Updated:
+    address: ChannelActivityLog/Updated
+    messages:
+      ChannelActivityLog-updated.message:
+        $ref: '#/components/messages/ChannelActivityLog'
+    description: ''
+  Event/Created:
+    address: Event/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Event'
+    description: ''
+  Event/Updated:
+    address: Event/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Event'
+    description: ''
+operations:
+  ChannelActivityLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ChannelActivityLog~1Created'
+    summary: ChannelActivityLog
+    messages:
+      - $ref: >-
+          #/channels/ChannelActivityLog~1Created/messages/ChannelActivityLog-created.message
+  ChannelActivityLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ChannelActivityLog~1Updated'
+    summary: ChannelActivityLog
+    messages:
+      - $ref: >-
+          #/channels/ChannelActivityLog~1Updated/messages/ChannelActivityLog-updated.message
+  Event/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Event~1Created'
+    summary: Event
+    messages:
+      - $ref: '#/channels/Event~1Created/messages/publish.message'
+  Event/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Event~1Updated'
+    summary: Event
+    messages:
+      - $ref: '#/channels/Event~1Updated/messages/publish.message'
+components:
+  messages:
+    ChannelActivityLog:
+      name: ChannelActivityLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Channel Activity History. 
+      payload:
+        $ref: '#/components/schemas/ChannelActivityLog'
+    Event:
+      name: Event
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:- Customer life event, Servicing event
+      payload:
+        $ref: '#/components/schemas/Event'
+  schemas:
+    Event:
+      type: object
+      format: Event
+      description: |-
+        A collection of the events/transactions recorded by the log
+        Examples:-Customer life event, Servicing event
+      properties:
+        EmployeeReference:
+          $ref: '#/components/schemas/Employee'
+          description: "The servicing resource for assisted customer exchanges ||\r\n|"
+        ProductReference:
+          $ref: '#/components/schemas/Product'
+          description: >-
+            The type of product involved Product_x000D_
+
+            |Product
+            https://www.iso20022.org/standardsrepository/type/Product|Standard|ISO20022
+            BM 
+        ProductInstanceReference:
+          $ref: '#/components/schemas/ProductAgreement'
+          description: "Reference to the specific product accessed by the proposed transaction ||\r\n|"
+        CustomerContactRecordReference:
+          $ref: '#/components/schemas/CustomerContact'
+          description: "Reference to the contact record for the active contact where the transaction is sourced ||\r\n|"
+        CustomerContactRecord:
+          $ref: '#/components/schemas/CustomerContact'
+          description: "The contact record consolidates all aspects of the contact that is cross-referenced by all  contact functions and called servicing sessions that make up the contact ||\r\n|"
+        CustomerContactRecordCustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "The customer reference as provided by the contacting party and verified by the authentication function ||\r\n|"
+        CustomerContactRecordContactDevice:
+          $ref: '#/components/schemas/Device'
+          description: "The contact device can be determined by the channel operations facilities e.g. URL/ANI-phone number ||\r\n|"
+        CustomerContactRecordAuthenticationStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The contact authentication level is determined by the authentication
+            function and can be updated during the contact Status |Status 
+            https://www.iso20022.org/standardsrepository/type/Status|Standard|ISO20022
+            BM 
+        CustomerContactRecordRoutingSelectionStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The routing selections made through the contact Status |Status 
+            https://www.iso20022.org/standardsrepository/type/Status|Standard|ISO20022
+            BM 
+        CustomerContactRecordMenuSelection:
+          type: string
+          format: String
+          description: "The requested service from a menu option can be indicated by the customer when initiating or during contact ||\r\n|"
+        CustomerContactRecordServicingRequest:
+          $ref: '#/components/schemas/Instruction'
+          description: "The customer may provide details of servicing resource request when initiating or during contact ||\r\n|"
+        CustomerContactRecordServicingEventHistory:
+          type: string
+          format: String
+          description: "Contact Handler can reference recent servicing activity for routing, security and servicing purposes obtained from Service Domain Channel Activity History ||\r\n|"
+        CustomerContactRecordServicingPositionReference:
+          $ref: '#/components/schemas/Position'
+          description: >-
+            Reference to the servicing position can be where an inbound contact
+            is routed, or the source of an outbound contact request Position
+            |Position 
+            https://www.iso20022.org/standardsrepository/type/Position|Standard|ISO20022
+            BM 
+        CustomerContactRecordServicingResourceReference:
+          $ref: '#/components/schemas/ServicingResource'
+          description: "Reference to the servicing resource can be to handle an inbound contact or the source of an outbound contact request ||\r\n|"
+        CustomerContactRecordActivityRecord:
+          $ref: '#/components/schemas/CustomerEventLog'
+          description: "Records the actions performed during contact, including all dialogue sessions ||\r\n|"
+        CustomerSessionDialogueReference:
+          $ref: '#/components/schemas/DialogueSession'
+          description: "Reference to any contact session dialogue records created during the contact there can be several ||\r\n|"
+        CustomerSessionDialogueRecord:
+          $ref: '#/components/schemas/DialogueSession'
+          description: "The session dialogue log of actions is returned to SD-Contact Handler and added to the contact record ||\r\n|"
+        CustomerContactRecordDuration:
+          $ref: '#/components/schemas/Duration'
+          description: >-
+            Records the start and end date times for the contact
+            Duration|Duration
+            https://www.iso20022.org/standardsrepository/type/duration|Standard|ISO20022
+            BM 
+        CustomerContactActivityRecord:
+          $ref: '#/components/schemas/CustomerContact'
+          description: "Description of all actions performed during the contact, including all sessions ||\r\n|"
+        CustomerContactResult:
+          $ref: '#/components/schemas/CustomerContact'
+          description: "The interim result of the contact subject to transaction approval ||\r\n|"
+        ChannelActivityHistoryReportReference:
+          $ref: '#/components/schemas/Report'
+          description: "Reference to a channel activity report extracted for the customer ||\r\n|"
+        ChannelActivityHistoryReportFromto:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: >-
+            The period for the channel activity report
+            DateTimePeriod|DateTimePeriod
+            https://www.iso20022.org/standardsrepository/type/DateTimePeriod|Standard|ISO20022
+            BM 
+        ChannelActivityHistoryReport:
+          $ref: '#/components/schemas/Report'
+          description: "The content of the report extracting recent channel activity records to support the transaction authorization decision ||\r\n|"
+        TransactionAuthorizationResult:
+          $ref: '#/components/schemas/TransactionAuthorization'
+          description: "Indicates success or failure or required increased authentication level to be acquired for authorization ||\r\n|"
+    Employee:
+      type: object
+      format: Employee
+      description: "The servicing resource for assisted customer exchanges ||\r\n|"
+      properties:
+        Employee:
+          type: string
+          format: Class
+          description: 'Party who is employed by an employer.  '
+    Product:
+      type: object
+      format: Product
+      description: >-
+        The type of product involved Product_x000D_
+
+        |Product
+        https://www.iso20022.org/standardsrepository/type/Product|Standard|ISO20022
+        BM 
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+          description: 'The identifier of product e.g. ISIN Code. '
+        ProductType:
+          $ref: '#/components/schemas/Bankingproducttypevalues'
+          format: Product
+          description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+          description: >-
+            Refers to the lifecycle of a product e.g., initiated, announced,
+            active, obsolete, withdrawn. 
+        ProductPriority:
+          type: string
+          format: String
+          description: ' '
+        ProductDescription:
+          type: string
+          format: String
+          description: 'A detailed explanation or commentary of product. '
+        ProductVersion:
+          type: string
+          format: String
+          description: ' '
+        ProductName:
+          $ref: '#/components/schemas/Name'
+          description: >-
+            The name of Product. 
+
+
+            Open Banking:
+
+            The name of the product used for marketing purposes from a customer
+            perspective. I.e. what the customer would recognise. 
+        FinancialInstrumentType:
+          $ref: '#/components/schemas/Financialinstrumenttypevalues'
+          format: Product
+          description: ">\r\n* `Loan` \r\n* `Bond` \r\n* `Deposit` \r\n* `Stock` \r\n* `Option` \r\n* `Share` \r\n* `Debt` Financial instruments evidencing moneys owed by the issuer to the holder on terms as specified. ISO20022\n\nAny type of instrument primarily classified as debt can be considered a debt instrument. Debt instruments are tools an individual, government entity, or business entity can utilize for the purpose of obtaining capital. Debt instruments provide capital to an entity that promises to repay the capital over time. Credit cards, credit lines, loans, and bonds can all be types of debt instruments. Investopedia\r\n* `Letterofcredit` Instrument issued by a bank substituting its name and credit standing for that of its customer. A letter of credit is a written undertaking of the bank, issued for the account of a customer the applicant, to honour a demand for payment, upon the beneficiary's compliance with the terms and conditions set forth in the undertaking. ISO20022\r\n* `Security` Financial instruments representing a sum of rights of the investor vis-a-vis the issuer. ISO20022\r\n* `Derivative` "
+        FinancialInstrumentIdentification:
+          $ref: '#/components/schemas/Financialinstrumentidentification'
+          description: ''
+        FinancialInstrumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        FinancialInstrumentDate:
+          $ref: '#/components/schemas/Financialinstrumentdatetime'
+          description: 'Key dates of financial instrument '
+        AssetTitle:
+          type: string
+          format: String
+          description: ' '
+        AssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of an
+            Asset.
+             
+        AssetType:
+          $ref: '#/components/schemas/Assettypevalues'
+          format: Product
+          description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+        AssetDescription:
+          type: string
+          format: String
+          description: 'Description of the asset  '
+        AssetStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The status of an asset; dependent on the tpe of asset this can be
+            free, mortgaged, blocked and more 
+        AssetDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key date and times of an asset like Maturity Date, Register Date,
+            ... 
+        AssetClassification:
+          type: string
+          format: String
+          description: 'Classification of the asset.ISO20022 '
+        AssetClassificationType:
+          $ref: '#/components/schemas/Assetclassificationtypevalues'
+          format: Product
+          description: ">\r\n* `Assetclassificationtypevalues` "
+        AssetSubClassificationType:
+          $ref: '#/components/schemas/Assetsubclassificationtypevalues'
+          format: Product
+          description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+        AssetSubClassification:
+          type: string
+          format: String
+          description: ' '
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        ProductIdentificationType:
+          $ref: '#/components/schemas/Productidentificationtypevalues'
+          format: Productidentification
+          description: ">\r\n* `ISINCode` \r\n* `PackageCode` \r\n* `Buyersitemnumber` Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` A code to identify a product based on applicable commercial conditions.\r\n* `EAN` The unique EAN European Article Number code.\r\n* `Harmonizedtariffcodename` Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` Product identifier used by the retail industry.\r\n* `Stylenumber` Identification of the style of a product.\r\n* `Suppliersitemnumber` Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` Number assigned to a manufacturer's product by the Product Code Council."
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: >-
+        Reference to an entity that assigns and manages the identification.
+
+        tReference to the organization or agency that issued the identifier
+        e.g., DMV, Passport Office. 
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+        TimeIndication:
+          type: string
+          format: String
+          description: >-
+            Expression of the point in time
+
+            is expressed according to "TimeIndicationType" e.g. period, day,
+            more detailed indication
+        TimeIndicationType:
+          type: string
+          format: String
+          description: ''
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product e.g., initiated, announced, active,
+        obsolete, withdrawn. 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        ProductStatusType:
+          $ref: '#/components/schemas/Productstatustypevalues'
+          format: Productstatus
+          description: ">\r\n* `Initiated` \r\n* `Announced` \r\n* `Sold` \r\n* `Obsolete` \r\n* `Active` "
+    Status:
+      type: object
+      format: Status
+      description: |-
+        The life cycle stage of a device
+        e.g. active, defect
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Financialinstrumentidentification:
+      type: object
+      format: Financialinstrumentidentification
+      description: ' '
+      properties:
+        FinancialInstrumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        FinancialInstrumentIdentificationType:
+          $ref: '#/components/schemas/Financialinstrumentidentificationtypevalues'
+          format: Financialinstrumentidentification
+          description: ">\r\n* `NASDAQ` \r\n* `ISIN` "
+    Financialinstrumentdatetime:
+      type: object
+      format: Financialinstrumentdatetime
+      description: 'Key dates of financial instrument '
+      properties:
+        FinancialInstrumentDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        FinancialInstrumentDateType:
+          $ref: '#/components/schemas/Financialinstrumentdatetimetypevalues'
+          format: Financialinstrumentdatetime
+          description: ">\r\n* `CouponDate` Next payment date of an interest bearing financial instrument.ISO20022\r\n* `ExpiryDate` Date on which a privilege expires.ISO20022\r\n* `FloatingRateFixingDate` Date at which the interest rate of an interest bearing security will be calculated and reset, according to the terms of the issue.ISO20022\r\n* `MaturityDate` Planned final repayment date at the time of issuance.ISO20022\r\n* `IssueDate` Date at which the security was made available.ISO20022\r\n* `NextCallableDate` Next date at which the issuer has the right to pay the security prior to maturity.ISO20022\r\n* `PutableDate` Date at which the holder has the right to ask for redemption of the security prior to final maturity.ISO20022\r\n* `DatedDate` First date at which a security begins to accrue interest.ISO20022\r\n* `FirstPaymentDate` Date at which the first interest payment is due to holders of the security.ISO20022"
+    ProductAgreement:
+      type: object
+      format: ProductAgreement
+      description: "Reference to the specific product accessed by the proposed transaction ||\r\n|"
+      properties:
+        ProductAgreementType:
+          $ref: '#/components/schemas/Productagreementtypevalues'
+          format: ProductAgreement
+          description: ">\r\n* `CurrentAccountAgreement` \r\n* `SavingsAccountAgreement` \r\n* `BrokeredProductAgreement` \r\n* `ConsumerLoanAgreement` \r\n* `MortgageLoanAgreement` \r\n* `DirectDebitServiceAgreement` \r\n* `TermDepositAgreement` "
+        ProductAgreementIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: 'A unique reference to product agreement or instance of product '
+        AgreementSignedDate:
+          $ref: '#/components/schemas/Date'
+          description: 'Date on which the agreement was signed by all parties. ISO20022 '
+        AgreementType:
+          $ref: '#/components/schemas/Agreementtypevalues'
+          format: ProductAgreement
+          description: ">\r\n* `CustomerAgreement` \r\n* `SupplierAgreement` \r\n* `BrokerAgreement` \r\n* `SalesAgreement` \r\n* `PurchaseAgreement` \r\n* `MaintenanceAgreement` \r\n* `ProductAgreement` \r\n* `ResourceAgreement` \r\n* `PartnerAgreement` \r\n* `MasterAgreement` \r\n* `BilateralAgreement` \r\n* `RepurchaseAgreement` "
+        AgreementValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: Period during which the agreement is valid
+        AgreementVersion:
+          type: string
+          format: String
+          description: ' '
+        AgreementStatus:
+          $ref: '#/components/schemas/Agreementstatus'
+          description: >-
+            A characteristic of agreement which refers to the LifecycleStatus of
+            agreement e.g., potential, offered, confirmed, completed, signed,
+            terminated. 
+        AgreementSubjectMatter:
+          type: string
+          format: String
+          description: ' '
+        AgreementIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            The identifier of agreement like Agreement Number, Contract Number,
+            Contract Registration Number, etc.  
+        AgreementDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            A characteristic of agreement which refers to 1 LifecycleDate of
+            agreement e.g., SignedDate, TerminatedDate, FulfilledDate OR 2
+            ArrangedDate of agreement e.g., StartingDate, EndingDate,
+            ValidityPeriod, EffectiveDate. 
+        AgreementDescription:
+          type: string
+          format: String
+          description: ' '
+    Date:
+      type: object
+      format: Date
+      description: 'Date on which the agreement was signed by all parties. ISO20022 '
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ' '
+    Agreementstatus:
+      type: object
+      format: Agreementstatus
+      description: >-
+        A characteristic of agreement which refers to the LifecycleStatus of
+        agreement e.g., potential, offered, confirmed, completed, signed,
+        terminated. 
+      properties:
+        AgreementStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        AgreementStatusType:
+          $ref: '#/components/schemas/Agreementstatustypevalues'
+          format: Agreementstatus
+          description: ">\r\n* `Offered` \r\n* `Confirmed` \r\n* `Completed` \r\n* `Signed` \r\n* `Terminated` \r\n* `Rejected` "
+    CustomerContact:
+      type: object
+      format: CustomerContact
+      description: "The interim result of the contact subject to transaction approval ||\r\n|"
+      properties:
+        CustomerContactType:
+          type: string
+          format: String
+          description: ' '
+        CustomerContactDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The start and end date times for the contact '
+        CustomerContactLocation:
+          $ref: '#/components/schemas/Location'
+          description: ''
+        CustomerContactSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: 'The schedule of past and planned customer contacts '
+        CustomerContactResult:
+          type: string
+          format: String
+          description: >-
+            The interpreted result of the contact e.g. completed, customer
+            terminated, timed-out 
+        CustomerContactPurpose:
+          type: string
+          format: String
+          description: >-
+            The reason and or purpose for the contact e.g. review, issue,
+            product sales, advice, customer enquiry 
+        CustomerContactDevice:
+          $ref: '#/components/schemas/Device'
+          description: ''
+        CustomerContactIndicator:
+          type: string
+          format: String
+          description: >-
+            Indicates whether this is an inbound or outbound contact inbound is
+            customer initiated, outbound is servicing resource initiated. 
+        CustomerContactContent:
+          type: string
+          format: String
+          description: ' '
+        CustomerContactIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          type: string
+          format: String
+          description: >-
+            A description of the property, particularly if it has landmark
+            characteristics. 
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key dates associated with the directory entry e.g. open date,
+            refresh date. 
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The tracked status e.g. under construction or repair, inhabited,
+            vacant. 
+        LocationType:
+          $ref: '#/components/schemas/Geographicalareatypevalues'
+          format: Location
+          description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+        LocationZoningType:
+          type: string
+          format: String
+          description: >-
+            The planning or zoning status e.g. residential, commercial,
+            industrial. 
+        LocationNeighborhoodType:
+          type: string
+          format: String
+          description: >-
+            The general purpose and neighborhood of the property  e.g.
+            residential, industrial, commercial. 
+        LocationConstructionType:
+          type: string
+          format: String
+          description: >-
+            The construction approach for a property at the location e.g. era
+            and architecture as might be used in valuation. 
+        LocationOccupancyType:
+          type: string
+          format: String
+          description: >-
+            The type of occupancy e.g. residency, business, retail,
+            entertainment. 
+        LocationValue:
+          type: string
+          format: String
+          description: >-
+            The estimated book value of the property at the location - rental
+            and purchase as appropriate. 
+        LocationCapacity:
+          type: string
+          format: String
+          description: >-
+            An indication of the size or scale of the property where appropriate
+            e.g. 4 bedroom, 600 seat auditorium, 40 cover restaurant. 
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        LocationAddress:
+          type: string
+          format: String
+          description: 'Reference to the address of location '
+        LocationName:
+          $ref: '#/components/schemas/Name'
+          description: 'Name label of the location. ISO20022 '
+        LocationTimeZone:
+          type: string
+          format: String
+          description: 'Local time zone. '
+    Schedule:
+      type: object
+      format: Schedule
+      description: 'The schedule of past and planned customer contacts '
+      properties:
+        ScheduleType:
+          type: string
+          format: String
+          description: ' '
+    Device:
+      type: object
+      format: Device
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Deviceidentification'
+          description: ''
+        DeviceType:
+          $ref: '#/components/schemas/Devicetypevalues'
+          format: Device
+          description: ">\r\n* `Securecardreader` Secure card reader attached to the customer device\r\n* `Nonsecurecardreader` Non-secure card reader attached to the customer device.\r\n* `Mobile` Mobile phone\r\n* `Tablet` Tablet\r\n* `Personalcomputer` Personal computer\r\n* `Othernational` Other device defined at national level\r\n* `Otherprivate` Other device defined in a private way.\r\n* `Wearable` Wearable device.\r\n* `Vehicle` Vehicle.\r\n* `Embedded` Embedded in a device.\r\n* `Keyfob` Key Fob\r\n* `Jewellery` Jewellery\r\n* `Sticker` Sticker\r\n* `Gamingdevice` Gaming Device\r\n* `Watch` Watch\r\n* `Unknown` Device type unknown\r\n* `BiometricDevice` A biometric device is a security identification and authentication device. Such devices use automated methods of verifying or recognising the identity of a living person based on a physiological or behavioral characteristic.\nhttps://en.wikipedia.org/wiki/Biometric_device\n"
+        DeviceProperty:
+          type: string
+          format: String
+          description: >-
+            Property of a device relevant for its use.
+
+
+            A device has the characteristics of the device type it belongs
+            to,possibly specified
+
+            e.g. . a device of the type "cheque book" will have cheques. The
+            device specifies how many and what the number range is.
+
+            e.g. an electronic banking app consists of software modules, the
+            device specifies what version 
+             
+        DeviceElement:
+          type: string
+          format: String
+          description: >-
+            An element of the device that can be used independently and is
+            individually identified
+
+
+            e.g. a cheque in a chequebook 
+        DeviceStatus:
+          $ref: '#/components/schemas/Status'
+          description: |-
+            The life cycle stage of a device
+            e.g. active, defect
+        DeviceVersion:
+          type: string
+          format: Number
+          description: ''
+        DeviceDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        DeviceDescription:
+          type: string
+          format: String
+          description: ' '
+        DeviceName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        DeviceLanguage:
+          type: string
+          format: String
+          description: 'Preferred language set on the device '
+        DevicePhoneNumber:
+          type: string
+          format: String
+          description: 'Phone number associated with the device. '
+        DeviceLocationReference:
+          type: string
+          format: String
+          description: 'Reference to Geographical Location of the device. '
+        DeviceManufacturer:
+          type: string
+          format: String
+          description: 'Manufacturer of the device. '
+        DeviceCountryReference:
+          type: string
+          format: String
+          description: 'Reference to Country of the location. '
+        DeviceAddressReference:
+          type: string
+          format: String
+          description: >-
+            Reference to the address associated with the device like Internet
+            Protocol address, email Address 
+        DeviceOperatingSystem:
+          $ref: '#/components/schemas/Deviceoperatingsystemtypevalues'
+          format: Device
+          description: ">\r\n* `Android` Android operating system.\r\n* `Ios` iOS operating system.\r\n* `Windows` Windows operating system.\r\n* `Blackberry` Blackberry operating system.\r\n* `Tizen` Tizen operating system.\r\n* `Othernational` Other nationally defined code.\r\n* `Otherprivate` Other privately defined code."
+    Deviceidentification:
+      type: object
+      format: Deviceidentification
+      description: ' '
+      properties:
+        DeviceIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        DeviceIdentificationType:
+          $ref: '#/components/schemas/Deviceidentificationtypevalues'
+          format: Deviceidentification
+          description: ">\r\n* `IMEI` International Mobile Equipment Identity.\r\n* `Serialnumber` Device serial number.\r\n* `Secureelementidentification` Secure element ID.\r\n* `Othernational` Other nationally assigned code.\r\n* `Otherprivate` Other privately assigned code."
+    Instruction:
+      type: object
+      format: Instruction
+      description: "The customer may provide details of servicing resource request when initiating or during contact ||\r\n|"
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Instructiondatetime'
+          description: ''
+        InstructionStatus:
+          $ref: '#/components/schemas/Instructionstatus'
+          description: >-
+            A characteristic of instruction which refers to the LifecycleStatus
+            of instruction e.g., requested, executed, fulfilled, etc.;  
+        InstructionIdentification:
+          $ref: '#/components/schemas/Instructionidentification'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of an
+            Instruction.
+             
+        InstructionType:
+          $ref: '#/components/schemas/Instructiontypevalues'
+          format: Instruction
+          description: ">\r\n* `PaymentInstruction` \r\n* `DeliveryOrder` \r\n* `InformationRequest` \r\n* `ExchangeInstruction` \r\n* `AllocationInstruction` \r\n* `MaintenanceInstruction` "
+        InstructionResult:
+          type: string
+          format: String
+          description: ' '
+        InstructionDescription:
+          type: string
+          format: String
+          description: ' '
+        InstructionLog:
+          $ref: '#/components/schemas/Log'
+          description: ''
+        InstructionPurpose:
+          type: string
+          format: String
+          description: ' '
+    Instructiondatetime:
+      type: object
+      format: Instructiondatetime
+      description: ' '
+      properties:
+        InstructionDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        InstructionDateType:
+          $ref: '#/components/schemas/Instructiondatetimetypevalues'
+          format: Instructiondatetime
+          description: ">\r\n* `DueDate` \r\n* `ExecutionDate` \r\n* `FulfillmentDate` "
+    Instructionstatus:
+      type: object
+      format: Instructionstatus
+      description: >-
+        A characteristic of instruction which refers to the LifecycleStatus of
+        instruction e.g., requested, executed, fulfilled, etc.;  
+      properties:
+        InstructionStatusType:
+          $ref: '#/components/schemas/Instructionstatustypevalues'
+          format: Instructionstatus
+          description: ">\r\n* `Pendingprocessing` Processing of the instruction is pending.\r\n* `Acknowledgedaccepted` Instruction has been acknowledged and accepted and is validated for further processing.\r\n* `Rejected` Instruction has been rejected.\r\n* `Accepted` Instruction has been accepted and is validated for further processing.\r\n* `Completed` Processing has been completed.\r\n* `Notreceived` No instruction has been received to be used in a reminder.\r\n* `Cancelled` Instruction has been cancelled.\r\n* `Beingcancelled` Cancel request is being processed.\r\n* `Receivedbyissuerorregistrar` Instruction has been received by Issuer.\r\n* `Pending` Instruction is pending.\r\n* `Standinginstruction` Standing instruction is applied.\r\n* `Queued` Instruction is queued.\r\n* `Cancelledbysubcustodian` Instruction has been cancelled by the agent, for example, due to an event deadline extension.\r\n* `Forwarded` Accepted and sent along the chain."
+        InstructionStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Instructionidentification:
+      type: object
+      format: Instructionidentification
+      description: >-
+        An identifier that allows to uniquely refer to an instance of an
+        Instruction.
+         
+      properties:
+        InstructionIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        InstructionIdentificationType:
+          $ref: '#/components/schemas/Instructionidentificationtypevalues'
+          format: Instructionidentification
+          description: ">\r\n* `OrderNumber` \r\n* `InstructionNumber` "
+    Log:
+      type: object
+      format: Log
+      description: >-
+        A complete record of the conversation during the session, including chat
+        messages, call notes, emails, or any other exchanged content. It
+        captures both customer and agent/bot contributions for reference,
+        analysis, and compliance. 
+      properties:
+        LogType:
+          type: string
+          format: String
+          description: ' '
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Key dates associated with the log e.g. start time. '
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Position:
+      type: object
+      format: Position
+      description: >-
+        Reference to the servicing position can be where an inbound contact is
+        routed, or the source of an outbound contact request Position |Position 
+        https://www.iso20022.org/standardsrepository/type/Position|Standard|ISO20022
+        BM 
+      properties:
+        PositionValue:
+          type: string
+          format: String
+          description: ' '
+        PositionQuantity:
+          type: string
+          format: Number
+          description: ''
+        PositionDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date on which the state of something is calculated '
+        PositionAmount:
+          $ref: '#/components/schemas/Amount'
+          description: ''
+    Amount:
+      type: object
+      format: Amount
+      description: ' '
+      properties:
+        AmountValue:
+          type: string
+          format: String
+          description: ' '
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+          description: ''
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        AmountType:
+          $ref: '#/components/schemas/Amounttypevalues'
+          format: Amount
+          description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. ISO20022
+
+             
+    ServicingResource:
+      type: object
+      format: ServicingResource
+      description: "Reference to the servicing resource can be to handle an inbound contact or the source of an outbound contact request ||\r\n|"
+      properties:
+        ResourceStatus:
+          type: string
+          format: String
+          description: ''
+        ResourceAvailabilitySchedule:
+          type: string
+          format: String
+          description: ''
+        ResourceLocation:
+          type: string
+          format: String
+          description: ''
+        ResourceQualificationProfile:
+          type: string
+          format: String
+          description: ''
+    CustomerEventLog:
+      type: object
+      format: CustomerEventLog
+      description: "Records the actions performed during contact, including all dialogue sessions ||\r\n|"
+      properties:
+        LogType:
+          type: string
+          format: String
+          description: ' '
+        LogPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        LogDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Key dates associated with the log e.g. start time. '
+        LogIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    DialogueSession:
+      type: object
+      format: DialogueSession
+      description: "The session dialogue log of actions is returned to SD-Contact Handler and added to the contact record ||\r\n|"
+      properties:
+        DialogueContent:
+          type: string
+          format: String
+          description: 'Payload of the exchange. '
+        DialogueSessionIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            A unique identifier assigned to each Dialogue Session to distinguish
+            it from all other sessions. 
+        DialoguePurpose:
+          type: string
+          format: String
+          description: >-
+            The purpose, need, or goal identified from the customers inputs
+            during the session. Examples include request for information,
+            complaint, order placement, or troubleshooting. 
+        DialogueSessionRequestedAction:
+          $ref: '#/components/schemas/Action'
+          description: >-
+            Action executed during the session, such as processing service
+            requests, placing orders, delivering notifications, or updating
+            customer data. 
+        DialogueSessionOutcome:
+          $ref: >-
+            #/components/schemas/Dialoguesessionrequestedactionoutcomestatustypevalues
+          format: DialogueSession
+          description: ">\r\n* `Success` Action executed successfully, requested result delivered.\r\n* `Pending` Action accepted but not yet fully executed; requires background processing.\r\n* `Requires_Authentication` Action cannot proceed until customer re-authenticates.\r\n* `Requires_Approval` Action paused awaiting manual or automated approval.\r\n* `Failed_Validation` Request failed due to invalid/missing input parameters.\r\n* `Failed_Authentication` Request failed due to incorrect or missing authentication.\r\n* `Rejected` Action explicitly denied due to business rules or risk controls.\r\n* `Cancelled` Action was initiated but then stopped before completion.\r\n* `Error_System` Request could not be completed due to a technical/system error.\r\n* `Error_Unknown` Request failed for an unspecified or unexpected reason."
+        DialogueSessionUsedDevice:
+          $ref: '#/components/schemas/Device'
+          description: >-
+            The hardware or endpoint the customer uses to participate in the
+            session, such as mobile phone, desktop/laptop, tablet, or IVR
+            interactive voice response system. 
+        DialogueSessionUsedChannel:
+          $ref: '#/components/schemas/Communicationchannel'
+          description: >-
+            The communication medium through which the party e.g., customer
+            interacts with the enterprise during the session. Examples include
+            voice call, chat, email, social media message, or self-service
+            porta 
+        DialogueSessionStartDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            The exact timestamp when the dialogue session is initiated e.g.,
+            when a call connects, a chat is opened, or a self-service
+            interaction begins. 
+        DialogueSessionEndDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            The exact timestamp when the dialogue session is concluded e.g.,
+            call ends, chat closed, portal session terminated. 
+        DialogueSessionDuration:
+          $ref: '#/components/schemas/Duration'
+          description: >-
+            The total elapsed time of the dialogue session, typically calculated
+            as the difference between End Time and Start Time may also include
+            idle/hold time if relevant. 
+        DialogueSessionStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The current or final state of the contact  session, such as:-
+
+            Active ongoing session
+
+            Closed successfully completed and logged
+
+            Pending Follow-up requires additional action, e.g., callback,
+            escalation, or unresolved issue. 
+        DialogueSessionLog:
+          $ref: '#/components/schemas/Log'
+          description: >-
+            A complete record of the conversation during the session, including
+            chat messages, call notes, emails, or any other exchanged content.
+            It captures both customer and agent/bot contributions for reference,
+            analysis, and compliance. 
+        SessionDuration:
+          $ref: '#/components/schemas/Duration'
+          description: 'The time the session was active '
+        SessionDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Key dates and times for the session '
+        SessionStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        SessionType:
+          $ref: '#/components/schemas/Sessiontype'
+          description: >-
+            Specifies the classification of session like Customer Contact
+            Session, Channel Operating Session, Device Operating Session, etc. 
+        SessionScheduel:
+          $ref: '#/components/schemas/Schedule'
+          description: ''
+        SessionIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            A unique identifier assigned to each Session to distinguish it from
+            all other sessions. 
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/Actiontypevalues'
+          format: Action
+          description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+        EventType:
+          type: string
+          format: String
+          description: ' '
+        EventDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        EventDescription:
+          type: string
+          format: String
+          description: ' '
+        EventSource:
+          type: string
+          format: Object
+          description: ''
+        EventLocation:
+          $ref: '#/components/schemas/Location'
+          description: ''
+        EventAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        EventStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        EventValue:
+          type: string
+          format: String
+          description: ' '
+        EventValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        EventIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Communicationchannel:
+      type: object
+      format: Communicationchannel
+      description: >-
+        The communication medium through which the party e.g., customer
+        interacts with the enterprise during the session. Examples include voice
+        call, chat, email, social media message, or self-service porta 
+      properties:
+        ChannelType:
+          $ref: '#/components/schemas/Channeltypevalues'
+          format: Communicationchannel
+          description: ">\r\n* `CommunicationChannel` \r\n* `AuthenticationChannel` "
+        SystemAccessSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: 'The time schedule that system services are available for use. '
+        SystemType:
+          type: string
+          format: String
+          description: ' '
+        SystemIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: 'Identification of the system. ISO20022 '
+        SystemIdentificationType:
+          $ref: '#/components/schemas/Systemidentificationtypevalues'
+          format: Communicationchannel
+          description: ">\r\n* `Model` Identification of a model for a given manufacturer.\r\n* `Serialnumber` Serial number of a component.\r\n* `Approvalnumber` Unique approval number for a component, delivered by a certification body.\r\n* `Systemversion` Version of the system, eg, \"4.0.1\" to indicate version 4.0.1.\r\n* `Systemname` Name by which a system is known.\r\n* `Identification` Identification of a system."
+        SystemStatus:
+          $ref: '#/components/schemas/Status'
+          description: 'Status of the system. ISO20022 '
+        SystemStatusType:
+          $ref: '#/components/schemas/Systemstatustypevalues'
+          format: Communicationchannel
+          description: ">\r\n* `Suspended` System is suspended, that is, not operational.\r\n* `Active` System is functioning normally, that is, operational.\r\n* `Closed` System is closed eg. normal closure of an RTGS.\r\n* `Closing` System needs to wait for completion of intermediate internal activities before going to a status Closed.\r\n* `Reservemaintenanceperiodstart` System is starting a new maintenance period."
+        SystemDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: |2-
+                
+            Date time of a system performing a task. ISO20022 
+        SystemLanguage:
+          type: string
+          format: String
+          description: |2-
+                
+            Specifies the language used by the system. ISO20022 
+    Duration:
+      type: object
+      format: Duration
+      description: >-
+        Records the start and end date times for the contact Duration|Duration
+        https://www.iso20022.org/standardsrepository/type/duration|Standard|ISO20022
+        BM 
+      properties:
+        Duration:
+          type: string
+          format: DataType
+          description: >-
+            A duration is the specification of a length of time without a fixed
+            start or end time, expressed in Gregorian calendar time units Year,
+            Month, Week, Day and Hours, Minutes or Seconds. UN/CEFACT 
+    Sessiontype:
+      type: object
+      format: Sessiontype
+      description: >-
+        Specifies the classification of session like Customer Contact Session,
+        Channel Operating Session, Device Operating Session, etc. 
+      properties:
+        SessionTypeName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        SessionType:
+          $ref: '#/components/schemas/Sessiontypevalues'
+          format: Sessiontype
+          description: ">\r\n* `ContactHandlingSession` \r\n* `CustomerDialogueSession` \r\n* `ChannelOperatingSession` \r\n* `GatewayOperatingSession` \r\n* `SwitchOperatingSession` \r\n* `DeviceOperatingSession` \r\n* `InterbankTransactionOperatingSession` \r\n* `CorrespondenceOperatingSession` \r\n* `InteractiveHelpOperatingSession` \r\n* `ACHOperatingSession` "
+    Report:
+      type: object
+      format: Report
+      description: "The content of the report extracting recent channel activity records to support the transaction authorization decision ||\r\n|"
+      properties:
+        ReportType:
+          $ref: '#/components/schemas/Reporttypevalues'
+          format: Report
+          description: ">\r\n* `FinancialReport` \r\n* `BusinessReport` \r\n* `ManagementReport` \r\n* `Statement` \r\n* `MaintenanceReport` \r\n* `RegulatoryReport` \r\n* `TaxReport` \r\n* `AnalysisReport` "
+        ReportValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        ReportVersion:
+          type: string
+          format: Number
+          description: ''
+        ReportDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ReportFormat:
+          type: string
+          format: String
+          description: ' '
+    TransactionAuthorization:
+      type: object
+      format: TransactionAuthorization
+      description: "Indicates success or failure or required increased authentication level to be acquired for authorization ||\r\n|"
+      properties:
+        TransactionAuthorization:
+          type: string
+          format: Class
+          description: ''
+    ChannelActivityLog:
+      type: object
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Channel Activity History. 
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the customer being logged ||\r\n|"
+        Date:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key dates associated with the log e.g. start time
+            ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Productidentificationtypevalues:
+      enum:
+        - ISINCode
+        - PackageCode
+        - Buyersitemnumber
+        - Commercialdescriptioncodename
+        - EAN
+        - Harmonizedtariffcodename
+        - Manufacturersitemnumber
+        - Modelnumber
+        - Partnumber
+        - Quotacategory
+        - Stylenumber
+        - Suppliersitemnumber
+        - Universalproductcode
+      type: string
+      description: ">\r\n* `ISINCode` \r\n* `PackageCode` \r\n* `Buyersitemnumber` Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` A code to identify a product based on applicable commercial conditions.\r\n* `EAN` The unique EAN European Article Number code.\r\n* `Harmonizedtariffcodename` Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` Product identifier used by the retail industry.\r\n* `Stylenumber` Identification of the style of a product.\r\n* `Suppliersitemnumber` Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` Number assigned to a manufacturer's product by the Product Code Council."
+    Bankingproducttypevalues:
+      enum:
+        - LoanProduct
+        - CurrentAccountProduct
+        - SavingAccountProduct
+        - BrokeredProduct
+        - TermDepositProduct
+      type: string
+      description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+    Productstatustypevalues:
+      enum:
+        - Initiated
+        - Announced
+        - Sold
+        - Obsolete
+        - Active
+      type: string
+      description: ">\r\n* `Initiated` \r\n* `Announced` \r\n* `Sold` \r\n* `Obsolete` \r\n* `Active` "
+    Financialinstrumenttypevalues:
+      enum:
+        - Loan
+        - Bond
+        - Deposit
+        - Stock
+        - Option
+        - Share
+        - Debt
+        - Letterofcredit
+        - Security
+        - Derivative
+      type: string
+      description: ">\r\n* `Loan` \r\n* `Bond` \r\n* `Deposit` \r\n* `Stock` \r\n* `Option` \r\n* `Share` \r\n* `Debt` Financial instruments evidencing moneys owed by the issuer to the holder on terms as specified. ISO20022\n\nAny type of instrument primarily classified as debt can be considered a debt instrument. Debt instruments are tools an individual, government entity, or business entity can utilize for the purpose of obtaining capital. Debt instruments provide capital to an entity that promises to repay the capital over time. Credit cards, credit lines, loans, and bonds can all be types of debt instruments. Investopedia\r\n* `Letterofcredit` Instrument issued by a bank substituting its name and credit standing for that of its customer. A letter of credit is a written undertaking of the bank, issued for the account of a customer the applicant, to honour a demand for payment, upon the beneficiary's compliance with the terms and conditions set forth in the undertaking. ISO20022\r\n* `Security` Financial instruments representing a sum of rights of the investor vis-a-vis the issuer. ISO20022\r\n* `Derivative` "
+    Financialinstrumentidentificationtypevalues:
+      enum:
+        - NASDAQ
+        - ISIN
+      type: string
+      description: ">\r\n* `NASDAQ` \r\n* `ISIN` "
+    Financialinstrumentdatetimetypevalues:
+      enum:
+        - CouponDate
+        - ExpiryDate
+        - FloatingRateFixingDate
+        - MaturityDate
+        - IssueDate
+        - NextCallableDate
+        - PutableDate
+        - DatedDate
+        - FirstPaymentDate
+      type: string
+      description: ">\r\n* `CouponDate` Next payment date of an interest bearing financial instrument.ISO20022\r\n* `ExpiryDate` Date on which a privilege expires.ISO20022\r\n* `FloatingRateFixingDate` Date at which the interest rate of an interest bearing security will be calculated and reset, according to the terms of the issue.ISO20022\r\n* `MaturityDate` Planned final repayment date at the time of issuance.ISO20022\r\n* `IssueDate` Date at which the security was made available.ISO20022\r\n* `NextCallableDate` Next date at which the issuer has the right to pay the security prior to maturity.ISO20022\r\n* `PutableDate` Date at which the holder has the right to ask for redemption of the security prior to final maturity.ISO20022\r\n* `DatedDate` First date at which a security begins to accrue interest.ISO20022\r\n* `FirstPaymentDate` Date at which the first interest payment is due to holders of the security.ISO20022"
+    Assettypevalues:
+      enum:
+        - TangibleAsset
+        - IntangibleAsset
+        - OperatingAsset
+        - Non-OperatingAsset
+        - CurrentAsset
+        - Non-CurrentFixedAsset
+        - PersonalAsset
+        - BusinessAsset
+      type: string
+      description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+    Assetclassificationtypevalues:
+      enum:
+        - Assetclassificationtypevalues
+      type: string
+      description: ">\r\n* `Assetclassificationtypevalues` "
+    Assetsubclassificationtypevalues:
+      enum:
+        - Subassetclass
+        - Timetomaturitybucket
+        - Optiontimetomaturitybucket
+        - Swaptimetomaturitybucket
+        - Underlyinginstrumentidentification
+        - Underlyingbondissuer
+        - Underlyinginterestrate
+        - Underlyingbondterm
+        - Assetclass
+        - Underlyingindexidentification
+        - Interestratetermofcontract
+        - Underlyingreferenceentity
+        - Sovereignandpublictypeissuer
+        - Irdnotionalcurrency1
+        - Fexnotionalcurrency1
+        - Cfdnotionalcurrency1
+        - Fexnotionalcurrency2
+        - Irdnotionalcurrency2
+        - Cfdnotionalcurrency2
+        - Swaptionnotionalcurrency
+        - Creditnotionalcurrency
+        - Commoditynotionalcurrency
+        - Contracttype
+        - Baseproduct
+        - Subproduct
+        - Furthersubproduct
+        - Deliverycashlocation
+        - Deliverysettlementtype
+        - Sizespecificationrelatedtofreights
+        - Specificroutetimecharteraverage
+        - Equityunderlyingtype
+        - Parameter
+        - Inflationindexcodename
+        - ISIN
+        - Underlyingindexcdssubclassidentifi
+        - Underlyingtype
+      type: string
+      description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+    Productagreementtypevalues:
+      enum:
+        - CurrentAccountAgreement
+        - SavingsAccountAgreement
+        - BrokeredProductAgreement
+        - ConsumerLoanAgreement
+        - MortgageLoanAgreement
+        - DirectDebitServiceAgreement
+        - TermDepositAgreement
+      type: string
+      description: ">\r\n* `CurrentAccountAgreement` \r\n* `SavingsAccountAgreement` \r\n* `BrokeredProductAgreement` \r\n* `ConsumerLoanAgreement` \r\n* `MortgageLoanAgreement` \r\n* `DirectDebitServiceAgreement` \r\n* `TermDepositAgreement` "
+    Agreementtypevalues:
+      enum:
+        - CustomerAgreement
+        - SupplierAgreement
+        - BrokerAgreement
+        - SalesAgreement
+        - PurchaseAgreement
+        - MaintenanceAgreement
+        - ProductAgreement
+        - ResourceAgreement
+        - PartnerAgreement
+        - MasterAgreement
+        - BilateralAgreement
+        - RepurchaseAgreement
+      type: string
+      description: ">\r\n* `CustomerAgreement` \r\n* `SupplierAgreement` \r\n* `BrokerAgreement` \r\n* `SalesAgreement` \r\n* `PurchaseAgreement` \r\n* `MaintenanceAgreement` \r\n* `ProductAgreement` \r\n* `ResourceAgreement` \r\n* `PartnerAgreement` \r\n* `MasterAgreement` \r\n* `BilateralAgreement` \r\n* `RepurchaseAgreement` "
+    Agreementstatustypevalues:
+      enum:
+        - Offered
+        - Confirmed
+        - Completed
+        - Signed
+        - Terminated
+        - Rejected
+      type: string
+      description: ">\r\n* `Offered` \r\n* `Confirmed` \r\n* `Completed` \r\n* `Signed` \r\n* `Terminated` \r\n* `Rejected` "
+    Geographicalareatypevalues:
+      enum:
+        - Continent
+        - Country
+        - State
+        - District
+        - Province
+        - Town
+        - City
+        - Region
+      type: string
+      description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+    Deviceidentificationtypevalues:
+      enum:
+        - IMEI
+        - Serialnumber
+        - Secureelementidentification
+        - Othernational
+        - Otherprivate
+      type: string
+      description: ">\r\n* `IMEI` International Mobile Equipment Identity.\r\n* `Serialnumber` Device serial number.\r\n* `Secureelementidentification` Secure element ID.\r\n* `Othernational` Other nationally assigned code.\r\n* `Otherprivate` Other privately assigned code."
+    Devicetypevalues:
+      enum:
+        - Securecardreader
+        - Nonsecurecardreader
+        - Mobile
+        - Tablet
+        - Personalcomputer
+        - Othernational
+        - Otherprivate
+        - Wearable
+        - Vehicle
+        - Embedded
+        - Keyfob
+        - Jewellery
+        - Sticker
+        - Gamingdevice
+        - Watch
+        - Unknown
+        - BiometricDevice
+      type: string
+      description: ">\r\n* `Securecardreader` Secure card reader attached to the customer device\r\n* `Nonsecurecardreader` Non-secure card reader attached to the customer device.\r\n* `Mobile` Mobile phone\r\n* `Tablet` Tablet\r\n* `Personalcomputer` Personal computer\r\n* `Othernational` Other device defined at national level\r\n* `Otherprivate` Other device defined in a private way.\r\n* `Wearable` Wearable device.\r\n* `Vehicle` Vehicle.\r\n* `Embedded` Embedded in a device.\r\n* `Keyfob` Key Fob\r\n* `Jewellery` Jewellery\r\n* `Sticker` Sticker\r\n* `Gamingdevice` Gaming Device\r\n* `Watch` Watch\r\n* `Unknown` Device type unknown\r\n* `BiometricDevice` A biometric device is a security identification and authentication device. Such devices use automated methods of verifying or recognising the identity of a living person based on a physiological or behavioral characteristic.\nhttps://en.wikipedia.org/wiki/Biometric_device\n"
+    Deviceoperatingsystemtypevalues:
+      enum:
+        - Android
+        - Ios
+        - Windows
+        - Blackberry
+        - Tizen
+        - Othernational
+        - Otherprivate
+      type: string
+      description: ">\r\n* `Android` Android operating system.\r\n* `Ios` iOS operating system.\r\n* `Windows` Windows operating system.\r\n* `Blackberry` Blackberry operating system.\r\n* `Tizen` Tizen operating system.\r\n* `Othernational` Other nationally defined code.\r\n* `Otherprivate` Other privately defined code."
+    Instructiondatetimetypevalues:
+      enum:
+        - DueDate
+        - ExecutionDate
+        - FulfillmentDate
+      type: string
+      description: ">\r\n* `DueDate` \r\n* `ExecutionDate` \r\n* `FulfillmentDate` "
+    Instructionstatustypevalues:
+      enum:
+        - Pendingprocessing
+        - Acknowledgedaccepted
+        - Rejected
+        - Accepted
+        - Completed
+        - Notreceived
+        - Cancelled
+        - Beingcancelled
+        - Receivedbyissuerorregistrar
+        - Pending
+        - Standinginstruction
+        - Queued
+        - Cancelledbysubcustodian
+        - Forwarded
+      type: string
+      description: ">\r\n* `Pendingprocessing` Processing of the instruction is pending.\r\n* `Acknowledgedaccepted` Instruction has been acknowledged and accepted and is validated for further processing.\r\n* `Rejected` Instruction has been rejected.\r\n* `Accepted` Instruction has been accepted and is validated for further processing.\r\n* `Completed` Processing has been completed.\r\n* `Notreceived` No instruction has been received to be used in a reminder.\r\n* `Cancelled` Instruction has been cancelled.\r\n* `Beingcancelled` Cancel request is being processed.\r\n* `Receivedbyissuerorregistrar` Instruction has been received by Issuer.\r\n* `Pending` Instruction is pending.\r\n* `Standinginstruction` Standing instruction is applied.\r\n* `Queued` Instruction is queued.\r\n* `Cancelledbysubcustodian` Instruction has been cancelled by the agent, for example, due to an event deadline extension.\r\n* `Forwarded` Accepted and sent along the chain."
+    Instructionidentificationtypevalues:
+      enum:
+        - OrderNumber
+        - InstructionNumber
+      type: string
+      description: ">\r\n* `OrderNumber` \r\n* `InstructionNumber` "
+    Instructiontypevalues:
+      enum:
+        - PaymentInstruction
+        - DeliveryOrder
+        - InformationRequest
+        - ExchangeInstruction
+        - AllocationInstruction
+        - MaintenanceInstruction
+      type: string
+      description: ">\r\n* `PaymentInstruction` \r\n* `DeliveryOrder` \r\n* `InformationRequest` \r\n* `ExchangeInstruction` \r\n* `AllocationInstruction` \r\n* `MaintenanceInstruction` "
+    Amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+        - DuePayable
+        - Minimum
+        - Open
+        - Unknown
+        - Fixed
+      type: string
+      description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+    Dialoguesessionrequestedactionoutcomestatustypevalues:
+      enum:
+        - Success
+        - Pending
+        - Requires_Authentication
+        - Requires_Approval
+        - Failed_Validation
+        - Failed_Authentication
+        - Rejected
+        - Cancelled
+        - Error_System
+        - Error_Unknown
+      type: string
+      description: ">\r\n* `Success` Action executed successfully, requested result delivered.\r\n* `Pending` Action accepted but not yet fully executed; requires background processing.\r\n* `Requires_Authentication` Action cannot proceed until customer re-authenticates.\r\n* `Requires_Approval` Action paused awaiting manual or automated approval.\r\n* `Failed_Validation` Request failed due to invalid/missing input parameters.\r\n* `Failed_Authentication` Request failed due to incorrect or missing authentication.\r\n* `Rejected` Action explicitly denied due to business rules or risk controls.\r\n* `Cancelled` Action was initiated but then stopped before completion.\r\n* `Error_System` Request could not be completed due to a technical/system error.\r\n* `Error_Unknown` Request failed for an unspecified or unexpected reason."
+    Channeltypevalues:
+      enum:
+        - CommunicationChannel
+        - AuthenticationChannel
+      type: string
+      description: ">\r\n* `CommunicationChannel` \r\n* `AuthenticationChannel` "
+    Systemidentificationtypevalues:
+      enum:
+        - Model
+        - Serialnumber
+        - Approvalnumber
+        - Systemversion
+        - Systemname
+        - Identification
+      type: string
+      description: ">\r\n* `Model` Identification of a model for a given manufacturer.\r\n* `Serialnumber` Serial number of a component.\r\n* `Approvalnumber` Unique approval number for a component, delivered by a certification body.\r\n* `Systemversion` Version of the system, eg, \"4.0.1\" to indicate version 4.0.1.\r\n* `Systemname` Name by which a system is known.\r\n* `Identification` Identification of a system."
+    Systemstatustypevalues:
+      enum:
+        - Suspended
+        - Active
+        - Closed
+        - Closing
+        - Reservemaintenanceperiodstart
+      type: string
+      description: ">\r\n* `Suspended` System is suspended, that is, not operational.\r\n* `Active` System is functioning normally, that is, operational.\r\n* `Closed` System is closed eg. normal closure of an RTGS.\r\n* `Closing` System needs to wait for completion of intermediate internal activities before going to a status Closed.\r\n* `Reservemaintenanceperiodstart` System is starting a new maintenance period."
+    Sessiontypevalues:
+      enum:
+        - ContactHandlingSession
+        - CustomerDialogueSession
+        - ChannelOperatingSession
+        - GatewayOperatingSession
+        - SwitchOperatingSession
+        - DeviceOperatingSession
+        - InterbankTransactionOperatingSessi
+        - CorrespondenceOperatingSession
+        - InteractiveHelpOperatingSession
+        - ACHOperatingSession
+      type: string
+      description: ">\r\n* `ContactHandlingSession` \r\n* `CustomerDialogueSession` \r\n* `ChannelOperatingSession` \r\n* `GatewayOperatingSession` \r\n* `SwitchOperatingSession` \r\n* `DeviceOperatingSession` \r\n* `InterbankTransactionOperatingSession` \r\n* `CorrespondenceOperatingSession` \r\n* `InteractiveHelpOperatingSession` \r\n* `ACHOperatingSession` "
+    Reporttypevalues:
+      enum:
+        - FinancialReport
+        - BusinessReport
+        - ManagementReport
+        - Statement
+        - MaintenanceReport
+        - RegulatoryReport
+        - TaxReport
+        - AnalysisReport
+      type: string
+      description: ">\r\n* `FinancialReport` \r\n* `BusinessReport` \r\n* `ManagementReport` \r\n* `Statement` \r\n* `MaintenanceReport` \r\n* `RegulatoryReport` \r\n* `TaxReport` \r\n* `AnalysisReport` "
