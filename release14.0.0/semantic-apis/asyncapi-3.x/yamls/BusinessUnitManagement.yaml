@@ -1,0 +1,796 @@
+asyncapi: 3.0.0
+info:
+  title: Business Unit Management
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | Track and report on
+    business unit activity and financial performance
+channels:
+  BusinessUnitManagementPlan/Created:
+    address: BusinessUnitManagementPlan/Created
+    messages:
+      BusinessUnitManagementPlan-created.message:
+        $ref: '#/components/messages/BusinessUnitManagementPlan'
+    description: ''
+  BusinessUnitManagementPlan/Updated:
+    address: BusinessUnitManagementPlan/Updated
+    messages:
+      BusinessUnitManagementPlan-updated.message:
+        $ref: '#/components/messages/BusinessUnitManagementPlan'
+    description: ''
+  Troubleshooting/Created:
+    address: Troubleshooting/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Troubleshooting/Updated:
+    address: Troubleshooting/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Troubleshooting'
+    description: ''
+  Performance/Created:
+    address: Performance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+  Performance/Updated:
+    address: Performance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Performance'
+    description: ''
+operations:
+  BusinessUnitManagementPlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BusinessUnitManagementPlan~1Created'
+    summary: BusinessUnitManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BusinessUnitManagementPlan~1Created/messages/BusinessUnitManagementPlan-created.message
+  BusinessUnitManagementPlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BusinessUnitManagementPlan~1Updated'
+    summary: BusinessUnitManagementPlan
+    messages:
+      - $ref: >-
+          #/channels/BusinessUnitManagementPlan~1Updated/messages/BusinessUnitManagementPlan-updated.message
+  Troubleshooting/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Created'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Created/messages/publish.message'
+  Troubleshooting/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Troubleshooting~1Updated'
+    summary: Troubleshooting
+    messages:
+      - $ref: '#/channels/Troubleshooting~1Updated/messages/publish.message'
+  Performance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Created'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Created/messages/publish.message'
+  Performance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Performance~1Updated'
+    summary: Performance
+    messages:
+      - $ref: '#/channels/Performance~1Updated/messages/publish.message'
+components:
+  messages:
+    BusinessUnitManagementPlan:
+      name: BusinessUnitManagementPlan
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Business Unit Management.
+      payload:
+        $ref: '#/components/schemas/BusinessUnitManagementPlan'
+    Troubleshooting:
+      name: Troubleshooting
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Troubleshooting'
+    Performance:
+      name: Performance
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:- Relationship development, Troubleshooting
+      payload:
+        $ref: '#/components/schemas/Performance'
+  schemas:
+    Troubleshooting:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:-Relationship development, Troubleshooting
+      properties:
+        BusinessUnitProductionIssueRecord:
+          $ref: '#/components/schemas/ProductionIssue'
+          description: "A record of any production issues arising during the session see Advanced Voice Channel Operations for detailed content ||\r\n|"
+        BusinessUnitIssueAnalysisAndRecommendedResponse:
+          type: string
+          format: Object
+          description: "A record of the root cause analysis for recurring issues and suggested remedial action that can be internal to the unit or recommended to service providers and subscribers as appropriate ||\r\n|"
+    ProductionIssue:
+      type: object
+      format: ProductionIssue
+      description: "A record of any production issues arising during the session see Advanced Voice Channel Operations for detailed content ||\r\n|"
+      properties:
+        ProductionIssueType:
+          type: string
+          format: String
+          description: The Type of production problem error
+        ProductionIssueDescription:
+          type: string
+          format: String
+          description: 'Description of the production problem '
+        ProductionIssueDiagnosis:
+          type: string
+          format: String
+          description: 'Evaluation of the production problem cause and impact assessment '
+        ProductionIssueResolutionTask:
+          type: string
+          format: String
+          description: 'Description of corrective action proposed and taken '
+        ProductionIssueStatus:
+          type: string
+          format: String
+          description: 'The state of resolution of a reported production problem '
+    Performance:
+      type: object
+      description: |-
+        A collection of one or more responsibilities or tasks under management
+        Examples:-Relationship development, Troubleshooting
+      properties:
+        BusinessUnitResourceUtilization:
+          type: string
+          format: Object
+          description: "Record of the business unit employee target and actual utilization/productivity ||\r\n|"
+        BusinessUnitOutputWorkProjections:
+          type: string
+          format: Object
+          description: "Estimated projected business unit product/service delivery and work volume targets as appropriate for the type of unit ||\r\n|"
+        BusinessUnitPerformanceStatistics:
+          type: string
+          format: Object
+          description: "Tracked business unit activity and performance statistics used to manage the business unit ||\r\n|"
+        BusinessUnitPerformanceStatisticType:
+          type: string
+          format: String
+          description: "The type of activity that is tracked and analyzed e.g. delivery rate, utilization ||\r\n|"
+        BusinessUnitPerformanceStatisticValue:
+          $ref: '#/components/schemas/Amount'
+          description: >-
+            The statistical analysis that can include historical and trended
+            views of the activity CurrencyAndAmount|CurrencyAndAmount
+            https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount|Standard|ISO20022 
+        BusinessUnitPerformanceStatisticInterpretation:
+          type: string
+          format: Object
+          description: "Narrative that might explain any divergence from expected performance/delivery ||\r\n|"
+        BusinessUnitPerformanceStatisticRecommendation:
+          type: string
+          format: Object
+          description: "Proposed operational changes/recommendations arising from the performance tracking and analysis ||\r\n|"
+    Amount:
+      type: object
+      format: Amount
+      description: >-
+        The statistical analysis that can include historical and trended views
+        of the activity CurrencyAndAmount|CurrencyAndAmount
+        https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount|Standard|ISO20022 
+      properties:
+        AmountValue:
+          type: string
+          format: String
+          description: ' '
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+          description: ''
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        AmountType:
+          $ref: '#/components/schemas/Amounttypevalues'
+          format: Amount
+          description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. ISO20022
+
+             
+    BusinessUnitManagementPlan:
+      type: object
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Business Unit Management.
+      properties:
+        BusinessUnitManagementPlanPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: >-
+            The time period addressed by the management plan typically this will
+            include setting the default daily operating goals and arrangements
+            for the business unit that is periodically updated
+            DateTimePeriod|DateTimePeriod
+            https://www.iso20022.org/standardsrepository/type/DateTimePeriod|Standard|ISO20022
+            BM 
+        BusinessUnitUsagePoliciesAndGuidelines:
+          $ref: '#/components/schemas/RuleSet'
+          description: >-
+            The policies and guidelines for business unit employees and service
+            users GovernanceRules|GovernanceRules
+            https://www.iso20022.org/standardsrepository/type/GovernanceRules|Standard|ISO20022
+            BM 
+        BusinessUnitPerformanceGoals:
+          $ref: '#/components/schemas/Goal'
+          description: "The target and actual business unit performance goals that are tracked by business unit management ||\r\n|"
+        BusinessUnitOperatingSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: "The target and actual business unit operating schedule recording planned and actual business activity ||\r\n|"
+        BusinessUnitOperatingOrganization:
+          $ref: '#/components/schemas/Organisation'
+          description: "The assigned roles and responsibilities and associated work/delivery responsibilities for the staff making up the business unit Organisation\__x000D_\n|Organisation\_ https://www.iso20022.org/standardsrepository/type/Organisation|Standard|ISO20022 BM "
+        BusinessUnitResourcePlan:
+          $ref: '#/components/schemas/BusinessUnitResourcePlan'
+          description: "Details the number and skill profile of the business unit staff target and actual ||\r\n|"
+        BusinessUnitTrainingPlan:
+          $ref: '#/components/schemas/BusinessUnitTrainingPlan'
+          description: "Details of staff training and certification as appropriate ||\r\n|"
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: 'Period of time during which the status is valid. '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    RuleSet:
+      type: object
+      format: RuleSet
+      description: >-
+        The policies and guidelines for business unit employees and service
+        users GovernanceRules|GovernanceRules
+        https://www.iso20022.org/standardsrepository/type/GovernanceRules|Standard|ISO20022
+        BM 
+      properties:
+        RuleSetDefinition:
+          type: string
+          format: String
+          description: ' '
+        RuleSetInterpretation:
+          type: string
+          format: String
+          description: ' '
+        RuleSetType:
+          $ref: '#/components/schemas/Rulesettypevalues'
+          format: RuleSet
+          description: ">\r\n* `Policy` Rule that governs business execution.\n\nThe set of basic principles and associated guidelines, formulated and enforced by the governing body of an organization, to direct and limit its actions in pursuit of long-term goals. Business Dictionary\n\r\n* `Regulation` A rule used to carry out a law FIBO\n\nBusiness Dictionary:a rule with or without the coercive power of law employed in controlling, directing, or managing an activity, organization, or system. \n\nThe set of rules and legislation governing certain actions. \nhttps://financial-dictionary.thefreedictionary.com/Regulatory\r\n* `Law` A binding rule that the courts will enforce.\nA system of rules and guidelines which are enforced through social institutions to govern behavior. FIBO\n\r\n* `Guideline` A recommended practice adapted from Business Dictionary\nA general rule, principle, or piece of advice.\r\n* `Criterion` A principle or standard by which something may be judged or decided.\n\nRead more:http:-//www.businessdictionary.com/definition/criterion.html\r\n* `Standard` A rule considered by an authority or by general consent as a basis of comparison"
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Name:
+      type: object
+      format: Name
+      description: >-
+        Name by which a party is known and which is usually used to identify
+        that party. ISO20022
+         
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: >-
+        Reference to a Party who plays a  specific role in the context of
+        assigning a status. 
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Goal:
+      type: object
+      format: Goal
+      description: "The target and actual business unit performance goals that are tracked by business unit management ||\r\n|"
+      properties:
+        GoalType:
+          $ref: '#/components/schemas/Goaltypevalues'
+          format: Goal
+          description: ">\r\n* `Short-TermGoal` \r\n* `Long-TermGoal` \r\n* `BusinessGoal` \r\n* `PerformanceGoal` \r\n* `FinancialGoal` \r\n* `OutcomeGoal` \r\n* `SMARTGoal` "
+        GoalDefinition:
+          type: string
+          format: String
+          description: 'The definition of Goal '
+        GoalName:
+          $ref: '#/components/schemas/Name'
+          description: 'The name of Goal '
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Goaldatetime'
+          description: >-
+            The key dates and times of Goal like Setting Data, Planning Date,
+            Start Date, Review Date, Completion Date. 
+        GoalStatus:
+          $ref: '#/components/schemas/Goalstatus'
+          description: >-
+            The lifecycle status of Goal like Goal Setting, Planning, Execution,
+            Monitoring and Evaluation, Completion or Achievement, Maintenance or
+            Sustainment, Closure or Renewal 
+    Goaldatetime:
+      type: object
+      format: Goaldatetime
+      description: >-
+        The key dates and times of Goal like Setting Data, Planning Date, Start
+        Date, Review Date, Completion Date. 
+      properties:
+        GoalDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        GoalDateAndTimeType:
+          $ref: '#/components/schemas/Goaldatetimetypevalues'
+          format: Goaldatetime
+          description: ">\r\n* `SettingDate` \r\n* `PlanningDate` \r\n* `StartDate` \r\n* `ReviewDate` \r\n* `CompletionDate` "
+    Goalstatus:
+      type: object
+      format: Goalstatus
+      description: >-
+        The lifecycle status of Goal like Goal Setting, Planning, Execution,
+        Monitoring and Evaluation, Completion or Achievement, Maintenance or
+        Sustainment, Closure or Renewal 
+      properties:
+        GoalStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        GoalStatusType:
+          $ref: '#/components/schemas/Goalstatustypevalues'
+          format: Goalstatus
+          description: ">\r\n* `Setting` \r\n* `Planning` \r\n* `Execution` \r\n* `MonitoringAndEvaluation` \r\n* `CompletionOrAchievement` \r\n* `MaintenanceOrSustainment` \r\n* `ClosureOrRenewal` "
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The target and actual business unit operating schedule recording planned and actual business activity ||\r\n|"
+      properties:
+        ScheduleType:
+          type: string
+          format: String
+          description: ' '
+    Organisation:
+      type: object
+      format: Organisation
+      description: "The assigned roles and responsibilities and associated work/delivery responsibilities for the staff making up the business unit Organisation\__x000D_\n|Organisation\_ https://www.iso20022.org/standardsrepository/type/Organisation|Standard|ISO20022 BM "
+      properties:
+        OrganisationStructureHierarchy:
+          type: string
+          format: String
+          description: 'Description of the structure of a company. ISO20022 '
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Organisationidentification'
+          description: ''
+        OrganisationSector:
+          type: string
+          format: String
+          description: >-
+            Sector of business of the organisation, for example, pharmaceutical.
+            ISO20022 
+        LegalEntityIndicator:
+          type: string
+          format: String
+          description: ''
+        OrganisationDate:
+          $ref: '#/components/schemas/Organisationdatetime'
+          description: ''
+        OrganisationType:
+          $ref: '#/components/schemas/Organisationtypevalues'
+          format: Organisation
+          description: ">\r\n* `LegalEntity` \r\n* `Authority` \r\n* `OrganisationUnit` \r\n* `FinancialInstitution` \r\n* `Charity` \r\n* `GovernmentBody` "
+        OrganisationName:
+          $ref: '#/components/schemas/Organisationname'
+          description: ''
+        OrganisationLegalStructure:
+          $ref: '#/components/schemas/Organisationlegalstructuretypevalues'
+          format: Organisation
+          description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+        PartyName:
+          $ref: '#/components/schemas/Name'
+          description: >-
+            Name by which a party is known and which is usually used to identify
+            that party. ISO20022
+             
+        PartyType:
+          $ref: '#/components/schemas/Partytypevalues'
+          format: Organisation
+          description: ">\r\n* `Person` Human entity, as distinguished from a corporate entity which is sometimes referred to as an 'artificial person'. ISO20022\r\n* `Organisation` Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+          description: ''
+        PartyLegalStructureType:
+          $ref: '#/components/schemas/Partylegalstructuretypevalues'
+          format: Organisation
+          description: ">\r\n* `Individual` \r\n* `CommunityInterestCompany` \r\n* `CharitableIncorporatedOrganisation` \r\n* `Co-Operative` \r\n* `Charity` \r\n* `GeneralPartnership` \r\n* `LimitedLiabilityPartnership` \r\n* `ScottishLimitedPartnership` \r\n* `LimitedPartnership` \r\n* `PrivateLimitedCompany` \r\n* `PublicLimitedCompany` \r\n* `SoleSoleTrader` "
+        PartyActivityIndicator:
+          $ref: '#/components/schemas/Industrycode'
+          description: 'Economical activity of Party ISO20022 '
+    Organisationidentification:
+      type: object
+      format: Organisationidentification
+      description: ' '
+      properties:
+        OrganisationIdentificationType:
+          $ref: '#/components/schemas/Organisationidentificationtypevalues'
+          format: Organisationidentification
+          description: ">\r\n* `LEI` Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier LEI\".\r\n* `ELF` Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms ELF\". \r\n* `MIC` Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code BIC\".\r\n* `Bankpartyidentification` Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` Country authority given organisation identification e.g., corporate registration number\r\n* `Customernumber` Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering EAN numbering scheme rules. The number is used to retrieve detailed information that is linked to it. iso20022"
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Organisationdatetime:
+      type: object
+      format: Organisationdatetime
+      description: ' '
+      properties:
+        OrganisatioDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        OrganisatioDateType:
+          $ref: '#/components/schemas/Organisationdatetimetypevalues'
+          format: Organisationdatetime
+          description: ">\r\n* `RegistrationDate` Date and time at which a given organisation was officially registered. ISO20022\r\n* `EstablishmentDate` Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationname:
+      type: object
+      format: Organisationname
+      description: ' '
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        NameType:
+          $ref: '#/components/schemas/Organisationnametypevalues'
+          format: Organisationname
+          description: ">\r\n* `ShortName` \r\n* `TradingName` \r\n* `LegalName` "
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        PartyIdentificationType:
+          $ref: '#/components/schemas/Partyidentificationtypevalues'
+          format: Partyidentification
+          description: ">\r\n* `Taxidentificationnumber` Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. ISO20022\r\n* `Registrationauthorityidentification` An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. ISO20022\r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` Number assigned to a tax exempt entity.\r\n* `Corporateidentification` Number assigned to a corporate entity.\r\n* `Driverlicensenumber` Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` Number assigned to a foreign investor other than the alien number.\r\n* `Socialsecuritynumber` Number assigned by a social security agency.\r\n* `Identitycardnumber` Number assigned by a national authority to an identity card.\r\n* `Concat` Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` National registration identification number. In Singapore this is known as the NRIC."
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Industrycode:
+      type: object
+      format: Industrycode
+      description: 'Economical activity of Party ISO20022 '
+      properties:
+        Industrycode:
+          type: string
+          format: DataType
+          description: >-
+            Code to identify economic activities by ISIC United Nations
+            International Standard Industrial Classification of all Economic
+            Activities. 
+    BusinessUnitResourcePlan:
+      type: object
+      format: BusinessUnitResourcePlan
+      description: "Details the number and skill profile of the business unit staff target and actual ||\r\n|"
+      properties:
+        BusinessUnitResourcePlan:
+          type: string
+          format: Class
+          description: >-
+            Details the number and skill profile of the business unit staff
+            target and actual
+             
+    BusinessUnitTrainingPlan:
+      type: object
+      format: BusinessUnitTrainingPlan
+      description: "Details of staff training and certification as appropriate ||\r\n|"
+      properties:
+        BusinessUnitTrainingPlan:
+          type: string
+          format: Class
+          description: Details of staff training and certification as appropriate
+    Amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+        - DuePayable
+        - Minimum
+        - Open
+        - Unknown
+        - Fixed
+      type: string
+      description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Rulesettypevalues:
+      enum:
+        - Policy
+        - Regulation
+        - Law
+        - Guideline
+        - Criterion
+        - Standard
+      type: string
+      description: ">\r\n* `Policy` Rule that governs business execution.\n\nThe set of basic principles and associated guidelines, formulated and enforced by the governing body of an organization, to direct and limit its actions in pursuit of long-term goals. Business Dictionary\n\r\n* `Regulation` A rule used to carry out a law FIBO\n\nBusiness Dictionary: a rule with or without the coercive power of law employed in controlling, directing, or managing an activity, organization, or system. \n\nThe set of rules and legislation governing certain actions. \nhttps://financial-dictionary.thefreedictionary.com/Regulatory\r\n* `Law` A binding rule that the courts will enforce.\nA system of rules and guidelines which are enforced through social institutions to govern behavior. FIBO\n\r\n* `Guideline` A recommended practice adapted from Business Dictionary\nA general rule, principle, or piece of advice.\r\n* `Criterion` A principle or standard by which something may be judged or decided.\n\nRead more: http://www.businessdictionary.com/definition/criterion.html\r\n* `Standard` A rule considered by an authority or by general consent as a basis of comparison"
+    Goaltypevalues:
+      enum:
+        - Short-TermGoal
+        - Long-TermGoal
+        - BusinessGoal
+        - PerformanceGoal
+        - FinancialGoal
+        - OutcomeGoal
+        - SMARTGoal
+      type: string
+      description: ">\r\n* `Short-TermGoal` \r\n* `Long-TermGoal` \r\n* `BusinessGoal` \r\n* `PerformanceGoal` \r\n* `FinancialGoal` \r\n* `OutcomeGoal` \r\n* `SMARTGoal` "
+    Goaldatetimetypevalues:
+      enum:
+        - SettingDate
+        - PlanningDate
+        - StartDate
+        - ReviewDate
+        - CompletionDate
+      type: string
+      description: ">\r\n* `SettingDate` \r\n* `PlanningDate` \r\n* `StartDate` \r\n* `ReviewDate` \r\n* `CompletionDate` "
+    Goalstatustypevalues:
+      enum:
+        - Setting
+        - Planning
+        - Execution
+        - MonitoringAndEvaluation
+        - CompletionOrAchievement
+        - MaintenanceOrSustainment
+        - ClosureOrRenewal
+      type: string
+      description: ">\r\n* `Setting` \r\n* `Planning` \r\n* `Execution` \r\n* `MonitoringAndEvaluation` \r\n* `CompletionOrAchievement` \r\n* `MaintenanceOrSustainment` \r\n* `ClosureOrRenewal` "
+    Organisationidentificationtypevalues:
+      enum:
+        - LEI
+        - ELF
+        - MIC
+        - BICFI
+        - Bankpartyidentification
+        - Centralbankidentificationnumber
+        - Clearingidentificationnumber
+        - Certificateofincorporationnumber
+        - Countryidentificationcode
+        - Customernumber
+        - Datauniversalnumberingsystem
+        - Employeridentificationnumber
+        - Gs1glnidentifier
+        - SIREN
+        - SIRET
+        - Taxidentificationnumber
+        - EANGLN
+      type: string
+      description: ">\r\n* `LEI` Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier LEI\".\r\n* `ELF` Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms ELF\". \r\n* `MIC` Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code BIC\".\r\n* `Bankpartyidentification` Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` Country authority given organisation identification e.g., corporate registration number\r\n* `Customernumber` Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering EAN numbering scheme rules. The number is used to retrieve detailed information that is linked to it. iso20022"
+    Organisationdatetimetypevalues:
+      enum:
+        - RegistrationDate
+        - EstablishmentDate
+        - EntityExpirationDate
+      type: string
+      description: ">\r\n* `RegistrationDate` Date and time at which a given organisation was officially registered. ISO20022\r\n* `EstablishmentDate` Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationtypevalues:
+      enum:
+        - LegalEntity
+        - Authority
+        - OrganisationUnit
+        - FinancialInstitution
+        - Charity
+        - GovernmentBody
+      type: string
+      description: ">\r\n* `LegalEntity` \r\n* `Authority` \r\n* `OrganisationUnit` \r\n* `FinancialInstitution` \r\n* `Charity` \r\n* `GovernmentBody` "
+    Organisationnametypevalues:
+      enum:
+        - ShortName
+        - TradingName
+        - LegalName
+      type: string
+      description: ">\r\n* `ShortName` \r\n* `TradingName` \r\n* `LegalName` "
+    Organisationlegalstructuretypevalues:
+      enum:
+        - Corporation
+        - Individual
+        - Supranational
+        - Sovereign
+        - Municipal
+        - Province
+        - State
+        - County
+        - Partnership
+        - Financialinstitution
+        - National
+      type: string
+      description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+    Partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\r\n* `Person` Human entity, as distinguished from a corporate entity which is sometimes referred to as an 'artificial person'. ISO20022\r\n* `Organisation` Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+    Partyidentificationtypevalues:
+      enum:
+        - Taxidentificationnumber
+        - Nationalregistrationnumber
+        - Registrationauthorityidentificatio
+        - LEILegalEntityIdentifier
+        - Alienregistrationnumber
+        - Passportnumber
+        - Taxexemptidentificationnumber
+        - Corporateidentification
+        - Driverlicensenumber
+        - Foreigninvestmentidentitynumber
+        - Socialsecuritynumber
+        - Identitycardnumber
+        - Concat
+        - Nationalregistrationidentification
+      type: string
+      description: ">\r\n* `Taxidentificationnumber` Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. ISO20022\r\n* `Registrationauthorityidentification` An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. ISO20022\r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` Number assigned to a tax exempt entity.\r\n* `Corporateidentification` Number assigned to a corporate entity.\r\n* `Driverlicensenumber` Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` Number assigned to a foreign investor other than the alien number.\r\n* `Socialsecuritynumber` Number assigned by a social security agency.\r\n* `Identitycardnumber` Number assigned by a national authority to an identity card.\r\n* `Concat` Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` National registration identification number. In Singapore this is known as the NRIC."
+    Partylegalstructuretypevalues:
+      enum:
+        - Individual
+        - CommunityInterestCompany
+        - CharitableIncorporatedOrganisation
+        - Co-Operative
+        - Charity
+        - GeneralPartnership
+        - LimitedLiabilityPartnership
+        - ScottishLimitedPartnership
+        - LimitedPartnership
+        - PrivateLimitedCompany
+        - PublicLimitedCompany
+        - SoleSoleTrader
+      type: string
+      description: ">\r\n* `Individual` \r\n* `CommunityInterestCompany` \r\n* `CharitableIncorporatedOrganisation` \r\n* `Co-Operative` \r\n* `Charity` \r\n* `GeneralPartnership` \r\n* `LimitedLiabilityPartnership` \r\n* `ScottishLimitedPartnership` \r\n* `LimitedPartnership` \r\n* `PrivateLimitedCompany` \r\n* `PublicLimitedCompany` \r\n* `SoleSoleTrader` "

@@ -1,0 +1,1317 @@
+asyncapi: 3.0.0
+info:
+  title: Customer Product And Service Eligibility
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | This Service Domain
+    maintains a list of products and services for which a customer is eligible.
+channels:
+  CustomerEligibilityAssessment/Created:
+    address: CustomerEligibilityAssessment/Created
+    messages:
+      CustomerEligibilityAssessment-created.message:
+        $ref: '#/components/messages/CustomerEligibilityAssessment'
+    description: ''
+  CustomerEligibilityAssessment/Updated:
+    address: CustomerEligibilityAssessment/Updated
+    messages:
+      CustomerEligibilityAssessment-updated.message:
+        $ref: '#/components/messages/CustomerEligibilityAssessment'
+    description: ''
+  NextBest/Created:
+    address: NextBest/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/NextBest'
+    description: ''
+  NextBest/Updated:
+    address: NextBest/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/NextBest'
+    description: ''
+  EligibilityCheck/Created:
+    address: EligibilityCheck/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/EligibilityCheck'
+    description: ''
+  EligibilityCheck/Updated:
+    address: EligibilityCheck/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/EligibilityCheck'
+    description: ''
+operations:
+  CustomerEligibilityAssessment-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerEligibilityAssessment~1Created'
+    summary: CustomerEligibilityAssessment
+    messages:
+      - $ref: >-
+          #/channels/CustomerEligibilityAssessment~1Created/messages/CustomerEligibilityAssessment-created.message
+  CustomerEligibilityAssessment-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CustomerEligibilityAssessment~1Updated'
+    summary: CustomerEligibilityAssessment
+    messages:
+      - $ref: >-
+          #/channels/CustomerEligibilityAssessment~1Updated/messages/CustomerEligibilityAssessment-updated.message
+  NextBest/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/NextBest~1Created'
+    summary: NextBest
+    messages:
+      - $ref: '#/channels/NextBest~1Created/messages/publish.message'
+  NextBest/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/NextBest~1Updated'
+    summary: NextBest
+    messages:
+      - $ref: '#/channels/NextBest~1Updated/messages/publish.message'
+  EligibilityCheck/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/EligibilityCheck~1Created'
+    summary: EligibilityCheck
+    messages:
+      - $ref: '#/channels/EligibilityCheck~1Created/messages/publish.message'
+  EligibilityCheck/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/EligibilityCheck~1Updated'
+    summary: EligibilityCheck
+    messages:
+      - $ref: '#/channels/EligibilityCheck~1Updated/messages/publish.message'
+components:
+  messages:
+    CustomerEligibilityAssessment:
+      name: CustomerEligibilityAssessment
+      description: ''
+      payload:
+        $ref: '#/components/schemas/CustomerEligibilityAssessment'
+    NextBest:
+      name: NextBest
+      description: ''
+      payload:
+        $ref: '#/components/schemas/NextBest'
+    EligibilityCheck:
+      name: EligibilityCheck
+      description: ''
+      payload:
+        $ref: '#/components/schemas/EligibilityCheck'
+  schemas:
+    NextBest:
+      type: object
+      description: ''
+      properties:
+        RequestedProductandServiceProperties:
+          $ref: '#/components/schemas/ProductFeature'
+          description: "Product/service features used to focus the selection ||\r\n|"
+        ProductServiceType:
+          $ref: '#/components/schemas/Bankingproducttype'
+          description: "The general type of product/service for which the best eligible product match is requested e.g. term deposit, loan ||\r\n|"
+        CustomerProductandServiceNextBestAssessmentResult:
+          $ref: '#/components/schemas/Assessment'
+          description: >-
+            The result is a descending list of matched products with the
+            associated eligibility that are available to the customer
+            Assessment|Assessment
+            https://www.iso20022.org/standardsrepository/type/Assessment|Standard|ISO20022
+            BM 
+    ProductFeature:
+      type: object
+      format: ProductFeature
+      description: "Product/service features used to focus the selection ||\r\n|"
+      properties:
+        ProductFeatureType:
+          $ref: '#/components/schemas/Productfeaturetypevalues'
+          format: ProductFeature
+          description: ">\r\n* `Bankingservice` A classification that distinguishes between instances of product features according to the core banking services, functionality and/or objectives of banking.\n\ne.g. deposit services, exchange services, etc.\n\nThe primary reason for the contract with the client are the banking services. These services can be classified as follows:-\n1. Selling services\n2. Financial Instruments Exchange\n3. Financial Stock Management\n4. Financial Transfers\n5. Financial Risk Transfer\n6. Business Operating\n7. Advisory\n8. Reporting\n\n\r\n* `Administrationservice` A classification that distinguishes between instances of product features according to administrative tasks related to the Banking Product or Service.\r\n* `Accessservice` A classification that distinguishes between product features according to way of the banking services can be accessed.\n\nThe access to services becomes more and more important in the evolving markets. \nWe need to separate different parts:-\n1. The physical access to the infrastructure that allows access to the bank where\n2. The authorization of different parties to use the services of the bank who\n3. The agreed procedure to have access to different services how\n4. The services that are available for the different parties what\n\r\n* `Pricefeature` A classification that distinguishes between instances of product features according to the cost/profit that is related to Banking Products or Services.\n\nIn all commercial offerings, there is an agreed cost for both parties e.g. the interest arrangements are in both directions. The pricing structure of products or packages is a service that gives the possibility to the client to adapt his costs to his individual situation.\nWe see different generic categories in the pricing structure of the different products.\n1. Compensations\n2. Prices\n3. Fees\n4. Discounts"
+        ProductFeatureSpecification:
+          type: string
+          format: String
+          description: ' '
+        ProductFeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        ProductFeatureName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        ProductFeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: >-
+        Reference to an entity that assigns and manages the identification.
+
+        tReference to the organization or agency that issued the identifier
+        e.g., DMV, Passport Office. 
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Bankingproducttype:
+      type: object
+      format: Bankingproducttype
+      description: "The general type of product/service for which the best eligible product match is requested e.g. term deposit, loan ||\r\n|"
+      properties:
+        ProductTypeDefinition:
+          type: string
+          format: String
+          description: ''
+        ProductType:
+          $ref: '#/components/schemas/Bankingproducttypevalues'
+          format: Bankingproducttype
+          description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+        ProductClassificationIssuingAuthority:
+          type: string
+          format: String
+          description: ''
+    Assessment:
+      type: object
+      format: Assessment
+      description: >-
+        The result is a descending list of matched products with the associated
+        eligibility that are available to the customer Assessment|Assessment
+        https://www.iso20022.org/standardsrepository/type/Assessment|Standard|ISO20022
+        BM 
+      properties:
+        AssessmentType:
+          $ref: '#/components/schemas/Assessmenttypevalues'
+          format: Assessment
+          description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying:1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories:something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:-2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+        AssessmentMethod:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: ''
+        AssessmentDescription:
+          type: string
+          format: String
+          description: ' '
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+          description: ''
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        AssessmentResult:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+          description: >-
+            Document that provides background or corroborating information
+            regarding an assessments. 
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+          description: 'Document that represents the result of an assessments. '
+        AssessmentRequiredAdjustment:
+          type: string
+          format: String
+          description: 'Change that the assessment reveals is needed. '
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+          description: ''
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+          description: 'Date when the assessment expires. ISO20022 '
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        AssessmentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Schedule:
+      type: object
+      format: Schedule
+      description: ' '
+      properties:
+        ScheduleType:
+          type: string
+          format: String
+          description: ' '
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          type: string
+          format: String
+          description: 'The type or category of model   '
+        ModelPurpose:
+          type: string
+          format: String
+          description: >-
+            A description of the model that clarifies the intended
+            analysis/insights provided 
+        ModelVersion:
+          type: string
+          format: String
+          description: ' '
+        ModelName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessments. '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of a
+            Document. 
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        DocumentType:
+          $ref: '#/components/schemas/Financialdocumenttypevalues'
+          format: Document
+          description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+          description: 'Status of the document e.g. delivered, paid, etc.. ISO20022 '
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/Documentdatetimetypevalues'
+          format: Document
+          description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
+        DocumentPurpose:
+          type: string
+          format: String
+          description: 'Specifies the function of the document. ISO20022 '
+        DocumentFormat:
+          type: string
+          format: String
+          description: ' '
+        DocumentSubject:
+          type: string
+          format: String
+          description: ' '
+        DocumentDescription:
+          type: string
+          format: String
+          description: ' '
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: 'Date when the assessment expires. ISO20022 '
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ' '
+    EligibilityCheck:
+      type: object
+      description: ''
+      properties:
+        CustomerProductandServiceEligibilityAssessmentResult:
+          $ref: '#/components/schemas/CustomerProductProfileAssessment'
+          description: "The result of the eligibility assessment for the requested product/service details any eligibility considerations or requirements and the applicable terms ||\r\n|"
+    CustomerProductProfileAssessment:
+      type: object
+      format: CustomerProductProfileAssessment
+      description: "The result of the eligibility assessment for the requested product/service details any eligibility considerations or requirements and the applicable terms ||\r\n|"
+      properties:
+        AssessmentType:
+          $ref: '#/components/schemas/Assessmenttypevalues'
+          format: CustomerProductProfileAssessment
+          description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying:1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories:something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:-2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+        AssessmentMethod:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: ''
+        AssessmentDescription:
+          type: string
+          format: String
+          description: ' '
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+          description: ''
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        AssessmentResult:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+          description: >-
+            Document that provides background or corroborating information
+            regarding an assessments. 
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+          description: 'Document that represents the result of an assessments. '
+        AssessmentRequiredAdjustment:
+          type: string
+          format: String
+          description: 'Change that the assessment reveals is needed. '
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+          description: ''
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+          description: 'Date when the assessment expires. ISO20022 '
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        AssessmentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    CustomerEligibilityAssessment:
+      type: object
+      description: ''
+      properties:
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the associated customer can currently be a person or a company ||\r\n|"
+        CustomerProductandServiceProfile:
+          $ref: '#/components/schemas/CustomerProductAndServiceProfile'
+          description: "This is the is the eligibility profile including in-force product terms ||\r\n|"
+        ProductandServiceType:
+          $ref: '#/components/schemas/Customerproductserviceprofiletypevalues'
+          description: ">\r\n* `Customerproductserviceeligibilityprofile` \r\n* `Customerproductserviceusageprofile` \r\n* `Customerproductservicecoverageprofile` \r\n* `Customerproductservicesaleprofile` \r\n* `Customerproductserviceconsentprofile` "
+        CustomerProductandServiceTypeEligibility:
+          $ref: '#/components/schemas/Arrangement'
+          description: >-
+            Defines if and under what terms a product/service is available to
+            this customer this detail is maintained by the service domain and
+            referenced by this evaluation Obligation|Obligation
+            https://www.iso20022.org/standardsrepository/type/Obligation|Standard|ISO20022
+            BM 
+        CustomerProductandServiceTypeUsage:
+          $ref: '#/components/schemas/ProductUsage'
+          description: "Records the sold/in-force status of a product/service with the customer. Again this detail is maintained by the service domain and referenced by this evaluation ||\r\n|"
+        Date:
+          $ref: '#/components/schemas/Date'
+          description: >-
+            The date time of the assessment ISODate|ISODate
+            https://www.iso20022.org/standardsrepository/type/ISODate|Standard|ISO20022
+            BM 
+    CustomerProductAndServiceProfile:
+      type: object
+      format: CustomerProductAndServiceProfile
+      description: "This is the is the eligibility profile including in-force product terms ||\r\n|"
+      properties:
+        ProfileType:
+          $ref: '#/components/schemas/Customerproductserviceprofiletypevalues'
+          format: CustomerProductAndServiceProfile
+          description: ">\r\n* `Customerproductserviceeligibilityprofile` \r\n* `Customerproductserviceusageprofile` \r\n* `Customerproductservicecoverageprofile` \r\n* `Customerproductservicesaleprofile` \r\n* `Customerproductserviceconsentprofile` "
+        CustomerReference:
+          $ref: '#/components/schemas/Customerrelationship'
+          description: ''
+        ProductReference:
+          $ref: '#/components/schemas/Product'
+          description: ''
+        ServiceReference:
+          $ref: '#/components/schemas/Service'
+          description: ''
+    Customerrelationship:
+      type: object
+      format: Customerrelationship
+      description: ' '
+      properties:
+        RelationshipType:
+          type: string
+          format: String
+          description: ' '
+        RelationshipValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        RelationshipStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        RelationshipEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        RelationshipLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        RelationshipIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Product:
+      type: object
+      format: Product
+      description: ' '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+          description: 'The identifier of product e.g. ISIN Code. '
+        ProductType:
+          $ref: '#/components/schemas/Bankingproducttypevalues'
+          format: Product
+          description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+          description: >-
+            Refers to the lifecycle of a product e.g., initiated, announced,
+            active, obsolete, withdrawn. 
+        ProductPriority:
+          type: string
+          format: String
+          description: ' '
+        ProductDescription:
+          type: string
+          format: String
+          description: 'A detailed explanation or commentary of product. '
+        ProductVersion:
+          type: string
+          format: String
+          description: ' '
+        ProductName:
+          $ref: '#/components/schemas/Name'
+          description: >-
+            The name of Product. 
+
+
+            Open Banking:
+
+            The name of the product used for marketing purposes from a customer
+            perspective. I.e. what the customer would recognise. 
+        FinancialInstrumentType:
+          $ref: '#/components/schemas/Financialinstrumenttypevalues'
+          format: Product
+          description: ">\r\n* `Loan` \r\n* `Bond` \r\n* `Deposit` \r\n* `Stock` \r\n* `Option` \r\n* `Share` \r\n* `Debt` Financial instruments evidencing moneys owed by the issuer to the holder on terms as specified. ISO20022\n\nAny type of instrument primarily classified as debt can be considered a debt instrument. Debt instruments are tools an individual, government entity, or business entity can utilize for the purpose of obtaining capital. Debt instruments provide capital to an entity that promises to repay the capital over time. Credit cards, credit lines, loans, and bonds can all be types of debt instruments. Investopedia\r\n* `Letterofcredit` Instrument issued by a bank substituting its name and credit standing for that of its customer. A letter of credit is a written undertaking of the bank, issued for the account of a customer the applicant, to honour a demand for payment, upon the beneficiary's compliance with the terms and conditions set forth in the undertaking. ISO20022\r\n* `Security` Financial instruments representing a sum of rights of the investor vis-a-vis the issuer. ISO20022\r\n* `Derivative` "
+        FinancialInstrumentIdentification:
+          $ref: '#/components/schemas/Financialinstrumentidentification'
+          description: ''
+        FinancialInstrumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        FinancialInstrumentDate:
+          $ref: '#/components/schemas/Financialinstrumentdatetime'
+          description: 'Key dates of financial instrument '
+        AssetTitle:
+          type: string
+          format: String
+          description: ' '
+        AssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of an
+            Asset.
+             
+        AssetType:
+          $ref: '#/components/schemas/Assettypevalues'
+          format: Product
+          description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+        AssetDescription:
+          type: string
+          format: String
+          description: 'Description of the asset  '
+        AssetStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The status of an asset; dependent on the tpe of asset this can be
+            free, mortgaged, blocked and more 
+        AssetDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key date and times of an asset like Maturity Date, Register Date,
+            ... 
+        AssetClassification:
+          type: string
+          format: String
+          description: 'Classification of the asset.ISO20022 '
+        AssetClassificationType:
+          $ref: '#/components/schemas/Assetclassificationtypevalues'
+          format: Product
+          description: ">\r\n* `Assetclassificationtypevalues` "
+        AssetSubClassificationType:
+          $ref: '#/components/schemas/Assetsubclassificationtypevalues'
+          format: Product
+          description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+        AssetSubClassification:
+          type: string
+          format: String
+          description: ' '
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        ProductIdentificationType:
+          $ref: '#/components/schemas/Productidentificationtypevalues'
+          format: Productidentification
+          description: ">\r\n* `ISINCode` \r\n* `PackageCode` \r\n* `Buyersitemnumber` Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` A code to identify a product based on applicable commercial conditions.\r\n* `EAN` The unique EAN European Article Number code.\r\n* `Harmonizedtariffcodename` Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` Product identifier used by the retail industry.\r\n* `Stylenumber` Identification of the style of a product.\r\n* `Suppliersitemnumber` Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` Number assigned to a manufacturer's product by the Product Code Council."
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product e.g., initiated, announced, active,
+        obsolete, withdrawn. 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        ProductStatusType:
+          $ref: '#/components/schemas/Productstatustypevalues'
+          format: Productstatus
+          description: ">\r\n* `Initiated` \r\n* `Announced` \r\n* `Sold` \r\n* `Obsolete` \r\n* `Active` "
+    Financialinstrumentidentification:
+      type: object
+      format: Financialinstrumentidentification
+      description: ' '
+      properties:
+        FinancialInstrumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        FinancialInstrumentIdentificationType:
+          $ref: '#/components/schemas/Financialinstrumentidentificationtypevalues'
+          format: Financialinstrumentidentification
+          description: ">\r\n* `NASDAQ` \r\n* `ISIN` "
+    Financialinstrumentdatetime:
+      type: object
+      format: Financialinstrumentdatetime
+      description: 'Key dates of financial instrument '
+      properties:
+        FinancialInstrumentDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        FinancialInstrumentDateType:
+          $ref: '#/components/schemas/Financialinstrumentdatetimetypevalues'
+          format: Financialinstrumentdatetime
+          description: ">\r\n* `CouponDate` Next payment date of an interest bearing financial instrument.ISO20022\r\n* `ExpiryDate` Date on which a privilege expires.ISO20022\r\n* `FloatingRateFixingDate` Date at which the interest rate of an interest bearing security will be calculated and reset, according to the terms of the issue.ISO20022\r\n* `MaturityDate` Planned final repayment date at the time of issuance.ISO20022\r\n* `IssueDate` Date at which the security was made available.ISO20022\r\n* `NextCallableDate` Next date at which the issuer has the right to pay the security prior to maturity.ISO20022\r\n* `PutableDate` Date at which the holder has the right to ask for redemption of the security prior to final maturity.ISO20022\r\n* `DatedDate` First date at which a security begins to accrue interest.ISO20022\r\n* `FirstPaymentDate` Date at which the first interest payment is due to holders of the security.ISO20022"
+    Service:
+      type: object
+      format: Service
+      description: ' '
+      properties:
+        ServiceName:
+          $ref: '#/components/schemas/Name'
+          description: 'The name of service.  '
+        ServiceDescription:
+          type: string
+          format: String
+          description: 'A detailed explanation or commentary of service '
+        ServiceType:
+          $ref: '#/components/schemas/Servicetypevalues'
+          format: Service
+          description: ">\r\n* `ITService` \r\n* `AdministrativeService` \r\n* `SystemService` \r\n* `FinancialService` \r\n* `InformationService` \r\n* `BusinessService` "
+        ServiceIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: 'The identifier of service. '
+        ServiceLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            A characteristic of service which refers to the lifecycle of service
+            e.g., initiated, active, de-active, etc.  
+        ServiceFeature:
+          $ref: '#/components/schemas/Feature'
+          description: >-
+            A characteristic of service which refers 1 mainly to the function or
+            condition of service. 2 to non-functional features like quality and
+            security 
+        FeatureType:
+          $ref: '#/components/schemas/Featuretypevalues'
+          format: Service
+          description: ">\r\n* `FeeFeature` This refers to the functionality in a system or platform that manages, calculates, or displays fees associated with specific transactions or services.\r\n* `InterestFeature` This feature calculates and tracks interest earnings or charges on accounts, loans, or investments over time.\r\n* `WithdrawalFeature` The withdraw feature typically refers to an option or functionality that allows users to retrieve or remove something from a system or platform.\r\n* `DepositFeature` This refers to a functionality that allows users to add funds to an account or system, often by transferring money from another source.\r\n* `SweepFeature` \r\n* `LienFeature` \r\n* `PaymentFeature` This refers to the functionality that facilitates or tracks the transfer of funds for a purchase or settlement of dues.\r\n* `RepaymentFeature` This feature facilitates or manages the process of paying back borrowed funds, such as loans, credit card balances, or advances.\r\n* `LimitFeature` This feature sets, monitors, or enforces restrictions on the maximum amount that can be accessed, spent, or transacted within a system.\r\n* `OverdraftFeature` This functionality allows users to withdraw more money than what is available in their account balance, often up to a predefined limit.\r\n* `StatementFeature` The statement feature refers to a functionality in banking, finance, or digital platforms that provides users with a detailed record of their transactions or activities over a specific period.\r\n* `CurrencyExchangeFeature` This feature enables users to convert funds from one currency to another at prevailing exchange rates, often within financial or payment platforms.\r\n* `PriceFeature` This feature involves displaying or managing the price of goods, services, or financial instruments within a platform."
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        FeatureDescription:
+          type: string
+          format: String
+          description: ' '
+    Feature:
+      type: object
+      format: Feature
+      description: >-
+        A characteristic of service which refers 1 mainly to the function or
+        condition of service. 2 to non-functional features like quality and
+        security 
+      properties:
+        FeatureType:
+          $ref: '#/components/schemas/Featuretypevalues'
+          format: Feature
+          description: ">\r\n* `FeeFeature` This refers to the functionality in a system or platform that manages, calculates, or displays fees associated with specific transactions or services.\r\n* `InterestFeature` This feature calculates and tracks interest earnings or charges on accounts, loans, or investments over time.\r\n* `WithdrawalFeature` The withdraw feature typically refers to an option or functionality that allows users to retrieve or remove something from a system or platform.\r\n* `DepositFeature` This refers to a functionality that allows users to add funds to an account or system, often by transferring money from another source.\r\n* `SweepFeature` \r\n* `LienFeature` \r\n* `PaymentFeature` This refers to the functionality that facilitates or tracks the transfer of funds for a purchase or settlement of dues.\r\n* `RepaymentFeature` This feature facilitates or manages the process of paying back borrowed funds, such as loans, credit card balances, or advances.\r\n* `LimitFeature` This feature sets, monitors, or enforces restrictions on the maximum amount that can be accessed, spent, or transacted within a system.\r\n* `OverdraftFeature` This functionality allows users to withdraw more money than what is available in their account balance, often up to a predefined limit.\r\n* `StatementFeature` The statement feature refers to a functionality in banking, finance, or digital platforms that provides users with a detailed record of their transactions or activities over a specific period.\r\n* `CurrencyExchangeFeature` This feature enables users to convert funds from one currency to another at prevailing exchange rates, often within financial or payment platforms.\r\n* `PriceFeature` This feature involves displaying or managing the price of goods, services, or financial instruments within a platform."
+        FeatureIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        FeatureName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        FeatureLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        FeatureDescription:
+          type: string
+          format: String
+          description: ' '
+    Arrangement:
+      type: object
+      format: Arrangement
+      description: >-
+        Defines if and under what terms a product/service is available to this
+        customer this detail is maintained by the service domain and referenced
+        by this evaluation Obligation|Obligation
+        https://www.iso20022.org/standardsrepository/type/Obligation|Standard|ISO20022
+        BM 
+      properties:
+        ArrangementAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        ArrangementStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ArrangementEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ArrangementStatus:
+          $ref: '#/components/schemas/Arrangementstatus'
+          description: >-
+            A characteristic of arrangement which refers to the LifecycleStatus
+            of arrangement e.g., requested, proposed, offered, accepted,
+            cancelled, terminated, fulfilled, etc. 
+        ArrangementSubjectMatter:
+          $ref: '#/components/schemas/Subject'
+          description: ''
+        Arrangementtype:
+          $ref: '#/components/schemas/Arrangementtypevalues'
+          format: Arrangement
+          description: ">\r\n* `SweepArrangement` An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\r\n* `WithdrawalArrangement` An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \r\n* `DepositArrangement` An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \r\n* `InterestArrangement` An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\r\n* `FeeArrangement` An arrangement into which is promised to apply a charge for services rendered. \r\n* `LienArrangement` An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \r\n* `InformationArrangement` An arrangement concerning the information the bank will provide about the agreement/account\r\n* `PaymentArrangement` An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \r\n* `EntitlementArrangement` Right or obligation linked to the involvement of a party in an agreement\r\n* `PeriodArrangement` \r\n* `CollateralArrangement` An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \r\n* `LimitArrangement` An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \r\n* `AccessArrangement` An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\r\n* `CardPaymentArrangement` An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \r\n* `StandingOrderArrangement` An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \r\n* `OverdraftArrangement` An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \r\n* `RepaymentArrangement` An arrangement into which is promised for paying back money previously borrowed from a lender. \r\n* `StatementArrangement` An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \r\n* `CreditTransferArrangement` An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \r\n* `ProductAndServiceArrangement` \r\n* `FactoringArrangement` \r\n* `RolloverArrangement` Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \r\n* `RestructuringArrangement` \r\n* `InsuranceArrangement` \r\n* `CollectionArrangement` An arrangement into which is promised to collect past-due debts from borrowers\r\n* `UnderwritingArrangement` A contractual agreement between parties that commits the underwriter to assuming risk.\r\n* `TerminationArrangement` \r\n* `MaturityArrangement` \r\n* `AdministrativeArrangement` "
+        ArrangementIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        ActionType:
+          $ref: '#/components/schemas/Actiontypevalues'
+          format: Action
+          description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+        EventType:
+          type: string
+          format: String
+          description: ' '
+        EventDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        EventDescription:
+          type: string
+          format: String
+          description: ' '
+        EventSource:
+          type: string
+          format: Object
+          description: ''
+        EventLocation:
+          $ref: '#/components/schemas/Location'
+          description: ''
+        EventAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        EventStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        EventValue:
+          type: string
+          format: String
+          description: ' '
+        EventValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        EventIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          type: string
+          format: String
+          description: >-
+            A description of the property, particularly if it has landmark
+            characteristics. 
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key dates associated with the directory entry e.g. open date,
+            refresh date. 
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The tracked status e.g. under construction or repair, inhabited,
+            vacant. 
+        LocationType:
+          $ref: '#/components/schemas/Geographicalareatypevalues'
+          format: Location
+          description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+        LocationZoningType:
+          type: string
+          format: String
+          description: >-
+            The planning or zoning status e.g. residential, commercial,
+            industrial. 
+        LocationNeighborhoodType:
+          type: string
+          format: String
+          description: >-
+            The general purpose and neighborhood of the property  e.g.
+            residential, industrial, commercial. 
+        LocationConstructionType:
+          type: string
+          format: String
+          description: >-
+            The construction approach for a property at the location e.g. era
+            and architecture as might be used in valuation. 
+        LocationOccupancyType:
+          type: string
+          format: String
+          description: >-
+            The type of occupancy e.g. residency, business, retail,
+            entertainment. 
+        LocationValue:
+          type: string
+          format: String
+          description: >-
+            The estimated book value of the property at the location - rental
+            and purchase as appropriate. 
+        LocationCapacity:
+          type: string
+          format: String
+          description: >-
+            An indication of the size or scale of the property where appropriate
+            e.g. 4 bedroom, 600 seat auditorium, 40 cover restaurant. 
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        LocationAddress:
+          type: string
+          format: String
+          description: 'Reference to the address of location '
+        LocationName:
+          $ref: '#/components/schemas/Name'
+          description: 'Name label of the location. ISO20022 '
+        LocationTimeZone:
+          type: string
+          format: String
+          description: 'Local time zone. '
+    Arrangementstatus:
+      type: object
+      format: Arrangementstatus
+      description: >-
+        A characteristic of arrangement which refers to the LifecycleStatus of
+        arrangement e.g., requested, proposed, offered, accepted, cancelled,
+        terminated, fulfilled, etc. 
+      properties:
+        ArrangementStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        ArrangementStatusType:
+          $ref: '#/components/schemas/Arrangementstatustypevalues'
+          format: Arrangementstatus
+          description: ">\r\n* `Requested` \r\n* `Proposed` \r\n* `Offered` \r\n* `Accepted` \r\n* `Cancelled` \r\n* `Fulfilled` \r\n* `Terminated` "
+    Subject:
+      type: object
+      format: Subject
+      description: ' '
+      properties:
+        Subject:
+          type: string
+          format: Class
+          description: >-
+            A thing that is discussed or dealt whit in agreement/arrangement
+            about doing or not doing as action something. 
+    ProductUsage:
+      type: object
+      format: ProductUsage
+      description: "Records the sold/in-force status of a product/service with the customer. Again this detail is maintained by the service domain and referenced by this evaluation ||\r\n|"
+      properties:
+        ProductUsageDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ProductUsageVolume:
+          type: string
+          format: String
+          description: 'Usage volume/frequency for in-force product. '
+        ProductUsageIndicator:
+          $ref: '#/components/schemas/Yesnoindicator'
+          description: >-
+            An indicator specifying if the whether the customer has bought  the
+            banking product or not.  
+    Yesnoindicator:
+      type: object
+      format: Yesnoindicator
+      description: >-
+        An indicator specifying if the whether the customer has bought  the
+        banking product or not.  
+      properties:
+        Yesnoindicator:
+          type: string
+          format: DataType
+          description: |-
+            Indicates a "Yes" or "No" type of answer for an element. ISO20022
+            true:Yes
+            false:No 
+    Productfeaturetypevalues:
+      enum:
+        - Bankingservice
+        - Administrationservice
+        - Accessservice
+        - Pricefeature
+      type: string
+      description: ">\r\n* `Bankingservice` A classification that distinguishes between instances of product features according to the core banking services, functionality and/or objectives of banking.\n\ne.g. deposit services, exchange services, etc.\n\nThe primary reason for the contract with the client are the banking services. These services can be classified as follows:\n1. Selling services\n2. Financial Instruments Exchange\n3. Financial Stock Management\n4. Financial Transfers\n5. Financial Risk Transfer\n6. Business Operating\n7. Advisory\n8. Reporting\n\n\r\n* `Administrationservice` A classification that distinguishes between instances of product features according to administrative tasks related to the Banking Product or Service.\r\n* `Accessservice` A classification that distinguishes between product features according to way of the banking services can be accessed.\n\nThe access to services becomes more and more important in the evolving markets. \nWe need to separate different parts:\n1. The physical access to the infrastructure that allows access to the bank where\n2. The authorization of different parties to use the services of the bank who\n3. The agreed procedure to have access to different services how\n4. The services that are available for the different parties what\n\r\n* `Pricefeature` A classification that distinguishes between instances of product features according to the cost/profit that is related to Banking Products or Services.\n\nIn all commercial offerings, there is an agreed cost for both parties e.g. the interest arrangements are in both directions. The pricing structure of products or packages is a service that gives the possibility to the client to adapt his costs to his individual situation.\nWe see different generic categories in the pricing structure of the different products.\n1. Compensations\n2. Prices\n3. Fees\n4. Discounts"
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Bankingproducttypevalues:
+      enum:
+        - LoanProduct
+        - CurrentAccountProduct
+        - SavingAccountProduct
+        - BrokeredProduct
+        - TermDepositProduct
+      type: string
+      description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+    Assessmenttypevalues:
+      enum:
+        - Valuation
+        - Matching
+        - Authorization
+        - Authentication
+        - QualityAssurance
+        - Audit
+        - ComplianceCheck
+        - FundingCheck
+        - SuitabilityCheck
+        - PerformanceCheck
+        - ImpactAssessment
+        - RiskAssessment
+        - Rating
+        - UnderwritingAssessment
+        - Qualification
+        - Verification
+        - KYCAssessment
+        - PEPAssessment
+        - AMLAssessment
+        - EligibilityCheck
+        - ExternalAgencyCheck
+        - EntitlementCheck
+      type: string
+      description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying: 1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories: something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+    Financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjust
+        - Debitnoterelatedtofinancialadjustm
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+    Documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
+    Customerproductserviceprofiletypevalues:
+      enum:
+        - Customerproductserviceeligibilityp
+        - Customerproductserviceusageprofile
+        - Customerproductservicecoverageprof
+        - Customerproductservicesaleprofile
+        - Customerproductserviceconsentprofi
+      type: string
+      description: ">\r\n* `Customerproductserviceeligibilityprofile` \r\n* `Customerproductserviceusageprofile` \r\n* `Customerproductservicecoverageprofile` \r\n* `Customerproductservicesaleprofile` \r\n* `Customerproductserviceconsentprofile` "
+    Productidentificationtypevalues:
+      enum:
+        - ISINCode
+        - PackageCode
+        - Buyersitemnumber
+        - Commercialdescriptioncodename
+        - EAN
+        - Harmonizedtariffcodename
+        - Manufacturersitemnumber
+        - Modelnumber
+        - Partnumber
+        - Quotacategory
+        - Stylenumber
+        - Suppliersitemnumber
+        - Universalproductcode
+      type: string
+      description: ">\r\n* `ISINCode` \r\n* `PackageCode` \r\n* `Buyersitemnumber` Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` A code to identify a product based on applicable commercial conditions.\r\n* `EAN` The unique EAN European Article Number code.\r\n* `Harmonizedtariffcodename` Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` Product identifier used by the retail industry.\r\n* `Stylenumber` Identification of the style of a product.\r\n* `Suppliersitemnumber` Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` Number assigned to a manufacturer's product by the Product Code Council."
+    Productstatustypevalues:
+      enum:
+        - Initiated
+        - Announced
+        - Sold
+        - Obsolete
+        - Active
+      type: string
+      description: ">\r\n* `Initiated` \r\n* `Announced` \r\n* `Sold` \r\n* `Obsolete` \r\n* `Active` "
+    Financialinstrumenttypevalues:
+      enum:
+        - Loan
+        - Bond
+        - Deposit
+        - Stock
+        - Option
+        - Share
+        - Debt
+        - Letterofcredit
+        - Security
+        - Derivative
+      type: string
+      description: ">\r\n* `Loan` \r\n* `Bond` \r\n* `Deposit` \r\n* `Stock` \r\n* `Option` \r\n* `Share` \r\n* `Debt` Financial instruments evidencing moneys owed by the issuer to the holder on terms as specified. ISO20022\n\nAny type of instrument primarily classified as debt can be considered a debt instrument. Debt instruments are tools an individual, government entity, or business entity can utilize for the purpose of obtaining capital. Debt instruments provide capital to an entity that promises to repay the capital over time. Credit cards, credit lines, loans, and bonds can all be types of debt instruments. Investopedia\r\n* `Letterofcredit` Instrument issued by a bank substituting its name and credit standing for that of its customer. A letter of credit is a written undertaking of the bank, issued for the account of a customer the applicant, to honour a demand for payment, upon the beneficiary's compliance with the terms and conditions set forth in the undertaking. ISO20022\r\n* `Security` Financial instruments representing a sum of rights of the investor vis-a-vis the issuer. ISO20022\r\n* `Derivative` "
+    Financialinstrumentidentificationtypevalues:
+      enum:
+        - NASDAQ
+        - ISIN
+      type: string
+      description: ">\r\n* `NASDAQ` \r\n* `ISIN` "
+    Financialinstrumentdatetimetypevalues:
+      enum:
+        - CouponDate
+        - ExpiryDate
+        - FloatingRateFixingDate
+        - MaturityDate
+        - IssueDate
+        - NextCallableDate
+        - PutableDate
+        - DatedDate
+        - FirstPaymentDate
+      type: string
+      description: ">\r\n* `CouponDate` Next payment date of an interest bearing financial instrument.ISO20022\r\n* `ExpiryDate` Date on which a privilege expires.ISO20022\r\n* `FloatingRateFixingDate` Date at which the interest rate of an interest bearing security will be calculated and reset, according to the terms of the issue.ISO20022\r\n* `MaturityDate` Planned final repayment date at the time of issuance.ISO20022\r\n* `IssueDate` Date at which the security was made available.ISO20022\r\n* `NextCallableDate` Next date at which the issuer has the right to pay the security prior to maturity.ISO20022\r\n* `PutableDate` Date at which the holder has the right to ask for redemption of the security prior to final maturity.ISO20022\r\n* `DatedDate` First date at which a security begins to accrue interest.ISO20022\r\n* `FirstPaymentDate` Date at which the first interest payment is due to holders of the security.ISO20022"
+    Assettypevalues:
+      enum:
+        - TangibleAsset
+        - IntangibleAsset
+        - OperatingAsset
+        - Non-OperatingAsset
+        - CurrentAsset
+        - Non-CurrentFixedAsset
+        - PersonalAsset
+        - BusinessAsset
+      type: string
+      description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+    Assetclassificationtypevalues:
+      enum:
+        - Assetclassificationtypevalues
+      type: string
+      description: ">\r\n* `Assetclassificationtypevalues` "
+    Assetsubclassificationtypevalues:
+      enum:
+        - Subassetclass
+        - Timetomaturitybucket
+        - Optiontimetomaturitybucket
+        - Swaptimetomaturitybucket
+        - Underlyinginstrumentidentification
+        - Underlyingbondissuer
+        - Underlyinginterestrate
+        - Underlyingbondterm
+        - Assetclass
+        - Underlyingindexidentification
+        - Interestratetermofcontract
+        - Underlyingreferenceentity
+        - Sovereignandpublictypeissuer
+        - Irdnotionalcurrency1
+        - Fexnotionalcurrency1
+        - Cfdnotionalcurrency1
+        - Fexnotionalcurrency2
+        - Irdnotionalcurrency2
+        - Cfdnotionalcurrency2
+        - Swaptionnotionalcurrency
+        - Creditnotionalcurrency
+        - Commoditynotionalcurrency
+        - Contracttype
+        - Baseproduct
+        - Subproduct
+        - Furthersubproduct
+        - Deliverycashlocation
+        - Deliverysettlementtype
+        - Sizespecificationrelatedtofreights
+        - Specificroutetimecharteraverage
+        - Equityunderlyingtype
+        - Parameter
+        - Inflationindexcodename
+        - ISIN
+        - Underlyingindexcdssubclassidentifi
+        - Underlyingtype
+      type: string
+      description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+    Servicetypevalues:
+      enum:
+        - ITService
+        - AdministrativeService
+        - SystemService
+        - FinancialService
+        - InformationService
+        - BusinessService
+      type: string
+      description: ">\r\n* `ITService` \r\n* `AdministrativeService` \r\n* `SystemService` \r\n* `FinancialService` \r\n* `InformationService` \r\n* `BusinessService` "
+    Featuretypevalues:
+      enum:
+        - FeeFeature
+        - InterestFeature
+        - WithdrawalFeature
+        - DepositFeature
+        - SweepFeature
+        - LienFeature
+        - PaymentFeature
+        - RepaymentFeature
+        - LimitFeature
+        - OverdraftFeature
+        - StatementFeature
+        - CurrencyExchangeFeature
+        - PriceFeature
+      type: string
+      description: ">\r\n* `FeeFeature` This refers to the functionality in a system or platform that manages, calculates, or displays fees associated with specific transactions or services.\r\n* `InterestFeature` This feature calculates and tracks interest earnings or charges on accounts, loans, or investments over time.\r\n* `WithdrawalFeature` The withdraw feature typically refers to an option or functionality that allows users to retrieve or remove something from a system or platform.\r\n* `DepositFeature` This refers to a functionality that allows users to add funds to an account or system, often by transferring money from another source.\r\n* `SweepFeature` \r\n* `LienFeature` \r\n* `PaymentFeature` This refers to the functionality that facilitates or tracks the transfer of funds for a purchase or settlement of dues.\r\n* `RepaymentFeature` This feature facilitates or manages the process of paying back borrowed funds, such as loans, credit card balances, or advances.\r\n* `LimitFeature` This feature sets, monitors, or enforces restrictions on the maximum amount that can be accessed, spent, or transacted within a system.\r\n* `OverdraftFeature` This functionality allows users to withdraw more money than what is available in their account balance, often up to a predefined limit.\r\n* `StatementFeature` The statement feature refers to a functionality in banking, finance, or digital platforms that provides users with a detailed record of their transactions or activities over a specific period.\r\n* `CurrencyExchangeFeature` This feature enables users to convert funds from one currency to another at prevailing exchange rates, often within financial or payment platforms.\r\n* `PriceFeature` This feature involves displaying or managing the price of goods, services, or financial instruments within a platform."
+    Actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+    Geographicalareatypevalues:
+      enum:
+        - Continent
+        - Country
+        - State
+        - District
+        - Province
+        - Town
+        - City
+        - Region
+      type: string
+      description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+    Arrangementstatustypevalues:
+      enum:
+        - Requested
+        - Proposed
+        - Offered
+        - Accepted
+        - Cancelled
+        - Fulfilled
+        - Terminated
+      type: string
+      description: ">\r\n* `Requested` \r\n* `Proposed` \r\n* `Offered` \r\n* `Accepted` \r\n* `Cancelled` \r\n* `Fulfilled` \r\n* `Terminated` "
+    Arrangementtypevalues:
+      enum:
+        - SweepArrangement
+        - WithdrawalArrangement
+        - DepositArrangement
+        - InterestArrangement
+        - FeeArrangement
+        - LienArrangement
+        - InformationArrangement
+        - PaymentArrangement
+        - EntitlementArrangement
+        - PeriodArrangement
+        - CollateralArrangement
+        - LimitArrangement
+        - AccessArrangement
+        - CardPaymentArrangement
+        - StandingOrderArrangement
+        - OverdraftArrangement
+        - RepaymentArrangement
+        - StatementArrangement
+        - CreditTransferArrangement
+        - ProductAndServiceArrangement
+        - FactoringArrangement
+        - RolloverArrangement
+        - RestructuringArrangement
+        - InsuranceArrangement
+        - CollectionArrangement
+        - UnderwritingArrangement
+        - TerminationArrangement
+        - MaturityArrangement
+        - AdministrativeArrangement
+      type: string
+      description: ">\r\n* `SweepArrangement` An arrangement into which is promised for the set-up and execution of structured sweeps to and from the facility to a linked account.\r\n* `WithdrawalArrangement` An arrangement into which is promised to deliver Withdraw Service  to take fund out of an account. \r\n* `DepositArrangement` An arrangement into which is promised to deliver Deposit Service  to place funds into an account for safekeeping. \r\n* `InterestArrangement` An arrangement into which is promised to apply a pricing element expressed in a percentage  to a principal amount.\r\n* `FeeArrangement` An arrangement into which is promised to apply a charge for services rendered. \r\n* `LienArrangement` An arrangement into which is promised for placing a lien or block on the account for a specified purpose, amount, and period. \r\n* `InformationArrangement` An arrangement concerning the information the bank will provide about the agreement/account\r\n* `PaymentArrangement` An arrangement into which is promised to deliver a specific payment service including regular payments, standing orders, direct debits and bill pay instructions. \r\n* `EntitlementArrangement` Right or obligation linked to the involvement of a party in an agreement\r\n* `PeriodArrangement` \r\n* `CollateralArrangement` An arrangement into which is promised for handling the oversight of the allocation, valuation and administration of collateral associated with the facility. \r\n* `LimitArrangement` An arrangement to limit something\ne.g., the number of transaction per week, the amount of money allowed to withdraw per week/day and etc. \r\n* `AccessArrangement` An arrangement that allows or restricts the access to a service or product, channel or device through a specific access point\r\n* `CardPaymentArrangement` An arrangement into which is promised to deliver Card payment Service to execute payment transactions through a payment card, including online payments. \r\n* `StandingOrderArrangement` An arrangement into which is promised to deliver Standing Order Service to make regular transfers on given dates to a named beneﬁciary. \r\n* `OverdraftArrangement` An arrangement into which is promised to deliver Overdraft Service  that allows fund transfer even if there is no provision on the account. \r\n* `RepaymentArrangement` An arrangement into which is promised for paying back money previously borrowed from a lender. \r\n* `StatementArrangement` An arrangement into which is promised to deliver a reporting service on payment transactions registered on an account. \r\n* `CreditTransferArrangement` An arrangement into which is promised to allow a payer to transfer fund to a beneficiary. \r\n* `ProductAndServiceArrangement` \r\n* `FactoringArrangement` \r\n* `RolloverArrangement` Arrangement stipulating the modalities for an automatic renewal of the agreement\n\ni.e. the replacement of the agreement with a new one without renewed negociation and witout explicit agreement of the customer \r\n* `RestructuringArrangement` \r\n* `InsuranceArrangement` \r\n* `CollectionArrangement` An arrangement into which is promised to collect past-due debts from borrowers\r\n* `UnderwritingArrangement` A contractual agreement between parties that commits the underwriter to assuming risk.\r\n* `TerminationArrangement` \r\n* `MaturityArrangement` \r\n* `AdministrativeArrangement` "

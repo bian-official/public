@@ -1,0 +1,129 @@
+asyncapi: 3.0.0
+info:
+  title: Brokered Product Proxy
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | This Service Domain
+    oversees all activities associated with the coordinated delivery of 3rd
+    party products and services
+channels:
+  BrokeredProductFacility/Created:
+    address: BrokeredProductFacility/Created
+    messages:
+      BrokeredProductFacility-created.message:
+        $ref: '#/components/messages/BrokeredProductFacility'
+    description: ''
+  BrokeredProductFacility/Updated:
+    address: BrokeredProductFacility/Updated
+    messages:
+      BrokeredProductFacility-updated.message:
+        $ref: '#/components/messages/BrokeredProductFacility'
+    description: ''
+  ServiceAccess/Created:
+    address: ServiceAccess/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ServiceAccess'
+    description: ''
+  ServiceAccess/Updated:
+    address: ServiceAccess/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/ServiceAccess'
+    description: ''
+operations:
+  BrokeredProductFacility-created:
+    action: receive
+    channel:
+      $ref: '#/channels/BrokeredProductFacility~1Created'
+    summary: BrokeredProductFacility
+    messages:
+      - $ref: >-
+          #/channels/BrokeredProductFacility~1Created/messages/BrokeredProductFacility-created.message
+  BrokeredProductFacility-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/BrokeredProductFacility~1Updated'
+    summary: BrokeredProductFacility
+    messages:
+      - $ref: >-
+          #/channels/BrokeredProductFacility~1Updated/messages/BrokeredProductFacility-updated.message
+  ServiceAccess/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ServiceAccess~1Created'
+    summary: ServiceAccess
+    messages:
+      - $ref: '#/channels/ServiceAccess~1Created/messages/publish.message'
+  ServiceAccess/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/ServiceAccess~1Updated'
+    summary: ServiceAccess
+    messages:
+      - $ref: '#/channels/ServiceAccess~1Updated/messages/publish.message'
+components:
+  messages:
+    BrokeredProductFacility:
+      name: BrokeredProductFacility
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brokered Product.
+      payload:
+        $ref: '#/components/schemas/BrokeredProductFacility'
+    ServiceAccess:
+      name: ServiceAccess
+      description: ''
+      payload:
+        $ref: '#/components/schemas/ServiceAccess'
+  schemas:
+    ServiceAccess:
+      type: object
+      description: ''
+      properties:
+        ServiceAccessIdentifier:
+          type: string
+          format: Identifier
+          description: >-
+            An unique reference to an item or an occurrence of <BQ>
+            GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        ServiceAccessType:
+          type: string
+          format: String
+          description: " ||\r\n|"
+    BrokeredProductFacility:
+      type: object
+      description: >-
+        Oversee the working of a business unit, assign work, manage against a
+        plan and troubleshoot issues within Brokered Product.
+      properties:
+        ConsentReference:
+          type: string
+          format: AccountAccessConsent
+          description: "Reference to the Customer's account ||\r\n|"
+        ActiveAccessTokenReference:
+          type: string
+          format: Token
+          description: ''
+        BrokeredProductFacilityReference:
+          type: string
+          format: Identifier
+          description: >-
+            An unique reference to an item or an occurrence of <CR>
+            GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM
+        ServiceProviderReference:
+          type: string
+          format: Involvedparty
+          description: ''
+        ServiceUserReference:
+          type: string
+          format: Involvedparty
+          description: ''
+        ThirdPartyProviderReference:
+          type: string
+          format: Involvedparty
+          description: ''

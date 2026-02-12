@@ -1,0 +1,235 @@
+asyncapi: 3.0.0
+info:
+  title: Card Transaction Tracking
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | Maintain a log of credit
+    card bookings and authorizations for operational and management information,
+    tracking and reconciliation purposes.
+channels:
+  CreditCardPositionLog/Created:
+    address: CreditCardPositionLog/Created
+    messages:
+      CreditCardPositionLog-created.message:
+        $ref: '#/components/messages/CreditCardPositionLog'
+    description: ''
+  CreditCardPositionLog/Updated:
+    address: CreditCardPositionLog/Updated
+    messages:
+      CreditCardPositionLog-updated.message:
+        $ref: '#/components/messages/CreditCardPositionLog'
+    description: ''
+  CardTransactionEvent/Created:
+    address: CardTransactionEvent/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CardTransactionEvent'
+    description: ''
+  CardTransactionEvent/Updated:
+    address: CardTransactionEvent/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CardTransactionEvent'
+    description: ''
+  CreditCardPositionKeepingOutcome/Created:
+    address: CreditCardPositionKeepingOutcome/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CreditCardPositionKeepingOutcome'
+    description: ''
+  CreditCardPositionKeepingOutcome/Updated:
+    address: CreditCardPositionKeepingOutcome/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/CreditCardPositionKeepingOutcome'
+    description: ''
+operations:
+  CreditCardPositionLog-created:
+    action: receive
+    channel:
+      $ref: '#/channels/CreditCardPositionLog~1Created'
+    summary: CreditCardPositionLog
+    messages:
+      - $ref: >-
+          #/channels/CreditCardPositionLog~1Created/messages/CreditCardPositionLog-created.message
+  CreditCardPositionLog-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/CreditCardPositionLog~1Updated'
+    summary: CreditCardPositionLog
+    messages:
+      - $ref: >-
+          #/channels/CreditCardPositionLog~1Updated/messages/CreditCardPositionLog-updated.message
+  CardTransactionEvent/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CardTransactionEvent~1Created'
+    summary: CardTransactionEvent
+    messages:
+      - $ref: '#/channels/CardTransactionEvent~1Created/messages/publish.message'
+  CardTransactionEvent/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CardTransactionEvent~1Updated'
+    summary: CardTransactionEvent
+    messages:
+      - $ref: '#/channels/CardTransactionEvent~1Updated/messages/publish.message'
+  CreditCardPositionKeepingOutcome/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CreditCardPositionKeepingOutcome~1Created'
+    summary: CreditCardPositionKeepingOutcome
+    messages:
+      - $ref: >-
+          #/channels/CreditCardPositionKeepingOutcome~1Created/messages/publish.message
+  CreditCardPositionKeepingOutcome/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/CreditCardPositionKeepingOutcome~1Updated'
+    summary: CreditCardPositionKeepingOutcome
+    messages:
+      - $ref: >-
+          #/channels/CreditCardPositionKeepingOutcome~1Updated/messages/publish.message
+components:
+  messages:
+    CreditCardPositionLog:
+      name: CreditCardPositionLog
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Credit Card Position Keeping. 
+      payload:
+        $ref: '#/components/schemas/CreditCardPositionLog'
+    CardTransactionEvent:
+      name: CardTransactionEvent
+      description: >-
+        The Card Transaction Event is one of the specific types of events that
+        is recorded in the Card Transaction Event
+      payload:
+        $ref: '#/components/schemas/CardTransactionEvent'
+    CreditCardPositionKeepingOutcome:
+      name: CreditCardPositionKeepingOutcome
+      description: >-
+        The Card Transaction Event is one of the specific types of events that
+        is recorded in the Card Transaction Event
+      payload:
+        $ref: '#/components/schemas/CreditCardPositionKeepingOutcome'
+  schemas:
+    CardTransactionEvent:
+      type: object
+      description: >-
+        The Card Transaction Event is one of the specific types of events that
+        is recorded in the Card Transaction Event
+      properties:
+        Preconditions:
+          type: string
+          format: Condition
+          description: "The required status/situation before the event is captured ||\r\n|"
+        Schedule:
+          type: string
+          format: Schedule
+          description: "The timing and key actions/milestones involved in capturing the event ||\r\n|"
+        BusinessService:
+          type: string
+          format: BusinessService
+          description: "The Card Transaction Event specific Business Service ||\r\n|"
+        Postconditions:
+          type: string
+          format: Condition
+          description: "The completion status once the event has been captured ||\r\n|"
+        CreditCardPositionLogReference:
+          type: string
+          format: Log
+          description: "Reference to Card Transaction Event ||\r\n|"
+        CardTransactionEventReference:
+          type: string
+          format: Event
+          description: "Reference to Card Transaction Event ||\r\n|"
+        CardTransactionEventType:
+          type: string
+          format: String
+          description: "The type of Card Transaction Event ||\r\n|"
+    CreditCardPositionKeepingOutcome:
+      type: object
+      description: >-
+        The Card Transaction Event is one of the specific types of events that
+        is recorded in the Card Transaction Event
+      properties:
+        CreditCardPositionKeepingIncident:
+          type: string
+          format: Event
+          description: ''
+        CreditCardPositionKeepingLog:
+          type: string
+          format: Log
+          description: ''
+    CreditCardPositionLog:
+      type: object
+      description: >-
+        Maintain a log of transactions or activity, typically a financial
+        account/journal or a log of activity to support behavioral analysis
+        within Credit Card Position Keeping. 
+      properties:
+        CreditCardPositionLogParameterType:
+          type: string
+          format: Featuretypevalues
+          description: "A Classification value that distinguishes between business service events logged within Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogSelectedOption:
+          type: string
+          format: Service
+          description: "A selected optional business service as subject matter of Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogType:
+          type: string
+          format: String
+          description: "The type of Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogSchedule:
+          type: string
+          format: Schedule
+          description: "Timetable to track Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogUsageLog:
+          type: string
+          format: Log
+          description: "Reference to the log of usage ativities/events  of Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogUpdateLog:
+          type: string
+          format: Log
+          description: "Reference to the log of update ativities/events of Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogAssociatedParty:
+          type: string
+          format: Involvedparty
+          description: "Reference to the party who is involved in Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogBusinessUnitReference:
+          type: string
+          format: BusinessUnit
+          description: "Reference to the business unit which is involved in Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogCustomerReference:
+          type: string
+          format: Involvedparty
+          description: "Reference to the customer who is involved in Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogServiceConfiguration:
+          type: string
+          format: String
+          description: "The configuration of Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogPosition:
+          type: string
+          format: Position
+          description: >-
+            The position of Credit Card Position Log Position |Position 
+            https://www.iso20022.org/standardsrepository/type/Position|Standard|ISO20022
+            BM 
+        CreditCardPositionLogPositionType:
+          type: string
+          format: PositionType
+          description: "A classification value expressing the kind of position withing the Credit Card Position Log ||\r\n|"
+        CreditCardPositionLogPositionLimitTime:
+          type: string
+          format: LimitArrangement
+          description: >-
+            Reference to the time limitation related to the position of Credit
+            Card Position Log Limit|Limit
+            https://www.iso20022.org/standardsrepository/type/Limit|Standard|ISO20022
+            https://www.iso20022.org/
+        CreditCardPositionLogReference:
+          type: string
+          format: Log
+          description: "An unique reference to an item or an occurrence of Credit Card Position Log ||\r\n|"
