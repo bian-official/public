@@ -1,0 +1,991 @@
+openapi: 3.0.1
+info:
+  title: Credit Management
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain provides a
+    bank-wide/oversight function to qualify credit pricing for offered products
+    and services to reflect the bank's appetite to write the business. This
+    decision can override the standard product pricing procedure
+  version: 14.0.0
+servers:
+  - url: ' https://virtserver.swaggerhub.com/BIAN-3/CreditManagement/12.0.1'
+paths:
+  '/CreditManagement/Evaluate':
+      post:
+        tags:
+          - CR (DDD Aggregate) - CreditPricingAssessment
+        summary: >-
+          (DDD  Service) EvCR Evaluate a proposed transaction pricing against group credit
+          policy
+        description: >-
+          (DDD  Service) EvCR Evaluate a proposed transaction pricing against group credit
+          policy
+        operationId: CreditPricingAssessment/Evaluate
+        requestBody:
+          $ref: '#/components/requestBodies/EvaluateCreditPricingAssessmentRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/CreditManagement/{creditmanagementid}/Grant':
+      put:
+        tags:
+          - CR (DDD Aggregate) - CreditPricingAssessment
+        summary: >-
+          (DDD  Service) GrCR Obtain a credit pricing policy acceptance grant to proceed
+          with a transaction
+        description: >-
+          (DDD  Service) GrCR Obtain a credit pricing policy acceptance grant to proceed
+          with a transaction
+        operationId: CreditPricingAssessment/Grant
+        parameters:
+          - $ref: '#/components/parameters/creditmanagementid'
+        requestBody:
+          $ref: '#/components/requestBodies/GrantCreditPricingAssessmentRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/CreditManagement/{creditmanagementid}/Update':
+      put:
+        tags:
+          - CR (DDD Aggregate) - CreditPricingAssessment
+        summary: (DDD  Service) UpCR Update details of an active credit pricing assessment
+        description: (DDD  Service) UpCR Update details of an active credit pricing assessment
+        operationId: CreditPricingAssessment/Update
+        parameters:
+          - $ref: '#/components/parameters/creditmanagementid'
+        requestBody:
+          $ref: '#/components/requestBodies/UpdateCreditPricingAssessmentRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/CreditManagement/{creditmanagementid}/Exchange':
+      put:
+        tags:
+          - CR (DDD Aggregate) - CreditPricingAssessment
+        summary: (DDD  Service) EcCR Accept/reject a pricing assessment
+        description: (DDD  Service) EcCR Accept/reject a pricing assessment
+        operationId: CreditPricingAssessment/Exchange
+        parameters:
+          - $ref: '#/components/parameters/creditmanagementid'
+        requestBody:
+          $ref: '#/components/requestBodies/ExchangeCreditPricingAssessmentRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/CreditManagement/{creditmanagementid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - CreditPricingAssessment
+        summary: (DDD  Service) ReCR Retrieve details about a credit pricing assessment
+        description: (DDD  Service) ReCR Retrieve details about a credit pricing assessment
+        operationId: CreditPricingAssessment/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/creditmanagementid'
+        responses:
+          '200':
+            $ref: '#/components/responses/RetrieveCreditPricingAssessmentResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    EvaluateCreditPricingAssessment:
+        type: object
+        description: >-
+          (DDD Entity) - EvCR Evaluate a proposed transaction pricing against group credit
+          policy
+        properties:
+          BusinessUnitReference:
+              $ref: '#/components/schemas/BusinessUnit'
+              format: BusinessUnit
+              description: "(DDD Entity) - Business unit submitting the proposed transaction for review ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer related to the proposed transaction ||\r\n|"
+          SectorReference:
+              type: string
+              description: "(DDD Entity) - The sector where the proposed transaction would be booked ||\r\n|"
+              format: Object
+          ProductType:
+              $ref: '#/components/schemas/Producttypevalues'
+              format: Producttypevalues
+              description: "(DDD Entity) - The product type/category of the proposed transaction for the credit pricing assessment ||\r\n|"
+          ProposedTransactionReference:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Reference to proposed transaction submitted for assessment
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionRecord:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Key details of the proposed transaction
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "(DDD Entity) - The type of credit instrument being considered ||\r\n|"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - The financial structure of the proposed transaction
+                CurrencyAndAmount|CurrencyAndAmount
+                ([https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)](https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount))|Standard|ISO20022 
+                ()
+          ProposedTransactionRecordDate:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - One or more key dates associated with the transaction
+                ISODateTime|ISODateTime
+                ([https://www.iso20022.org/standardsrepository/type/ISODateTime)](https://www.iso20022.org/standardsrepository/type/ISODateTime))|Standard|ISO20022
+                BM ()
+          ProposedTransactionBookingEntity:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The booking entity within the bank that the proposed transaction would impact ||\r\n|"
+          ProposedTransactionCreditPricingAssessment:
+              $ref: '#/components/schemas/Assessment'
+              format: Assessment
+              description: >-
+                (DDD Entity) - Details of the credit pricing assessment, permitting or
+                adjusting terms as necessary Assessment|Assessment
+                ([https://www.iso20022.org/standardsrepository/type/Assessment)](https://www.iso20022.org/standardsrepository/type/Assessment))|Standard|ISO20022
+                BM ()
+    BusinessUnit:
+        type: object
+        description: Business unit submitting the proposed transaction for review
+        properties:
+          BusinessFunction:
+              type: string
+              description: ' '
+              format: String
+          Goal:
+              type: string
+              description: ' '
+              format: String
+          OrganisationStructureHierarchy:
+              type: string
+              description: 'Description of the structure of a company. ISO20022 '
+              format: String
+          OrganisationIdentification:
+              $ref: '#/components/schemas/Organisationidentification'
+              format: Organisationidentification
+              description: '(DDD Entity) -  '
+          OrganisationSector:
+              type: string
+              description: >-
+                Sector of business of the organisation, for example,
+                pharmaceutical. (ISO20022) 
+              format: String
+          LegalEntityIndicator:
+              type: string
+              description: ' '
+              format: String
+          OrganisationDate:
+              $ref: '#/components/schemas/Organisationdatetime'
+              format: Organisationdatetime
+              description: '(DDD Entity) -  '
+          OrganisationType:
+              $ref: '#/components/schemas/Organisationtypevalues'
+              format: Organisationtypevalues
+              description: '(DDD Entity) -  '
+          OrganisationName:
+              $ref: '#/components/schemas/Organisationname'
+              format: Organisationname
+              description: '(DDD Entity) -  '
+          OrganisationLegalStructure:
+              $ref: '#/components/schemas/Organisationlegalstructuretypevalues'
+              format: Organisationlegalstructuretypevalues
+              description: '(DDD Entity) - Legal standing of the organisation. (ISO20022 BM) '
+    Organisationidentification:
+        type: object
+        description: ''
+        properties:
+          OrganisationIdentificationType:
+              $ref: '#/components/schemas/Organisationidentificationtypevalues'
+              format: Organisationidentificationtypevalues
+              description: '(DDD Entity) -  '
+          OrganisationIdentification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+    Organisationidentificationtypevalues:
+        type: object
+        description: ''
+        properties:
+          Organisationidentificationtypevalues:
+              enum:
+                  -  LEI
+                  -  ELF
+                  -  MIC
+                  -  BICFI
+                  -  Bankpartyidentification
+                  -  Clearingidentificationnumber
+                  -  Countryidentificationcode
+                  -  Customernumber
+                  -  Datauniversalnumberingsystem
+                  -  Employeridentificationnumber
+                  -  Gs1glnidentifier
+                  -  SIREN
+                  -  SIRET
+                  -  Taxidentificationnumber
+                  -  EANGLN
+              type: string
+              format: Organisationidentificationtypevalues
+              description: ">\r\n* `LEI` - Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier (LEI)\".\r\n* `ELF` - Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms (ELF)\". \r\n* `MIC` - Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` - Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code (BIC)\".\r\n* `Bankpartyidentification` - Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` - A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` - A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` - A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` - Country authority given organisation identification (e.g., corporate registration number)\r\n* `Customernumber` - Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` - A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` - Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` - Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` - The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` - The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` - Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` - Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering (EAN) numbering scheme rules. The number is used to retrieve detailed information that is linked to it. (iso20022)"
+    Identifier:
+        type: object
+        description: ''
+        properties:
+          IdentifierValue:
+              type: string
+              description: >-
+                tThe actual unique code or number (e.g., passport number,
+                drivers license number). 
+              format: String
+          IdentifierIssuerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: >-
+                (DDD Entity) - Reference to an entity that assigns and manages the
+                identification.
+
+                tReference to the organization or agency that issued the
+                identifier (e.g., DMV, Passport Office). 
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - The date when the identifier became valid. '
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+        type: object
+        description: (DDD Entity) - Reference to the account primary party/owner
+        properties:
+          PartyReference:
+              type: string
+              description: 'Reference to a Party who plays a specific role '
+              format: String
+          InvolvementReference:
+              type: string
+              description: 'Reference to a specific Role that is played by a Party '
+              format: String
+    Datetime:
+        type: object
+        description: The date when the identifier became valid.
+        properties:
+          DateTimeContent:
+              type: string
+              description: 'The particular date and time point in the progression of time '
+              format: String
+          TimeZoneCode:
+              type: string
+              description: 'The time zone to which the date time refers. '
+              format: String
+          DaylightSavingIndicator:
+              type: string
+              description: ' '
+              format: String
+          DateTimeType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: '(DDD Entity) -  '
+    Datetimetypevalues:
+        type: object
+        description: The date when the identifier became valid.
+        properties:
+          Datetimetypevalues:
+              enum:
+                  -  MaturityDate
+                  -  InitiatedDate
+                  -  RequestedDate
+                  -  ExecutedDate
+                  -  OpenDate
+                  -  CloseDate
+                  -  ExpiryDate
+                  -  EffectiveDate
+                  -  CreatingDate
+                  -  ActivationDate
+                  -  DeactivationDate
+                  -  BlockingDate
+                  -  SendingDate
+                  -  ValidFromDate
+                  -  ValidToDate
+                  -  ReceivingDate
+                  -  SigningDate
+                  -  DueDate
+                  -  ValueDate
+                  -  FulfillmentDate
+                  -  EntryDate
+              type: string
+              format: Datetimetypevalues
+              description: ">\r\n* `MaturityDate` - \r\n* `InitiatedDate` - \r\n* `RequestedDate` - \r\n* `ExecutedDate` - \r\n* `OpenDate` - \r\n* `CloseDate` - \r\n* `ExpiryDate` - \r\n* `EffectiveDate` - \r\n* `CreatingDate` - \r\n* `ActivationDate` - \r\n* `DeactivationDate` - \r\n* `BlockingDate` - \r\n* `SendingDate` - \r\n* `ValidFromDate` - \r\n* `ValidToDate` - \r\n* `ReceivingDate` - \r\n* `SigningDate` - \r\n* `DueDate` - \r\n* `ValueDate` - \r\n* `FulfillmentDate` - \r\n* `EntryDate` - "
+    Organisationdatetime:
+        type: object
+        description: ''
+        properties:
+          OrganisatioDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          OrganisatioDateType:
+              $ref: '#/components/schemas/Organisationdatetimetypevalues'
+              format: Organisationdatetimetypevalues
+              description: '(DDD Entity) -  '
+    Organisationdatetimetypevalues:
+        type: object
+        description: ''
+        properties:
+          Organisationdatetimetypevalues:
+              enum:
+                  -  RegistrationDate
+                  -  EstablishmentDate
+                  -  EntityExpirationDate
+              type: string
+              format: Organisationdatetimetypevalues
+              description: ">\r\n* `RegistrationDate` - Date and time at which a given organisation was officially registered. (ISO20022)\r\n* `EstablishmentDate` - Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` - The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationtypevalues:
+        type: object
+        description: Business unit submitting the proposed transaction for review
+        properties:
+          Organisationtypevalues:
+              enum:
+                  -  LegalEntity
+                  -  Authority
+                  -  OrganisationUnit
+                  -  FinancialInstitution
+                  -  Charity
+                  -  GovernmentBody
+              type: string
+              format: Organisationtypevalues
+              description: ">\r\n* `LegalEntity` - \r\n* `Authority` - \r\n* `OrganisationUnit` - \r\n* `FinancialInstitution` - \r\n* `Charity` - \r\n* `GovernmentBody` - "
+    Organisationname:
+        type: object
+        description: ''
+        properties:
+          Name:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: '(DDD Entity) -  '
+          NameType:
+              $ref: '#/components/schemas/Organisationnametypevalues'
+              format: Organisationnametypevalues
+              description: '(DDD Entity) -  '
+    Name:
+        type: object
+        description: ''
+        properties:
+          Name:
+              type: string
+              description: >-
+                (DDD Entity) - A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+              format: DataType
+    Organisationnametypevalues:
+        type: object
+        description: ''
+        properties:
+          Organisationnametypevalues:
+              enum:
+                  -  ShortName
+                  -  TradingName
+                  -  LegalName
+              type: string
+              format: Organisationnametypevalues
+              description: ">\r\n* `ShortName` - \r\n* `TradingName` - \r\n* `LegalName` - "
+    Organisationlegalstructuretypevalues:
+        type: object
+        description: Business unit submitting the proposed transaction for review
+        properties:
+          Organisationlegalstructuretypevalues:
+              enum:
+                  -  Corporation
+                  -  Individual
+                  -  Supranational
+                  -  Sovereign
+                  -  Municipal
+                  -  Province
+                  -  State
+                  -  County
+                  -  Partnership
+                  -  Financialinstitution
+                  -  National
+              type: string
+              format: Organisationlegalstructuretypevalues
+              description: ">\r\n* `Corporation` - Legal structure is a corporation.\r\n* `Individual` - Legal structure is an individual.\r\n* `Supranational` - Legal structure is a supranational.\r\n* `Sovereign` - Legal structure is a sovereign.\r\n* `Municipal` - Legal structure is a municipal.\r\n* `Province` - Legal structure is a province.\r\n* `State` - Legal structure is a state.\r\n* `County` - Legal structure is a county.\r\n* `Partnership` - Legal structure is a partnership.\r\n* `Financialinstitution` - Legal structure is a financial institution.\r\n* `National` - Legal structure is a state."
+    Producttypevalues:
+        type: object
+        description: >-
+          (DDD Entity) - EvCR Evaluate a proposed transaction pricing against group credit
+          policy
+        properties:
+          Producttypevalues:
+              enum:
+                  -  BankingProduct
+                  -  InsuranceProduct
+              type: string
+              format: Producttypevalues
+              description: ">\r\n* `BankingProduct` - \r\n* `InsuranceProduct` - "
+    Transactiontypevalues:
+        type: object
+        description: >-
+          (DDD Entity) - EvCR Evaluate a proposed transaction pricing against group credit
+          policy
+        properties:
+          Transactiontypevalues:
+              enum:
+                  -  FinancialTransaction
+                  -  BusinessTransaction
+                  -  BankingTransaction
+                  -  AccountingTransaction
+                  -  BookingTransaction
+                  -  AllocationTransaction
+                  -  DeliveryTransaction
+                  -  ProductionTransaction
+              type: string
+              format: Transactiontypevalues
+              description: ">\r\n* `FinancialTransaction` - \r\n* `BusinessTransaction` - \r\n* `BankingTransaction` - \r\n* `AccountingTransaction` - \r\n* `BookingTransaction` - \r\n* `AllocationTransaction` - \r\n* `DeliveryTransaction` - \r\n* `ProductionTransaction` - "
+    GrantCreditPricingAssessment:
+        type: object
+        description: >-
+          (DDD Entity) - GrCR Obtain a credit pricing policy acceptance grant to proceed
+          with a transaction
+        properties:
+          BusinessUnitReference:
+              $ref: '#/components/schemas/BusinessUnit'
+              format: BusinessUnit
+              description: "(DDD Entity) - Business unit submitting the proposed transaction for review ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer related to the proposed transaction ||\r\n|"
+          SectorReference:
+              type: string
+              description: "(DDD Entity) - The sector where the proposed transaction would be booked ||\r\n|"
+              format: Object
+          ProductType:
+              $ref: '#/components/schemas/Producttypevalues'
+              format: Producttypevalues
+              description: "(DDD Entity) - The product type/category of the proposed transaction for the credit pricing assessment ||\r\n|"
+          ProposedTransactionReference:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Reference to proposed transaction submitted for assessment
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionRecord:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Key details of the proposed transaction
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "(DDD Entity) - The type of credit instrument being considered ||\r\n|"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - The financial structure of the proposed transaction
+                CurrencyAndAmount|CurrencyAndAmount
+                ([https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)](https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount))|Standard|ISO20022 
+                ()
+          ProposedTransactionRecordDate:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - One or more key dates associated with the transaction
+                ISODateTime|ISODateTime
+                ([https://www.iso20022.org/standardsrepository/type/ISODateTime)](https://www.iso20022.org/standardsrepository/type/ISODateTime))|Standard|ISO20022
+                BM ()
+          ProposedTransactionBookingEntity:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The booking entity within the bank that the proposed transaction would impact ||\r\n|"
+          ProposedTransactionCreditPricingAssessment:
+              $ref: '#/components/schemas/Assessment'
+              format: Assessment
+              description: >-
+                (DDD Entity) - Details of the credit pricing assessment, permitting or
+                adjusting terms as necessary Assessment|Assessment
+                ([https://www.iso20022.org/standardsrepository/type/Assessment)](https://www.iso20022.org/standardsrepository/type/Assessment))|Standard|ISO20022
+                BM ()
+    UpdateCreditPricingAssessment:
+        type: object
+        description: (DDD Entity) - UpCR Update details of an active credit pricing assessment
+        properties:
+          BusinessUnitReference:
+              $ref: '#/components/schemas/BusinessUnit'
+              format: BusinessUnit
+              description: "(DDD Entity) - Business unit submitting the proposed transaction for review ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer related to the proposed transaction ||\r\n|"
+          SectorReference:
+              type: string
+              description: "(DDD Entity) - The sector where the proposed transaction would be booked ||\r\n|"
+              format: Object
+          ProductType:
+              $ref: '#/components/schemas/Producttypevalues'
+              format: Producttypevalues
+              description: "(DDD Entity) - The product type/category of the proposed transaction for the credit pricing assessment ||\r\n|"
+          ProposedTransactionReference:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Reference to proposed transaction submitted for assessment
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionRecord:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Key details of the proposed transaction
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "(DDD Entity) - The type of credit instrument being considered ||\r\n|"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - The financial structure of the proposed transaction
+                CurrencyAndAmount|CurrencyAndAmount
+                ([https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)](https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount))|Standard|ISO20022 
+                ()
+          ProposedTransactionRecordDate:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - One or more key dates associated with the transaction
+                ISODateTime|ISODateTime
+                ([https://www.iso20022.org/standardsrepository/type/ISODateTime)](https://www.iso20022.org/standardsrepository/type/ISODateTime))|Standard|ISO20022
+                BM ()
+          ProposedTransactionBookingEntity:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The booking entity within the bank that the proposed transaction would impact ||\r\n|"
+          ProposedTransactionCreditPricingAssessment:
+              $ref: '#/components/schemas/Assessment'
+              format: Assessment
+              description: >-
+                (DDD Entity) - Details of the credit pricing assessment, permitting or
+                adjusting terms as necessary Assessment|Assessment
+                ([https://www.iso20022.org/standardsrepository/type/Assessment)](https://www.iso20022.org/standardsrepository/type/Assessment))|Standard|ISO20022
+                BM ()
+    ExchangeCreditPricingAssessment:
+        type: object
+        description: (DDD Entity) - EcCR Accept/reject a pricing assessment
+        properties:
+          BusinessUnitReference:
+              $ref: '#/components/schemas/BusinessUnit'
+              format: BusinessUnit
+              description: "(DDD Entity) - Business unit submitting the proposed transaction for review ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer related to the proposed transaction ||\r\n|"
+          SectorReference:
+              type: string
+              description: "(DDD Entity) - The sector where the proposed transaction would be booked ||\r\n|"
+              format: Object
+          ProductType:
+              $ref: '#/components/schemas/Producttypevalues'
+              format: Producttypevalues
+              description: "(DDD Entity) - The product type/category of the proposed transaction for the credit pricing assessment ||\r\n|"
+          ProposedTransactionReference:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Reference to proposed transaction submitted for assessment
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionRecord:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Key details of the proposed transaction
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "(DDD Entity) - The type of credit instrument being considered ||\r\n|"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - The financial structure of the proposed transaction
+                CurrencyAndAmount|CurrencyAndAmount
+                ([https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)](https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount))|Standard|ISO20022 
+                ()
+          ProposedTransactionRecordDate:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - One or more key dates associated with the transaction
+                ISODateTime|ISODateTime
+                ([https://www.iso20022.org/standardsrepository/type/ISODateTime)](https://www.iso20022.org/standardsrepository/type/ISODateTime))|Standard|ISO20022
+                BM ()
+          ProposedTransactionBookingEntity:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The booking entity within the bank that the proposed transaction would impact ||\r\n|"
+          ProposedTransactionCreditPricingAssessment:
+              $ref: '#/components/schemas/Assessment'
+              format: Assessment
+              description: >-
+                (DDD Entity) - Details of the credit pricing assessment, permitting or
+                adjusting terms as necessary Assessment|Assessment
+                ([https://www.iso20022.org/standardsrepository/type/Assessment)](https://www.iso20022.org/standardsrepository/type/Assessment))|Standard|ISO20022
+                BM ()
+    RetrieveCreditPricingAssessment:
+        type: object
+        description: (DDD Entity) - ReCR Retrieve details about a credit pricing assessment
+        properties:
+          BusinessUnitReference:
+              $ref: '#/components/schemas/BusinessUnit'
+              format: BusinessUnit
+              description: "(DDD Entity) - Business unit submitting the proposed transaction for review ||\r\n|"
+          CustomerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Reference to the customer related to the proposed transaction ||\r\n|"
+          SectorReference:
+              type: string
+              description: "(DDD Entity) - The sector where the proposed transaction would be booked ||\r\n|"
+              format: Object
+          ProductType:
+              $ref: '#/components/schemas/Producttypevalues'
+              format: Producttypevalues
+              description: "(DDD Entity) - The product type/category of the proposed transaction for the credit pricing assessment ||\r\n|"
+          ProposedTransactionReference:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Reference to proposed transaction submitted for assessment
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionRecord:
+              $ref: '#/components/schemas/ObligationFulfilment'
+              format: ObligationFulfilment
+              description: >-
+                (DDD Entity) - Key details of the proposed transaction
+                ObligationFulfilment|ObligationFulfilment
+                ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+                BM ()
+          ProposedTransactionType:
+              $ref: '#/components/schemas/Transactiontypevalues'
+              format: Transactiontypevalues
+              description: "(DDD Entity) - The type of credit instrument being considered ||\r\n|"
+          ProposedTransactionAmount:
+              $ref: '#/components/schemas/CurrencyAndAmount'
+              format: CurrencyAndAmount
+              description: >-
+                (DDD Entity) - The financial structure of the proposed transaction
+                CurrencyAndAmount|CurrencyAndAmount
+                ([https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount)](https://www.iso20022.org/standardsrepository/type/CurrencyAndAmount))|Standard|ISO20022 
+                ()
+          ProposedTransactionRecordDate:
+              $ref: '#/components/schemas/ISODateTime'
+              format: ISODateTime
+              description: >-
+                (DDD Entity) - One or more key dates associated with the transaction
+                ISODateTime|ISODateTime
+                ([https://www.iso20022.org/standardsrepository/type/ISODateTime)](https://www.iso20022.org/standardsrepository/type/ISODateTime))|Standard|ISO20022
+                BM ()
+          ProposedTransactionBookingEntity:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The booking entity within the bank that the proposed transaction would impact ||\r\n|"
+          ProposedTransactionCreditPricingAssessment:
+              $ref: '#/components/schemas/Assessment'
+              format: Assessment
+              description: >-
+                (DDD Entity) - Details of the credit pricing assessment, permitting or
+                adjusting terms as necessary Assessment|Assessment
+                ([https://www.iso20022.org/standardsrepository/type/Assessment)](https://www.iso20022.org/standardsrepository/type/Assessment))|Standard|ISO20022
+                BM ()
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    ObligationFulfilment:
+        type: object
+        description: >-
+          (DDD Entity) - Key details of the proposed transaction
+          ObligationFulfilment|ObligationFulfilment
+          ([https://www.iso20022.org/standardsrepository/type/ObligationFulfilment)](https://www.iso20022.org/standardsrepository/type/ObligationFulfilment))|Standard|ISO20022
+          BM ()
+        properties:
+          Date:
+              type: string
+              format: ISODate
+              description: '(DDD Entity) - Date and time on which assets become available. '
+          ObligationOffset:
+              type: string
+              format: Obligation
+              description: >-
+                (DDD Entity) - Specifies the obligation which has been offset for instance
+                a payment obligation or a securities delivery. 
+          ResultingObligation:
+              type: string
+              format: Obligation
+              description: >-
+                (DDD Entity) - Specifies the obligation which result from a settlement
+                process, for instance the remaining obligation when the
+                obligations are netted. 
+    CurrencyAndAmount:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - Number of monetary units specified in a currency, where the unit
+          of currency is explicit and compliant with ISO 4217. The decimal
+          separator is a dot.
+
+          Note: A zero amount is considered a positive amount.
+    ISODateTime:
+        type: string
+        format: ''
+        description: >-
+          (DDD Entity) - A particular point in the progression of time defined by a
+          mandatory date and a mandatory time component, expressed in either UTC
+          time format (YYYY-MM-DDThh:mm:ss.sssZ), local time with UTC offset
+          format (YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), or local time format
+          (YYYY-MM-DDThh:mm:ss.sss). These representations are defined in "XML
+          Schema Part 2: Datatypes Second Edition W3C Recommendation 28
+          October 2004" which is aligned with ISO 8601.
+
+          Note on the time format:
+
+          1) beginning / end of calendar day
+
+          00:00:00  -  the beginning of a calendar day
+
+          24:00:00  -  the end of a calendar day
+
+          2) fractions of second in time format
+
+          Decimal fractions of seconds may be included. In this case, the
+          involved parties shall agree on the maximum number of digits that are
+          allowed.
+    Assessment:
+        type: object
+        description: >-
+          (DDD Entity) - Details of the credit pricing assessment, permitting or adjusting
+          terms as necessary Assessment|Assessment
+          ([https://www.iso20022.org/standardsrepository/type/Assessment)](https://www.iso20022.org/standardsrepository/type/Assessment))|Standard|ISO20022
+          BM ()
+        properties:
+          AssessmentType:
+              type: string
+              format: POIComponentAssessmentCode
+              description: '(DDD Entity) - Type of assessment. '
+          System:
+              type: string
+              format: System
+              description: '(DDD Entity) - System for which an assessment is produced. '
+          ExpiryDate:
+              type: string
+              format: ISODateTime
+              description: '(DDD Entity) - Date when the assessment expires. '
+          DeliveryDate:
+              type: string
+              format: ISODateTime
+              description: '(DDD Entity) - Date when the assessment document was delivered. '
+  responses:
+    EvaluateCreditPricingAssessmentResponse:
+        description: CreditPricingAssessmentEvaluate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateCreditPricingAssessment'
+    GrantCreditPricingAssessmentResponse:
+        description: CreditPricingAssessmentGrant
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/GrantCreditPricingAssessment'
+    UpdateCreditPricingAssessmentResponse:
+        description: CreditPricingAssessmentUpdate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateCreditPricingAssessment'
+    ExchangeCreditPricingAssessmentResponse:
+        description: CreditPricingAssessmentExchange
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ExchangeCreditPricingAssessment'
+    RetrieveCreditPricingAssessmentResponse:
+        description: CreditPricingAssessmentRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveCreditPricingAssessment'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    creditmanagementid:
+        name: creditmanagementid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    EvaluateCreditPricingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateCreditPricingAssessment'
+        required: true
+    GrantCreditPricingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/GrantCreditPricingAssessment'
+        required: true
+    UpdateCreditPricingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/UpdateCreditPricingAssessment'
+        required: true
+    ExchangeCreditPricingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ExchangeCreditPricingAssessment'
+        required: true
+    RetrieveCreditPricingAssessmentRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveCreditPricingAssessment'
+        required: true
