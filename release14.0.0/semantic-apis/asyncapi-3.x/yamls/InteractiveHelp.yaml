@@ -1,0 +1,186 @@
+asyncapi: 3.0.0
+info:
+  title: Interactive Help
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | Operate the automated
+    facility that provides interactive context sensitive servicing guidance to
+    employees and self-serve customers
+channels:
+  HelpServiceSelection/Created:
+    address: HelpServiceSelection/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/HelpServiceSelection'
+    description: ''
+  HelpServiceSelection/Updated:
+    address: HelpServiceSelection/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/HelpServiceSelection'
+    description: ''
+operations:
+  HelpServiceSelection/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/HelpServiceSelection~1Created'
+    summary: HelpServiceSelection
+    messages:
+      - $ref: '#/channels/HelpServiceSelection~1Created/messages/publish.message'
+  HelpServiceSelection/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/HelpServiceSelection~1Updated'
+    summary: HelpServiceSelection
+    messages:
+      - $ref: '#/channels/HelpServiceSelection~1Updated/messages/publish.message'
+components:
+  messages:
+    HelpServiceSelection:
+      name: HelpServiceSelection
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:- messages, capture, routines
+      payload:
+        $ref: '#/components/schemas/HelpServiceSelection'
+  schemas:
+    HelpServiceSelection:
+      type: object
+      description: >-
+        The collection of operational serivces/functions offered by the
+        operational facility
+
+
+        Examples:-messages, capture, routines
+      properties:
+        HelpSelectionInteractionType:
+          type: string
+          format: String
+          description: "The type of session provides context for filtering content e.g. employee, self-service customer ||\r\n|"
+        HelpSelectionProductandServiceType:
+          $ref: '#/components/schemas/Producttypevalues'
+          description: ">\r\n* `BankingProduct` \r\n* `InsuranceProduct` "
+        HelpSelectionProductFeatureType:
+          $ref: '#/components/schemas/Productfeaturetypevalues'
+          description: ">\r\n* `Bankingservice` A classification that distinguishes between instances of product features according to the core banking services, functionality and/or objectives of banking.\n\ne.g. deposit services, exchange services, etc.\n\nThe primary reason for the contract with the client are the banking services. These services can be classified as follows:-\n1. Selling services\n2. Financial Instruments Exchange\n3. Financial Stock Management\n4. Financial Transfers\n5. Financial Risk Transfer\n6. Business Operating\n7. Advisory\n8. Reporting\n\n\r\n* `Administrationservice` A classification that distinguishes between instances of product features according to administrative tasks related to the Banking Product or Service.\r\n* `Accessservice` A classification that distinguishes between product features according to way of the banking services can be accessed.\n\nThe access to services becomes more and more important in the evolving markets. \nWe need to separate different parts:-\n1. The physical access to the infrastructure that allows access to the bank where\n2. The authorization of different parties to use the services of the bank who\n3. The agreed procedure to have access to different services how\n4. The services that are available for the different parties what\n\r\n* `Pricefeature` A classification that distinguishes between instances of product features according to the cost/profit that is related to Banking Products or Services.\n\nIn all commercial offerings, there is an agreed cost for both parties e.g. the interest arrangements are in both directions. The pricing structure of products or packages is a service that gives the possibility to the client to adapt his costs to his individual situation.\nWe see different generic categories in the pricing structure of the different products.\n1. Compensations\n2. Prices\n3. Fees\n4. Discounts"
+        SessionDialogueRecord:
+          type: string
+          format: Object
+          description: "The session dialogue log of actions during the contact to this point can be mined for key words that might improve the help selection ||\r\n|"
+        HelpSelectionKeyWordMenu:
+          type: string
+          format: Object
+          description: "An interactive exchange can be supported where the service presents a menu of selection options or key words to narrow the search ||\r\n|"
+        HelpSelectionKeyWordSelection:
+          type: string
+          format: Object
+          description: "The selected keyword or menu option ||\r\n|"
+        InteractiveHelp:
+          type: string
+          format: Object
+          description: "The returned interactive help in any suitable form ||\r\n|"
+        HelpSelectionTaskResult:
+          $ref: '#/components/schemas/Task'
+          description: "The user provided result of the interactive help service, including interaction statistics such as exchange frequency and duration ||\r\n|"
+        HelpSelectionFeedback:
+          type: string
+          format: Object
+          description: "User provided commentary on the service provided ||\r\n|"
+        EmployeeorBusinessUnitReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the employee, business unit providing service feedback ||\r\n|"
+        DateandTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            The date, time and duration of the service usage
+            ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+    Task:
+      type: object
+      format: Task
+      description: "The user provided result of the interactive help service, including interaction statistics such as exchange frequency and duration ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "Reference to the employee, business unit providing service feedback ||\r\n|"
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        The date, time and duration of the service usage ISODateTime|ISODateTime
+        https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+        BM 
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Producttypevalues:
+      enum:
+        - BankingProduct
+        - InsuranceProduct
+      type: string
+      description: ">\r\n* `BankingProduct` \r\n* `InsuranceProduct` "
+    Productfeaturetypevalues:
+      enum:
+        - Bankingservice
+        - Administrationservice
+        - Accessservice
+        - Pricefeature
+      type: string
+      description: ">\r\n* `Bankingservice` A classification that distinguishes between instances of product features according to the core banking services, functionality and/or objectives of banking.\n\ne.g. deposit services, exchange services, etc.\n\nThe primary reason for the contract with the client are the banking services. These services can be classified as follows:\n1. Selling services\n2. Financial Instruments Exchange\n3. Financial Stock Management\n4. Financial Transfers\n5. Financial Risk Transfer\n6. Business Operating\n7. Advisory\n8. Reporting\n\n\r\n* `Administrationservice` A classification that distinguishes between instances of product features according to administrative tasks related to the Banking Product or Service.\r\n* `Accessservice` A classification that distinguishes between product features according to way of the banking services can be accessed.\n\nThe access to services becomes more and more important in the evolving markets. \nWe need to separate different parts:\n1. The physical access to the infrastructure that allows access to the bank where\n2. The authorization of different parties to use the services of the bank who\n3. The agreed procedure to have access to different services how\n4. The services that are available for the different parties what\n\r\n* `Pricefeature` A classification that distinguishes between instances of product features according to the cost/profit that is related to Banking Products or Services.\n\nIn all commercial offerings, there is an agreed cost for both parties e.g. the interest arrangements are in both directions. The pricing structure of products or packages is a service that gives the possibility to the client to adapt his costs to his individual situation.\nWe see different generic categories in the pricing structure of the different products.\n1. Compensations\n2. Prices\n3. Fees\n4. Discounts"
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "

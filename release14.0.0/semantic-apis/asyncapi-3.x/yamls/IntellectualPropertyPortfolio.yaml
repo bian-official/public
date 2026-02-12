@@ -1,0 +1,1310 @@
+asyncapi: 3.0.0
+info:
+  title: Intellectual Property Portfolio
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | Administer the bank's
+    intellectual property assets
+channels:
+  IntellectualPropertyAdministrativePlan/Created:
+    address: IntellectualPropertyAdministrativePlan/Created
+    messages:
+      IntellectualPropertyAdministrativePlan-created.message:
+        $ref: '#/components/messages/IntellectualPropertyAdministrativePlan'
+    description: ''
+  IntellectualPropertyAdministrativePlan/Updated:
+    address: IntellectualPropertyAdministrativePlan/Updated
+    messages:
+      IntellectualPropertyAdministrativePlan-updated.message:
+        $ref: '#/components/messages/IntellectualPropertyAdministrativePlan'
+    description: ''
+  Maintenance/Created:
+    address: Maintenance/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Maintenance'
+    description: ''
+  Maintenance/Updated:
+    address: Maintenance/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Maintenance'
+    description: ''
+  Assignment/Created:
+    address: Assignment/Created
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+  Assignment/Updated:
+    address: Assignment/Updated
+    messages:
+      publish.message:
+        $ref: '#/components/messages/Assignment'
+    description: ''
+operations:
+  IntellectualPropertyAdministrativePlan-created:
+    action: receive
+    channel:
+      $ref: '#/channels/IntellectualPropertyAdministrativePlan~1Created'
+    summary: IntellectualPropertyAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/IntellectualPropertyAdministrativePlan~1Created/messages/IntellectualPropertyAdministrativePlan-created.message
+  IntellectualPropertyAdministrativePlan-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/IntellectualPropertyAdministrativePlan~1Updated'
+    summary: IntellectualPropertyAdministrativePlan
+    messages:
+      - $ref: >-
+          #/channels/IntellectualPropertyAdministrativePlan~1Updated/messages/IntellectualPropertyAdministrativePlan-updated.message
+  Maintenance/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Maintenance~1Created'
+    summary: Maintenance
+    messages:
+      - $ref: '#/channels/Maintenance~1Created/messages/publish.message'
+  Maintenance/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Maintenance~1Updated'
+    summary: Maintenance
+    messages:
+      - $ref: '#/channels/Maintenance~1Updated/messages/publish.message'
+  Assignment/Created.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Created'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Created/messages/publish.message'
+  Assignment/Updated.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/Assignment~1Updated'
+    summary: Assignment
+    messages:
+      - $ref: '#/channels/Assignment~1Updated/messages/publish.message'
+components:
+  messages:
+    IntellectualPropertyAdministrativePlan:
+      name: IntellectualPropertyAdministrativePlan
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Intellectual Property Portfolio. 
+      payload:
+        $ref: '#/components/schemas/IntellectualPropertyAdministrativePlan'
+    Maintenance:
+      name: Maintenance
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Maintenance'
+    Assignment:
+      name: Assignment
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:- Time-sheet recording
+      payload:
+        $ref: '#/components/schemas/Assignment'
+  schemas:
+    Maintenance:
+      type: object
+      description: >-
+        A collection of one or more clerical routines that are to be followed to
+        administer the operational unit/function
+
+
+        Examples:-Time-sheet recording
+      properties:
+        IntellectualPropertyAssetMaintenanceSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: "The schedule for maintenance tasks performed and to be performed e.g. patent renewals ||\r\n|"
+        IntellectualPropertyAssetProtectionReference:
+          type: string
+          format: Object
+          description: "Reference to the intellectual property protection mechanism employed e.g. copyright, trademark or patent reference number ||\r\n|"
+        IntellectualPropertyAssetRegistrationReference:
+          type: string
+          format: Object
+          description: "Reference to the registration entity for the intellectual property protection mechanism e.g. U.S. Patent Office ||\r\n|"
+        IntellectualPropertyAssetMaintenanceTaskRecord:
+          $ref: '#/components/schemas/Task'
+          description: "A record of payments and other actions taken to maintain the asset ||\r\n|"
+        IntellectualPropertyAssetMaintenanceTaskType:
+          type: string
+          format: String
+          description: "The type of maintenance task e.g. annual renewal ||\r\n|"
+        IntellectualPropertyAssetMaintenanceTaskDescription:
+          type: string
+          format: String
+          description: "Description of the task performed ||\r\n|"
+        IntellectualPropertyAssetMaintenanceTaskWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+          description: "File of consolidated notes, forms and documents for the maintenance task ||\r\n|"
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+          description: "Reference to associated documents ||\r\n|"
+        IntellectualPropertyAssetMaintenanceTransaction:
+          $ref: '#/components/schemas/Transaction'
+          description: >-
+            Details of any payments made as part of maintenance
+            ObligationFulfilment|ObligationFulfilment
+            https://www.iso20022.org/standardsrepository/type/ObligationFulfilment|Standard|ISO20022
+            BM 
+    Schedule:
+      type: object
+      format: Schedule
+      description: "The schedule capturing assignments for use/deployment of the intellectual property asset. This can include internal use and external licensed agreements ||\r\n|"
+      properties:
+        ScheduleType:
+          type: string
+          format: String
+          description: ' '
+    Task:
+      type: object
+      format: Task
+      description: "A record of payments and other actions taken to maintain the asset ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "File of consolidated notes, forms and documents for the maintenance task ||\r\n|"
+      properties:
+        WorkProductType:
+          $ref: '#/components/schemas/Workproducttypevalues'
+          format: Workproduct
+          description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: >-
+        Reference to a Party who plays a  specific role in the context of
+        assigning a status. 
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        Key dates associated with the directory entry e.g. open date, refresh
+        date. 
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    DocumentDirectoryEntry:
+      type: object
+      format: DocumentDirectoryEntry
+      description: "Reference to associated documents ||\r\n|"
+      properties:
+        DocumentDirectoryEntryIdentification:
+          type: string
+          format: String
+          description: >-
+            Identification allowing the retrieval of a document from a Document
+            Directory 
+        DirectoryEntryDateType:
+          $ref: '#/components/schemas/Directoryentrydatetypevalues'
+          format: DocumentDirectoryEntry
+          description: ">\r\n* `OpenDate` \r\n* `RefreshDate` "
+        DirectoryEntryDate:
+          $ref: '#/components/schemas/Date'
+          description: ''
+        DirectoryEntryStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Date:
+      type: object
+      format: Date
+      description: ' '
+      properties:
+        DateContent:
+          type: string
+          format: String
+          description: ' '
+    Status:
+      type: object
+      format: Status
+      description: ' '
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Transaction:
+      type: object
+      format: Transaction
+      description: >-
+        Details of any charges levied and payments received made from licensing
+        ObligationFulfilment|ObligationFulfilment
+        https://www.iso20022.org/standardsrepository/type/ObligationFulfilment|Standard|ISO20022
+        BM 
+      properties:
+        TransactionIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of a
+            transaction. 
+        TransactionDate:
+          $ref: '#/components/schemas/Transactiondatetime'
+          description: >-
+            The Date that the transaction has occurred or is planned to occur.
+
+            A characteristic of transaction which refers to the LifecycleDate of
+            transaction e.g., initiated date, executed date, fulfillment date.  
+        TransactionType:
+          $ref: '#/components/schemas/Transactiontypevalues'
+          format: Transaction
+          description: ">\r\n* `FinancialTransaction` \r\n* `BusinessTransaction` \r\n* `BankingTransaction` \r\n* `AccountingTransaction` \r\n* `BookingTransaction` \r\n* `AllocationTransaction` \r\n* `DeliveryTransaction` \r\n* `ProductionTransaction` "
+        TransactionDescription:
+          type: string
+          format: String
+          description: 'A detailed explanation or commentary of transaction. '
+        TransactionStatus:
+          $ref: '#/components/schemas/Transactionstatus'
+          description: >-
+            A characteristic of transaction which refers to the LifecycleStatus
+            of transaction e.g., initiated, executed, confirmed, cancelled,
+            etc.  
+        TransactionName:
+          $ref: '#/components/schemas/Name'
+          description: 'The name of transaction. '
+        ActionType:
+          $ref: '#/components/schemas/Actiontypevalues'
+          format: Transaction
+          description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+        EventType:
+          type: string
+          format: String
+          description: ' '
+        EventDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        EventDescription:
+          type: string
+          format: String
+          description: ' '
+        EventSource:
+          type: string
+          format: Object
+          description: ''
+        EventLocation:
+          $ref: '#/components/schemas/Location'
+          description: ''
+        EventAction:
+          $ref: '#/components/schemas/Action'
+          description: ''
+        EventStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        EventValue:
+          type: string
+          format: String
+          description: ' '
+        EventValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        EventIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Transactiondatetime:
+      type: object
+      format: Transactiondatetime
+      description: >-
+        The Date that the transaction has occurred or is planned to occur.
+
+        A characteristic of transaction which refers to the LifecycleDate of
+        transaction e.g., initiated date, executed date, fulfillment date.  
+      properties:
+        TransactionDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        TransactionDateType:
+          $ref: '#/components/schemas/Transactiondatetimetypevalues'
+          format: Transactiondatetime
+          description: ">\r\n* `ExecutedDate` \r\n* `FulfillmentDate` \r\n* `InitiatedDate` \r\n* `CancelledDate` \r\n* `ApprovedDate` \r\n* `ValueDate` \r\n* `BookingDate` "
+    Transactionstatus:
+      type: object
+      format: Transactionstatus
+      description: >-
+        A characteristic of transaction which refers to the LifecycleStatus of
+        transaction e.g., initiated, executed, confirmed, cancelled, etc.  
+      properties:
+        TransactionStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        TransactionStatusType:
+          $ref: '#/components/schemas/Transactionstatustypevalues'
+          format: Transactionstatus
+          description: ">\r\n* `Initiated` \r\n* `Executed` \r\n* `Cancelled` \r\n* `Confirmed` \r\n* `Suspended` \r\n* `Pending` \r\n* `Completed` \r\n* `Notified` \r\n* `Booked` \r\n* `Rejected` "
+    Name:
+      type: object
+      format: Name
+      description: 'Name label of the location. ISO20022 '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Location:
+      type: object
+      format: Location
+      description: ' '
+      properties:
+        LocationDescription:
+          type: string
+          format: String
+          description: >-
+            A description of the property, particularly if it has landmark
+            characteristics. 
+        LocationDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key dates associated with the directory entry e.g. open date,
+            refresh date. 
+        LocationStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The tracked status e.g. under construction or repair, inhabited,
+            vacant. 
+        LocationType:
+          $ref: '#/components/schemas/Geographicalareatypevalues'
+          format: Location
+          description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+        LocationZoningType:
+          type: string
+          format: String
+          description: >-
+            The planning or zoning status e.g. residential, commercial,
+            industrial. 
+        LocationNeighborhoodType:
+          type: string
+          format: String
+          description: >-
+            The general purpose and neighborhood of the property  e.g.
+            residential, industrial, commercial. 
+        LocationConstructionType:
+          type: string
+          format: String
+          description: >-
+            The construction approach for a property at the location e.g. era
+            and architecture as might be used in valuation. 
+        LocationOccupancyType:
+          type: string
+          format: String
+          description: >-
+            The type of occupancy e.g. residency, business, retail,
+            entertainment. 
+        LocationValue:
+          type: string
+          format: String
+          description: >-
+            The estimated book value of the property at the location - rental
+            and purchase as appropriate. 
+        LocationCapacity:
+          type: string
+          format: String
+          description: >-
+            An indication of the size or scale of the property where appropriate
+            e.g. 4 bedroom, 600 seat auditorium, 40 cover restaurant. 
+        LocationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        LocationAddress:
+          type: string
+          format: String
+          description: 'Reference to the address of location '
+        LocationName:
+          $ref: '#/components/schemas/Name'
+          description: 'Name label of the location. ISO20022 '
+        LocationTimeZone:
+          type: string
+          format: String
+          description: 'Local time zone. '
+    Action:
+      type: object
+      format: Action
+      description: ' '
+      properties:
+        Action:
+          type: string
+          format: Class
+          description: >-
+            An event related to the behaviour performed by an actor. 
+
+
+            Comment:-
+
+            An actor can be a party or a machine
+
+            An action Includes various types of requests, orders and financial
+            transactions. Includes responses where appropriate.
+
+            An action is an event which means that the concept describes the
+            result of acting. 
+    Assignment:
+      type: object
+      format: Assignment
+      description: "A record of assignments of the intellectual property both for internal use and for 3rd party licensing ||\r\n|"
+      properties:
+        IntellectualPropertyAssetAssignmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: "The schedule capturing assignments for use/deployment of the intellectual property asset. This can include internal use and external licensed agreements ||\r\n|"
+        IntellectualPropertyAssetAssignmentRecord:
+          $ref: '#/components/schemas/Assignment'
+          description: "A record of assignments of the intellectual property both for internal use and for 3rd party licensing ||\r\n|"
+        PartyReference:
+          $ref: '#/components/schemas/Party'
+          description: ''
+        PartyInvolvement:
+          $ref: '#/components/schemas/Partyrole'
+          description: ''
+        SubjectMatter:
+          type: string
+          format: Object
+          description: ''
+        IntellectualPropertyAssetAssignmentType:
+          type: string
+          format: String
+          description: "The type of assignment e.g. internal, external license ||\r\n|"
+        IntellectualPropertyAssetAssignmentDescription:
+          type: string
+          format: String
+          description: "Description of the assignment e.g. allowed use, terms ||\r\n|"
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+          description: "Reference to associated documents ||\r\n|"
+        IntellectualPropertyAssetAssignmentTransaction:
+          $ref: '#/components/schemas/Transaction'
+          description: >-
+            Details of any charges levied and payments received made from
+            licensing ObligationFulfilment|ObligationFulfilment
+            https://www.iso20022.org/standardsrepository/type/ObligationFulfilment|Standard|ISO20022
+            BM 
+    Party:
+      type: object
+      format: Party
+      description: ' '
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+          description: >-
+            Name by which a party is known and which is usually used to identify
+            that party. ISO20022
+             
+        PartyType:
+          $ref: '#/components/schemas/Partytypevalues'
+          format: Party
+          description: ">\r\n* `Person` Human entity, as distinguished from a corporate entity which is sometimes referred to as an 'artificial person'. ISO20022\r\n* `Organisation` Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+          description: ''
+        PartyLegalStructureType:
+          $ref: '#/components/schemas/Partylegalstructuretypevalues'
+          format: Party
+          description: ">\r\n* `Individual` \r\n* `CommunityInterestCompany` \r\n* `CharitableIncorporatedOrganisation` \r\n* `Co-Operative` \r\n* `Charity` \r\n* `GeneralPartnership` \r\n* `LimitedLiabilityPartnership` \r\n* `ScottishLimitedPartnership` \r\n* `LimitedPartnership` \r\n* `PrivateLimitedCompany` \r\n* `PublicLimitedCompany` \r\n* `SoleSoleTrader` "
+        PartyActivityIndicator:
+          $ref: '#/components/schemas/Industrycode'
+          description: 'Economical activity of Party ISO20022 '
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        PartyIdentificationType:
+          $ref: '#/components/schemas/Partyidentificationtypevalues'
+          format: Partyidentification
+          description: ">\r\n* `Taxidentificationnumber` Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. ISO20022\r\n* `Registrationauthorityidentification` An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. ISO20022\r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` Number assigned to a tax exempt entity.\r\n* `Corporateidentification` Number assigned to a corporate entity.\r\n* `Driverlicensenumber` Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` Number assigned to a foreign investor other than the alien number.\r\n* `Socialsecuritynumber` Number assigned by a social security agency.\r\n* `Identitycardnumber` Number assigned by a national authority to an identity card.\r\n* `Concat` Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` National registration identification number. In Singapore this is known as the NRIC."
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Industrycode:
+      type: object
+      format: Industrycode
+      description: 'Economical activity of Party ISO20022 '
+      properties:
+        Industrycode:
+          type: string
+          format: DataType
+          description: >-
+            Code to identify economic activities by ISIC United Nations
+            International Standard Industrial Classification of all Economic
+            Activities. 
+    Partyrole:
+      type: object
+      format: Partyrole
+      description: ' '
+      properties:
+        PartyRoleType:
+          type: string
+          format: String
+          description: ' '
+        PartyRoleName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        PartyRoleValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        PartyInvolvementType:
+          $ref: '#/components/schemas/Partyinvolvementtypevalues'
+          format: Partyrole
+          description: ">\r\n* `AgreementInvolvement` \r\n* `PartyInvolvement` \r\n* `ArrangementInvolvement` \r\n* `DesignSpecificationInvolvement` \r\n* `RelationshipInvolvement` \r\n* `LocationInvolvement` \r\n* `BankGuaranteeInvolvement` "
+    IntellectualPropertyAdministrativePlan:
+      type: object
+      description: >
+        Handle and assign the day to day activities, capture time, costs and
+        income for an operational unit within Intellectual Property Portfolio. 
+      properties:
+        IntellectualPropertyAssetReference:
+          $ref: '#/components/schemas/Asset'
+          description: >-
+            Reference to the intellectual property asset item Asset |Asset 
+            https://www.iso20022.org/standardsrepository/type/Asset|Standard|ISO20022
+            BM 
+        IntellectualPropertyAssetRecord:
+          $ref: '#/components/schemas/Asset'
+          description: >-
+            The details maintained for the intellectual property asset Asset
+            |Asset 
+            https://www.iso20022.org/standardsrepository/type/Asset|Standard|ISO20022
+            BM 
+        IntellectualPropertyAssetType:
+          $ref: '#/components/schemas/Assettypevalues'
+          description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+        IntellectualPropertyAssetDescription:
+          type: string
+          format: String
+          description: "Description of significant details and properties of the intellectual property asset ||\r\n|"
+        IntellectualPropertyAssetTitle:
+          type: string
+          format: Object
+          description: "Details of title ownership, including assigned usage rights ||\r\n|"
+        IntellectualPropertyAssetJurisdiction:
+          $ref: '#/components/schemas/Jurisdiction'
+          description: >-
+            Details of scope of coverage of the intellectual property asset e.g.
+            geographic coverage, allowed usage type coverage
+            Jurisdiction|Jurisdiction
+            https://www.iso20022.org/standardsrepository/type/Jurisdiction|Standard|ISO20022
+            BM 
+        IntellectualPropertyAssetCreator:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the original source of the intellectual property ||\r\n|"
+        IntellectualPropertyAssetValuation:
+          $ref: '#/components/schemas/AssetValuation'
+          description: >-
+            An indication or description of the commercial value of the
+            intellectual property asset. This can combine a 'replacement'
+            valuation and an licensing/assignment income assessment. The value
+            can be an estimate and include actual realized income
+            CollateralValuation|CollateralValuation
+            https://www.iso20022.org/standardsrepository/type/CollateralValuation|Standard|ISO20022
+            BM 
+        DocumentDirectoryEntryInstanceReference:
+          $ref: '#/components/schemas/DocumentDirectoryEntry'
+          description: "Reference to associated specification documents ||\r\n|"
+        DateType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+        Date:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Value of the date type ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+    Asset:
+      type: object
+      format: Asset
+      description: >-
+        The details maintained for the intellectual property asset Asset |Asset 
+        https://www.iso20022.org/standardsrepository/type/Asset|Standard|ISO20022
+        BM 
+      properties:
+        AssetTitle:
+          type: string
+          format: String
+          description: ' '
+        AssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of an
+            Asset.
+             
+        AssetType:
+          $ref: '#/components/schemas/Assettypevalues'
+          format: Asset
+          description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+        AssetDescription:
+          type: string
+          format: String
+          description: 'Description of the asset  '
+        AssetStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The status of an asset; dependent on the tpe of asset this can be
+            free, mortgaged, blocked and more 
+        AssetDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key date and times of an asset like Maturity Date, Register Date,
+            ... 
+        AssetClassification:
+          type: string
+          format: String
+          description: 'Classification of the asset.ISO20022 '
+        AssetClassificationType:
+          $ref: '#/components/schemas/Assetclassificationtypevalues'
+          format: Asset
+          description: ">\r\n* `Assetclassificationtypevalues` "
+        AssetSubClassificationType:
+          $ref: '#/components/schemas/Assetsubclassificationtypevalues'
+          format: Asset
+          description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+        AssetSubClassification:
+          type: string
+          format: String
+          description: ' '
+    Jurisdiction:
+      type: object
+      format: Jurisdiction
+      description: >-
+        Details of scope of coverage of the intellectual property asset e.g.
+        geographic coverage, allowed usage type coverage
+        Jurisdiction|Jurisdiction
+        https://www.iso20022.org/standardsrepository/type/Jurisdiction|Standard|ISO20022
+        BM 
+      properties:
+        Jurisdiction:
+          type: string
+          format: Class
+          description: 'Jurisdiction that will be assigned in case of legal dispute. '
+    AssetValuation:
+      type: object
+      format: AssetValuation
+      description: >-
+        An indication or description of the commercial value of the intellectual
+        property asset. This can combine a 'replacement' valuation and an
+        licensing/assignment income assessment. The value can be an estimate and
+        include actual realized income CollateralValuation|CollateralValuation
+        https://www.iso20022.org/standardsrepository/type/CollateralValuation|Standard|ISO20022
+        BM 
+      properties:
+        AssetValue:
+          type: string
+          format: String
+          description: 'A value of some value aspect of an Asset.  '
+        AssetValueType:
+          type: string
+          format: String
+          description: >-
+            reference to the type of value expressed in the valuation. this can
+            be ratio, qualifier, amounts, etc.
+        AssetValuationType:
+          type: string
+          format: String
+          description: >-
+            Type of a particular valuation. Possible types are ad hoc-external
+            valuer, ad hoc-internal valuer, scheduö
+
+            led external valuer, scheduled internal valuer 
+        AssetValuationDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date on which the asset has been valued '
+        AssetValuationRate:
+          $ref: '#/components/schemas/Rate'
+          description: ''
+        AssetValuationStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        AssetValuationValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        AsseValuationAmount:
+          $ref: '#/components/schemas/Amount'
+          description: 'Amount at which the asset has been valued at a particular valuation '
+        AssessmentType:
+          $ref: '#/components/schemas/Assessmenttypevalues'
+          format: AssetValuation
+          description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying:1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories:something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:-2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:-2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+        AssessmentMethod:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSchedule:
+          $ref: '#/components/schemas/Schedule'
+          description: ''
+        AssessmentDescription:
+          type: string
+          format: String
+          description: ' '
+        AssessmentModel:
+          $ref: '#/components/schemas/Model'
+          description: ''
+        AssessmentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        AssessmentResult:
+          type: string
+          format: String
+          description: ' '
+        AssessmentSupportingDocument:
+          $ref: '#/components/schemas/Document'
+          description: >-
+            Document that provides background or corroborating information
+            regarding an assessments. 
+        AssessmentRepresentingDocument:
+          $ref: '#/components/schemas/Document'
+          description: 'Document that represents the result of an assessments. '
+        AssessmentRequiredAdjustment:
+          type: string
+          format: String
+          description: 'Change that the assessment reveals is needed. '
+        AssessmentRequirement:
+          $ref: '#/components/schemas/Requirement'
+          description: ''
+        AssessmentExpiryDate:
+          $ref: '#/components/schemas/Date'
+          description: 'Date when the assessment expires. ISO20022 '
+        AssessmentStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        AssessmentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Rate:
+      type: object
+      format: Rate
+      description: ' '
+      properties:
+        RateValue:
+          type: string
+          format: String
+          description: ' '
+        RateUnit:
+          type: string
+          format: String
+          description: >-
+            The unit of measure like Percentage or BPS
+
+
+            Basis points BPS refers to a common unit of measure for interest
+            rates and other percentages in finance. 
+        RatePeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+        RateCapitalUnit:
+          type: string
+          format: String
+          description: ' '
+    Amount:
+      type: object
+      format: Amount
+      description: 'Amount at which the asset has been valued at a particular valuation '
+      properties:
+        AmountValue:
+          type: string
+          format: String
+          description: ' '
+        AmountCurrency:
+          $ref: '#/components/schemas/Currencycode'
+          description: ''
+        DecimalPointPosition:
+          type: string
+          format: String
+          description: Decimal point position starts calulating from the right
+        AmountType:
+          $ref: '#/components/schemas/Amounttypevalues'
+          format: Amount
+          description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Currencycode:
+      type: object
+      format: Currencycode
+      description: ' '
+      properties:
+        Currencycode:
+          type: string
+          format: DataType
+          description: >-
+            A code identifying a currency according to ISO-4217.
+
+            A currency is a system of money in general use in a particular
+            country.
+
+
+            Code allocated to a currency, by a maintenance agency, under an
+            international identification scheme as described in the latest
+            edition of the international standard ISO 4217 "Codes for the
+            representation of currencies and funds". Valid currency codes are
+            registered with the ISO 4217 Maintenance Agency, and consist of
+            three contiguous letters. ISO20022
+
+             
+    Model:
+      type: object
+      format: Model
+      description: ' '
+      properties:
+        ModelType:
+          type: string
+          format: String
+          description: 'The type or category of model   '
+        ModelPurpose:
+          type: string
+          format: String
+          description: >-
+            A description of the model that clarifies the intended
+            analysis/insights provided 
+        ModelVersion:
+          type: string
+          format: String
+          description: ' '
+        ModelName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        ModelDateAndTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        ModelStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Document:
+      type: object
+      format: Document
+      description: 'Document that represents the result of an assessments. '
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of a
+            Document. 
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        DocumentType:
+          $ref: '#/components/schemas/Financialdocumenttypevalues'
+          format: Document
+          description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+          description: 'Status of the document e.g. delivered, paid, etc.. ISO20022 '
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/Documentdatetimetypevalues'
+          format: Document
+          description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
+        DocumentPurpose:
+          type: string
+          format: String
+          description: 'Specifies the function of the document. ISO20022 '
+        DocumentFormat:
+          type: string
+          format: String
+          description: ' '
+        DocumentSubject:
+          type: string
+          format: String
+          description: ' '
+        DocumentDescription:
+          type: string
+          format: String
+          description: ' '
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+    Requirement:
+      type: object
+      format: Requirement
+      description: ' '
+      properties:
+        RequirementType:
+          type: string
+          format: String
+          description: ''
+    Workproducttypevalues:
+      enum:
+        - Document
+        - WorkingPaper
+        - ActivityLog
+        - Form
+        - File
+        - MeetingSchedule
+        - MeetingMinute
+      type: string
+      description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Directoryentrydatetypevalues:
+      enum:
+        - OpenDate
+        - RefreshDate
+      type: string
+      description: ">\r\n* `OpenDate` \r\n* `RefreshDate` "
+    Transactiondatetimetypevalues:
+      enum:
+        - ExecutedDate
+        - FulfillmentDate
+        - InitiatedDate
+        - CancelledDate
+        - ApprovedDate
+        - ValueDate
+        - BookingDate
+      type: string
+      description: ">\r\n* `ExecutedDate` \r\n* `FulfillmentDate` \r\n* `InitiatedDate` \r\n* `CancelledDate` \r\n* `ApprovedDate` \r\n* `ValueDate` \r\n* `BookingDate` "
+    Transactiontypevalues:
+      enum:
+        - FinancialTransaction
+        - BusinessTransaction
+        - BankingTransaction
+        - AccountingTransaction
+        - BookingTransaction
+        - AllocationTransaction
+        - DeliveryTransaction
+        - ProductionTransaction
+      type: string
+      description: ">\r\n* `FinancialTransaction` \r\n* `BusinessTransaction` \r\n* `BankingTransaction` \r\n* `AccountingTransaction` \r\n* `BookingTransaction` \r\n* `AllocationTransaction` \r\n* `DeliveryTransaction` \r\n* `ProductionTransaction` "
+    Transactionstatustypevalues:
+      enum:
+        - Initiated
+        - Executed
+        - Cancelled
+        - Confirmed
+        - Suspended
+        - Pending
+        - Completed
+        - Notified
+        - Booked
+        - Rejected
+      type: string
+      description: ">\r\n* `Initiated` \r\n* `Executed` \r\n* `Cancelled` \r\n* `Confirmed` \r\n* `Suspended` \r\n* `Pending` \r\n* `Completed` \r\n* `Notified` \r\n* `Booked` \r\n* `Rejected` "
+    Actiontypevalues:
+      enum:
+        - Initiate
+        - Execute
+        - Create
+        - Transfer
+        - Pay
+        - Deliver
+        - Apply
+        - Calculate
+      type: string
+      description: ">\r\n* `Initiate` \r\n* `Execute` \r\n* `Create` \r\n* `Transfer` \r\n* `Pay` \r\n* `Deliver` \r\n* `Apply` \r\n* `Calculate` "
+    Geographicalareatypevalues:
+      enum:
+        - Continent
+        - Country
+        - State
+        - District
+        - Province
+        - Town
+        - City
+        - Region
+      type: string
+      description: ">\r\n* `Continent` \r\n* `Country` \r\n* `State` \r\n* `District` \r\n* `Province` \r\n* `Town` \r\n* `City` \r\n* `Region` "
+    Partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\r\n* `Person` Human entity, as distinguished from a corporate entity which is sometimes referred to as an 'artificial person'. ISO20022\r\n* `Organisation` Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+    Partyidentificationtypevalues:
+      enum:
+        - Taxidentificationnumber
+        - Nationalregistrationnumber
+        - Registrationauthorityidentificatio
+        - LEILegalEntityIdentifier
+        - Alienregistrationnumber
+        - Passportnumber
+        - Taxexemptidentificationnumber
+        - Corporateidentification
+        - Driverlicensenumber
+        - Foreigninvestmentidentitynumber
+        - Socialsecuritynumber
+        - Identitycardnumber
+        - Concat
+        - Nationalregistrationidentification
+      type: string
+      description: ">\r\n* `Taxidentificationnumber` Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. ISO20022\r\n* `Registrationauthorityidentification` An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. ISO20022\r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` Number assigned to a tax exempt entity.\r\n* `Corporateidentification` Number assigned to a corporate entity.\r\n* `Driverlicensenumber` Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` Number assigned to a foreign investor other than the alien number.\r\n* `Socialsecuritynumber` Number assigned by a social security agency.\r\n* `Identitycardnumber` Number assigned by a national authority to an identity card.\r\n* `Concat` Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` National registration identification number. In Singapore this is known as the NRIC."
+    Partylegalstructuretypevalues:
+      enum:
+        - Individual
+        - CommunityInterestCompany
+        - CharitableIncorporatedOrganisation
+        - Co-Operative
+        - Charity
+        - GeneralPartnership
+        - LimitedLiabilityPartnership
+        - ScottishLimitedPartnership
+        - LimitedPartnership
+        - PrivateLimitedCompany
+        - PublicLimitedCompany
+        - SoleSoleTrader
+      type: string
+      description: ">\r\n* `Individual` \r\n* `CommunityInterestCompany` \r\n* `CharitableIncorporatedOrganisation` \r\n* `Co-Operative` \r\n* `Charity` \r\n* `GeneralPartnership` \r\n* `LimitedLiabilityPartnership` \r\n* `ScottishLimitedPartnership` \r\n* `LimitedPartnership` \r\n* `PrivateLimitedCompany` \r\n* `PublicLimitedCompany` \r\n* `SoleSoleTrader` "
+    Partyinvolvementtypevalues:
+      enum:
+        - AgreementInvolvement
+        - PartyInvolvement
+        - ArrangementInvolvement
+        - DesignSpecificationInvolvement
+        - RelationshipInvolvement
+        - LocationInvolvement
+        - BankGuaranteeInvolvement
+      type: string
+      description: ">\r\n* `AgreementInvolvement` \r\n* `PartyInvolvement` \r\n* `ArrangementInvolvement` \r\n* `DesignSpecificationInvolvement` \r\n* `RelationshipInvolvement` \r\n* `LocationInvolvement` \r\n* `BankGuaranteeInvolvement` "
+    Assettypevalues:
+      enum:
+        - TangibleAsset
+        - IntangibleAsset
+        - OperatingAsset
+        - Non-OperatingAsset
+        - CurrentAsset
+        - Non-CurrentFixedAsset
+        - PersonalAsset
+        - BusinessAsset
+      type: string
+      description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+    Assetclassificationtypevalues:
+      enum:
+        - Assetclassificationtypevalues
+      type: string
+      description: ">\r\n* `Assetclassificationtypevalues` "
+    Assetsubclassificationtypevalues:
+      enum:
+        - Subassetclass
+        - Timetomaturitybucket
+        - Optiontimetomaturitybucket
+        - Swaptimetomaturitybucket
+        - Underlyinginstrumentidentification
+        - Underlyingbondissuer
+        - Underlyinginterestrate
+        - Underlyingbondterm
+        - Assetclass
+        - Underlyingindexidentification
+        - Interestratetermofcontract
+        - Underlyingreferenceentity
+        - Sovereignandpublictypeissuer
+        - Irdnotionalcurrency1
+        - Fexnotionalcurrency1
+        - Cfdnotionalcurrency1
+        - Fexnotionalcurrency2
+        - Irdnotionalcurrency2
+        - Cfdnotionalcurrency2
+        - Swaptionnotionalcurrency
+        - Creditnotionalcurrency
+        - Commoditynotionalcurrency
+        - Contracttype
+        - Baseproduct
+        - Subproduct
+        - Furthersubproduct
+        - Deliverycashlocation
+        - Deliverysettlementtype
+        - Sizespecificationrelatedtofreights
+        - Specificroutetimecharteraverage
+        - Equityunderlyingtype
+        - Parameter
+        - Inflationindexcodename
+        - ISIN
+        - Underlyingindexcdssubclassidentifi
+        - Underlyingtype
+      type: string
+      description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+    Amounttypevalues:
+      enum:
+        - Principal
+        - Actual
+        - Estimated
+        - Maximum
+        - Default
+        - Replacement
+        - Incremental
+        - Decremental
+        - Reserved
+        - Available
+        - Used
+        - DuePayable
+        - Minimum
+        - Open
+        - Unknown
+        - Fixed
+      type: string
+      description: ">\r\n* `Principal` \r\n* `Actual` Actual amount.\r\n* `Estimated` Estimated amount the final amount could be above or below.\r\n* `Maximum` Maximum amount the final amount must be less or equal.\r\n* `Default` Default amount.\r\n* `Replacement` Replacement amount.\r\n* `Incremental` Incremental amount for reservation.\r\n* `Decremental` Decremental amount for reservation.\r\n* `Reserved` Reserved or updated reserved amount for reservation.\r\n* `Available` \r\n* `Used` \r\n* `DuePayable` \r\n* `Minimum` \r\n* `Open` The amount is open.ISO20022\r\n* `Unknown` The amount is unkown.ISO20022\r\n* `Fixed` The amount represents a fixed value.ISO20022"
+    Assessmenttypevalues:
+      enum:
+        - Valuation
+        - Matching
+        - Authorization
+        - Authentication
+        - QualityAssurance
+        - Audit
+        - ComplianceCheck
+        - FundingCheck
+        - SuitabilityCheck
+        - PerformanceCheck
+        - ImpactAssessment
+        - RiskAssessment
+        - Rating
+        - UnderwritingAssessment
+        - Qualification
+        - Verification
+        - KYCAssessment
+        - PEPAssessment
+        - AMLAssessment
+        - EligibilityCheck
+        - ExternalAgencyCheck
+        - EntitlementCheck
+      type: string
+      description: ">\r\n* `Valuation` \r\n* `Matching` \r\n* `Authorization` An evaluation whether a party or system is allowed to do something.\n\nThe consent given by a participant or a third party acting on behalf of that participant in order to transfer funds or securities. ECB\n\nAuthorization is a mechanism by which a computer system determines whether to allow or deny specific action to a user. Authorization is often controlled by rather complex rules and algorithms, usually specified as part of an access control model. Authorization often follows and required authentication, however, authentication and authorization are two separate mechanisms. In rare cases, \"authorization\" is understood as a process of allowing access, granting permissions or giving approval. Such as \"authorization\" of a request to join a group. ISO/IEC 24760-1:2019 IT Security and Privacy\r\n* `Authentication` An evaluation whether a party or system is what it claims to be.\n\nA security mechanism for verifying: 1 the identity of an individual or other entity including verification by means of a computer or computer application; and 2 the level of authority of that person or entity i.e. the ability of that person or entity to perform specific tasks or activities. ECB\n\nAuthentication is a mechanism by which a computer system checks that the user is really the one she or he claims to be. Authentication can be implemented by a broad variety of mechanisms broadly divided into three categories: something you know, something you have, something you are. Traditionally, authentication is done by the means of by username and password. Authentication is often followed by authorization, however, authentication and authorization are two separate mechanisms. ISO/IEC 24760-1:2019 IT Security and Privacy\r\n* `QualityAssurance` \r\n* `Audit` \r\n* `ComplianceCheck` \r\n* `FundingCheck` \r\n* `SuitabilityCheck` \r\n* `PerformanceCheck` \r\n* `ImpactAssessment` \r\n* `RiskAssessment` \r\n* `Rating` \r\n* `UnderwritingAssessment` \r\n* `Qualification` \r\n* `Verification` A process establishing that a particular information is correct, while the meaning of \"information\" and \"correct\" varies from context to context. When dealing with identity information, this usually means formal verification of identity attributes, checking the schema, identifier uniqueness and referential integrity. However, verification may mean deeper verification, such as checking that the information is true and up-to-date.  ISO/IEC 24760-1:2019 IT Security and Privacy\n\r\n* `KYCAssessment` An assessment conducted by businesses and financial institutions to verify and confirm the identity of their customers or clients. The primary purpose of a KYC check is to prevent illegal activities, such as money laundering, terrorist financing, and fraud, by ensuring that customers are who they claim to be.\r\n* `PEPAssessment` A PEP check, or \"Politically Exposed Person\" check, is an assessment conducted by used by businesses, financial institutions, and government agencies to identify individuals who hold prominent public positions or have significant political influence. The purpose of a PEP check is to assess and manage the potential risks associated with doing business with these individuals, as they may be more susceptible to corruption, money laundering, or other illicit activities.\r\n* `AMLAssessment` An AML Anti-Money Laundering check is an assessment conducted by businesses, financial institutions, and other organizations to prevent and detect money laundering and the financing of criminal activities. The main purpose of an AML check is to ensure that financial transactions and business relationships are not being used to disguise the illegal origins of funds.\r\n* `EligibilityCheck` Determines whether a person or case meets the criteria or preconditions to qualify for a benefit, service, or action.\r\n* `ExternalAgencyCheck` \r\n* `EntitlementCheck` Determines what benefit, amount, or service the person is actually entitled to receive once eligibility is confirmed."
+    Financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjust
+        - Debitnoterelatedtofinancialadjustm
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+    Documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
