@@ -1,0 +1,470 @@
+asyncapi: 3.0.0
+info:
+  title: Servicing Order
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | This service domain handles
+    the processing of a customer servicing request as a predefined procedure. A
+    range of standard servicing requests can be supported. The process can
+    include a check of permissions when the request is made by a third
+    party/service provider
+channels:
+  ServicingOrderProcedure/Created:
+    address: ServicingOrderProcedure/Created
+    messages:
+      ServicingOrderProcedure-created.message:
+        $ref: '#/components/messages/ServicingOrderProcedure'
+    description: ''
+  ServicingOrderProcedure/Updated:
+    address: ServicingOrderProcedure/Updated
+    messages:
+      ServicingOrderProcedure-updated.message:
+        $ref: '#/components/messages/ServicingOrderProcedure'
+    description: ''
+operations:
+  ServicingOrderProcedure-created:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingOrderProcedure~1Created'
+    summary: ServicingOrderProcedure
+    messages:
+      - $ref: >-
+          #/channels/ServicingOrderProcedure~1Created/messages/ServicingOrderProcedure-created.message
+  ServicingOrderProcedure-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/ServicingOrderProcedure~1Updated'
+    summary: ServicingOrderProcedure
+    messages:
+      - $ref: >-
+          #/channels/ServicingOrderProcedure~1Updated/messages/ServicingOrderProcedure-updated.message
+components:
+  messages:
+    ServicingOrderProcedure:
+      name: ServicingOrderProcedure
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Servicing
+        Order. 
+      payload:
+        $ref: '#/components/schemas/ServicingOrderProcedure'
+  schemas:
+    ServicingOrderProcedure:
+      type: object
+      description: >-
+        Complete work tasks following a defined procedure in support of general
+        office activities and product and service delivery within Servicing
+        Order. 
+      properties:
+        ThirdPartyReference:
+          $ref: '#/components/schemas/Party'
+          description: >-
+            Reference to a third party service provider that handles some aspect
+            of customer servicing access with the bank Party|Party
+            https://www.iso20022.org/standardsrepository/type/Party|Standard|ISO20022BM
+        ThirdPartyServicingMandateReference:
+          type: string
+          format: String
+          description: "Reference to a third party servicing mandate used when a third party is requesting the service order ||\r\n|"
+        ThirdPartyServicingMandate:
+          type: string
+          format: String
+          description: "The servicing mandate for a third party defines the customers and service access allowed ||\r\n|"
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "The customer requesting the servicing order directly or the customer that is being serviced indirectly by the third party ||\r\n|"
+        CustomerEligibilityAssessmentInstanceReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            Reference to the customer's active services and products record
+            GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        ServicingOrderType:
+          type: string
+          format: String
+          description: "The type of servicing order being processed e.g. change of address, change of employment… ||\r\n|"
+        ServicingOrderTaskRecord:
+          $ref: '#/components/schemas/Task'
+          description: "The record for the servicing task ||\r\n|"
+        ServicingOrderDescription:
+          type: string
+          format: String
+          description: "Defines the processing tasks and their sequencing followed by the servicing order ||\r\n|"
+        Date:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            The date and time that the servicing order is processed
+            ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+        EmployeeBusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+          description: "Employees involved in the servicing order ||\r\n|"
+        ServicingOrderWorkProduct:
+          $ref: '#/components/schemas/Workproduct'
+          description: "Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+        ServicingOrderWorkTaskResult:
+          $ref: '#/components/schemas/Task'
+          description: "The outcome of the servicing order ||\r\n|"
+    Party:
+      type: object
+      format: Party
+      description: >-
+        Reference to a third party service provider that handles some aspect of
+        customer servicing access with the bank Party|Party
+        https://www.iso20022.org/standardsrepository/type/Party|Standard|ISO20022BM
+      properties:
+        PartyName:
+          $ref: '#/components/schemas/Name'
+          description: >-
+            Name by which a party is known and which is usually used to identify
+            that party. ISO20022
+             
+        PartyType:
+          $ref: '#/components/schemas/Partytypevalues'
+          format: Party
+          description: ">\r\n* `Person` Human entity, as distinguished from a corporate entity which is sometimes referred to as an 'artificial person'. ISO20022\r\n* `Organisation` Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+        PartyDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        PartyIdentification:
+          $ref: '#/components/schemas/Partyidentification'
+          description: ''
+        PartyLegalStructureType:
+          $ref: '#/components/schemas/Partylegalstructuretypevalues'
+          format: Party
+          description: ">\r\n* `Individual` \r\n* `CommunityInterestCompany` \r\n* `CharitableIncorporatedOrganisation` \r\n* `Co-Operative` \r\n* `Charity` \r\n* `GeneralPartnership` \r\n* `LimitedLiabilityPartnership` \r\n* `ScottishLimitedPartnership` \r\n* `LimitedPartnership` \r\n* `PrivateLimitedCompany` \r\n* `PublicLimitedCompany` \r\n* `SoleSoleTrader` "
+        PartyActivityIndicator:
+          $ref: '#/components/schemas/Industrycode'
+          description: 'Economical activity of Party ISO20022 '
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Datetime:
+      type: object
+      format: Datetime
+      description: ' '
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Partyidentification:
+      type: object
+      format: Partyidentification
+      description: ' '
+      properties:
+        PartyIdentificationType:
+          $ref: '#/components/schemas/Partyidentificationtypevalues'
+          format: Partyidentification
+          description: ">\r\n* `Taxidentificationnumber` Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. ISO20022\r\n* `Registrationauthorityidentification` An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. ISO20022\r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` Number assigned to a tax exempt entity.\r\n* `Corporateidentification` Number assigned to a corporate entity.\r\n* `Driverlicensenumber` Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` Number assigned to a foreign investor other than the alien number.\r\n* `Socialsecuritynumber` Number assigned by a social security agency.\r\n* `Identitycardnumber` Number assigned by a national authority to an identity card.\r\n* `Concat` Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` National registration identification number. In Singapore this is known as the NRIC."
+        PartyIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Identifier:
+      type: object
+      format: Identifier
+      description: ' '
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "The customer requesting the servicing order directly or the customer that is being serviced indirectly by the third party ||\r\n|"
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Industrycode:
+      type: object
+      format: Industrycode
+      description: 'Economical activity of Party ISO20022 '
+      properties:
+        Industrycode:
+          type: string
+          format: DataType
+          description: >-
+            Code to identify economic activities by ISIC United Nations
+            International Standard Industrial Classification of all Economic
+            Activities. 
+    Task:
+      type: object
+      format: Task
+      description: "The outcome of the servicing order ||\r\n|"
+      properties:
+        Task:
+          type: string
+          format: DataType
+          description: ''
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Employees involved in the servicing order ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+        OrganisationStructureHierarchy:
+          type: string
+          format: String
+          description: 'Description of the structure of a company. ISO20022 '
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Organisationidentification'
+          description: ''
+        OrganisationSector:
+          type: string
+          format: String
+          description: >-
+            Sector of business of the organisation, for example, pharmaceutical.
+            ISO20022 
+        LegalEntityIndicator:
+          type: string
+          format: String
+          description: ''
+        OrganisationDate:
+          $ref: '#/components/schemas/Organisationdatetime'
+          description: ''
+        OrganisationType:
+          $ref: '#/components/schemas/Organisationtypevalues'
+          format: BusinessUnit
+          description: ">\r\n* `LegalEntity` \r\n* `Authority` \r\n* `OrganisationUnit` \r\n* `FinancialInstitution` \r\n* `Charity` \r\n* `GovernmentBody` "
+        OrganisationName:
+          $ref: '#/components/schemas/Organisationname'
+          description: ''
+        OrganisationLegalStructure:
+          $ref: '#/components/schemas/Organisationlegalstructuretypevalues'
+          format: BusinessUnit
+          description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+    Organisationidentification:
+      type: object
+      format: Organisationidentification
+      description: ' '
+      properties:
+        OrganisationIdentificationType:
+          $ref: '#/components/schemas/Organisationidentificationtypevalues'
+          format: Organisationidentification
+          description: ">\r\n* `LEI` Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier LEI\".\r\n* `ELF` Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms ELF\". \r\n* `MIC` Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code BIC\".\r\n* `Bankpartyidentification` Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` Country authority given organisation identification e.g., corporate registration number\r\n* `Customernumber` Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering EAN numbering scheme rules. The number is used to retrieve detailed information that is linked to it. iso20022"
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Organisationdatetime:
+      type: object
+      format: Organisationdatetime
+      description: ' '
+      properties:
+        OrganisatioDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        OrganisatioDateType:
+          $ref: '#/components/schemas/Organisationdatetimetypevalues'
+          format: Organisationdatetime
+          description: ">\r\n* `RegistrationDate` Date and time at which a given organisation was officially registered. ISO20022\r\n* `EstablishmentDate` Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationname:
+      type: object
+      format: Organisationname
+      description: ' '
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        NameType:
+          $ref: '#/components/schemas/Organisationnametypevalues'
+          format: Organisationname
+          description: ">\r\n* `ShortName` \r\n* `TradingName` \r\n* `LegalName` "
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+      properties:
+        WorkProductType:
+          $ref: '#/components/schemas/Workproducttypevalues'
+          format: Workproduct
+          description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Partytypevalues:
+      enum:
+        - Person
+        - Organisation
+      type: string
+      description: ">\r\n* `Person` Human entity, as distinguished from a corporate entity which is sometimes referred to as an 'artificial person'. ISO20022\r\n* `Organisation` Organised structure that is set up for a particular purpose. For example, a business, government body, department, charity, or financial institution. ISO20022"
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Partyidentificationtypevalues:
+      enum:
+        - Taxidentificationnumber
+        - Nationalregistrationnumber
+        - Registrationauthorityidentificatio
+        - LEILegalEntityIdentifier
+        - Alienregistrationnumber
+        - Passportnumber
+        - Taxexemptidentificationnumber
+        - Corporateidentification
+        - Driverlicensenumber
+        - Foreigninvestmentidentitynumber
+        - Socialsecuritynumber
+        - Identitycardnumber
+        - Concat
+        - Nationalregistrationidentification
+      type: string
+      description: ">\r\n* `Taxidentificationnumber` Number assigned by a tax authority to an entity.\r\n* `Nationalregistrationnumber` Number assigned by a national registration authority to an entity. In Singapore this is known as the NRIC. ISO20022\r\n* `Registrationauthorityidentification` An identifier for the Legal Entity in a business registry in the jurisdiction of legal registration, or in the appropriate registration authority. ISO20022\r\n* `LEILegalEntityIdentifier` \r\n* `Alienregistrationnumber` Number assigned by a government agency to identify foreign nationals.\r\n* `Passportnumber` Number assigned by a passport authority.\r\n* `Taxexemptidentificationnumber` Number assigned to a tax exempt entity.\r\n* `Corporateidentification` Number assigned to a corporate entity.\r\n* `Driverlicensenumber` Number assigned to a driver's license.\r\n* `Foreigninvestmentidentitynumber` Number assigned to a foreign investor other than the alien number.\r\n* `Socialsecuritynumber` Number assigned by a social security agency.\r\n* `Identitycardnumber` Number assigned by a national authority to an identity card.\r\n* `Concat` Number assigned by an issuer to identify a customer via the concatenation of the birthdate and characters of the first name and surname.\r\n* `Nationalregistrationidentificationnumber` National registration identification number. In Singapore this is known as the NRIC."
+    Partylegalstructuretypevalues:
+      enum:
+        - Individual
+        - CommunityInterestCompany
+        - CharitableIncorporatedOrganisation
+        - Co-Operative
+        - Charity
+        - GeneralPartnership
+        - LimitedLiabilityPartnership
+        - ScottishLimitedPartnership
+        - LimitedPartnership
+        - PrivateLimitedCompany
+        - PublicLimitedCompany
+        - SoleSoleTrader
+      type: string
+      description: ">\r\n* `Individual` \r\n* `CommunityInterestCompany` \r\n* `CharitableIncorporatedOrganisation` \r\n* `Co-Operative` \r\n* `Charity` \r\n* `GeneralPartnership` \r\n* `LimitedLiabilityPartnership` \r\n* `ScottishLimitedPartnership` \r\n* `LimitedPartnership` \r\n* `PrivateLimitedCompany` \r\n* `PublicLimitedCompany` \r\n* `SoleSoleTrader` "
+    Organisationidentificationtypevalues:
+      enum:
+        - LEI
+        - ELF
+        - MIC
+        - BICFI
+        - Bankpartyidentification
+        - Centralbankidentificationnumber
+        - Clearingidentificationnumber
+        - Certificateofincorporationnumber
+        - Countryidentificationcode
+        - Customernumber
+        - Datauniversalnumberingsystem
+        - Employeridentificationnumber
+        - Gs1glnidentifier
+        - SIREN
+        - SIRET
+        - Taxidentificationnumber
+        - EANGLN
+      type: string
+      description: ">\r\n* `LEI` Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier LEI\".\r\n* `ELF` Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms ELF\". \r\n* `MIC` Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code BIC\".\r\n* `Bankpartyidentification` Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` Country authority given organisation identification e.g., corporate registration number\r\n* `Customernumber` Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering EAN numbering scheme rules. The number is used to retrieve detailed information that is linked to it. iso20022"
+    Organisationdatetimetypevalues:
+      enum:
+        - RegistrationDate
+        - EstablishmentDate
+        - EntityExpirationDate
+      type: string
+      description: ">\r\n* `RegistrationDate` Date and time at which a given organisation was officially registered. ISO20022\r\n* `EstablishmentDate` Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationtypevalues:
+      enum:
+        - LegalEntity
+        - Authority
+        - OrganisationUnit
+        - FinancialInstitution
+        - Charity
+        - GovernmentBody
+      type: string
+      description: ">\r\n* `LegalEntity` \r\n* `Authority` \r\n* `OrganisationUnit` \r\n* `FinancialInstitution` \r\n* `Charity` \r\n* `GovernmentBody` "
+    Organisationnametypevalues:
+      enum:
+        - ShortName
+        - TradingName
+        - LegalName
+      type: string
+      description: ">\r\n* `ShortName` \r\n* `TradingName` \r\n* `LegalName` "
+    Organisationlegalstructuretypevalues:
+      enum:
+        - Corporation
+        - Individual
+        - Supranational
+        - Sovereign
+        - Municipal
+        - Province
+        - State
+        - County
+        - Partnership
+        - Financialinstitution
+        - National
+      type: string
+      description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+    Workproducttypevalues:
+      enum:
+        - Document
+        - WorkingPaper
+        - ActivityLog
+        - Form
+        - File
+        - MeetingSchedule
+        - MeetingMinute
+      type: string
+      description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "

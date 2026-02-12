@@ -1,0 +1,892 @@
+asyncapi: 3.0.0
+info:
+  title: Regulatory Compliance
+  version: 14.0.0
+  description: >-
+    BIAN Service Domain expanded with the BIAN BOM | This service domain
+    provides a service to interpret regulatory requirements, provide guidance
+    and define and implement a portfolio of regulatory compliance tests across
+    all appropriate bank activities
+channels:
+  RegulatoryComplianceAssessment/Created:
+    address: RegulatoryComplianceAssessment/Created
+    messages:
+      RegulatoryComplianceAssessment-created.message:
+        $ref: '#/components/messages/RegulatoryComplianceAssessment'
+    description: ''
+  RegulatoryComplianceAssessment/Updated:
+    address: RegulatoryComplianceAssessment/Updated
+    messages:
+      RegulatoryComplianceAssessment-updated.message:
+        $ref: '#/components/messages/RegulatoryComplianceAssessment'
+    description: ''
+operations:
+  RegulatoryComplianceAssessment-created:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryComplianceAssessment~1Created'
+    summary: RegulatoryComplianceAssessment
+    messages:
+      - $ref: >-
+          #/channels/RegulatoryComplianceAssessment~1Created/messages/RegulatoryComplianceAssessment-created.message
+  RegulatoryComplianceAssessment-updated:
+    action: receive
+    channel:
+      $ref: '#/channels/RegulatoryComplianceAssessment~1Updated'
+    summary: RegulatoryComplianceAssessment
+    messages:
+      - $ref: >-
+          #/channels/RegulatoryComplianceAssessment~1Updated/messages/RegulatoryComplianceAssessment-updated.message
+components:
+  messages:
+    RegulatoryComplianceAssessment:
+      name: RegulatoryComplianceAssessment
+      description: >-
+        To test or assess an entity, possibly against some formal qualification
+        or certification requirement within Regulatory Compliance. 
+      payload:
+        $ref: '#/components/schemas/RegulatoryComplianceAssessment'
+  schemas:
+    RegulatoryComplianceAssessment:
+      type: object
+      description: >-
+        To test or assess an entity, possibly against some formal qualification
+        or certification requirement within Regulatory Compliance. 
+      properties:
+        RegulatoryAssessmentType:
+          type: string
+          format: String
+          description: "The type and make-up of regulatory tests referenced in the assessment ||\r\n|"
+        BusinessUnitReference:
+          $ref: '#/components/schemas/BusinessUnit'
+          description: "Reference to the business function or unit assessed for compliance if applicable ||\r\n|"
+        ProductandServiceReference:
+          $ref: '#/components/schemas/Product'
+          description: >-
+            Reference to the product or service being assessed, possibly in
+            combination with the referenced customer and the referenced business
+            unit Product_x000D_
+
+            |Product
+            https://www.iso20022.org/standardsrepository/type/Product|Standard|ISO20022
+            BM 
+        CustomerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the customer being assessed, possibly in combination with the referenced product or service and business unit ||\r\n|"
+        RegulatoryAuthorityReference:
+          $ref: '#/components/schemas/RegulatoryAuthority'
+          description: "Reference to the authority pertaining to the evaluated regulation ||\r\n|"
+        RegulationReference:
+          $ref: '#/components/schemas/Regulation'
+          description: "Reference to the specific regulation against which the assessment is done ||\r\n|"
+        RegulationDefinition:
+          type: string
+          format: String
+          description: "Description of the specific regulation against which the assessment is done ||\r\n|"
+        RegulationComplianceandReportingRequirements:
+          type: string
+          format: String
+          description: "Description of the measurements and reporting required to demonstrate compliance ||\r\n|"
+        RegulationAccountability:
+          $ref: '#/components/schemas/BusinessUnit'
+          description: "Business unit or person accountable for the compliance with the regulation ||\r\n|"
+        RegulationPenalties:
+          type: string
+          format: String
+          description: "Description of the implications of non-compliance ||\r\n|"
+        RegulationGuideline:
+          $ref: '#/components/schemas/Guideline'
+          description: "Guidelines issued by the regulator about how to comply with the regulation ||\r\n|"
+        DocumentReference:
+          $ref: '#/components/schemas/Document'
+          description: "A reference to an instance in Document Directory Document\__x000D_\n|Document https://www.iso20022.org/standardsrepository/type/Document|Standard|ISO20022 BM "
+        RegulatoryAssessmentWorkProducts:
+          $ref: '#/components/schemas/Workproduct'
+          description: "Work documentation, forms and schedules produced and referenced during the assessment ||\r\n|"
+        RegulatoryAssessmentResult:
+          type: string
+          format: RegulatoryComplianceCheck
+          description: "Description of the result of the assessment, can include remedial actions ||\r\n|"
+        RegulatoryComplianceAssessmentReference:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An unique reference to an item or an occurrence of Regulatory
+            Compliance Assessment GenericIdentification|GenericIdentification
+            https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+            BM 
+        AssessmentRequestor:
+          $ref: '#/components/schemas/Involvedparty'
+          description: "Reference to the business unit or party that requested the assessment ||\r\n|"
+        AssessmentStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Date on which the assessment is started ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+        AssessmentCompletionDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Date on which the result of the assessment is handed over to the
+            requestor ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+        RegulationCustomerType:
+          $ref: '#/components/schemas/Organisationlegalstructuretypevalues'
+          description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+        RegulationCustomerResidenceStatus:
+          $ref: '#/components/schemas/Residentalstatustypevalues'
+          description: ">\r\n* `Resident` \r\n* `Permanentresident` \r\n* `Nonresident` "
+        RegulationValidfromDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Date from which the regulation applies ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+        RegulationValidtoDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Date until which the regulation applies ISODateTime|ISODateTime
+            https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+            BM 
+    BusinessUnit:
+      type: object
+      format: BusinessUnit
+      description: "Business unit or person accountable for the compliance with the regulation ||\r\n|"
+      properties:
+        BusinessFunction:
+          type: string
+          format: String
+          description: ''
+        Goal:
+          type: string
+          format: String
+          description: ''
+        OrganisationStructureHierarchy:
+          type: string
+          format: String
+          description: 'Description of the structure of a company. ISO20022 '
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Organisationidentification'
+          description: ''
+        OrganisationSector:
+          type: string
+          format: String
+          description: >-
+            Sector of business of the organisation, for example, pharmaceutical.
+            ISO20022 
+        LegalEntityIndicator:
+          type: string
+          format: String
+          description: ''
+        OrganisationDate:
+          $ref: '#/components/schemas/Organisationdatetime'
+          description: ''
+        OrganisationType:
+          $ref: '#/components/schemas/Organisationtypevalues'
+          format: BusinessUnit
+          description: ">\r\n* `LegalEntity` \r\n* `Authority` \r\n* `OrganisationUnit` \r\n* `FinancialInstitution` \r\n* `Charity` \r\n* `GovernmentBody` "
+        OrganisationName:
+          $ref: '#/components/schemas/Organisationname'
+          description: ''
+        OrganisationLegalStructure:
+          $ref: '#/components/schemas/Organisationlegalstructuretypevalues'
+          format: BusinessUnit
+          description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+    Organisationidentification:
+      type: object
+      format: Organisationidentification
+      description: ' '
+      properties:
+        OrganisationIdentificationType:
+          $ref: '#/components/schemas/Organisationidentificationtypevalues'
+          format: Organisationidentification
+          description: ">\r\n* `LEI` Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier LEI\".\r\n* `ELF` Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms ELF\". \r\n* `MIC` Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code BIC\".\r\n* `Bankpartyidentification` Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` Country authority given organisation identification e.g., corporate registration number\r\n* `Customernumber` Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering EAN numbering scheme rules. The number is used to retrieve detailed information that is linked to it. iso20022"
+        OrganisationIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Identifier:
+      type: object
+      format: Identifier
+      description: >-
+        An unique reference to an item or an occurrence of Regulatory Compliance
+        Assessment GenericIdentification|GenericIdentification
+        https://www.iso20022.org/standardsrepository/type/GenericIdentification|Standard|ISO20022
+        BM 
+      properties:
+        IdentifierValue:
+          type: string
+          format: String
+          description: >-
+            tThe actual unique code or number e.g., passport number, drivers
+            license number. 
+        IdentifierIssuerReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to an entity that assigns and manages the identification.
+
+            tReference to the organization or agency that issued the identifier
+            e.g., DMV, Passport Office. 
+        IdentifierStartDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier became valid. '
+        IdentifierEndDate:
+          $ref: '#/components/schemas/Datetime'
+          description: 'The date when the identifier expires or is no longer valid. '
+    Involvedparty:
+      type: object
+      format: Involvedparty
+      description: "Reference to the business unit or party that requested the assessment ||\r\n|"
+      properties:
+        PartyReference:
+          type: string
+          format: String
+          description: 'Reference to a Party who plays a specific role '
+        InvolvementReference:
+          type: string
+          format: String
+          description: 'Reference to a specific Role that is played by a Party '
+    Datetime:
+      type: object
+      format: Datetime
+      description: >-
+        Date until which the regulation applies ISODateTime|ISODateTime
+        https://www.iso20022.org/standardsrepository/type/ISODateTime|Standard|ISO20022
+        BM 
+      properties:
+        DateTimeContent:
+          type: string
+          format: String
+          description: 'The particular date and time point in the progression of time '
+        TimeZoneCode:
+          type: string
+          format: String
+          description: 'The time zone to which the date time refers. '
+        DaylightSavingIndicator:
+          type: string
+          format: String
+          description: ' '
+        DateTimeType:
+          $ref: '#/components/schemas/Datetimetypevalues'
+          format: Datetime
+          description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Organisationdatetime:
+      type: object
+      format: Organisationdatetime
+      description: ' '
+      properties:
+        OrganisatioDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        OrganisatioDateType:
+          $ref: '#/components/schemas/Organisationdatetimetypevalues'
+          format: Organisationdatetime
+          description: ">\r\n* `RegistrationDate` Date and time at which a given organisation was officially registered. ISO20022\r\n* `EstablishmentDate` Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationname:
+      type: object
+      format: Organisationname
+      description: ' '
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        NameType:
+          $ref: '#/components/schemas/Organisationnametypevalues'
+          format: Organisationname
+          description: ">\r\n* `ShortName` \r\n* `TradingName` \r\n* `LegalName` "
+    Name:
+      type: object
+      format: Name
+      description: ' '
+      properties:
+        Name:
+          type: string
+          format: DataType
+          description: >-
+            A name is a word or phrase that constitutes the distinctive
+            designation of a person, place, thing or concept. UN/CEFAT 
+    Product:
+      type: object
+      format: Product
+      description: >-
+        Reference to the product or service being assessed, possibly in
+        combination with the referenced customer and the referenced business
+        unit Product_x000D_
+
+        |Product
+        https://www.iso20022.org/standardsrepository/type/Product|Standard|ISO20022
+        BM 
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Productidentification'
+          description: 'The identifier of product e.g. ISIN Code. '
+        ProductType:
+          $ref: '#/components/schemas/Bankingproducttypevalues'
+          format: Product
+          description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+        ProductLifecycleStatus:
+          $ref: '#/components/schemas/Productstatus'
+          description: >-
+            Refers to the lifecycle of a product e.g., initiated, announced,
+            active, obsolete, withdrawn. 
+        ProductPriority:
+          type: string
+          format: String
+          description: ' '
+        ProductDescription:
+          type: string
+          format: String
+          description: 'A detailed explanation or commentary of product. '
+        ProductVersion:
+          type: string
+          format: String
+          description: ' '
+        ProductName:
+          $ref: '#/components/schemas/Name'
+          description: >-
+            The name of Product. 
+
+
+            Open Banking:
+
+            The name of the product used for marketing purposes from a customer
+            perspective. I.e. what the customer would recognise. 
+        FinancialInstrumentType:
+          $ref: '#/components/schemas/Financialinstrumenttypevalues'
+          format: Product
+          description: ">\r\n* `Loan` \r\n* `Bond` \r\n* `Deposit` \r\n* `Stock` \r\n* `Option` \r\n* `Share` \r\n* `Debt` Financial instruments evidencing moneys owed by the issuer to the holder on terms as specified. ISO20022\n\nAny type of instrument primarily classified as debt can be considered a debt instrument. Debt instruments are tools an individual, government entity, or business entity can utilize for the purpose of obtaining capital. Debt instruments provide capital to an entity that promises to repay the capital over time. Credit cards, credit lines, loans, and bonds can all be types of debt instruments. Investopedia\r\n* `Letterofcredit` Instrument issued by a bank substituting its name and credit standing for that of its customer. A letter of credit is a written undertaking of the bank, issued for the account of a customer the applicant, to honour a demand for payment, upon the beneficiary's compliance with the terms and conditions set forth in the undertaking. ISO20022\r\n* `Security` Financial instruments representing a sum of rights of the investor vis-a-vis the issuer. ISO20022\r\n* `Derivative` "
+        FinancialInstrumentIdentification:
+          $ref: '#/components/schemas/Financialinstrumentidentification'
+          description: ''
+        FinancialInstrumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        FinancialInstrumentDate:
+          $ref: '#/components/schemas/Financialinstrumentdatetime'
+          description: 'Key dates of financial instrument '
+        AssetTitle:
+          type: string
+          format: String
+          description: ' '
+        AssetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of an
+            Asset.
+             
+        AssetType:
+          $ref: '#/components/schemas/Assettypevalues'
+          format: Product
+          description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+        AssetDescription:
+          type: string
+          format: String
+          description: 'Description of the asset  '
+        AssetStatus:
+          $ref: '#/components/schemas/Status'
+          description: >-
+            The status of an asset; dependent on the tpe of asset this can be
+            free, mortgaged, blocked and more 
+        AssetDate:
+          $ref: '#/components/schemas/Datetime'
+          description: >-
+            Key date and times of an asset like Maturity Date, Register Date,
+            ... 
+        AssetClassification:
+          type: string
+          format: String
+          description: 'Classification of the asset.ISO20022 '
+        AssetClassificationType:
+          $ref: '#/components/schemas/Assetclassificationtypevalues'
+          format: Product
+          description: ">\r\n* `Assetclassificationtypevalues` "
+        AssetSubClassificationType:
+          $ref: '#/components/schemas/Assetsubclassificationtypevalues'
+          format: Product
+          description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+        AssetSubClassification:
+          type: string
+          format: String
+          description: ' '
+    Productidentification:
+      type: object
+      format: Productidentification
+      description: 'The identifier of product e.g. ISIN Code. '
+      properties:
+        ProductIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        ProductIdentificationType:
+          $ref: '#/components/schemas/Productidentificationtypevalues'
+          format: Productidentification
+          description: ">\r\n* `ISINCode` \r\n* `PackageCode` \r\n* `Buyersitemnumber` Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` A code to identify a product based on applicable commercial conditions.\r\n* `EAN` The unique EAN European Article Number code.\r\n* `Harmonizedtariffcodename` Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` Product identifier used by the retail industry.\r\n* `Stylenumber` Identification of the style of a product.\r\n* `Suppliersitemnumber` Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` Number assigned to a manufacturer's product by the Product Code Council."
+    Productstatus:
+      type: object
+      format: Productstatus
+      description: >-
+        Refers to the lifecycle of a product e.g., initiated, announced, active,
+        obsolete, withdrawn. 
+      properties:
+        ProductStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+        ProductStatusType:
+          $ref: '#/components/schemas/Productstatustypevalues'
+          format: Productstatus
+          description: ">\r\n* `Initiated` \r\n* `Announced` \r\n* `Sold` \r\n* `Obsolete` \r\n* `Active` "
+    Status:
+      type: object
+      format: Status
+      description: 'Status of the document e.g. delivered, paid, etc.. ISO20022 '
+      properties:
+        StatusReason:
+          type: string
+          format: String
+          description: 'Specifies the reasons for the status. '
+        StatusDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the status was assigned. '
+        StatusValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: 'Period of time during which the status is valid. '
+        StatusInvolvedPartyReference:
+          $ref: '#/components/schemas/Involvedparty'
+          description: >-
+            Reference to a Party who plays a  specific role in the context of
+            assigning a status. 
+    Datetimeperiod:
+      type: object
+      format: Datetimeperiod
+      description: ' '
+      properties:
+        FromDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range starts. ISO20022 '
+        ToDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: 'Date and time at which the range ends. ISO20022 '
+    Financialinstrumentidentification:
+      type: object
+      format: Financialinstrumentidentification
+      description: ' '
+      properties:
+        FinancialInstrumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        FinancialInstrumentIdentificationType:
+          $ref: '#/components/schemas/Financialinstrumentidentificationtypevalues'
+          format: Financialinstrumentidentification
+          description: ">\r\n* `NASDAQ` \r\n* `ISIN` "
+    Financialinstrumentdatetime:
+      type: object
+      format: Financialinstrumentdatetime
+      description: 'Key dates of financial instrument '
+      properties:
+        FinancialInstrumentDate:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        FinancialInstrumentDateType:
+          $ref: '#/components/schemas/Financialinstrumentdatetimetypevalues'
+          format: Financialinstrumentdatetime
+          description: ">\r\n* `CouponDate` Next payment date of an interest bearing financial instrument.ISO20022\r\n* `ExpiryDate` Date on which a privilege expires.ISO20022\r\n* `FloatingRateFixingDate` Date at which the interest rate of an interest bearing security will be calculated and reset, according to the terms of the issue.ISO20022\r\n* `MaturityDate` Planned final repayment date at the time of issuance.ISO20022\r\n* `IssueDate` Date at which the security was made available.ISO20022\r\n* `NextCallableDate` Next date at which the issuer has the right to pay the security prior to maturity.ISO20022\r\n* `PutableDate` Date at which the holder has the right to ask for redemption of the security prior to final maturity.ISO20022\r\n* `DatedDate` First date at which a security begins to accrue interest.ISO20022\r\n* `FirstPaymentDate` Date at which the first interest payment is due to holders of the security.ISO20022"
+    RegulatoryAuthority:
+      type: object
+      format: RegulatoryAuthority
+      description: "Reference to the authority pertaining to the evaluated regulation ||\r\n|"
+      properties:
+        RegulatoryAuthority:
+          type: string
+          format: Class
+          description: 'An organisation that is alowed to impose regulations '
+    Regulation:
+      type: object
+      format: Regulation
+      description: "Reference to the specific regulation against which the assessment is done ||\r\n|"
+      properties:
+        RegulationDefinition:
+          type: string
+          format: String
+          description: ' '
+        RuleSetDefinition:
+          type: string
+          format: String
+          description: ' '
+        RuleSetInterpretation:
+          type: string
+          format: String
+          description: ' '
+        RuleSetType:
+          $ref: '#/components/schemas/Rulesettypevalues'
+          format: Regulation
+          description: ">\r\n* `Policy` Rule that governs business execution.\n\nThe set of basic principles and associated guidelines, formulated and enforced by the governing body of an organization, to direct and limit its actions in pursuit of long-term goals. Business Dictionary\n\r\n* `Regulation` A rule used to carry out a law FIBO\n\nBusiness Dictionary:a rule with or without the coercive power of law employed in controlling, directing, or managing an activity, organization, or system. \n\nThe set of rules and legislation governing certain actions. \nhttps://financial-dictionary.thefreedictionary.com/Regulatory\r\n* `Law` A binding rule that the courts will enforce.\nA system of rules and guidelines which are enforced through social institutions to govern behavior. FIBO\n\r\n* `Guideline` A recommended practice adapted from Business Dictionary\nA general rule, principle, or piece of advice.\r\n* `Criterion` A principle or standard by which something may be judged or decided.\n\nRead more:http:-//www.businessdictionary.com/definition/criterion.html\r\n* `Standard` A rule considered by an authority or by general consent as a basis of comparison"
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Guideline:
+      type: object
+      format: Guideline
+      description: "Guidelines issued by the regulator about how to comply with the regulation ||\r\n|"
+      properties:
+        RuleSetDefinition:
+          type: string
+          format: String
+          description: ' '
+        RuleSetInterpretation:
+          type: string
+          format: String
+          description: ' '
+        RuleSetType:
+          $ref: '#/components/schemas/Rulesettypevalues'
+          format: Guideline
+          description: ">\r\n* `Policy` Rule that governs business execution.\n\nThe set of basic principles and associated guidelines, formulated and enforced by the governing body of an organization, to direct and limit its actions in pursuit of long-term goals. Business Dictionary\n\r\n* `Regulation` A rule used to carry out a law FIBO\n\nBusiness Dictionary:a rule with or without the coercive power of law employed in controlling, directing, or managing an activity, organization, or system. \n\nThe set of rules and legislation governing certain actions. \nhttps://financial-dictionary.thefreedictionary.com/Regulatory\r\n* `Law` A binding rule that the courts will enforce.\nA system of rules and guidelines which are enforced through social institutions to govern behavior. FIBO\n\r\n* `Guideline` A recommended practice adapted from Business Dictionary\nA general rule, principle, or piece of advice.\r\n* `Criterion` A principle or standard by which something may be judged or decided.\n\nRead more:http:-//www.businessdictionary.com/definition/criterion.html\r\n* `Standard` A rule considered by an authority or by general consent as a basis of comparison"
+        RuleSetName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        RuleSetIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+        RuleSetLifecycleStatus:
+          $ref: '#/components/schemas/Status'
+          description: ''
+    Document:
+      type: object
+      format: Document
+      description: "A reference to an instance in Document Directory Document\__x000D_\n|Document https://www.iso20022.org/standardsrepository/type/Document|Standard|ISO20022 BM "
+      properties:
+        DocumentIdentification:
+          $ref: '#/components/schemas/Identifier'
+          description: >-
+            An identifier that allows to uniquely refer to an instance of a
+            Document. 
+        DocumentVersion:
+          type: string
+          format: Number
+          description: ''
+        DocumentType:
+          $ref: '#/components/schemas/Financialdocumenttypevalues'
+          format: Document
+          description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+        DocumentStatus:
+          $ref: '#/components/schemas/Status'
+          description: 'Status of the document e.g. delivered, paid, etc.. ISO20022 '
+        DocumentDateTime:
+          $ref: '#/components/schemas/Datetime'
+          description: ''
+        DocumentName:
+          $ref: '#/components/schemas/Name'
+          description: ''
+        DocumentDateTimeType:
+          $ref: '#/components/schemas/Documentdatetimetypevalues'
+          format: Document
+          description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
+        DocumentPurpose:
+          type: string
+          format: String
+          description: 'Specifies the function of the document. ISO20022 '
+        DocumentFormat:
+          type: string
+          format: String
+          description: ' '
+        DocumentSubject:
+          type: string
+          format: String
+          description: ' '
+        DocumentDescription:
+          type: string
+          format: String
+          description: ' '
+        DocumentValidityPeriod:
+          $ref: '#/components/schemas/Datetimeperiod'
+          description: ''
+    Workproduct:
+      type: object
+      format: Workproduct
+      description: "Work documentation, forms and schedules produced and referenced during the assessment ||\r\n|"
+      properties:
+        WorkProductType:
+          $ref: '#/components/schemas/Workproducttypevalues'
+          format: Workproduct
+          description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+        WorkProductIdentifoication:
+          $ref: '#/components/schemas/Identifier'
+          description: ''
+    Organisationidentificationtypevalues:
+      enum:
+        - LEI
+        - ELF
+        - MIC
+        - BICFI
+        - Bankpartyidentification
+        - Centralbankidentificationnumber
+        - Clearingidentificationnumber
+        - Certificateofincorporationnumber
+        - Countryidentificationcode
+        - Customernumber
+        - Datauniversalnumberingsystem
+        - Employeridentificationnumber
+        - Gs1glnidentifier
+        - SIREN
+        - SIRET
+        - Taxidentificationnumber
+        - EANGLN
+      type: string
+      description: ">\r\n* `LEI` Legal Entity Identifier is a code allocated to a party as described in ISO 17442 \"Financial Services Legal Entity Identifier LEI\".\r\n* `ELF` Entity Legal Forms is a code allocated to a party as described in ISO 20275 \"Financial services  Entity legal forms ELF\". \r\n* `MIC` Market Identifier Code. Identification of a financial market, as stipulated in the norm ISO 10383 \"Codes for exchanges and market identifications\".\r\n* `BICFI` Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking Banking telecommunication messages Business identifier code BIC\".\r\n* `Bankpartyidentification` Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.\r\n* `Centralbankidentificationnumber` A unique identification number assigned by a central bank to identify an organisation.\r\n* `Clearingidentificationnumber` A unique identification number assigned by a clearing house to identify an organisation\r\n* `Certificateofincorporationnumber` A unique identification number assigned by a designated authority to a certificate of incorporation and used to identify an organisation.\r\n* `Countryidentificationcode` Country authority given organisation identification e.g., corporate registration number\r\n* `Customernumber` Number assigned by an issuer to identify a customer.\nNumber assigned by a party to identify a creditor or debtor relationship.\r\n* `Datauniversalnumberingsystem` A unique identification number provided by Dun & Bradstreet to identify an organisation.\r\n* `Employeridentificationnumber` Number assigned by a registration authority to an employer.\r\n* `Gs1glnidentifier` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to GS1 numbering scheme rules.The number is used to retrieve detailed information that is linked to it.\r\n* `SIREN` The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France.\r\n* `SIRET` The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity\r\n* `Taxidentificationnumber` Number assigned by a tax authority to identify an organisation.\r\n* `EANGLN` Global Location Number. A non-significant reference number used to identify legal entities, functional entities, or physical entities according to the European Association for Numbering EAN numbering scheme rules. The number is used to retrieve detailed information that is linked to it. iso20022"
+    Datetimetypevalues:
+      enum:
+        - MaturityDate
+        - InitiatedDate
+        - RequestedDate
+        - ExecutedDate
+        - OpenDate
+        - CloseDate
+        - ExpiryDate
+        - EffectiveDate
+        - CreatingDate
+        - ActivationDate
+        - DeactivationDate
+        - BlockingDate
+        - SendingDate
+        - ValidFromDate
+        - ValidToDate
+        - ReceivingDate
+        - SigningDate
+        - DueDate
+        - ValueDate
+        - FulfillmentDate
+        - EntryDate
+      type: string
+      description: ">\r\n* `MaturityDate` \r\n* `InitiatedDate` \r\n* `RequestedDate` \r\n* `ExecutedDate` \r\n* `OpenDate` \r\n* `CloseDate` \r\n* `ExpiryDate` \r\n* `EffectiveDate` \r\n* `CreatingDate` \r\n* `ActivationDate` \r\n* `DeactivationDate` \r\n* `BlockingDate` \r\n* `SendingDate` \r\n* `ValidFromDate` \r\n* `ValidToDate` \r\n* `ReceivingDate` \r\n* `SigningDate` \r\n* `DueDate` \r\n* `ValueDate` \r\n* `FulfillmentDate` \r\n* `EntryDate` "
+    Organisationdatetimetypevalues:
+      enum:
+        - RegistrationDate
+        - EstablishmentDate
+        - EntityExpirationDate
+      type: string
+      description: ">\r\n* `RegistrationDate` Date and time at which a given organisation was officially registered. ISO20022\r\n* `EstablishmentDate` Date when the organisation was established. ISO20022\r\n* `EntityExpirationDate` The date the Legal Entity ceased operation or was merged. ISO20022"
+    Organisationtypevalues:
+      enum:
+        - LegalEntity
+        - Authority
+        - OrganisationUnit
+        - FinancialInstitution
+        - Charity
+        - GovernmentBody
+      type: string
+      description: ">\r\n* `LegalEntity` \r\n* `Authority` \r\n* `OrganisationUnit` \r\n* `FinancialInstitution` \r\n* `Charity` \r\n* `GovernmentBody` "
+    Organisationnametypevalues:
+      enum:
+        - ShortName
+        - TradingName
+        - LegalName
+      type: string
+      description: ">\r\n* `ShortName` \r\n* `TradingName` \r\n* `LegalName` "
+    Organisationlegalstructuretypevalues:
+      enum:
+        - Corporation
+        - Individual
+        - Supranational
+        - Sovereign
+        - Municipal
+        - Province
+        - State
+        - County
+        - Partnership
+        - Financialinstitution
+        - National
+      type: string
+      description: ">\r\n* `Corporation` Legal structure is a corporation.\r\n* `Individual` Legal structure is an individual.\r\n* `Supranational` Legal structure is a supranational.\r\n* `Sovereign` Legal structure is a sovereign.\r\n* `Municipal` Legal structure is a municipal.\r\n* `Province` Legal structure is a province.\r\n* `State` Legal structure is a state.\r\n* `County` Legal structure is a county.\r\n* `Partnership` Legal structure is a partnership.\r\n* `Financialinstitution` Legal structure is a financial institution.\r\n* `National` Legal structure is a state."
+    Productidentificationtypevalues:
+      enum:
+        - ISINCode
+        - PackageCode
+        - Buyersitemnumber
+        - Commercialdescriptioncodename
+        - EAN
+        - Harmonizedtariffcodename
+        - Manufacturersitemnumber
+        - Modelnumber
+        - Partnumber
+        - Quotacategory
+        - Stylenumber
+        - Suppliersitemnumber
+        - Universalproductcode
+      type: string
+      description: ">\r\n* `ISINCode` \r\n* `PackageCode` \r\n* `Buyersitemnumber` Product identifier assigned by the buyer.\r\n* `Commercialdescriptioncodename` A code to identify a product based on applicable commercial conditions.\r\n* `EAN` The unique EAN European Article Number code.\r\n* `Harmonizedtariffcodename` Classification of goods as developed by the Customs Cooperation council.\r\n* `Manufacturersitemnumber` Product identifier as assigned by the manufacturer.\r\n* `Modelnumber` Reference number assigned by the manufacturer to differentiate variations in similar products in a class or group.\r\n* `Partnumber` Reference assigned by the manufacturer to a product part.\r\n* `Quotacategory` Product identifier used by the retail industry.\r\n* `Stylenumber` Identification of the style of a product.\r\n* `Suppliersitemnumber` Number assigned to an article by the supplier of that article.\r\n* `Universalproductcode` Number assigned to a manufacturer's product by the Product Code Council."
+    Bankingproducttypevalues:
+      enum:
+        - LoanProduct
+        - CurrentAccountProduct
+        - SavingAccountProduct
+        - BrokeredProduct
+        - TermDepositProduct
+      type: string
+      description: ">\r\n* `LoanProduct` \r\n* `CurrentAccountProduct` \r\n* `SavingAccountProduct` \r\n* `BrokeredProduct` \r\n* `TermDepositProduct` "
+    Productstatustypevalues:
+      enum:
+        - Initiated
+        - Announced
+        - Sold
+        - Obsolete
+        - Active
+      type: string
+      description: ">\r\n* `Initiated` \r\n* `Announced` \r\n* `Sold` \r\n* `Obsolete` \r\n* `Active` "
+    Financialinstrumenttypevalues:
+      enum:
+        - Loan
+        - Bond
+        - Deposit
+        - Stock
+        - Option
+        - Share
+        - Debt
+        - Letterofcredit
+        - Security
+        - Derivative
+      type: string
+      description: ">\r\n* `Loan` \r\n* `Bond` \r\n* `Deposit` \r\n* `Stock` \r\n* `Option` \r\n* `Share` \r\n* `Debt` Financial instruments evidencing moneys owed by the issuer to the holder on terms as specified. ISO20022\n\nAny type of instrument primarily classified as debt can be considered a debt instrument. Debt instruments are tools an individual, government entity, or business entity can utilize for the purpose of obtaining capital. Debt instruments provide capital to an entity that promises to repay the capital over time. Credit cards, credit lines, loans, and bonds can all be types of debt instruments. Investopedia\r\n* `Letterofcredit` Instrument issued by a bank substituting its name and credit standing for that of its customer. A letter of credit is a written undertaking of the bank, issued for the account of a customer the applicant, to honour a demand for payment, upon the beneficiary's compliance with the terms and conditions set forth in the undertaking. ISO20022\r\n* `Security` Financial instruments representing a sum of rights of the investor vis-a-vis the issuer. ISO20022\r\n* `Derivative` "
+    Financialinstrumentidentificationtypevalues:
+      enum:
+        - NASDAQ
+        - ISIN
+      type: string
+      description: ">\r\n* `NASDAQ` \r\n* `ISIN` "
+    Financialinstrumentdatetimetypevalues:
+      enum:
+        - CouponDate
+        - ExpiryDate
+        - FloatingRateFixingDate
+        - MaturityDate
+        - IssueDate
+        - NextCallableDate
+        - PutableDate
+        - DatedDate
+        - FirstPaymentDate
+      type: string
+      description: ">\r\n* `CouponDate` Next payment date of an interest bearing financial instrument.ISO20022\r\n* `ExpiryDate` Date on which a privilege expires.ISO20022\r\n* `FloatingRateFixingDate` Date at which the interest rate of an interest bearing security will be calculated and reset, according to the terms of the issue.ISO20022\r\n* `MaturityDate` Planned final repayment date at the time of issuance.ISO20022\r\n* `IssueDate` Date at which the security was made available.ISO20022\r\n* `NextCallableDate` Next date at which the issuer has the right to pay the security prior to maturity.ISO20022\r\n* `PutableDate` Date at which the holder has the right to ask for redemption of the security prior to final maturity.ISO20022\r\n* `DatedDate` First date at which a security begins to accrue interest.ISO20022\r\n* `FirstPaymentDate` Date at which the first interest payment is due to holders of the security.ISO20022"
+    Assettypevalues:
+      enum:
+        - TangibleAsset
+        - IntangibleAsset
+        - OperatingAsset
+        - Non-OperatingAsset
+        - CurrentAsset
+        - Non-CurrentFixedAsset
+        - PersonalAsset
+        - BusinessAsset
+      type: string
+      description: ">\r\n* `TangibleAsset` It has a physical form and can be touched or seen.\r\n* `IntangibleAsset` It doesn't have a physical form but hold value\r\n* `OperatingAsset` Used in the day-to-day operations of the business.\r\n* `Non-OperatingAsset` Not used in core business operations but still provide value\r\n* `CurrentAsset` Expected to be converted into cash within one year.\r\n* `Non-CurrentFixedAsset` Provide value over the long term more than one year.\r\n* `PersonalAsset` Owned by individuals and not related to a business.\r\n* `BusinessAsset` Owned by a business and used to generate revenue."
+    Assetclassificationtypevalues:
+      enum:
+        - Assetclassificationtypevalues
+      type: string
+      description: ">\r\n* `Assetclassificationtypevalues` "
+    Assetsubclassificationtypevalues:
+      enum:
+        - Subassetclass
+        - Timetomaturitybucket
+        - Optiontimetomaturitybucket
+        - Swaptimetomaturitybucket
+        - Underlyinginstrumentidentification
+        - Underlyingbondissuer
+        - Underlyinginterestrate
+        - Underlyingbondterm
+        - Assetclass
+        - Underlyingindexidentification
+        - Interestratetermofcontract
+        - Underlyingreferenceentity
+        - Sovereignandpublictypeissuer
+        - Irdnotionalcurrency1
+        - Fexnotionalcurrency1
+        - Cfdnotionalcurrency1
+        - Fexnotionalcurrency2
+        - Irdnotionalcurrency2
+        - Cfdnotionalcurrency2
+        - Swaptionnotionalcurrency
+        - Creditnotionalcurrency
+        - Commoditynotionalcurrency
+        - Contracttype
+        - Baseproduct
+        - Subproduct
+        - Furthersubproduct
+        - Deliverycashlocation
+        - Deliverysettlementtype
+        - Sizespecificationrelatedtofreights
+        - Specificroutetimecharteraverage
+        - Equityunderlyingtype
+        - Parameter
+        - Inflationindexcodename
+        - ISIN
+        - Underlyingindexcdssubclassidentifi
+        - Underlyingtype
+      type: string
+      description: ">\r\n* `Subassetclass` Sub-asset class.ISO20022\r\n* `Timetomaturitybucket` Time to maturity bucket.ISO20022\r\n* `Optiontimetomaturitybucket` Time to maturity bucket of the option.ISO20022\r\n* `Swaptimetomaturitybucket` Time to maturity bucket of the swap.ISO20022\r\n* `Underlyinginstrumentidentification` Underlying instrument identification, such as an ISIN code.ISO20022\r\n* `Underlyingbondissuer` Issuer of the underlying bond.ISO20022\r\n* `Underlyinginterestrate` Underlying interest rate.ISO20022\r\n* `Underlyingbondterm` Term of the underlying bond.ISO20022\r\n* `Assetclass` Asset class.ISO20022\r\n* `Underlyingindexidentification` Underlying index identification such as an ISIN or an index name.ISO20022\r\n* `Interestratetermofcontract` Interest rate term of contract.ISO20022\r\n* `Underlyingreferenceentity` Underlying reference entity.ISO20022\r\n* `Sovereignandpublictypeissuer` Issuer of sovereign and public type.ISO20022\r\n* `Irdnotionalcurrency1` Interest rate derivative notional currency 1.ISO20022\r\n* `Fexnotionalcurrency1` Foreign exchange derivative notional currency 1.ISO20022\r\n* `Cfdnotionalcurrency1` Contract for difference notional currency 1.ISO20022\r\n* `Fexnotionalcurrency2` Foreign exchange derivative notional currency 2.ISO20022\r\n* `Irdnotionalcurrency2` Interest rate derivative notional currency 2.ISO20022\r\n* `Cfdnotionalcurrency2` Contract for difference notional currency 2.ISO20022\r\n* `Swaptionnotionalcurrency` Notional currency of the swaption.ISO20022\r\n* `Creditnotionalcurrency` Credit derivative notional currency.ISO20022\r\n* `Commoditynotionalcurrency` Commodity derivative notional currency.ISO20022\r\n* `Contracttype` Contract type.ISO20022\r\n* `Baseproduct` Base product.ISO20022\r\n* `Subproduct` Sub product.ISO20022\r\n* `Furthersubproduct` Further sub product.ISO20022\r\n* `Deliverycashlocation` Delivery cash settlement location.ISO20022\r\n* `Deliverysettlementtype` Delivery settlement type.ISO20022\r\n* `Sizespecificationrelatedtofreightsubtype` Size specification related to freight subtype.ISO20022\r\n* `Specificroutetimecharteraverage` Specific route time charter average.ISO20022\r\n* `Equityunderlyingtype` Equity derivative underlying type.ISO20022\r\n* `Parameter` Parameter.ISO20022\r\n* `Inflationindexcodename` Inflation index code or name.ISO20022\r\n* `ISIN` Instrument identification.ISO20022\r\n* `Underlyingindexcdssubclassidentification` Sub class of the underlying index credit default swap CDS.ISO20022\r\n* `Underlyingtype` Underlying type.ISSO20022"
+    Rulesettypevalues:
+      enum:
+        - Policy
+        - Regulation
+        - Law
+        - Guideline
+        - Criterion
+        - Standard
+      type: string
+      description: ">\r\n* `Policy` Rule that governs business execution.\n\nThe set of basic principles and associated guidelines, formulated and enforced by the governing body of an organization, to direct and limit its actions in pursuit of long-term goals. Business Dictionary\n\r\n* `Regulation` A rule used to carry out a law FIBO\n\nBusiness Dictionary: a rule with or without the coercive power of law employed in controlling, directing, or managing an activity, organization, or system. \n\nThe set of rules and legislation governing certain actions. \nhttps://financial-dictionary.thefreedictionary.com/Regulatory\r\n* `Law` A binding rule that the courts will enforce.\nA system of rules and guidelines which are enforced through social institutions to govern behavior. FIBO\n\r\n* `Guideline` A recommended practice adapted from Business Dictionary\nA general rule, principle, or piece of advice.\r\n* `Criterion` A principle or standard by which something may be judged or decided.\n\nRead more: http://www.businessdictionary.com/definition/criterion.html\r\n* `Standard` A rule considered by an authority or by general consent as a basis of comparison"
+    Financialdocumenttypevalues:
+      enum:
+        - Meteredserviceinvoice
+        - Creditnoterelatedtofinancialadjust
+        - Debitnoterelatedtofinancialadjustm
+        - Commercialinvoice
+        - Creditnote
+        - Debitnote
+        - Hireinvoice
+        - Selfbilledinvoice
+        - Remittanceadvicemessage
+        - Relatedpaymentinstruction
+        - Commercialcontract
+        - Foreignexchangedealreference
+        - Statementofaccount
+        - Dispatchadvice
+        - Purchaseorder
+        - Structuredcommunicationreference
+        - Billoflading
+        - Voucher
+        - Accountreceivableopenitem
+        - Tradeservicesutilitytransaction
+        - Cashierreceipt
+        - Customerreceipt
+        - Journal
+        - Salereceipt
+      type: string
+      description: ">\r\n* `Meteredserviceinvoice` Document is an invoice claiming payment for the supply of metered services, for example gas or electricity supplied to a fixed meter.\r\n* `Creditnoterelatedtofinancialadjustment` Document is a credit note for the final amount settled for a commercial transaction.\r\n* `Debitnoterelatedtofinancialadjustment` Document is a debit note for the final amount settled for a commercial transaction.\r\n* `Commercialinvoice` Document is an invoice.\r\n* `Creditnote` Document is a credit note.\r\n* `Debitnote` Document is a debit note.\r\n* `Hireinvoice` Document is an invoice for the hiring of human resources or renting goods or equipment.\r\n* `Selfbilledinvoice` Document is an invoice issued by the debtor.\r\n* `Remittanceadvicemessage` Document is a remittance advice sent separately from the current transaction.\r\n* `Relatedpaymentinstruction` Document is a linked payment instruction to which the current payment instruction is related, for example, in a cover scenario.\r\n* `Commercialcontract` Document is an agreement between the parties, stipulating the terms and conditions of the delivery of goods or services.\r\n* `Foreignexchangedealreference` Document is a pre-agreed or pre-arranged foreign exchange transaction to which the payment transaction refers.\r\n* `Statementofaccount` Document is a statement of the transactions posted to the debtor's account at the supplier.\r\n* `Dispatchadvice` Document is a dispatch advice.\r\n* `Purchaseorder` Document is a purchase order.\r\n* `Structuredcommunicationreference` Document is a structured communication reference provided by the creditor to identify the referred transaction.\r\n* `Billoflading` Document is a shipping notice.\r\n* `Voucher` Document is an electronic payment document.\r\n* `Accountreceivableopenitem` Document is a payment that applies to a specific source document.\r\n* `Tradeservicesutilitytransaction` Document is a transaction identifier as assigned by the Trade Services Utility.\r\n* `Cashierreceipt` When the Sale system print the Cashier copy of the Payment receipt.\r\n* `Customerreceipt` When the Sale System requires   the POI system to print the Customer receipt.\r\n* `Journal` When the POI or the Sale System wants to store a message on the journal printer or electronic journal of the Sale Terminal it is sometimes a Sale Logging/Journal Printer.\r\n* `Salereceipt` When the Sale System requires the POI system to print the Sale receipt."
+    Documentdatetimetypevalues:
+      enum:
+        - CreationDate
+        - CapturingDate
+        - VersionDate
+        - ValueDate
+        - IssueDate
+      type: string
+      description: ">\r\n* `CreationDate` \r\n* `CapturingDate` \r\n* `VersionDate` \r\n* `ValueDate` \r\n* `IssueDate` "
+    Workproducttypevalues:
+      enum:
+        - Document
+        - WorkingPaper
+        - ActivityLog
+        - Form
+        - File
+        - MeetingSchedule
+        - MeetingMinute
+      type: string
+      description: ">\r\n* `Document` \r\n* `WorkingPaper` \r\n* `ActivityLog` \r\n* `Form` \r\n* `File` File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` \r\n* `MeetingMinute` "
+    Residentalstatustypevalues:
+      enum:
+        - Resident
+        - Permanentresident
+        - Nonresident
+      type: string
+      description: ">\r\n* `Resident` \r\n* `Permanentresident` \r\n* `Nonresident` "
