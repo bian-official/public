@@ -1,0 +1,1233 @@
+openapi: 3.0.1
+info:
+  title: Market Analysis
+  description: >-
+    BIAN Service Domain (expanded with ISO200022) | Packaged Business Capability
+    (PBC) | DDD Bounded Context | This service domain analyzes internal and
+    external market information sources as necessary to develop specific market
+    insights. It may maintain a collection of predefined market analyses and may
+    also offer specific ad-hoc analysis on request
+  version: 14.0.0
+servers:
+  - url: ' https://virtserver.swaggerhub.com/BIAN-3/MarketAnalysis/12.0.1'
+paths:
+  '/MarketAnalysis/Evaluate':
+      post:
+        tags:
+          - CR (DDD Aggregate) - GeneralMarketResearchAnalysis
+        summary: (DDD  Service) EvCR Initialize a market research analysis
+        description: (DDD  Service) EvCR Initialize a market research analysis
+        operationId: GeneralMarketResearchAnalysis/Evaluate
+        requestBody:
+          $ref: >-
+            #/components/requestBodies/EvaluateGeneralMarketResearchAnalysisRequest
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/Execute':
+      put:
+        tags:
+          - CR (DDD Aggregate) - GeneralMarketResearchAnalysis
+        summary: (DDD  Service) ExCR Obtain an automated refresh of market research analysis
+        description: (DDD  Service) ExCR Obtain an automated refresh of market research analysis
+        operationId: GeneralMarketResearchAnalysis/Execute
+        parameters:
+          - $ref: '#/components/parameters/marketanalysisid'
+        requestBody:
+          $ref: >-
+            #/components/requestBodies/ExecuteGeneralMarketResearchAnalysisRequest
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/Request':
+      put:
+        tags:
+          - CR (DDD Aggregate) - GeneralMarketResearchAnalysis
+        summary: (DDD  Service) RqCR Request a manual refresh of market research analysis
+        description: (DDD  Service) RqCR Request a manual refresh of market research analysis
+        operationId: GeneralMarketResearchAnalysis/Request
+        parameters:
+          - $ref: '#/components/parameters/marketanalysisid'
+        requestBody:
+          $ref: >-
+            #/components/requestBodies/RequestGeneralMarketResearchAnalysisRequest
+        responses:
+          '200':
+            $ref: '#/components/responses/BadRequest'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/Retrieve':
+      get:
+        tags:
+          - CR (DDD Aggregate) - GeneralMarketResearchAnalysis
+        summary: >-
+          (DDD  Service) ReCR Retrieve details about market research analysis, including
+          recent results
+        description: >-
+          (DDD  Service) ReCR Retrieve details about market research analysis, including
+          recent results
+        operationId: GeneralMarketResearchAnalysis/Retrieve
+        parameters:
+          - $ref: '#/components/parameters/marketanalysisid'
+        responses:
+          '200':
+            $ref: >-
+              #/components/responses/RetrieveGeneralMarketResearchAnalysisResponse
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+  '/MarketAnalysis/{marketanalysisid}/CompetitiveAnalysis/Evaluate':
+      post:
+        tags:
+          - BQ (DDD Aggregate) - CompetitiveAnalysis
+        summary: (DDD  Service) Evaluate Competitive Analysis
+        description: (DDD  Service) Evaluate Competitive Analysis
+        operationId: CompetitiveAnalysis/Evaluate
+        parameters:
+          - $ref: '#/components/parameters/marketanalysisid'
+        requestBody:
+          $ref: '#/components/requestBodies/EvaluateCompetitiveAnalysisRequest'
+        responses:
+          '200':
+            $ref: '#/components/responses/EvaluateCompetitiveAnalysisResponse'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '403':
+            $ref: '#/components/responses/Forbidden'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '429':
+            $ref: '#/components/responses/TooManyRequests'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+components:
+  schemas:
+    EvaluateGeneralMarketResearchAnalysis:
+        type: object
+        description: (DDD Entity) - EvCR Initialize a market research analysis
+        properties:
+          GeneralMarketResearchAnalysisType:
+              $ref: '#/components/schemas/Marketresearchanalysistypevalues'
+              format: Marketresearchanalysistypevalues
+              description: "(DDD Entity) - The type of research view provided by the research (e.g. competitor analysis) ||\r\n|"
+          GeneralMarketResearchAnalysisSpecification:
+              type: string
+              description: "The definition of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisGuidance:
+              $ref: '#/components/schemas/GovernanceRules'
+              format: GovernanceRules
+              description: >-
+                (DDD Entity) - Guidance on usage and interpretation of the analysis
+                GovernanceRules|GovernanceRules
+                ([https://www.iso20022.org/standardsrepository/type/GovernanceRules)](https://www.iso20022.org/standardsrepository/type/GovernanceRules))|Standard|ISO20022
+                BM ()
+          GeneralMarketResearchAnalysisAlgorithmReference:
+              $ref: '#/components/schemas/Algorithm'
+              format: Algorithm
+              description: "(DDD Entity) - Reference to the algorithm used to generate the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "Request record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisRequest:
+              $ref: '#/components/schemas/MarketResearchAnalysisRequest'
+              format: MarketResearchAnalysisRequest
+              description: "(DDD Entity) - The specific details of the request ||\r\n|"
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The employee/business unit requesting the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestWorkProducts:
+              $ref: '#/components/schemas/Workproduct'
+              format: Workproduct
+              description: "(DDD Entity) - Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "The output from performing the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "Usage record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsage:
+              type: string
+              description: "A record of the usage of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "A record of reported impact/accuracy of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisReference:
+              $ref: '#/components/schemas/Analysis'
+              format: Analysis
+              description: "(DDD Entity) - \r\n "
+    Marketresearchanalysistypevalues:
+        type: object
+        description: (DDD Entity) - EvCR Initialize a market research analysis
+        properties:
+          Marketresearchanalysistypevalues:
+              enum:
+                  -  CustomerNeedAnalysis
+                  -  CompetitiveAnalysis
+                  -  ChannelDistributionAnalysis
+                  -  PricingBehaviorAnalsysis
+                  -  MarketSegmentationAnalysis
+                  -  MarketForecasting
+              type: string
+              format: Marketresearchanalysistypevalues
+              description: ">\r\n* `CustomerNeedAnalysis` - Understanding the needs, preferences, buying behaviors, and decision-making processes of the target customers. This often includes analyzing customer demographics and psychographics\r\n* `CompetitiveAnalysis` - Identifying key competitors in the market, assessing their strengths and weaknesses, and understanding their strategies. This helps in determining the competitive landscape and positioning a business accordingly\r\n* `ChannelDistributionAnalysis` - Analyzing how products or services are delivered to customers, including the effectiveness and efficiency of these channels\r\n* `PricingBehaviorAnalsysis` - Analyzing pricing in the market, understanding how price affects consumer behavior, and determining the best pricing strategy for a product or service.\r\n* `MarketSegmentationAnalysis` - Customer segmentation involves dividing a customer base into distinct groups with similar characteristics. To effectively perform customer segmentation, various specific analyses are applied, each providing insights into different aspects of the customer base like Needs-Based Analysis, Value-Based Segmentation, Cohort Analysis.\r\n* `MarketForecasting` - Predicting future market conditions based on current data, trends, and statistical models. This can help businesses anticipate changes and plan accordingly"
+    Algorithm:
+        type: object
+        description: Reference to the algorithm used to generate the analysis
+        properties:
+          AlgorithmType:
+              type: string
+              description: ' '
+              format: String
+          AlgorithmUsage:
+              type: string
+              description: ' '
+              format: String
+          AlgorithmImpact:
+              type: string
+              description: ' '
+              format: String
+          AlgorithmFeedback:
+              type: string
+              description: ' '
+              format: String
+          AlgorithmSpecification:
+              type: string
+              description: ' '
+              format: String
+          AlgorithmUsageGuideline:
+              type: string
+              description: ' '
+              format: String
+    MarketResearchAnalysisRequest:
+        type: object
+        description: The specific details of the request
+        properties:
+          InstructionDate:
+              $ref: '#/components/schemas/Instructiondatetime'
+              format: Instructiondatetime
+              description: '(DDD Entity) -  '
+          InstructionStatus:
+              $ref: '#/components/schemas/Instructionstatus'
+              format: Instructionstatus
+              description: >-
+                (DDD Entity) - A characteristic of instruction which refers to the
+                LifecycleStatus of instruction (e.g., requested, executed,
+                fulfilled, etc.);  
+          InstructionIdentification:
+              $ref: '#/components/schemas/Instructionidentification'
+              format: Instructionidentification
+              description: >-
+                (DDD Entity) - An identifier that allows to uniquely refer to an instance
+                of an Instruction.
+                 
+          InstructionType:
+              $ref: '#/components/schemas/Instructiontypevalues'
+              format: Instructiontypevalues
+              description: >-
+                (DDD Entity) - Classification Value classifying the instruction according
+                to the "type of action" to be applied to a subject matter.
+
+
+                examples: payment instruction, withdrawal instruction, blocking
+                instruction, accounting instruction, sending instruction,
+                purchase instruction blocked deposit, a blocked securities
+                portfolio, pawn, etc. 
+          InstructionResult:
+              type: string
+              description: ' '
+              format: String
+          InstructionDescription:
+              type: string
+              description: ' '
+              format: String
+          InstructionLog:
+              $ref: '#/components/schemas/Log'
+              format: Log
+              description: '(DDD Entity) -  '
+          InstructionPurpose:
+              type: string
+              description: ' '
+              format: String
+    Instructiondatetime:
+        type: object
+        description: ''
+        properties:
+          InstructionDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          InstructionDateType:
+              $ref: '#/components/schemas/Instructiondatetimetypevalues'
+              format: Instructiondatetimetypevalues
+              description: '(DDD Entity) -  '
+    Datetime:
+        type: object
+        description: The date when the identifier became valid.
+        properties:
+          DateTimeContent:
+              type: string
+              description: 'The particular date and time point in the progression of time '
+              format: String
+          TimeZoneCode:
+              type: string
+              description: 'The time zone to which the date time refers. '
+              format: String
+          DaylightSavingIndicator:
+              type: string
+              description: ' '
+              format: String
+          DateTimeType:
+              $ref: '#/components/schemas/Datetimetypevalues'
+              format: Datetimetypevalues
+              description: '(DDD Entity) -  '
+    Datetimetypevalues:
+        type: object
+        description: The date when the identifier became valid.
+        properties:
+          Datetimetypevalues:
+              enum:
+                  -  MaturityDate
+                  -  InitiatedDate
+                  -  RequestedDate
+                  -  ExecutedDate
+                  -  OpenDate
+                  -  CloseDate
+                  -  ExpiryDate
+                  -  EffectiveDate
+                  -  CreatingDate
+                  -  ActivationDate
+                  -  DeactivationDate
+                  -  BlockingDate
+                  -  SendingDate
+                  -  ValidFromDate
+                  -  ValidToDate
+                  -  ReceivingDate
+                  -  SigningDate
+                  -  DueDate
+                  -  ValueDate
+                  -  FulfillmentDate
+                  -  EntryDate
+              type: string
+              format: Datetimetypevalues
+              description: ">\r\n* `MaturityDate` - \r\n* `InitiatedDate` - \r\n* `RequestedDate` - \r\n* `ExecutedDate` - \r\n* `OpenDate` - \r\n* `CloseDate` - \r\n* `ExpiryDate` - \r\n* `EffectiveDate` - \r\n* `CreatingDate` - \r\n* `ActivationDate` - \r\n* `DeactivationDate` - \r\n* `BlockingDate` - \r\n* `SendingDate` - \r\n* `ValidFromDate` - \r\n* `ValidToDate` - \r\n* `ReceivingDate` - \r\n* `SigningDate` - \r\n* `DueDate` - \r\n* `ValueDate` - \r\n* `FulfillmentDate` - \r\n* `EntryDate` - "
+    Instructiondatetimetypevalues:
+        type: object
+        description: ''
+        properties:
+          Instructiondatetimetypevalues:
+              enum:
+                  -  DueDate
+                  -  ExecutionDate
+                  -  FulfillmentDate
+              type: string
+              format: Instructiondatetimetypevalues
+              description: ">\r\n* `DueDate` - \r\n* `ExecutionDate` - \r\n* `FulfillmentDate` - "
+    Instructionstatus:
+        type: object
+        description: >-
+          A characteristic of instruction which refers to the LifecycleStatus of
+          instruction (e.g., requested, executed, fulfilled, etc.); 
+        properties:
+          InstructionStatusType:
+              $ref: '#/components/schemas/Instructionstatustypevalues'
+              format: Instructionstatustypevalues
+              description: '(DDD Entity) -  '
+          InstructionStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: '(DDD Entity) -  '
+    Instructionstatustypevalues:
+        type: object
+        description: >-
+          A characteristic of instruction which refers to the LifecycleStatus of
+          instruction (e.g., requested, executed, fulfilled, etc.); 
+        properties:
+          Instructionstatustypevalues:
+              enum:
+                  -  Pendingprocessing
+                  -  Acknowledgedaccepted
+                  -  Rejected
+                  -  Accepted
+                  -  Completed
+                  -  Notreceived
+                  -  Cancelled
+                  -  Beingcancelled
+                  -  Receivedbyissuerorregistrar
+                  -  Pending
+                  -  Standinginstruction
+                  -  Queued
+                  -  Cancelledbysubcustodian
+                  -  Forwarded
+              type: string
+              format: Instructionstatustypevalues
+              description: ">\r\n* `Pendingprocessing` - Processing of the instruction is pending.\r\n* `Acknowledgedaccepted` - Instruction has been acknowledged and accepted and is validated for further processing.\r\n* `Rejected` - Instruction has been rejected.\r\n* `Accepted` - Instruction has been accepted and is validated for further processing.\r\n* `Completed` - Processing has been completed.\r\n* `Notreceived` - No instruction has been received (to be used in a reminder).\r\n* `Cancelled` - Instruction has been cancelled.\r\n* `Beingcancelled` - Cancel request is being processed.\r\n* `Receivedbyissuerorregistrar` - Instruction has been received by Issuer.\r\n* `Pending` - Instruction is pending.\r\n* `Standinginstruction` - Standing instruction is applied.\r\n* `Queued` - Instruction is queued.\r\n* `Cancelledbysubcustodian` - Instruction has been cancelled by the agent, for example, due to an event deadline extension.\r\n* `Forwarded` - Accepted and sent along the chain."
+    Status:
+        type: object
+        description: ''
+        properties:
+          StatusReason:
+              type: string
+              description: 'Specifies the reasons for the status. '
+              format: String
+          StatusDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the status was assigned. '
+          StatusValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) - Period of time during which the status is valid. '
+          StatusInvolvedPartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: >-
+                (DDD Entity) - Reference to a Party who plays a  specific role in the
+                context of assigning a status. 
+    Datetimeperiod:
+        type: object
+        description: Period of time during which the status is valid.
+        properties:
+          FromDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range starts. (ISO20022) '
+          ToDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Date and time at which the range ends. (ISO20022) '
+    Involvedparty:
+        type: object
+        description: (DDD Entity) - Reference to the account primary party/owner
+        properties:
+          PartyReference:
+              type: string
+              description: 'Reference to a Party who plays a specific role '
+              format: String
+          InvolvementReference:
+              type: string
+              description: 'Reference to a specific Role that is played by a Party '
+              format: String
+    Instructionidentification:
+        type: object
+        description: >
+          An identifier that allows to uniquely refer to an instance of an
+          Instruction.
+        properties:
+          InstructionIdentification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+          InstructionIdentificationType:
+              $ref: '#/components/schemas/Instructionidentificationtypevalues'
+              format: Instructionidentificationtypevalues
+              description: '(DDD Entity) -  '
+    Identifier:
+        type: object
+        description: ''
+        properties:
+          IdentifierValue:
+              type: string
+              description: >-
+                tThe actual unique code or number (e.g., passport number,
+                drivers license number). 
+              format: String
+          IdentifierIssuerReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: >-
+                (DDD Entity) - Reference to an entity that assigns and manages the
+                identification.
+
+                tReference to the organization or agency that issued the
+                identifier (e.g., DMV, Passport Office). 
+          IdentifierStartDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - The date when the identifier became valid. '
+          IdentifierEndDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - The date when the identifier expires or is no longer valid. '
+    Instructionidentificationtypevalues:
+        type: object
+        description: >
+          An identifier that allows to uniquely refer to an instance of an
+          Instruction.
+        properties:
+          Instructionidentificationtypevalues:
+              enum:
+                  -  OrderNumber
+                  -  InstructionNumber
+              type: string
+              format: Instructionidentificationtypevalues
+              description: ">\r\n* `OrderNumber` - \r\n* `InstructionNumber` - "
+    Instructiontypevalues:
+        type: object
+        description: The specific details of the request
+        properties:
+          Instructiontypevalues:
+              enum:
+                  -  PaymentInstruction
+                  -  DeliveryOrder
+                  -  InformationRequest
+                  -  ExchangeInstruction
+                  -  AllocationInstruction
+                  -  MaintenanceInstruction
+              type: string
+              format: Instructiontypevalues
+              description: ">\r\n* `PaymentInstruction` - \r\n* `DeliveryOrder` - \r\n* `InformationRequest` - \r\n* `ExchangeInstruction` - \r\n* `AllocationInstruction` - \r\n* `MaintenanceInstruction` - "
+    Log:
+        type: object
+        description: ''
+        properties:
+          LogType:
+              type: string
+              description: ' '
+              format: String
+          LogPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) -  '
+          LogDate:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) - Key dates associated with the log (e.g. start time). '
+          LogIdentification:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+    Workproduct:
+        type: object
+        description: >-
+          Work documentation, forms and schedules produced and referenced during
+          the analysis
+        properties:
+          WorkProductType:
+              $ref: '#/components/schemas/Workproducttypevalues'
+              format: Workproducttypevalues
+              description: '(DDD Entity) -  '
+          WorkProductIdentifoication:
+              $ref: '#/components/schemas/Identifier'
+              format: Identifier
+              description: '(DDD Entity) -  '
+    Workproducttypevalues:
+        type: object
+        description: >-
+          Work documentation, forms and schedules produced and referenced during
+          the analysis
+        properties:
+          Workproducttypevalues:
+              enum:
+                  -  Document
+                  -  WorkingPaper
+                  -  ActivityLog
+                  -  Form
+                  -  File
+                  -  MeetingSchedule
+                  -  MeetingMinute
+              type: string
+              format: Workproducttypevalues
+              description: ">\r\n* `Document` - \r\n* `WorkingPaper` - \r\n* `ActivityLog` - \r\n* `Form` - \r\n* `File` - File of consolidated notes, evaluations and recommendations for the work task\r\n* `MeetingSchedule` - \r\n* `MeetingMinute` - "
+    Analysis:
+        type: object
+        description: "\r\n"
+        properties:
+          AnalysisType:
+              $ref: '#/components/schemas/Analysistypevalues'
+              format: Analysistypevalues
+              description: '(DDD Entity) -  '
+          AnalysisResult:
+              type: string
+              description: ' '
+              format: String
+          AnalysisPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) - The period covered by the analysis (from to date time) '
+          AnalysisDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          AnalysisSpecification:
+              type: string
+              description: ' '
+              format: String
+          AnalysisSchedule:
+              $ref: '#/components/schemas/Schedule'
+              format: Schedule
+              description: >-
+                (DDD Entity) - The schedule and timing of the analysis performed using the
+                algorithm 
+    Analysistypevalues:
+        type: object
+        description: "\r\n"
+        properties:
+          Analysistypevalues:
+              enum:
+                  -  PerformanceAnalysis
+                  -  ActivityAnalysis
+                  -  RevenueAnalysis
+                  -  CostAnalysis
+                  -  PredictiveAnalysis
+                  -  BehavioralAnalysis
+                  -  ProfitabilityAnalysis
+                  -  CompetitiveAnalysis
+                  -  CohortAnalysis
+                  -  SegmentAnalysis
+                  -  SWOTAnalysis
+                  -  Benchmarking
+                  -  PositioningAnalysis
+                  -  ScenarioAnalysis
+                  -  IntelligenceGathering
+                  -  Profiling
+              type: string
+              format: Analysistypevalues
+              description: ">\r\n* `PerformanceAnalysis` - \r\n* `ActivityAnalysis` - \r\n* `RevenueAnalysis` - \r\n* `CostAnalysis` - \r\n* `PredictiveAnalysis` - \r\n* `BehavioralAnalysis` - \r\n* `ProfitabilityAnalysis` - \r\n* `CompetitiveAnalysis` - \r\n* `CohortAnalysis` - \r\n* `SegmentAnalysis` - \r\n* `SWOTAnalysis` - \r\n* `Benchmarking` - \r\n* `PositioningAnalysis` - \r\n* `ScenarioAnalysis` - \r\n* `IntelligenceGathering` - \r\n* `Profiling` - "
+    Schedule:
+        type: object
+        description: The schedule and timing of the analysis performed using the algorithm
+        properties:
+          ScheduleType:
+              type: string
+              description: ' '
+              format: String
+    ExecuteGeneralMarketResearchAnalysis:
+        type: object
+        description: (DDD Entity) - ExCR Obtain an automated refresh of market research analysis
+        properties:
+          GeneralMarketResearchAnalysisType:
+              $ref: '#/components/schemas/Marketresearchanalysistypevalues'
+              format: Marketresearchanalysistypevalues
+              description: "(DDD Entity) - The type of research view provided by the research (e.g. competitor analysis) ||\r\n|"
+          GeneralMarketResearchAnalysisSpecification:
+              type: string
+              description: "The definition of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisGuidance:
+              $ref: '#/components/schemas/GovernanceRules'
+              format: GovernanceRules
+              description: >-
+                (DDD Entity) - Guidance on usage and interpretation of the analysis
+                GovernanceRules|GovernanceRules
+                ([https://www.iso20022.org/standardsrepository/type/GovernanceRules)](https://www.iso20022.org/standardsrepository/type/GovernanceRules))|Standard|ISO20022
+                BM ()
+          GeneralMarketResearchAnalysisAlgorithmReference:
+              $ref: '#/components/schemas/Algorithm'
+              format: Algorithm
+              description: "(DDD Entity) - Reference to the algorithm used to generate the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "Request record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisRequest:
+              $ref: '#/components/schemas/MarketResearchAnalysisRequest'
+              format: MarketResearchAnalysisRequest
+              description: "(DDD Entity) - The specific details of the request ||\r\n|"
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The employee/business unit requesting the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestWorkProducts:
+              $ref: '#/components/schemas/Workproduct'
+              format: Workproduct
+              description: "(DDD Entity) - Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "The output from performing the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "Usage record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsage:
+              type: string
+              description: "A record of the usage of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "A record of reported impact/accuracy of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisReference:
+              $ref: '#/components/schemas/Analysis'
+              format: Analysis
+              description: "(DDD Entity) - \r\n "
+    RequestGeneralMarketResearchAnalysis:
+        type: object
+        description: (DDD Entity) - RqCR Request a manual refresh of market research analysis
+        properties:
+          GeneralMarketResearchAnalysisType:
+              $ref: '#/components/schemas/Marketresearchanalysistypevalues'
+              format: Marketresearchanalysistypevalues
+              description: "(DDD Entity) - The type of research view provided by the research (e.g. competitor analysis) ||\r\n|"
+          GeneralMarketResearchAnalysisSpecification:
+              type: string
+              description: "The definition of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisGuidance:
+              $ref: '#/components/schemas/GovernanceRules'
+              format: GovernanceRules
+              description: >-
+                (DDD Entity) - Guidance on usage and interpretation of the analysis
+                GovernanceRules|GovernanceRules
+                ([https://www.iso20022.org/standardsrepository/type/GovernanceRules)](https://www.iso20022.org/standardsrepository/type/GovernanceRules))|Standard|ISO20022
+                BM ()
+          GeneralMarketResearchAnalysisAlgorithmReference:
+              $ref: '#/components/schemas/Algorithm'
+              format: Algorithm
+              description: "(DDD Entity) - Reference to the algorithm used to generate the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "Request record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisRequest:
+              $ref: '#/components/schemas/MarketResearchAnalysisRequest'
+              format: MarketResearchAnalysisRequest
+              description: "(DDD Entity) - The specific details of the request ||\r\n|"
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The employee/business unit requesting the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestWorkProducts:
+              $ref: '#/components/schemas/Workproduct'
+              format: Workproduct
+              description: "(DDD Entity) - Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "The output from performing the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "Usage record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsage:
+              type: string
+              description: "A record of the usage of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "A record of reported impact/accuracy of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisReference:
+              $ref: '#/components/schemas/Analysis'
+              format: Analysis
+              description: "(DDD Entity) - \r\n "
+    RetrieveGeneralMarketResearchAnalysis:
+        type: object
+        description: >-
+          (DDD Entity) - ReCR Retrieve details about market research analysis, including
+          recent results
+        properties:
+          GeneralMarketResearchAnalysisType:
+              $ref: '#/components/schemas/Marketresearchanalysistypevalues'
+              format: Marketresearchanalysistypevalues
+              description: "(DDD Entity) - The type of research view provided by the research (e.g. competitor analysis) ||\r\n|"
+          GeneralMarketResearchAnalysisSpecification:
+              type: string
+              description: "The definition of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisGuidance:
+              $ref: '#/components/schemas/GovernanceRules'
+              format: GovernanceRules
+              description: >-
+                (DDD Entity) - Guidance on usage and interpretation of the analysis
+                GovernanceRules|GovernanceRules
+                ([https://www.iso20022.org/standardsrepository/type/GovernanceRules)](https://www.iso20022.org/standardsrepository/type/GovernanceRules))|Standard|ISO20022
+                BM ()
+          GeneralMarketResearchAnalysisAlgorithmReference:
+              $ref: '#/components/schemas/Algorithm'
+              format: Algorithm
+              description: "(DDD Entity) - Reference to the algorithm used to generate the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestRecord:
+              type: string
+              description: "Request record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisRequest:
+              $ref: '#/components/schemas/MarketResearchAnalysisRequest'
+              format: MarketResearchAnalysisRequest
+              description: "(DDD Entity) - The specific details of the request ||\r\n|"
+          EmployeeBusinessUnitReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - The employee/business unit requesting the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestWorkProducts:
+              $ref: '#/components/schemas/Workproduct'
+              format: Workproduct
+              description: "(DDD Entity) - Work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+          GeneralMarketResearchAnalysisRequestResult:
+              type: string
+              description: "The output from performing the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsageRecord:
+              type: string
+              description: "Usage record of the general market analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisUsage:
+              type: string
+              description: "A record of the usage of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisImpact:
+              type: string
+              description: "A record of reported impact/accuracy of the analysis ||\r\n|"
+              format: String
+          GeneralMarketResearchAnalysisReference:
+              $ref: '#/components/schemas/Analysis'
+              format: Analysis
+              description: "(DDD Entity) - \r\n "
+    EvaluateCompetitiveAnalysis:
+        type: object
+        description: (DDD Entity) - Evaluate Competitive Analysis
+        properties:
+          AnalysisTask:
+              $ref: '#/components/schemas/Task'
+              format: Task
+              description: "(DDD Entity) - Refers to a task for doing the analysis ||\r\n|"
+          AnalysisModelReference:
+              $ref: '#/components/schemas/AnalysisModel'
+              format: AnalysisModel
+              description: "(DDD Entity) - Refers to a model used in the analysis Like Customer Behavior Model ||\r\n|"
+          AnalysisInvolvedPartyReference:
+              $ref: '#/components/schemas/Involvedparty'
+              format: Involvedparty
+              description: "(DDD Entity) - Refers to a party and its role involved in the analysis ||\r\n|"
+          AnalysisType:
+              $ref: '#/components/schemas/Analysistypevalues'
+              format: Analysistypevalues
+              description: "(DDD Entity) - Refers to the type analysis ||\r\n|"
+          AnalysisLogReference:
+              $ref: '#/components/schemas/Log'
+              format: Log
+              description: "(DDD Entity) - Refers to a log used in the  analysis like Event Log ||\r\n|"
+          AnalysisWorkProduct:
+              $ref: '#/components/schemas/Workproduct'
+              format: Workproduct
+              description: "(DDD Entity) - Refers to work documentation, forms and schedules produced and referenced during the analysis ||\r\n|"
+          AnalysisReportReference:
+              $ref: '#/components/schemas/AnalysisReport'
+              format: AnalysisReport
+              description: "(DDD Entity) - Refers to a report used in the analysis like Market Research Report ||\r\n|"
+          AnalysisDocumentReference:
+              $ref: '#/components/schemas/Document'
+              format: Document
+              description: "(DDD Entity) - Refers to a document used in the analysis Document\__x000D_\n|Document ([https://www.iso20022.org/standardsrepository/type/Document)](https://www.iso20022.org/standardsrepository/type/Document))|Standard|ISO20022 BM ()"
+          AnalysisReference:
+              $ref: '#/components/schemas/Analysis'
+              format: Analysis
+              description: "(DDD Entity) - Reference to the (result of) analysis ||\r\n|"
+          AnalysisCriteriaReference:
+              $ref: '#/components/schemas/GovernanceRules'
+              format: GovernanceRules
+              description: >-
+                (DDD Entity) - Reference to the creteria applied to the analysis
+                GovernanceRules|GovernanceRules
+                ([https://www.iso20022.org/standardsrepository/type/GovernanceRules)](https://www.iso20022.org/standardsrepository/type/GovernanceRules))|Standard|ISO20022
+                BM ()
+    Task:
+        type: object
+        description: Refers to a task for doing the analysis
+        properties:
+          Task:
+              type: string
+              description: '(DDD Entity) -  '
+              format: DataType
+    AnalysisModel:
+        type: object
+        description: Refers to a model used in the analysis Like Customer Behavior Model
+        properties:
+          ModelType:
+              type: string
+              description: 'The type or category of model   '
+              format: String
+          ModelPurpose:
+              type: string
+              description: >-
+                A description of the model that clarifies the intended
+                analysis/insights provided 
+              format: String
+          ModelVersion:
+              type: string
+              description: ' '
+              format: String
+          ModelName:
+              $ref: '#/components/schemas/Name'
+              format: Name
+              description: '(DDD Entity) -  '
+          ModelDateAndTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          ModelStatus:
+              $ref: '#/components/schemas/Status'
+              format: Status
+              description: '(DDD Entity) -  '
+    Name:
+        type: object
+        description: ''
+        properties:
+          Name:
+              type: string
+              description: >-
+                (DDD Entity) - A name is a word or phrase that constitutes the distinctive
+                designation of a person, place, thing or concept. (UN/CEFAT) 
+              format: DataType
+    AnalysisReport:
+        type: object
+        description: Refers to a report used in the analysis like Market Research Report
+        properties:
+          AnalysisReportDatetime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          ReportType:
+              $ref: '#/components/schemas/Reporttypevalues'
+              format: Reporttypevalues
+              description: '(DDD Entity) -  '
+          ReportValidityPeriod:
+              $ref: '#/components/schemas/Datetimeperiod'
+              format: Datetimeperiod
+              description: '(DDD Entity) -  '
+          ReportVersion:
+              type: string
+              description: '(DDD Entity) -  '
+              format: Number
+          ReportDateTime:
+              $ref: '#/components/schemas/Datetime'
+              format: Datetime
+              description: '(DDD Entity) -  '
+          ReportFormat:
+              type: string
+              description: ' '
+              format: String
+    Reporttypevalues:
+        type: object
+        description: Refers to a report used in the analysis like Market Research Report
+        properties:
+          Reporttypevalues:
+              enum:
+                  -  FinancialReport
+                  -  BusinessReport
+                  -  ManagementReport
+                  -  Statement
+                  -  MaintenanceReport
+                  -  RegulatoryReport
+                  -  TaxReport
+                  -  AnalysisReport
+              type: string
+              format: Reporttypevalues
+              description: ">\r\n* `FinancialReport` - \r\n* `BusinessReport` - \r\n* `ManagementReport` - \r\n* `Statement` - \r\n* `MaintenanceReport` - \r\n* `RegulatoryReport` - \r\n* `TaxReport` - \r\n* `AnalysisReport` - "
+    HTTPError:
+        type: object
+        properties:
+          status_code:
+            type: string
+            format: string
+          status:
+            type: string
+            format: string
+          message:
+            type: string
+            format: string
+        description: Status Attributes
+    GovernanceRules:
+        type: object
+        description: >-
+          (DDD Entity) - Guidance on usage and interpretation of the analysis
+          GovernanceRules|GovernanceRules
+          ([https://www.iso20022.org/standardsrepository/type/GovernanceRules)](https://www.iso20022.org/standardsrepository/type/GovernanceRules))|Standard|ISO20022
+          BM ()
+        properties:
+          ModelForm:
+              type: string
+              format: ModelForm
+              description: '(DDD Entity) - Model form to which the governance rules apply. '
+          Identification:
+              type: string
+              format: GovernanceIdentificationCode
+              description: '(DDD Entity) - Identification of the governance rules. '
+          ApplicableLaw:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Law under which the undertaking has been issued. '
+          Jurisdiction:
+              type: string
+              format: Jurisdiction
+              description: '(DDD Entity) - Jurisdiction which applies to the governance rules. '
+          PublicationAgency:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Agency that publishes the governance rules. '
+    Document:
+        type: object
+        description: "(DDD Entity) - Refers to a document used in the analysis Document\__x000D_\n|Document ([https://www.iso20022.org/standardsrepository/type/Document)](https://www.iso20022.org/standardsrepository/type/Document))|Standard|ISO20022 BM ()"
+        properties:
+          IssueDate:
+              type: string
+              format: ISODateTime
+              description: '(DDD Entity) - Issue date of the document. '
+          CopyDuplicate:
+              type: string
+              format: CopyDuplicateCode
+              description: >-
+                (DDD Entity) - Specifies if this document is a copy, a duplicate, or a
+                duplicate of a copy. 
+          PlaceOfStorage:
+              type: string
+              format: ContactPoint
+              description: '(DDD Entity) - Specifies where the document is stored. '
+          PaymentObligation:
+              type: string
+              format: PaymentObligation
+              description: '(DDD Entity) - Document which is referred to in a payment obligation. '
+          Type:
+              type: string
+              format: DocumentTypeCode
+              description: >-
+                (DDD Entity) - Specifies the type of the document, for example commercial
+                invoice. 
+          Amount:
+              type: string
+              format: ActiveCurrencyAndAmount
+              description: "(DDD Entity) - Amount of money and currency of a document. \r\nThe amount can be either the original amount due and payable for instance the ordered amount, or the amount actually remitted for the referred document. "
+          Agreement:
+              type: string
+              format: Agreement
+              description: '(DDD Entity) - Agreement which is materialised by a document '
+          PlaceOfIssue:
+              type: string
+              format: Location
+              description: '(DDD Entity) - Place where the document was issued. '
+          DocumentVersion:
+              type: string
+              format: Number
+              description: '(DDD Entity) - Unambiguous identification of the version of a document. '
+          Status:
+              type: string
+              format: Max140Text
+              description: '(DDD Entity) - Status of the document (eg delivered, paid, etc.) '
+          Reconciliation:
+              type: string
+              format: Reconciliation
+              description: '(DDD Entity) - Reconciliation process for which a document is specified. '
+          LetterOfCredit:
+              type: string
+              format: LetterOfCredit
+              description: >-
+                (DDD Entity) - Written undertaking by a bank to honour a demand for
+                payment. 
+          PartyRole:
+              type: string
+              format: DocumentPartyRole
+              description: >-
+                (DDD Entity) - Role played by a party in the context of a document or in
+                the context of the business linked to the document. 
+          DataSetType:
+              type: string
+              format: DataSetTypeCode
+              description: >-
+                (DDD Entity) - Specifies the type of data set in which the document is
+                included. 
+          Transport:
+              type: string
+              format: Transport
+              description: >-
+                (DDD Entity) - Transport process for which related documents are
+                specified. 
+          SignedIndicator:
+              type: string
+              format: YesNoIndicator
+              description: '(DDD Entity) - Indication whether the document must be signed or not. '
+          RemittedAmount:
+              type: string
+              format: CurrencyAndAmount
+              description: '(DDD Entity) - Amount of money remitted for the referred document. '
+          Guarantee:
+              type: string
+              format: Guarantee
+              description: '(DDD Entity) - Guarantee that is described in a document. '
+          Language:
+              type: string
+              format: LanguageCode
+              description: '(DDD Entity) - Language used for textual information in the document. '
+          Purpose:
+              type: string
+              format: Max35Text
+              description: '(DDD Entity) - Specifies the function of the document. '
+          DocumentIdentification:
+              type: string
+              format: GenericIdentification
+              description: >-
+                (DDD Entity) - Identification of a document for instance unique
+                identification of the purchase order, assigned by the buyer. 
+          Evidence:
+              type: string
+              format: Evidence
+              description: '(DDD Entity) - Proof of evidence which uses a document. '
+          CommercialTrade:
+              type: string
+              format: CommercialTrade
+              description: '(DDD Entity) - Trade for which a certificare is issued. '
+          Presentation:
+              type: string
+              format: Presentation
+              description: '(DDD Entity) - Presentation of documents and statements. '
+          RelatedContract:
+              type: string
+              format: RegisteredContract
+              description: '(DDD Entity) - Related document which materialises the agreement. '
+  responses:
+    EvaluateGeneralMarketResearchAnalysisResponse:
+        description: GeneralMarketResearchAnalysisEvaluate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateGeneralMarketResearchAnalysis'
+    ExecuteGeneralMarketResearchAnalysisResponse:
+        description: GeneralMarketResearchAnalysisExecute
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ExecuteGeneralMarketResearchAnalysis'
+    RequestGeneralMarketResearchAnalysisResponse:
+        description: GeneralMarketResearchAnalysisRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RequestGeneralMarketResearchAnalysis'
+    RetrieveGeneralMarketResearchAnalysisResponse:
+        description: GeneralMarketResearchAnalysisRetrieve
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveGeneralMarketResearchAnalysis'
+    EvaluateCompetitiveAnalysisResponse:
+        description: CompetitiveAnalysisEvaluate
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateCompetitiveAnalysis'
+    BadRequest:
+        description: BadRequest
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Unauthorized:
+        description: Unauthorized
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    Forbidden:
+        description: Forbidden
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    NotFound:
+        description: NotFound
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    TooManyRequests:
+        description: TooManyRequests
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+    InternalServerError:
+        description: InternalServerError
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/HTTPError'
+  parameters:
+    marketanalysisid:
+        name: marketanalysisid
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+  requestBodies:
+    EvaluateGeneralMarketResearchAnalysisRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateGeneralMarketResearchAnalysis'
+        required: true
+    ExecuteGeneralMarketResearchAnalysisRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/ExecuteGeneralMarketResearchAnalysis'
+        required: true
+    RequestGeneralMarketResearchAnalysisRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RequestGeneralMarketResearchAnalysis'
+        required: true
+    RetrieveGeneralMarketResearchAnalysisRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/RetrieveGeneralMarketResearchAnalysis'
+        required: true
+    EvaluateCompetitiveAnalysisRequest:
+        content:
+          'application/json:':
+            schema:
+              $ref: '#/components/schemas/EvaluateCompetitiveAnalysis'
+        required: true
